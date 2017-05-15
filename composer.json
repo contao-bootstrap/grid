@@ -1,0 +1,57 @@
+{
+  "name":"contao-bootstrap/navbar",
+  "description":"Bootstrap grid component",
+  "keywords":["bootstrap", "components", "contao", "grid"],
+  "type":"contao-bundle",
+  "license":"LGPL-3.0+",
+  "authors":[
+    {
+      "name":"David Molineus",
+      "email":"mail@netzmacht.de",
+      "homepage":"http://www.netzmacht.de",
+      "role":"Project leader"
+    }
+  ],
+  "support":{
+    "email":"mail@netzmacht.de",
+    "issues":"https://github.com/contao-bootstrap/grid/issues",
+    "wiki":"http://contao-bootstrap.netzmacht.de",
+    "source":"https://github.com/contao-bootstrap/grid"
+  },
+  "require":{
+    "php":">=5.5.0",
+    "contao-community-alliance/composer-plugin": "~3.0",
+    "contao/core-bundle":"^4.3",
+    "contao-bootstrap/core": "^2.0",
+    "menatwork/contao-multicolumnwizard":"^3.3.4",
+    "contao-community-alliance/meta-palettes":"^1.10"
+  },
+  "require-dev": {
+    "netzmacht/contao-build-tools": "~1.1",
+    "contao/manager-plugin": "^2.0"
+  },
+  "conflict": {
+    "netzmacht/contao-bootstrap": "*",
+    "contao/manager-plugin": "<2.0 || >=3.0"
+  },
+  "autoload": {
+    "psr-4": { "ContaoBootstrap\\Grid\\": "src/" }
+  },
+  "extra":{
+    "contao": {
+      "transifex": {
+        "project": "contao-bootstrap",
+        "prefix": "grid-",
+        "languages_cto": "src/Resources/contao/languages",
+        "languages_tx": ".tx"
+      }
+    },
+    "branch-alias": {
+      "dev-master": "2.0.x-dev",
+      "dev-develop": "2.1.x-dev"
+    },
+    "contao-manager-plugin": "ContaoBootstrap\\Grid\\ContaoManager\\Plugin"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
