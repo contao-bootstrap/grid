@@ -1,5 +1,5 @@
 {
-  "name":"contao-bootstrap/navbar",
+  "name":"contao-bootstrap/grid",
   "description":"Bootstrap grid component",
   "keywords":["bootstrap", "components", "contao", "grid"],
   "type":"contao-bundle",
