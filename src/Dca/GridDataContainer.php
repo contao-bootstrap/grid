@@ -10,7 +10,9 @@
 
 namespace ContaoBootstrap\Grid\Dca;
 
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use ContaoBootstrap\Core\Config;
+use ContaoBootstrap\Grid\Model\GridModel;
 
 class GridDataContainer
 {
@@ -27,6 +29,33 @@ class GridDataContainer
     public function __construct(Config $config)
     {
         $this->config = $config;
+    }
+
+    public function initializePalette()
+    {
+        if (\Input::get('act') === 'edit') {
+            $model = GridModel::findByPk(\Input::get('id'));
+            $sizes = array_map(
+                function ($value) {
+                    return $value . 'Size';
+                },
+                deserialize($model->sizes, true)
+            );
+
+            PaletteManipulator::create()
+                ->addField($sizes, 'sizes')
+                ->applyToPalette('default', 'tl_grid');
+
+        }
+    }
+
+    public function generateLabel($row)
+    {
+        return sprintf(
+            '%s <div class="tl_gray">%s</div>',
+            $row['title'],
+            $row['description']
+        );
     }
 
     /**
