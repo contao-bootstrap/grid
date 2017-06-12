@@ -18,11 +18,6 @@ namespace ContaoBootstrap\Grid\Definition;
 class Column
 {
     /**
-     * @var string
-     */
-    private $size;
-
-    /**
      * @var
      */
     private $width;
@@ -52,10 +47,14 @@ class Column
      */
     private $justify;
 
+    /**
+     * @var
+     */
+    private $cssClasses;
 
-    public function __construct($size)
+
+    public function __construct()
     {
-        $this->size = $size;
     }
 
     public function width($width)
@@ -107,10 +106,10 @@ class Column
         return $this;
     }
 
-    public function build(array $classes)
+    public function build(array $classes, $size = '')
     {
-        $sizeSuffix  = $this->size ? '-' . $this->size : $this->size;
-        $widthSuffix = $this->width ? '-' . $this->width : $this->width;
+        $sizeSuffix  = $size ? '-' . $size : $size;
+        $widthSuffix = strlen($this->width) ? '-' . $this->width : $this->width;
         $classes[]   = 'col' . $sizeSuffix . $widthSuffix;
 
         if ($this->align) {
@@ -122,17 +121,25 @@ class Column
         }
         
         if ($this->order) {
-            if ($this->order[0] === 'flex' || !$this->size) {
+            if ($this->order[0] === 'flex' || !$size) {
                 $classes[] = implode('-', $this->order);
             } else {
-                $classes[] = sprintf('%s-%s-%s', $this->order[0], $this->size, $this->order[1]);
+                $classes[] = sprintf('%s-%s-%s', $this->order[0], $size, $this->order[1]);
             }
         }
         
         if ($this->offset) {
             $classes[] = 'offset' . $sizeSuffix . $widthSuffix;
         }
+
+        if ($this->cssClasses) {
+            $classes = array_merge($classes, $this->cssClasses);
+        }
         
         return array_unique($classes);
+    }
+
+    public function cssClass($class)
+    {
     }
 }

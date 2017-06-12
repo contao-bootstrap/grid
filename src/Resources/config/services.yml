@@ -6,3 +6,11 @@ services:
 
   contao_bootstrap.grid.dca.content_data_container:
     class: ContaoBootstrap\Grid\Dca\ContentDataContainer
+
+  contao_bootstrap.grid.grid_builder:
+    class: ContaoBootstrap\Grid\GridBuilder
+
+  contao_bootstrap.grid.grid_provider:
+    class: ContaoBootstrap\Grid\GridProvider
+    arguments:
+      - "@contao_bootstrap.grid.grid_builder"
