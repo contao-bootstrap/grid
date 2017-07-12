@@ -124,6 +124,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "tinyBlob NULL"
         ],
         'xsSize'      => [
+            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['xsSize'],
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
@@ -202,6 +203,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "blob NULL"
         ],
         'smSize'      => [
+            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['smSize'],
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
@@ -280,6 +282,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "blob NULL"
         ],
         'mdSize'      => [
+            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['mdSize'],
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
@@ -359,6 +362,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "blob NULL"
         ],
         'lgSize'      => [
+            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['lgSize'],
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
@@ -438,6 +442,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "blob NULL"
         ],
         'xlSize'      => [
+            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['xlSize'],
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
@@ -552,7 +557,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_grid']['noGutters'],
             'exclude'   => true,
-            'default'   => '1',
+            'default'   => '',
             'inputType' => 'checkbox',
             'reference' => &$GLOBALS['TL_LANG']['tl_grid'],
             'eval'      => array(
