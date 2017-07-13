@@ -21,15 +21,8 @@ use Doctrine\DBAL\Connection;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class ContentDataContainer
+class ContentDataContainer extends AbstractDcaHelper
 {
-    /**
-     * Bootstrap config.
-     *
-     * @var Config
-     */
-    private $config;
-
     /**
      * Database connection.
      *
@@ -45,27 +38,9 @@ class ContentDataContainer
      */
     public function __construct(Config $config, Connection $connection)
     {
-        $this->config     = $config;
+        parent::__construct($config);
+
         $this->connection = $connection;
-    }
-
-    /**
-     * Get all available grids.
-     *
-     * @return array
-     */
-    public function getGridOptions()
-    {
-        $collection = GridModel::findAll();
-        $options    = [];
-
-        if ($collection) {
-            foreach ($collection as $model) {
-                $options[$model->id] = sprintf('%s [%s]', $model->title, $model->getRelated('pid')->name);
-            }
-        }
-
-        return $options;
     }
 
     /**
@@ -102,36 +77,6 @@ class ContentDataContainer
         }
 
         return $options;
-    }
-
-    /**
-     * Generate a grid name if not given.
-     *
-     * @param string        $value         Grid name.
-     * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return string
-     */
-    public function generateGridName($value, $dataContainer)
-    {
-        if (!$value) {
-            $value = 'grid_' . $dataContainer->activeRecord->id;
-        }
-
-        return $value;
-    }
-
-    /**
-     * Get range of grid columns.
-     *
-     * @return array
-     */
-    public function getGridColumns()
-    {
-        return range(
-            1,
-            (int) $this->config->get('grid.columns', 12)
-        );
     }
 
     /**
