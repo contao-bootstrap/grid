@@ -113,14 +113,10 @@ class Grid
     {
         $classes = [];
         foreach ($this->columns as $size => $columns) {
-            $currentIndex = $index;
+            $column = $this->getColumnByIndex($columns, $index);
 
-            if (!array_key_exists($currentIndex, $columns) && $currentIndex > 0) {
-                $currentIndex = (count($columns) % $currentIndex);
-            }
-
-            if (array_key_exists($currentIndex, $columns)) {
-                $classes = $columns[$currentIndex]->build($classes, $size);
+            if ($column) {
+                $classes = $column->build($classes, $size);
             }
         }
 
@@ -131,5 +127,50 @@ class Grid
         }
 
         return $classes;
+    }
+
+    /**
+     * Build reset classes.
+     *
+     * @param $index
+     *
+     * @return array
+     */
+    public function buildResets($index)
+    {
+        $resets = [];
+
+        foreach ($this->columns as $size => $columns) {
+            $column = $this->getColumnByIndex($columns, $index);
+
+            if ($column) {
+                $resets = $column->buildReset($resets, $size);
+            }
+        }
+
+        return $resets;
+    }
+
+    /**
+     * Get a column by index.
+     *
+     * @param Column[] $columns Column.
+     * @param int       $index  Column index.
+     *
+     * @return null|Column
+     */
+    private function getColumnByIndex($columns, $index)
+    {
+        $currentIndex = $index;
+
+        if (!array_key_exists($currentIndex, $columns) && $currentIndex > 0) {
+            $currentIndex = (count($columns) % $currentIndex);
+        }
+
+        if (array_key_exists($currentIndex, $columns)) {
+            return $columns[$currentIndex];
+        }
+
+        return null;
     }
 }

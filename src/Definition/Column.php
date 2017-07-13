@@ -203,6 +203,33 @@ class Column
     }
 
     /**
+     * Build the reset for the column.
+     *
+     * @param array  $resets Reset definitions.
+     * @param string $size   Column size.
+     *
+     * @return array
+     */
+    public function buildReset(array $resets, $size)
+    {
+        if ($this->hasReset()) {
+            $resets[] = sprintf('d%s-none', $size ? '-' . $size : '');
+        }
+
+        return $resets;
+    }
+
+    /**
+     * Check if reset is required.
+     *
+     * @return bool
+     */
+    public function hasReset()
+    {
+        return $this->reset;
+    }
+
+    /**
      * Build the align setting.
      *
      * @param array $classes Column classes.

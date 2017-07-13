@@ -54,6 +54,16 @@ class GridIterator implements \Iterator
     }
 
     /**
+     * Get all resets.
+     *
+     * @return array
+     */
+    public function resets()
+    {
+        return $this->grid->buildResets($this->index);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function current()

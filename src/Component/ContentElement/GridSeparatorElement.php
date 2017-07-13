@@ -54,6 +54,7 @@ class GridSeparatorElement extends AbstractGridElement
             $iterator->next();
 
             $this->Template->columnClasses = $iterator->current();
+            $this->Template->resets        = $iterator->resets();
         }
     }
 }
