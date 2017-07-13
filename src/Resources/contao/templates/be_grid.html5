@@ -1,0 +1,7 @@
+<?php if ($this->error): ?>
+<span class="tl_error"><?= $this->error ?></span>
+<?php else: ?>
+<span class="tl_gray" <?php if ($this->color): ?>style="color: <?= $this->color; ?>"<?php endif; ?>>
+    <?= $this->name ?> [<?= $this->classes ?>]
+</span>
+<?php endif; ?>

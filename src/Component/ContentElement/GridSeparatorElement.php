@@ -34,7 +34,13 @@ class GridSeparatorElement extends AbstractGridElement
         // TODO: Rewrite using ScopeMatcher since Contao 4.4. is released
 
         if (TL_MODE === 'BE') {
-            return '';
+            $iterator = $this->getIterator();
+
+            if ($iterator) {
+                $iterator->next();
+
+                return $this->renderBackendView($this->getParent(), $iterator);
+            }
         }
 
         return parent::generate();
@@ -45,16 +51,42 @@ class GridSeparatorElement extends AbstractGridElement
      */
     protected function compile()
     {
-        $parent = ContentModel::findByPk($this->bootstrap_grid_parent);
+        $iterator = $this->getIterator();
 
-        if ($parent) {
-            $provider = $this->getGridProvider();
-            $iterator = $provider->getIterator('ce:' . $parent->id, $parent->bootstrap_grid);
-
+        if ($iterator) {
             $iterator->next();
 
             $this->Template->columnClasses = $iterator->current();
             $this->Template->resets        = $iterator->resets();
+        } else {
+            $this->Template->resets = [];
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getIterator()
+    {
+        $provider = $this->getGridProvider();
+        $parent   = $this->getParent();
+
+        if ($parent) {
+            try {
+                return $provider->getIterator('ce:' . $parent->id, $parent->bootstrap_grid);
+            } catch (\Exception $e) {}
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the parent model.
+     *
+     * @return ContentModel|null
+     */
+    protected function getParent()
+    {
+        return ContentModel::findByPk($this->bootstrap_grid_parent);
     }
 }

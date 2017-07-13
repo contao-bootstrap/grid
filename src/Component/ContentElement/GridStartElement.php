@@ -30,9 +30,10 @@ class GridStartElement extends AbstractGridElement
     public function generate()
     {
         // TODO: Rewrite using ScopeMatcher since Contao 4.4. is released
-
         if (TL_MODE === 'BE') {
-            return '';
+            $iterator = $this->getIterator();
+
+            return $this->renderBackendView($this->objModel, $iterator);
         }
 
         return parent::generate();
@@ -43,10 +44,26 @@ class GridStartElement extends AbstractGridElement
      */
     protected function compile()
     {
-        $provider = $this->getGridProvider();
-        $iterator = $provider->getIterator('ce:' . $this->id, $this->bootstrap_grid);
+        $iterator = $this->getIterator();
 
-        $this->Template->rowClasses    = $iterator->row();
-        $this->Template->columnClasses = $iterator->current();
+        if ($iterator) {
+            $this->Template->rowClasses    = $iterator->row();
+            $this->Template->columnClasses = $iterator->current();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getIterator()
+    {
+        try {
+            $provider = $this->getGridProvider();
+            $iterator = $provider->getIterator('ce:' . $this->id, $this->bootstrap_grid);
+
+            return $iterator;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }

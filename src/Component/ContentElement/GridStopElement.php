@@ -34,7 +34,7 @@ class GridStopElement extends AbstractGridElement
         // TODO: Rewrite using ScopeMatcher since Contao 4.4. is released
 
         if (TL_MODE === 'BE') {
-            return '<hr style="background: red;">';
+            return '';
         }
 
         return parent::generate();
@@ -45,12 +45,28 @@ class GridStopElement extends AbstractGridElement
      */
     protected function compile()
     {
-        $parent = ContentModel::findByPk($this->bootstrap_grid_parent);
+        $iterator = $this->getIterator();
 
-        if ($parent) {
-            $this->getGridProvider()
-                ->getIterator('ce:' . $parent->id, $parent->bootstrap_grid)
-                ->rewind();
+        if ($iterator) {
+            $iterator->rewind();
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getIterator()
+    {
+        $provider = $this->getGridProvider();
+        $parent   = ContentModel::findByPk($this->bootstrap_grid_parent);
+
+        if ($parent) {
+            try {
+                return $provider->getIterator('ce:' . $parent->id, $parent->bootstrap_grid);
+            } catch (\Exception $e) {}
+        }
+
+        return null;
+    }
+
 }

@@ -10,7 +10,10 @@
 
 namespace ContaoBootstrap\Grid\Component\ContentElement;
 
+use Contao\BackendTemplate;
 use Contao\ContentElement;
+use Contao\ContentModel;
+use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
 
 /**
@@ -29,4 +32,39 @@ abstract class AbstractGridElement extends ContentElement
     {
         return static::getContainer()->get('contao_bootstrap.grid.grid_provider');
     }
+
+    /**
+     * Render the backend view.
+     *
+     * @param ContentModel $start Start element.
+     * @param GridIterator $iterator Iterator.
+     *
+     * @return string.
+     */
+    protected function renderBackendView($start, GridIterator $iterator = null)
+    {
+        $template = new BackendTemplate('be_grid');
+
+        if ($start) {
+            $colorRotate = static::getContainer()->get('contao_bootstrap.grid.helper.color_rotate');
+
+            $template->name  = $start->bootstrap_grid_name;
+            $template->color = $colorRotate->getColor('ce:' . $start->id);
+        }
+
+        if ($iterator && $start) {
+            $template->classes = $iterator->current();
+        } else {
+            $template->error   = $GLOBALS['TL_LANG']['ERR']['bootstrapGridMissing'];
+        }
+
+        return $template->parse();
+    }
+
+    /**
+     * Get the iterator.
+     *
+     * @return GridIterator
+     */
+    abstract protected function getIterator();
 }
