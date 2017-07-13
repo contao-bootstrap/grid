@@ -10,28 +10,55 @@
 
 namespace ContaoBootstrap\Grid;
 
+use ContaoBootstrap\Grid\Definition\Grid;
 
+/**
+ * GridProvider is the main entry point to get grids or grid iterators.
+ *
+ * @package ContaoBootstrap\Grid
+ */
 class GridProvider
 {
     /**
+     * Grid builder.
+     *
      * @var GridBuilder
      */
     private $builder;
 
+    /**
+     * Map of created grids.
+     *
+     * @var array
+     */
     private $grids = [];
 
+    /**
+     * Map of grid iterators.
+     *
+     * @var array
+     */
     private $iterators = [];
 
     /**
      * GridProvider constructor.
      *
-     * @param GridBuilder $builder
+     * @param GridBuilder $builder The grid builder.
      */
     public function __construct(GridBuilder $builder)
     {
         $this->builder = $builder;
     }
 
+    /**
+     * Get a grid.
+     *
+     * @param int $gridId Grid id.
+     *
+     * @return Grid
+     *
+     * @throws \RuntimeException When grid could not be build.
+     */
     public function getGrid($gridId)
     {
         if (!isset($this->grids[$gridId])) {
@@ -42,10 +69,14 @@ class GridProvider
     }
 
     /**
-     * @param      $uniqueId
-     * @param null $gridId
+     * Get the grid iterator.
+     *
+     * @param string $uniqueId Unique id to reference a grid iterator.
+     * @param int    $gridId   The grid id.
      *
      * @return GridIterator
+     *
+     * @throws \RuntimeException When grid could not be build.
      */
     public function getIterator($uniqueId, $gridId = null)
     {

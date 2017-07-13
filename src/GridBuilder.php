@@ -15,26 +15,34 @@ use ContaoBootstrap\Grid\Definition\Grid;
 use ContaoBootstrap\Grid\Model\GridModel;
 
 /**
- * Class GridBuilder
+ * GridBuilder builds the grid class from the database definition.
  *
  * @package ContaoBootstrap\Grid
  */
 class GridBuilder
 {
     /**
+     * Grid model.
+     *
      * @var GridModel
      */
     private $model;
 
     /**
+     * Cache of grid being built.
+     *
      * @var Grid
      */
     private $grid;
 
     /**
-     * @param $gridId
+     * Build a grid.
+     *
+     * @param int $gridId THe grid id.
      *
      * @return Grid
+     *
+     * @throws \RuntimeException When Grid does not exist.
      */
     public function build($gridId)
     {
@@ -45,7 +53,11 @@ class GridBuilder
     }
 
     /**
-     * @param $gridId
+     * Load grid model from the database.
+     *
+     * @param int $gridId THe grid id.
+     *
+     * @throws \RuntimeException When Grid does not exist.
      */
     protected function loadModel($gridId)
     {
@@ -57,6 +69,11 @@ class GridBuilder
         $this->model = $model;
     }
 
+    /**
+     * Create the grid from the model.
+     *
+     * @return void
+     */
     private function createGrid()
     {
         $this->grid = new Grid();
@@ -74,7 +91,15 @@ class GridBuilder
         }
     }
 
-    private function buildSize($size, $definition)
+    /**
+     * Build a grid size.
+     *
+     * @param string $size       Grid size.
+     * @param array  $definition Definition.
+     *
+     * @return void
+     */
+    private function buildSize($size, array $definition)
     {
         foreach ($definition as $columnDefinition) {
             $column = $this->buildColumn($columnDefinition);
@@ -84,33 +109,37 @@ class GridBuilder
     }
 
     /**
-     * @param $columnDefinition
+     * Build a column.
+     *
+     * @param array $definition Column definition.
      *
      * @return Column
      */
-    private function buildColumn($columnDefinition)
+    private function buildColumn(array $definition)
     {
         $column = new Column();
-        $column->width($columnDefinition['width']);
+        $column->width($definition['width']);
 
         foreach (['offset', 'order', 'align'] as $key) {
-            if ($columnDefinition[$key]) {
-                $column->{$key}($columnDefinition[$key]);
+            if ($definition[$key]) {
+                $column->{$key}($definition[$key]);
             }
         }
 
-        if ($columnDefinition['reset']) {
+        if ($definition['reset']) {
             $column->reset();
         }
 
-        if ($columnDefinition['class']) {
-            $column->cssClass($columnDefinition['class']);
+        if ($definition['class']) {
+            $column->cssClass($definition['class']);
         }
 
         return $column;
     }
 
     /**
+     * Finish the grid building.
+     *
      * @return Grid
      */
     private function finish()

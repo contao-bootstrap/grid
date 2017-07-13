@@ -13,7 +13,7 @@ namespace ContaoBootstrap\Grid;
 use ContaoBootstrap\Grid\Definition\Grid;
 
 /**
- * Class GridIterator
+ * GridIterator to iterate over the grid columns.
  *
  * @package ContaoBootstrap\Grid
  */
@@ -36,7 +36,7 @@ class GridIterator implements \Iterator
     /**
      * GridIterator constructor.
      *
-     * @param Grid $grid
+     * @param Grid $grid The grid.
      */
     public function __construct(Grid $grid)
     {
