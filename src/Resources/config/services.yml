@@ -10,6 +10,11 @@ services:
       - '@contao_bootstrap.config'
       - '@database_connection'
 
+  contao_bootstrap.grid.dca.form:
+    class: ContaoBootstrap\Grid\Dca\Form
+    arguments:
+      - '@contao_bootstrap.config'
+
   contao_bootstrap.grid.grid_builder:
     class: ContaoBootstrap\Grid\GridBuilder
 

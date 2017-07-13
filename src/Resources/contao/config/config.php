@@ -11,6 +11,9 @@
 use ContaoBootstrap\Grid\Component\ContentElement\GridSeparatorElement;
 use ContaoBootstrap\Grid\Component\ContentElement\GridStartElement;
 use ContaoBootstrap\Grid\Component\ContentElement\GridStopElement;
+use ContaoBootstrap\Grid\Component\FormField\GridSeparatorFormField;
+use ContaoBootstrap\Grid\Component\FormField\GridStartFormField;
+use ContaoBootstrap\Grid\Component\FormField\GridStopFormField;
 use ContaoBootstrap\Grid\Model\GridModel;
 
 // Models
@@ -23,6 +26,11 @@ $GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_grid';
 $GLOBALS['TL_CTE']['bootstrap_grid']['gridStart']     = GridStartElement::class;
 $GLOBALS['TL_CTE']['bootstrap_grid']['gridStop']      = GridStopElement::class;
 $GLOBALS['TL_CTE']['bootstrap_grid']['gridSeparator'] = GridSeparatorElement::class;
+
+// Form fields
+$GLOBALS['TL_FFL']['gridStart']     = GridStartFormField::class;
+$GLOBALS['TL_FFL']['gridSeparator'] = GridSeparatorFormField::class;
+$GLOBALS['TL_FFL']['gridStop']      = GridStopFormField::class;
 
 // Wrapper elements
 $GLOBALS['TL_WRAPPERS']['start'][]     = 'gridStart';
