@@ -54,7 +54,7 @@ class ColorRotate
      * @param float        $saturation    Saturation.
      * @param float        $value         Value.
      */
-    public function __construct($rotatingColor = .89, $saturation = 0.7, $value = .7)
+    public function __construct($rotatingColor = .5, $saturation = 0.7, $value = .7)
     {
         $this->rotatingColor = $rotatingColor;
         $this->saturation    = $saturation;
@@ -86,7 +86,7 @@ class ColorRotate
     private function rotateColor()
     {
         $color = $this->convertHSVtoRGB($this->rotatingColor, $this->saturation, $this->value);
-        $this->rotatingColor += .7;
+        $this->rotatingColor += .3;
 
         if ($this->rotatingColor > 1) {
             $this->rotatingColor -= 1;
