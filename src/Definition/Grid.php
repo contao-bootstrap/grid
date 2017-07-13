@@ -164,7 +164,7 @@ class Grid
         $currentIndex = $index;
 
         if (!array_key_exists($currentIndex, $columns) && $currentIndex > 0) {
-            $currentIndex = (count($columns) % $currentIndex);
+            $currentIndex = ($currentIndex % count($columns));
         }
 
         if (array_key_exists($currentIndex, $columns)) {
