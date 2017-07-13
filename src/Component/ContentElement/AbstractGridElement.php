@@ -39,7 +39,9 @@ abstract class AbstractGridElement extends ContentElement
      * @param ContentModel $start Start element.
      * @param GridIterator $iterator Iterator.
      *
-     * @return string.
+     * @return string
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     protected function renderBackendView($start, GridIterator $iterator = null)
     {
