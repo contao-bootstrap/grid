@@ -29,8 +29,7 @@ class GridStartElement extends AbstractGridElement
      */
     public function generate()
     {
-        // TODO: Rewrite using ScopeMatcher since Contao 4.4. is released
-        if (TL_MODE === 'BE') {
+        if ($this->isBackendRequest()) {
             $iterator = $this->getIterator();
 
             return $this->renderBackendView($this->objModel, $iterator);

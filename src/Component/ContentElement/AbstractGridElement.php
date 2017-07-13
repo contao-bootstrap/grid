@@ -62,6 +62,19 @@ abstract class AbstractGridElement extends ContentElement
     }
 
     /**
+     * Check if we are in backend mode.
+     *
+     * @return bool
+     */
+    protected function isBackendRequest()
+    {
+        $scopeMatcher   = static::getContainer()->get('contao.routing.scope_matcher');
+        $currentRequest = static::getContainer()->get('request_stack')->getCurrentRequest();
+
+        return $scopeMatcher->isBackendRequest($currentRequest);
+    }
+
+    /**
      * Get the iterator.
      *
      * @return GridIterator
