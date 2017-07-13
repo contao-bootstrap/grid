@@ -2,10 +2,13 @@ services:
   contao_bootstrap.grid.dca.grid_data_container:
     class: ContaoBootstrap\Grid\Dca\GridDataContainer
     arguments:
-      - "@contao_bootstrap.config"
+      - '@contao_bootstrap.config'
 
   contao_bootstrap.grid.dca.content_data_container:
     class: ContaoBootstrap\Grid\Dca\ContentDataContainer
+    arguments:
+      - '@contao_bootstrap.config'
+      - '@database_connection'
 
   contao_bootstrap.grid.grid_builder:
     class: ContaoBootstrap\Grid\GridBuilder
@@ -13,4 +16,4 @@ services:
   contao_bootstrap.grid.grid_provider:
     class: ContaoBootstrap\Grid\GridProvider
     arguments:
-      - "@contao_bootstrap.grid.grid_builder"
+      - '@contao_bootstrap.grid.grid_builder'

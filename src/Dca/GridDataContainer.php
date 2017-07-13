@@ -14,9 +14,16 @@ use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Grid\Model\GridModel;
 
+/**
+ * Data container helper for grid.
+ *
+ * @package ContaoBootstrap\Grid\Dca
+ */
 class GridDataContainer
 {
     /**
+     * Bootstrap config.
+     *
      * @var Config
      */
     private $config;
@@ -31,6 +38,11 @@ class GridDataContainer
         $this->config = $config;
     }
 
+    /**
+     * Initialize the palette.
+     *
+     * @return void
+     */
     public function initializePalette()
     {
         if (\Input::get('act') === 'edit') {
@@ -49,6 +61,13 @@ class GridDataContainer
         }
     }
 
+    /**
+     * Generate the label.
+     *
+     * @param array $row Data row.
+     *
+     * @return string
+     */
     public function generateLabel($row)
     {
         return sprintf(
@@ -59,7 +78,7 @@ class GridDataContainer
     }
 
     /**
-     *
+     * Get all widths.
      */
     public function getWidths()
     {
@@ -70,6 +89,8 @@ class GridDataContainer
     }
 
     /**
+     * Get the order options.
+     *
      * @return array
      */
     public function getOrders()
@@ -90,6 +111,8 @@ class GridDataContainer
     }
 
     /**
+     * Get offset values.
+     *
      * @return array
      */
     public function getOffsets()
@@ -104,7 +127,9 @@ class GridDataContainer
     }
 
     /**
-     * @return mixed
+     * Get the number of defined columns.
+     *
+     * @return int
      */
     private function getColumns()
     {
