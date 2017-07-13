@@ -144,19 +144,18 @@ class ContentDataContainer
      */
     public function generateColumns($value, $dataContainer)
     {
+        if (!$dataContainer->activeRecord) {
+            return null;
+        }
+
+        $current     = $dataContainer->activeRecord;
+        $this->getStopElement($current);
+
         if ($value && $dataContainer->activeRecord) {
-            $current     = $dataContainer->activeRecord;
-            $stopElement = $this->getStopElement($current);
-
-            $nextElements = $this->getNextElements($stopElement ?: $current);
-            $sorting      = $stopElement ? $stopElement->sorting : $current->sorting;
-
-            if ($nextElements && $stopElement) {
-                $nextElements[] = $stopElement;
-            }
+            $nextElements = $this->getNextElements($current);
+            $sorting      = $current->sorting;
 
             $sorting = $this->createSeparators($value, $current, $sorting);
-            $sorting = $this->createStopElement($stopElement, $current, $sorting, $value);
 
             if ($value) {
                 $this->updateSortings($nextElements, $sorting);
@@ -173,9 +172,9 @@ class ContentDataContainer
      * @param string       $type    Type of the content model.
      * @param int          $sorting The sorting value.
      *
-     * @return int
+     * @return ContentModel
      */
-    private function createGridElement($current, $type, $sorting)
+    private function createGridElement($current, $type, &$sorting)
     {
         $model                        = new ContentModel();
         $model->tstamp                = time();
@@ -186,7 +185,7 @@ class ContentDataContainer
         $model->bootstrap_grid_parent = $current->id;
         $model->save();
 
-        return $sorting;
+        return $model;
     }
 
     /**
@@ -205,7 +204,7 @@ class ContentDataContainer
         );
 
         if ($collection) {
-            return $collection->fetchAll();
+            return $collection->getIterator()->getArrayCopy();
         }
 
         return [];
@@ -217,14 +216,10 @@ class ContentDataContainer
      * @param ContentModel[] $elements    Content model.
      * @param int            $lastSorting Last sorting value.
      *
-     * @return void
+     * @return int
      */
     private function updateSortings($elements, $lastSorting)
     {
-        if (!$elements) {
-            return;
-        }
-
         foreach ($elements as $element) {
             if ($lastSorting > $element->sorting) {
                 $element->sorting = ($lastSorting + 8);
@@ -233,6 +228,8 @@ class ContentDataContainer
 
             $lastSorting = $element->sorting;
         }
+
+        return $lastSorting;
     }
 
     /**
@@ -249,27 +246,26 @@ class ContentDataContainer
             ['gridStop', $current->id]
         );
 
-        return $stopElement;
+        if ($stopElement) {
+            return $stopElement;
+        }
+
+        return $this->createStopElement($current, $current->sorting);
     }
 
     /**
      * Create the stop element.
      *
-     * @param ContentModel $stopElement Stop element.
-     * @param ContentModel $current     Content model.
-     * @param int          $sorting     Last sorting value.
-     * @param int          $count       Count value.
+     * @param ContentModel $current Content model.
+     * @param int          $sorting Last sorting value.
      *
-     * @return int
+     * @return ContentModel
      */
-    private function createStopElement($stopElement, $current, $sorting, &$count)
+    private function createStopElement($current, $sorting)
     {
-        if (!$stopElement) {
-            $sorting = $this->createGridElement($current, 'gridStop', ($sorting + 8));
-            $count++;
-        }
+        $sorting = ($sorting + 8);
 
-        return $sorting;
+        return $this->createGridElement($current, 'gridStop', $sorting);
     }
 
     /**
@@ -284,7 +280,8 @@ class ContentDataContainer
     private function createSeparators($value, $current, $sorting)
     {
         for ($count = 1; $count <= $value; $count++) {
-            $sorting = $this->createGridElement($current, 'gridSeparator', ($sorting + 8));
+            $sorting = ($sorting + 8);
+            $this->createGridElement($current, 'gridSeparator', $sorting);
         }
 
         return $sorting;
