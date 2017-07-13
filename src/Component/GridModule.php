@@ -13,7 +13,7 @@ namespace ContaoBootstrap\Grid\Component;
 use Contao\Module;
 
 /**
- * Class GridModule
+ * Class GridModule.
  *
  * @package ContaoBootstrap\Grid\Component
  */

@@ -31,7 +31,7 @@ class GridDataContainer
     /**
      * GridDataContainer constructor.
      *
-     * @param Config $config
+     * @param Config $config Bootstrap config.
      */
     public function __construct(Config $config)
     {
@@ -79,6 +79,8 @@ class GridDataContainer
 
     /**
      * Get all widths.
+     *
+     * @return array
      */
     public function getWidths()
     {

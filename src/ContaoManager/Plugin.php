@@ -18,7 +18,7 @@ use ContaoBootstrap\Core\ContaoBootstrapCoreBundle;
 use ContaoBootstrap\Grid\ContaoBootstrapGridBundle;
 
 /**
- * Class Plugin
+ * Contao manager plugin.
  *
  * @package ContaoBootstrap\Grid\ContaoManager
  */

@@ -13,11 +13,16 @@ namespace ContaoBootstrap\Grid\Model;
 use Contao\Model;
 
 /**
- * Class GridModel
+ * Class GridModel.
  *
  * @package ContaoBootstrap\Grid\Model
  */
 class GridModel extends Model
 {
+    /**
+     * Table name.
+     *
+     * @var string
+     */
     protected static $strTable = 'tl_grid';
 }

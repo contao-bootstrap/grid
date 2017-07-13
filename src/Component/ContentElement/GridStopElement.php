@@ -10,17 +10,14 @@
 
 namespace ContaoBootstrap\Grid\Component\ContentElement;
 
-use Contao\ContentElement;
 use Contao\ContentModel;
-use ContaoBootstrap\Grid\GridProvider;
-
 
 /**
  * Class GridStopElement.
  *
  * @package ContaoBootstrap\Grid\Component\ContentElement
  */
-class GridStopElement extends ContentElement
+class GridStopElement extends AbstractGridElement
 {
     /**
      * Template name.
@@ -37,7 +34,7 @@ class GridStopElement extends ContentElement
         // TODO: Rewrite using ScopeMatcher since Contao 4.4. is released
 
         if (TL_MODE === 'BE') {
-            return '';
+            return '<hr style="background: red;">';
         }
 
         return parent::generate();
@@ -55,13 +52,5 @@ class GridStopElement extends ContentElement
                 ->getIterator('ce:' . $parent->id, $parent->bootstrap_grid)
                 ->rewind();
         }
-    }
-
-    /**
-     * @return GridProvider
-     */
-    protected function getGridProvider()
-    {
-        return static::getContainer()->get('contao_bootstrap.grid.grid_provider');
     }
 }

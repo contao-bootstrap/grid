@@ -43,6 +43,11 @@ class GridIterator implements \Iterator
         $this->grid = $grid;
     }
 
+    /**
+     * Build a row.
+     *
+     * @return string
+     */
     public function row()
     {
         return $this->grid->buildRow(true);

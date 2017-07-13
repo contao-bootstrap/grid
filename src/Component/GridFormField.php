@@ -10,7 +10,11 @@
 
 namespace ContaoBootstrap\Grid\Component;
 
-
+/**
+ * Class GridFormField.
+ *
+ * @package ContaoBootstrap\Grid\Component
+ */
 class GridFormField
 {
 

@@ -10,16 +10,14 @@
 
 namespace ContaoBootstrap\Grid\Component\ContentElement;
 
-use Contao\ContentElement;
 use Contao\ContentModel;
-use ContaoBootstrap\Grid\GridProvider;
 
 /**
  * Class GridSeparatorElement.
  *
  * @package ContaoBootstrap\Grid\Component\ContentElement
  */
-class GridSeparatorElement extends ContentElement
+class GridSeparatorElement extends AbstractGridElement
 {
     /**
      * Template name.
@@ -57,13 +55,5 @@ class GridSeparatorElement extends ContentElement
 
             $this->Template->columnClasses = $iterator->current();
         }
-    }
-
-    /**
-     * @return GridProvider
-     */
-    protected function getGridProvider()
-    {
-        return static::getContainer()->get('contao_bootstrap.grid.grid_provider');
     }
 }

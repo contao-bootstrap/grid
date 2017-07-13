@@ -18,22 +18,47 @@ namespace ContaoBootstrap\Grid\Definition;
 class Grid
 {
     /**
+     * Columns list for each size.
+     *
      * @var Column[][]
      */
     private $columns;
 
+    /**
+     * Grid alignment.
+     *
+     * @var string
+     */
     private $align;
+
+    /**
+     * Grid justify settings.
+     *
+     * @var string
+     */
     private $justify;
+
+    /**
+     * Row classes.
+     *
+     * @var array
+     */
     private $rowClasses = ['row'];
+
+    /**
+     * Show gutters.
+     *
+     * @var bool
+     */
     private $noGutters;
 
     /**
      * Add a column.
      *
-     * @param Column|null $column
-     * @param string      $size
+     * @param Column|null $column New column.
+     * @param string      $size   Column size.
      *
-     * @return string
+     * @return Column
      */
     public function addColumn(Column $column = null, $size = '')
     {
@@ -47,7 +72,9 @@ class Grid
     }
 
     /**
-     * @param bool $flat
+     * Build the row.
+     *
+     * @param bool $flat If true a string is returned.
      *
      * @return array|string
      */
@@ -75,8 +102,10 @@ class Grid
     }
 
     /**
-     * @param      $index
-     * @param bool $flat
+     * Build a column.
+     *
+     * @param int  $index Current index.
+     * @param bool $flat  If true a string is returned.
      *
      * @return array|string
      */
@@ -87,7 +116,7 @@ class Grid
             $currentIndex = $index;
 
             if (!array_key_exists($currentIndex, $columns) && $currentIndex > 0) {
-                $currentIndex = count($columns) % $currentIndex;
+                $currentIndex = (count($columns) % $currentIndex);
             }
 
             if (array_key_exists($currentIndex, $columns)) {

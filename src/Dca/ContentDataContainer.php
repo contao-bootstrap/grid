@@ -128,7 +128,7 @@ class ContentDataContainer
      */
     public function getGridColumns()
     {
-        return range (
+        return range(
             1,
             (int) $this->config->get('grid.columns', 12)
         );
@@ -144,34 +144,23 @@ class ContentDataContainer
      */
     public function generateColumns($value, $dataContainer)
     {
-        if (!$value || !$dataContainer->activeRecord) {
-            return null;
-        }
+        if ($value && $dataContainer->activeRecord) {
+            $current     = $dataContainer->activeRecord;
+            $stopElement = $this->getStopElement($current);
 
-        $current      = $dataContainer->activeRecord;
-        $stopElement  = ContentModel::findOneBy(
-            ['tl_content.type=?', 'tl_content.bootstrap_grid_parent=?'],
-            ['gridStop', $current->id]
-        );
+            $nextElements = $this->getNextElements($stopElement ?: $current);
+            $sorting      = $stopElement ? $stopElement->sorting : $current->sorting;
 
-        $nextElements = $this->getNextElements($stopElement ?: $current);
-        $sorting      = $stopElement ? $stopElement->sorting : $current->sorting;
+            if ($nextElements && $stopElement) {
+                $nextElements[] = $stopElement;
+            }
 
-        if ($nextElements && $stopElement) {
-            $nextElements[] = $stopElement;
-        }
+            $sorting = $this->createSeparators($value, $current, $sorting);
+            $sorting = $this->createStopElement($stopElement, $current, $sorting, $value);
 
-        for ($count = 1; $count <= $value; $count++) {
-            $sorting = $this->createGridElement($current, 'gridSeparator', ($sorting + 8));
-        }
-
-        if (!$stopElement) {
-            $sorting = $this->createGridElement($current, 'gridStop', ($sorting + 8));
-            $count++;
-        }
-
-        if ($count) {
-            $this->updateSortings($nextElements, $sorting);
+            if ($value) {
+                $this->updateSortings($nextElements, $sorting);
+            }
         }
 
         return null;
@@ -244,5 +233,60 @@ class ContentDataContainer
 
             $lastSorting = $element->sorting;
         }
+    }
+
+    /**
+     * Get related stop element.
+     *
+     * @param ContentModel $current Current element.
+     *
+     * @return ContentModel|null
+     */
+    private function getStopElement($current)
+    {
+        $stopElement = ContentModel::findOneBy(
+            ['tl_content.type=?', 'tl_content.bootstrap_grid_parent=?'],
+            ['gridStop', $current->id]
+        );
+
+        return $stopElement;
+    }
+
+    /**
+     * Create the stop element.
+     *
+     * @param ContentModel $stopElement Stop element.
+     * @param ContentModel $current     Content model.
+     * @param int          $sorting     Last sorting value.
+     * @param int          $count       Count value.
+     *
+     * @return int
+     */
+    private function createStopElement($stopElement, $current, $sorting, &$count)
+    {
+        if (!$stopElement) {
+            $sorting = $this->createGridElement($current, 'gridStop', ($sorting + 8));
+            $count++;
+        }
+
+        return $sorting;
+    }
+
+    /**
+     * Create separators.
+     *
+     * @param int          $value   Number of separators being created.
+     * @param ContentModel $current Content model.
+     * @param int          $sorting Current sorting value.
+     *
+     * @return int
+     */
+    private function createSeparators($value, $current, $sorting)
+    {
+        for ($count = 1; $count <= $value; $count++) {
+            $sorting = $this->createGridElement($current, 'gridSeparator', ($sorting + 8));
+        }
+
+        return $sorting;
     }
 }

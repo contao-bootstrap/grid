@@ -10,16 +10,12 @@
 
 namespace ContaoBootstrap\Grid\Component\ContentElement;
 
-use Contao\ContentElement;
-use ContaoBootstrap\Grid\GridIterator;
-use ContaoBootstrap\Grid\GridProvider;
-
 /**
  * Class GridStartElement.
  *
  * @package ContaoBootstrap\Grid\Component\ContentElement
  */
-class GridStartElement extends ContentElement
+class GridStartElement extends AbstractGridElement
 {
     /**
      * Template name.
@@ -52,13 +48,5 @@ class GridStartElement extends ContentElement
 
         $this->Template->rowClasses    = $iterator->row();
         $this->Template->columnClasses = $iterator->current();
-    }
-
-    /**
-     * @return GridProvider
-     */
-    protected function getGridProvider()
-    {
-        return static::getContainer()->get('contao_bootstrap.grid.grid_provider');
     }
 }

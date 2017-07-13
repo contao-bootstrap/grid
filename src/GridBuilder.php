@@ -57,6 +57,8 @@ class GridBuilder
      *
      * @param int $gridId THe grid id.
      *
+     * @return void
+     *
      * @throws \RuntimeException When Grid does not exist.
      */
     protected function loadModel($gridId)
