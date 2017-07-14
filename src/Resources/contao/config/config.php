@@ -14,13 +14,17 @@ use ContaoBootstrap\Grid\Component\ContentElement\GridStopElement;
 use ContaoBootstrap\Grid\Component\FormField\GridSeparatorFormField;
 use ContaoBootstrap\Grid\Component\FormField\GridStartFormField;
 use ContaoBootstrap\Grid\Component\FormField\GridStopFormField;
+use ContaoBootstrap\Grid\Component\Module\GridModule;
 use ContaoBootstrap\Grid\Model\GridModel;
 
 // Models
 $GLOBALS['TL_MODELS']['tl_bs_grid'] = GridModel::class;
 
-// Modules
+// Backend modules
 $GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_bs_grid';
+
+// Frontend modules
+$GLOBALS['FE_MOD']['miscellaneous']['bs_grid'] = GridModule::class;
 
 // Content elements
 $GLOBALS['TL_CTE']['bs_grid']['bs_gridStart']     = GridStartElement::class;

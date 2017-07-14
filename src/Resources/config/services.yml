@@ -15,6 +15,11 @@ services:
     arguments:
       - '@contao_bootstrap.config'
 
+  contao_bootstrap.grid.dca.module:
+    class: ContaoBootstrap\Grid\Dca\Module
+    arguments:
+      - '@contao_bootstrap.config'
+
   contao_bootstrap.grid.grid_builder:
     class: ContaoBootstrap\Grid\GridBuilder
 
