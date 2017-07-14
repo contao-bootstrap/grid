@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c82a4d9c306a5a8c5a79693a7ec82d4",
+    "content-hash": "d50f89edb007eef080f14103c06e7c24",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -5870,16 +5870,16 @@
         },
         {
             "name": "terminal42/header-replay-bundle",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/terminal42/header-replay-bundle.git",
-                "reference": "73b1a3aea93dbcdba76f581a441e9cf426984ad6"
+                "reference": "4c747bef12e2fad4b4529b15ddf76f92331aab72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terminal42/header-replay-bundle/zipball/73b1a3aea93dbcdba76f581a441e9cf426984ad6",
-                "reference": "73b1a3aea93dbcdba76f581a441e9cf426984ad6",
+                "url": "https://api.github.com/repos/terminal42/header-replay-bundle/zipball/4c747bef12e2fad4b4529b15ddf76f92331aab72",
+                "reference": "4c747bef12e2fad4b4529b15ddf76f92331aab72",
                 "shasum": ""
             },
             "require": {
@@ -5910,7 +5910,7 @@
                 }
             ],
             "description": "Send preflight requests for user context headers and replay them for reverse proxy support.",
-            "time": "2017-06-12T11:46:54+00:00"
+            "time": "2017-07-14T09:50:56+00:00"
         },
         {
             "name": "true/punycode",
