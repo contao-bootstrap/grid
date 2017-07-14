@@ -14,7 +14,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
         'enableVersioning' => true,
         'ptable'           => 'tl_theme',
         'onload_callback'  => [
-            ['contao_bootstrap.grid.dca.grid_data_container', 'initializePalette']
+            ['contao_bootstrap.grid.dca.grid', 'initializePalette']
         ],
         'sql'              => [
             'keys' => [
@@ -35,7 +35,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'headerFields'          => ['name', 'author', 'tstamp'],
             'panelLayout'           => 'sort,search,limit',
             'child_record_callback' => [
-                'contao_bootstrap.grid.dca.grid_data_container',
+                'contao_bootstrap.grid.dca.grid',
                 'generateLabel'
             ],
         ],
@@ -133,7 +133,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getWidths'
                         ],
                         'eval'             => [
@@ -146,7 +146,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getOffsets'
                         ],
                         'reference'        => ['null' => '0 '],
@@ -161,7 +161,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getOrders'
                         ],
                         'eval'             => [
@@ -212,7 +212,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getWidths'
                         ],
                         'eval'             => [
@@ -225,7 +225,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getOffsets'
                         ],
                         'reference'        => ['null' => '0 '],
@@ -240,7 +240,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getOrders'
                         ],
                         'eval'             => [
@@ -292,7 +292,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getWidths'
                         ],
                         'eval'             => [
@@ -305,7 +305,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getOffsets'
                         ],
                         'reference'        => ['null' => '0 '],
@@ -320,7 +320,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getOrders'
                         ],
                         'eval'             => [
@@ -372,7 +372,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getWidths'
                         ],
                         'eval'             => [
@@ -385,7 +385,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getOffsets'
                         ],
                         'reference'        => ['null' => '0 '],
@@ -400,7 +400,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getOrders'
                         ],
                         'eval'             => [
@@ -452,7 +452,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getWidths'
                         ],
                         'eval'             => [
@@ -465,7 +465,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getOffsets'
                         ],
                         'reference'        => ['null' => '0 '],
@@ -480,7 +480,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         'label'            => $GLOBALS['TL_LANG']['tl_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
-                            'contao_bootstrap.grid.dca.grid_data_container',
+                            'contao_bootstrap.grid.dca.grid',
                             'getOrders'
                         ],
                         'eval'             => [

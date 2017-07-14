@@ -50,7 +50,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid'] = [
     'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
-    'options_callback' => ['contao_bootstrap.grid.dca.content_data_container', 'getGridOptions'],
+    'options_callback' => ['contao_bootstrap.grid.dca.content', 'getGridOptions'],
     'reference'        => &$GLOBALS['TL_LANG']['tl_content'],
     'eval'             => [
         'mandatory'          => true,
@@ -76,7 +76,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_name'] = [
         'tl_class'           => 'w50'
     ],
     'save_callback' => [
-        ['contao_bootstrap.grid.dca.content_data_container', 'generateGridName']
+        ['contao_bootstrap.grid.dca.content', 'generateGridName']
     ],
     'sql'           => "varchar(64) NOT NULL default ''",
 ];
@@ -85,7 +85,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_parent'] = [
     'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
-    'options_callback' => ['contao_bootstrap.grid.dca.content_data_container', 'getGridParentOptions'],
+    'options_callback' => ['contao_bootstrap.grid.dca.content', 'getGridParentOptions'],
     'reference'        => &$GLOBALS['TL_LANG']['tl_content'],
     'eval'             => [
         'mandatory'          => true,
@@ -101,9 +101,9 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_wizard'] = [
     'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid_wizard'],
     'exclude'          => true,
     'inputType'        => 'select',
-    'options_callback' => ['contao_bootstrap.grid.dca.content_data_container', 'getGridColumns'],
+    'options_callback' => ['contao_bootstrap.grid.dca.content', 'getGridColumns'],
     'save_callback'    => [
-        ['contao_bootstrap.grid.dca.content_data_container', 'generateColumns'],
+        ['contao_bootstrap.grid.dca.content', 'generateColumns'],
     ],
     'eval'             => [
         'includeBlankOption' => true,

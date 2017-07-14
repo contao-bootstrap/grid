@@ -13,7 +13,6 @@ namespace ContaoBootstrap\Grid\Dca;
 use Contao\ContentModel;
 use Contao\DataContainer;
 use ContaoBootstrap\Core\Config;
-use ContaoBootstrap\Grid\Model\GridModel;
 use Doctrine\DBAL\Connection;
 
 /**

@@ -1,10 +1,10 @@
 services:
-  contao_bootstrap.grid.dca.grid_data_container:
+  contao_bootstrap.grid.dca.grid:
     class: ContaoBootstrap\Grid\Dca\GridDataContainer
     arguments:
       - '@contao_bootstrap.config'
 
-  contao_bootstrap.grid.dca.content_data_container:
+  contao_bootstrap.grid.dca.content:
     class: ContaoBootstrap\Grid\Dca\ContentDataContainer
     arguments:
       - '@contao_bootstrap.config'
