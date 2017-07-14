@@ -10,14 +10,12 @@
 
 namespace ContaoBootstrap\Grid\Component\FormField;
 
-use Contao\FormFieldModel;
-
 /**
  * Class GridStopFormField.
  *
  * @package ContaoBootstrap\Grid\Component\FormField
  */
-class GridStopFormField extends AbstractFormField
+class GridStopFormField extends AbstractRelatedFormField
 {
     /**
      * Template name.
@@ -25,14 +23,6 @@ class GridStopFormField extends AbstractFormField
      * @var string
      */
     protected $strTemplate = 'form_grid_stop';
-
-    /**
-     * {@inheritDoc}
-     */
-    public function generate()
-    {
-        return '';
-    }
 
     /**
      * {@inheritdoc}
@@ -49,32 +39,5 @@ class GridStopFormField extends AbstractFormField
         }
 
         return parent::parse($attributes);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getIterator()
-    {
-        $provider = $this->getGridProvider();
-        $parent   = $this->getParent();
-
-        if ($parent) {
-            try {
-                return $provider->getIterator('ffl:' . $parent->id, $parent->bs_grid);
-            } catch (\Exception $e) {
-                // Do nothing. Error is displayed in backend view.
-            }
-        }
-    }
-
-    /**
-     * Get the parent model.
-     *
-     * @return FormFieldModel|null
-     */
-    protected function getParent()
-    {
-        return FormFieldModel::findByPk($this->bs_grid_parent);
     }
 }
