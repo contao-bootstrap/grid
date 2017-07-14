@@ -8,7 +8,7 @@
  *
  */
 
-namespace ContaoBootstrap\Grid\Component;
+namespace ContaoBootstrap\Grid\Component\Module;
 
 use Contao\Module;
 

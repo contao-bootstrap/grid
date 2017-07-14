@@ -24,5 +24,5 @@ class GridModel extends Model
      *
      * @var string
      */
-    protected static $strTable = 'tl_grid';
+    protected static $strTable = 'tl_bs_grid';
 }

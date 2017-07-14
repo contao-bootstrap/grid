@@ -8,8 +8,8 @@
  *
  */
 
-$GLOBALS['TL_DCA']['tl_theme']['list']['operations']['bootstrap_grid'] = array(
-    'href'  => 'table=tl_grid',
-    'label' => &$GLOBALS['TL_LANG']['tl_theme']['bootstrap_grid'],
+$GLOBALS['TL_DCA']['tl_theme']['list']['operations']['bs_grid'] = array(
+    'href'  => 'table=tl_bs_grid',
+    'label' => &$GLOBALS['TL_LANG']['tl_theme']['bs_grid'],
     'icon'  => 'bundles/contaobootstrapgrid/img/icon.png'
 );

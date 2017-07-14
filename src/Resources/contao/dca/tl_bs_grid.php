@@ -7,7 +7,7 @@
  * @filesource
  *
  */
-$GLOBALS['TL_DCA']['tl_grid'] = [
+$GLOBALS['TL_DCA']['tl_bs_grid'] = [
     // Config
     'config'       => [
         'dataContainer'    => 'Table',
@@ -26,7 +26,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
     'list'         => [
         'label'             => [
             'fields' => ['title'],
-            'format' => '%s <span style="color:#ccc;">[%s ' . $GLOBALS['TL_LANG']['tl_grid']['formatColumns'] . ']</span>',
+            'format' => '%s <span style="color:#ccc;">[%s ' . $GLOBALS['TL_LANG']['tl_bs_grid']['formatColumns'] . ']</span>',
         ],
         'sorting'           => [
             'mode'                  => 4,
@@ -49,24 +49,24 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
         ],
         'operations'        => [
             'edit'   => [
-                'label' => &$GLOBALS['TL_LANG']['tl_grid']['edit'],
+                'label' => &$GLOBALS['TL_LANG']['tl_bs_grid']['edit'],
                 'href'  => 'act=edit',
                 'icon'  => 'edit.gif'
             ],
             'copy'   => [
-                'label'      => &$GLOBALS['TL_LANG']['tl_grid']['copy'],
+                'label'      => &$GLOBALS['TL_LANG']['tl_bs_grid']['copy'],
                 'href'       => 'act=copy',
                 'icon'       => 'copy.gif',
                 'attributes' => 'onclick="Backend.getScrollOffset()"'
             ],
             'delete' => [
-                'label'      => &$GLOBALS['TL_LANG']['tl_grid']['delete'],
+                'label'      => &$GLOBALS['TL_LANG']['tl_bs_grid']['delete'],
                 'href'       => 'act=delete',
                 'icon'       => 'delete.gif',
                 'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
             ],
             'show'   => [
-                'label' => &$GLOBALS['TL_LANG']['tl_grid']['show'],
+                'label' => &$GLOBALS['TL_LANG']['tl_bs_grid']['show'],
                 'href'  => 'act=show',
                 'icon'  => 'show.gif'
             ]
@@ -93,7 +93,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql' => "int(10) unsigned NOT NULL default '0'"
         ],
         'title'       => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['title'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['title'],
             'exclude'   => true,
             'sorting'   => true,
             'flag'      => 1,
@@ -103,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "varchar(255) NOT NULL default ''"
         ],
         'description' => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['description'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['description'],
             'exclude'   => true,
             'search'    => true,
             'inputType' => 'text',
@@ -111,11 +111,11 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "varchar(255) NOT NULL default ''"
         ],
         'sizes'       => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['sizes'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['sizes'],
             'exclude'   => true,
             'inputType' => 'checkbox',
             'options'   => ['xs', 'sm', 'md', 'lg', 'xl'],
-            'reference' => &$GLOBALS['TL_LANG']['tl_grid'],
+            'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid'],
             'eval'      => [
                 'submitOnChange' => true,
                 'multiple'       => true,
@@ -124,13 +124,13 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "tinyBlob NULL"
         ],
         'xsSize'      => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['xsSize'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['xsSize'],
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
                 'columnFields' => [
                     'width'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['width'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -143,7 +143,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'offset' => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['offset'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -158,7 +158,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'order'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['order'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -171,7 +171,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'align'  => [
-                        'label'     => $GLOBALS['TL_LANG']['tl_grid']['order'],
+                        'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
@@ -181,7 +181,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'class'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'text',
@@ -190,7 +190,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'checkbox',
@@ -203,13 +203,13 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "blob NULL"
         ],
         'smSize'      => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['smSize'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['smSize'],
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
                 'columnFields' => [
                     'width'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['width'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -222,7 +222,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'offset' => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['offset'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -237,7 +237,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'order'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['order'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -250,7 +250,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'align'  => [
-                        'label'     => $GLOBALS['TL_LANG']['tl_grid']['order'],
+                        'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
@@ -260,7 +260,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'class'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'text',
@@ -269,7 +269,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'checkbox',
@@ -282,14 +282,14 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "blob NULL"
         ],
         'mdSize'      => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['mdSize'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['mdSize'],
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
                 'includeBlankOption' => true,
                 'columnFields'       => [
                     'width'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['width'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -302,7 +302,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'offset' => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['offset'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -317,7 +317,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'order'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['order'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -330,7 +330,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'align'  => [
-                        'label'     => $GLOBALS['TL_LANG']['tl_grid']['order'],
+                        'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
@@ -340,7 +340,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'class'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'text',
@@ -349,7 +349,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'checkbox',
@@ -362,14 +362,14 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "blob NULL"
         ],
         'lgSize'      => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['lgSize'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['lgSize'],
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
                 'includeBlankOption' => true,
                 'columnFields'       => [
                     'width'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['width'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -382,7 +382,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'offset' => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['offset'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -397,7 +397,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'order'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['order'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -410,7 +410,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'align'  => [
-                        'label'     => $GLOBALS['TL_LANG']['tl_grid']['order'],
+                        'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
@@ -420,7 +420,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'class'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'text',
@@ -429,7 +429,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'checkbox',
@@ -442,14 +442,14 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "blob NULL"
         ],
         'xlSize'      => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['xlSize'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['xlSize'],
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
                 'includeBlankOption' => true,
                 'columnFields'       => [
                     'width'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['width'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -462,7 +462,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'offset' => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['offset'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -477,7 +477,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'order'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_grid']['order'],
+                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -490,7 +490,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'align'  => [
-                        'label'     => $GLOBALS['TL_LANG']['tl_grid']['order'],
+                        'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
@@ -500,7 +500,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'class'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'text',
@@ -509,7 +509,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
                         ],
                     ],
                     'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'checkbox',
@@ -522,7 +522,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => "blob NULL"
         ],
         'align'       => [
-            'label'     => $GLOBALS['TL_LANG']['tl_grid']['align'],
+            'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['align'],
             'inputType' => 'select',
             'options'   => ['start', 'center', 'end'],
             'eval'      => [
@@ -533,7 +533,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => 'varchar(64) NOT NULL default \'\''
         ],
         'justify'     => [
-            'label'     => $GLOBALS['TL_LANG']['tl_grid']['justify'],
+            'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['justify'],
             'inputType' => 'select',
             'options'   => ['start', 'center', 'end', 'around', 'between'],
             'eval'      => [
@@ -544,7 +544,7 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
             'sql'       => 'varchar(64) NOT NULL default \'\''
         ],
         'rowClass'    => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['rowClass'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['rowClass'],
             'exclude'   => true,
             'default'   => '',
             'inputType' => 'text',
@@ -555,11 +555,11 @@ $GLOBALS['TL_DCA']['tl_grid'] = [
         ],
         'noGutters'   => array
         (
-            'label'     => &$GLOBALS['TL_LANG']['tl_grid']['noGutters'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['noGutters'],
             'exclude'   => true,
             'default'   => '',
             'inputType' => 'checkbox',
-            'reference' => &$GLOBALS['TL_LANG']['tl_grid'],
+            'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid'],
             'eval'      => array(
                 'tl_class' => 'w50 m12',
             ),

@@ -17,10 +17,10 @@ use ContaoBootstrap\Grid\Component\FormField\GridStopFormField;
 use ContaoBootstrap\Grid\Model\GridModel;
 
 // Models
-$GLOBALS['TL_MODELS']['tl_grid'] = GridModel::class;
+$GLOBALS['TL_MODELS']['tl_bs_grid'] = GridModel::class;
 
 // Modules
-$GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_grid';
+$GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_bs_grid';
 
 // Content elements
 $GLOBALS['TL_CTE']['bs_grid']['bs_gridStart']     = GridStartElement::class;

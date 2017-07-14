@@ -16,3 +16,5 @@ $GLOBALS['TL_LANG']['CTE']['bs_gridSeparator'][0] = 'Grid Separator';
 $GLOBALS['TL_LANG']['CTE']['bs_gridSeparator'][1] = 'Grid Separator Element';
 $GLOBALS['TL_LANG']['CTE']['bs_gridStop'][0]      = 'Grid Stop';
 $GLOBALS['TL_LANG']['CTE']['bs_gridStop'][1]      = 'Grid Stop Element';
+
+$GLOBALS['TL_LANG']['MOD']['tl_bs_grid'] = 'Grid definitions';
