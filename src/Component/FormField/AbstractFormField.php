@@ -48,7 +48,7 @@ abstract class AbstractFormField extends Widget
         $template = new BackendTemplate('be_grid');
 
         if ($start) {
-            $colorRotate = static::getContainer()->get('contao_bootstrap.grid.helper.color_rotate');
+            $colorRotate = static::getContainer()->get('contao_bootstrap.core.helper.color_rotate');
 
             $template->name  = $start->bootstrap_grid_name;
             $template->color = $colorRotate->getColor('ce:' . $start->id);

@@ -22,6 +22,3 @@ services:
     class: ContaoBootstrap\Grid\GridProvider
     arguments:
       - '@contao_bootstrap.grid.grid_builder'
-
-  contao_bootstrap.grid.helper.color_rotate:
-    class: ContaoBootstrap\Grid\Helper\ColorRotate
