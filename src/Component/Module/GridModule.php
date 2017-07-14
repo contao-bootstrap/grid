@@ -58,29 +58,8 @@ class GridModule extends Module
     protected function compile()
     {
         $config    = \StringUtil::deserialize($this->bs_gridModules, true);
-        $moduleIds = array_filter(
-            array_map(
-                function ($item) {
-                    return $item['module'];
-                },
-                array_filter(
-                    $config,
-                    function ($item) {
-                        return $item['inactive'] == '';
-                    }
-                )
-            ),
-            'is_numeric'
-        );
-
-        $collection = ModuleModel::findMultipleByIds($moduleIds);
-        $modules    = [];
-
-        if ($collection) {
-            foreach ($collection as $model) {
-                $modules[$model->id] = static::getFrontendModule($model, $this->strColumn);
-            }
-        }
+        $moduleIds = $this->getModuleIds($config);
+        $modules   = $this->preCompileModules($moduleIds);
 
         $iterator = $this->getGridIterator();
 
@@ -91,9 +70,7 @@ class GridModule extends Module
             $this->Template->firstColumn = $iterator->current();
         }
 
-        $buffer = $this->generateModules($config, $modules, $iterator);
-
-        $this->Template->modules = $buffer;
+        $this->Template->modules = $this->generateModules($config, $modules, $iterator);
     }
 
     /**
@@ -163,5 +140,53 @@ class GridModule extends Module
         }
 
         return $buffer;
+    }
+
+    /**
+     * Get the module ids.
+     *
+     * @param array $config Config.
+     *
+     * @return array
+     */
+    protected function getModuleIds($config)
+    {
+        $moduleIds = array_filter(
+            array_map(
+                function ($item) {
+                    return $item['module'];
+                },
+                array_filter(
+                    $config,
+                    function ($item) {
+                        return $item['inactive'] == '';
+                    }
+                )
+            ),
+            'is_numeric'
+        );
+
+        return $moduleIds;
+    }
+
+    /**
+     * Precompile the modules.
+     *
+     * @param array $moduleIds List of module ids.
+     *
+     * @return array
+     */
+    protected function preCompileModules($moduleIds)
+    {
+        $collection = ModuleModel::findMultipleByIds($moduleIds);
+        $modules    = [];
+
+        if ($collection) {
+            foreach ($collection as $model) {
+                $modules[$model->id] = static::getFrontendModule($model, $this->strColumn);
+            }
+        }
+
+        return $modules;
     }
 }
