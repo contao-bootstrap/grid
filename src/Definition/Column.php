@@ -286,7 +286,7 @@ class Column
      */
     private function buildOffset(array &$classes, $sizeSuffix)
     {
-        if ($this->offset) {
+        if (strlen($this->offset)) {
             $classes[] = 'offset' . $sizeSuffix . '-' . $this->offset;
         }
     }
