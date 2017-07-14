@@ -7,6 +7,7 @@
  * @filesource
  *
  */
+
 $GLOBALS['TL_DCA']['tl_bs_grid'] = [
     // Config
     'config'       => [
@@ -120,6 +121,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                 'submitOnChange' => true,
                 'multiple'       => true,
                 'tl_class'       => 'clr',
+                'helpwizard'     => true,
             ],
             'sql'       => "tinyBlob NULL"
         ],
@@ -190,7 +192,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                     ],
                     'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'checkbox',
@@ -269,7 +271,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                     ],
                     'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'checkbox',
@@ -349,7 +351,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                     ],
                     'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'checkbox',
@@ -429,7 +431,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                     ],
                     'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'checkbox',
@@ -509,7 +511,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                     ],
                     'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'checkbox',
