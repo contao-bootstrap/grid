@@ -14,6 +14,8 @@ namespace ContaoBootstrap\Grid\Definition;
  * Class Column.
  *
  * @package ContaoBootstrap\Grid\Definition
+ *
+ * @SuppressWarnings(TooManyPublicMethods)
  */
 class Column
 {
@@ -279,8 +281,8 @@ class Column
     /**
      * Build offset setting.
      *
-     * @param array  $classes     Column classes.
-     * @param string $sizeSuffix  Size suffix.
+     * @param array  $classes    Column classes.
+     * @param string $sizeSuffix Size suffix.
      *
      * @return void
      */

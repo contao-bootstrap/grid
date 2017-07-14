@@ -73,6 +73,7 @@ class GridSeparatorElement extends AbstractGridElement
             try {
                 return $provider->getIterator('ce:' . $parent->id, $parent->bs_grid);
             } catch (\Exception $e) {
+                // Do nothing. In backend view an error is shown anyway.
             }
         }
 

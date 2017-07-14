@@ -132,7 +132,7 @@ class Grid
     /**
      * Build reset classes.
      *
-     * @param $index
+     * @param int $index Column index.
      *
      * @return array
      */
@@ -155,7 +155,7 @@ class Grid
      * Get a column by index.
      *
      * @param Column[] $columns Column.
-     * @param int       $index  Column index.
+     * @param int      $index   Column index.
      *
      * @return null|Column
      */

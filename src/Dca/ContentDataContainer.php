@@ -92,7 +92,7 @@ class ContentDataContainer extends AbstractDcaHelper
             return null;
         }
 
-        $current     = $dataContainer->activeRecord;
+        $current = $dataContainer->activeRecord;
         $this->getStopElement($current);
 
         if ($value && $dataContainer->activeRecord) {
@@ -120,12 +120,12 @@ class ContentDataContainer extends AbstractDcaHelper
      */
     private function createGridElement($current, $type, &$sorting)
     {
-        $model                        = new ContentModel();
-        $model->tstamp                = time();
-        $model->pid                   = $current->pid;
-        $model->ptable                = $current->ptable;
-        $model->sorting               = $sorting;
-        $model->type                  = $type;
+        $model                 = new ContentModel();
+        $model->tstamp         = time();
+        $model->pid            = $current->pid;
+        $model->ptable         = $current->ptable;
+        $model->sorting        = $sorting;
+        $model->type           = $type;
         $model->bs_grid_parent = $current->id;
         $model->save();
 

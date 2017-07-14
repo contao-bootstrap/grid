@@ -13,6 +13,11 @@ namespace ContaoBootstrap\Grid\Dca;
 use Contao\DataContainer;
 use Contao\FormFieldModel;
 
+/**
+ * Data container helper class for form.
+ *
+ * @package ContaoBootstrap\Grid\Dca
+ */
 class Form extends AbstractDcaHelper
 {
     /**
@@ -22,6 +27,7 @@ class Form extends AbstractDcaHelper
      * @param DataContainer $dataContainer Data container driver.
      *
      * @return null
+     * @SuppressWarnings(PHPMD.UnusedFormalParameters)
      */
     public function generateColumns($value, $dataContainer)
     {

@@ -25,6 +25,8 @@ class Module extends AbstractDcaHelper
      * @param \MultiColumnWizard $multiColumnWizard Multicolumnwizard.
      *
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function getAllModules(\MultiColumnWizard $multiColumnWizard = null)
     {
@@ -50,13 +52,11 @@ class Module extends AbstractDcaHelper
 
         if ($collection) {
             foreach ($collection as $model) {
-                $modules['module'][$model->id] = sprintf(
-                    '%s [%s]',
-                    $model->name,
-                    isset($GLOBALS['TL_LANG']['FMD'][$model->type][0])
-                        ? $GLOBALS['TL_LANG']['FMD'][$model->type][0]
-                        : $model->type
-                );
+                $label = isset($GLOBALS['TL_LANG']['FMD'][$model->type][0])
+                    ? $GLOBALS['TL_LANG']['FMD'][$model->type][0]
+                    : $model->type;
+
+                $modules['module'][$model->id] = sprintf('%s [%s]', $model->name, $label);
             }
         }
 

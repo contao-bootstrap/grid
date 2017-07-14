@@ -12,6 +12,11 @@ namespace ContaoBootstrap\Grid\Component\FormField;
 
 use Contao\FormFieldModel;
 
+/**
+ * Class GridSeparatorFormField.
+ *
+ * @package ContaoBootstrap\Grid\Component\FormField
+ */
 class GridSeparatorFormField extends AbstractFormField
 {
     /**
@@ -22,11 +27,11 @@ class GridSeparatorFormField extends AbstractFormField
     protected $strTemplate = 'form_grid_separator';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function generate()
     {
-        // TODO: Implement generate() method.
+        return '';
     }
 
     /**
@@ -55,7 +60,7 @@ class GridSeparatorFormField extends AbstractFormField
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function getIterator()
     {
@@ -65,7 +70,9 @@ class GridSeparatorFormField extends AbstractFormField
         if ($parent) {
             try {
                 return $provider->getIterator('ffl:' . $parent->id, $parent->bs_grid);
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+                // Do nothing. Error is displayed in backend view.
+            }
         }
     }
 

@@ -57,7 +57,6 @@ class GridDataContainer
             PaletteManipulator::create()
                 ->addField($sizes, 'sizes')
                 ->applyToPalette('default', 'tl_bs_grid');
-
         }
     }
 

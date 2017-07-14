@@ -62,7 +62,7 @@ class GridStartElement extends AbstractGridElement
 
             return $iterator;
         } catch (\Exception $e) {
-            return null;
+            // Do nothing. In backend view an error is shown anyway.
         }
     }
 }

@@ -25,7 +25,7 @@ class GridStartFormField extends AbstractFormField
     protected $strTemplate = 'form_grid_start';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function getIterator()
     {
@@ -40,12 +40,15 @@ class GridStartFormField extends AbstractFormField
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function generate()
     {
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function parse($attributes = null)
     {
         $iterator = $this->getIterator();

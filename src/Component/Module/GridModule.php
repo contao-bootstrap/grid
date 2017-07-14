@@ -31,7 +31,9 @@ class GridModule extends Module
     protected $strTemplate = 'mod_bs_grid';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function generate()
     {
@@ -80,7 +82,6 @@ class GridModule extends Module
             }
         }
 
-        $buffer   = [];
         $iterator = $this->getGridIterator();
 
         if ($iterator) {
@@ -90,29 +91,7 @@ class GridModule extends Module
             $this->Template->firstColumn = $iterator->current();
         }
 
-        foreach ($config as $entry) {
-            if ($entry['inactive'] || !$entry['module']) {
-                continue;
-            }
-
-            if (is_numeric($entry['module'])) {
-                if (!empty($modules[$entry['module']])) {
-                    $buffer[] = $modules[$entry['module']];
-                }
-
-                continue;
-            }
-
-            if ($iterator) {
-                $iterator->next();
-
-                $buffer[] = sprintf(
-                    '</div><div class="%s">',
-                    $iterator->current()
-                );
-            }
-
-        }
+        $buffer = $this->generateModules($config, $modules, $iterator);
 
         $this->Template->modules = $buffer;
     }
@@ -140,8 +119,49 @@ class GridModule extends Module
 
         try {
             return $provider->getIterator('ce:' . $this->id, $this->bs_grid);
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+            // Do nothing.
+        }
 
         return null;
+    }
+
+    /**
+     * Generate all modules.
+     *
+     * @param array        $config   Module config.
+     * @param array        $modules  Generated modules.
+     * @param GridIterator $iterator Grid iterator.
+     *
+     * @return array
+     */
+    protected function generateModules($config, $modules, $iterator)
+    {
+        $buffer = [];
+
+        foreach ($config as $entry) {
+            if ($entry['inactive'] || !$entry['module']) {
+                continue;
+            }
+
+            if (is_numeric($entry['module'])) {
+                if (!empty($modules[$entry['module']])) {
+                    $buffer[] = $modules[$entry['module']];
+                }
+
+                continue;
+            }
+
+            if ($iterator) {
+                $iterator->next();
+
+                $buffer[] = sprintf(
+                    '</div><div class="%s">',
+                    $iterator->current()
+                );
+            }
+        }
+
+        return $buffer;
     }
 }
