@@ -122,10 +122,18 @@ class GridBuilder
         $column = new Column();
         $column->width($definition['width']);
 
-        foreach (['offset', 'order', 'align'] as $key) {
+        foreach (['order', 'align'] as $key) {
             if ($definition[$key]) {
                 $column->{$key}($definition[$key]);
             }
+        }
+
+        if ($definition['offset']) {
+            if ($definition['offset'] === 'null') {
+                $definition['offset'] = 0;
+            }
+
+            $column->offset($definition['offset']);
         }
 
         if ($definition['reset']) {
