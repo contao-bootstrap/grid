@@ -12,20 +12,20 @@
  * Palettes
  */
 
-$GLOBALS['TL_DCA']['tl_content']['metapalettes']['gridStart'] = [
-    'type'      => [
+$GLOBALS['TL_DCA']['tl_content']['metapalettes']['bs_gridStart'] = [
+    'type'           => [
         'type',
         'bs_grid',
         'bs_grid_name',
     ],
-    'wizard'    => ['bs_grid_generateColumns',],
-    'template'  => [':hide', 'customTpl'],
-    'protected' => [':hide', 'protected'],
-    'expert'    => [':hide', 'guests', 'cssID'],
-    'invisible' => ['invisible', 'start', 'stop'],
+    'bs_grid_wizard' => ['bs_grid_wizard'],
+    'template'       => [':hide', 'customTpl'],
+    'protected'      => [':hide', 'protected'],
+    'expert'         => [':hide', 'guests', 'cssID'],
+    'invisible'      => ['invisible', 'start', 'stop'],
 ];
 
-$GLOBALS['TL_DCA']['tl_content']['metapalettes']['gridSeparator'] = [
+$GLOBALS['TL_DCA']['tl_content']['metapalettes']['bs_gridSeparator'] = [
     'type'      => ['type', 'name', 'bs_grid_parent'],
     'template'  => [':hide', 'customTpl'],
     'protected' => [':hide', 'protected'],
@@ -33,7 +33,7 @@ $GLOBALS['TL_DCA']['tl_content']['metapalettes']['gridSeparator'] = [
     'invisible' => ['invisible', 'start', 'stop'],
 ];
 
-$GLOBALS['TL_DCA']['tl_content']['metapalettes']['gridStop'] = [
+$GLOBALS['TL_DCA']['tl_content']['metapalettes']['bs_gridStop'] = [
     'type'      => ['type', 'name', 'bs_grid_parent'],
     'template'  => [':hide', 'customTpl'],
     'protected' => [':hide', 'protected'],
@@ -97,8 +97,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_parent'] = [
     'sql'              => "int(10) unsigned NOT NULL default '0'"
 ];
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_generateColumns'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid'],
+$GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_wizard'] = [
+    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid_wizard'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.dca.content_data_container', 'getGridColumns'],

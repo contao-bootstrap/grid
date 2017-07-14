@@ -23,16 +23,16 @@ $GLOBALS['TL_MODELS']['tl_grid'] = GridModel::class;
 $GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_grid';
 
 // Content elements
-$GLOBALS['TL_CTE']['bs_']['gridStart']     = GridStartElement::class;
-$GLOBALS['TL_CTE']['bs_']['gridStop']      = GridStopElement::class;
-$GLOBALS['TL_CTE']['bs_']['gridSeparator'] = GridSeparatorElement::class;
+$GLOBALS['TL_CTE']['bs_grid']['bs_gridStart']     = GridStartElement::class;
+$GLOBALS['TL_CTE']['bs_grid']['bs_gridStop']      = GridStopElement::class;
+$GLOBALS['TL_CTE']['bs_grid']['bs_gridSeparator'] = GridSeparatorElement::class;
 
 // Form fields
-$GLOBALS['TL_FFL']['gridStart']     = GridStartFormField::class;
-$GLOBALS['TL_FFL']['gridSeparator'] = GridSeparatorFormField::class;
-$GLOBALS['TL_FFL']['gridStop']      = GridStopFormField::class;
+$GLOBALS['TL_FFL']['bs_gridStart']     = GridStartFormField::class;
+$GLOBALS['TL_FFL']['bs_gridSeparator'] = GridSeparatorFormField::class;
+$GLOBALS['TL_FFL']['bs_gridStop']      = GridStopFormField::class;
 
 // Wrapper elements
-$GLOBALS['TL_WRAPPERS']['start'][]     = 'gridStart';
-$GLOBALS['TL_WRAPPERS']['separator'][] = 'gridSeparator';
-$GLOBALS['TL_WRAPPERS']['stop'][]      = 'gridStop';
+$GLOBALS['TL_WRAPPERS']['start'][]     = 'bs_gridStart';
+$GLOBALS['TL_WRAPPERS']['separator'][] = 'bs_gridSeparator';
+$GLOBALS['TL_WRAPPERS']['stop'][]      = 'bs_gridStop';

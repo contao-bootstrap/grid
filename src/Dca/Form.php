@@ -38,7 +38,7 @@ class Form extends AbstractDcaHelper
     public function getGridParentOptions(DataContainer $dataContainer = null)
     {
         $columns[] = 'tl_form_field.type = ?';
-        $values[]  = 'gridStart';
+        $values[]  = 'bs_gridStart';
 
         if ($dataContainer) {
             $columns[] = 'tl_form_field.pid = ?';

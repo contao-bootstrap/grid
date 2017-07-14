@@ -53,7 +53,7 @@ class ContentDataContainer extends AbstractDcaHelper
     public function getGridParentOptions(DataContainer $dataContainer = null)
     {
         $columns[] = 'tl_content.type = ?';
-        $values[]  = 'gridStart';
+        $values[]  = 'bs_gridStart';
 
         if ($dataContainer) {
             $columns[] = 'tl_content.pid = ?';
@@ -188,7 +188,7 @@ class ContentDataContainer extends AbstractDcaHelper
     {
         $stopElement = ContentModel::findOneBy(
             ['tl_content.type=?', 'tl_content.bs_grid_parent=?'],
-            ['gridStop', $current->id]
+            ['bs_gridStop', $current->id]
         );
 
         if ($stopElement) {
@@ -210,7 +210,7 @@ class ContentDataContainer extends AbstractDcaHelper
     {
         $sorting = ($sorting + 8);
 
-        return $this->createGridElement($current, 'gridStop', $sorting);
+        return $this->createGridElement($current, 'bs_gridStop', $sorting);
     }
 
     /**
@@ -226,7 +226,7 @@ class ContentDataContainer extends AbstractDcaHelper
     {
         for ($count = 1; $count <= $value; $count++) {
             $sorting = ($sorting + 8);
-            $this->createGridElement($current, 'gridSeparator', $sorting);
+            $this->createGridElement($current, 'bs_gridSeparator', $sorting);
         }
 
         return $sorting;

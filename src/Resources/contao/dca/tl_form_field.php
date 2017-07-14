@@ -12,7 +12,7 @@
  * Palettes
  */
 
-$GLOBALS['TL_DCA']['tl_form_field']['metapalettes']['gridStart'] = [
+$GLOBALS['TL_DCA']['tl_form_field']['metapalettes']['bs_gridStart'] = [
     'type'           => [
         'type',
         'bs_grid',
@@ -23,13 +23,13 @@ $GLOBALS['TL_DCA']['tl_form_field']['metapalettes']['gridStart'] = [
     'protected'      => [':hide', 'protected'],
 ];
 
-$GLOBALS['TL_DCA']['tl_form_field']['metapalettes']['gridSeparator'] = [
+$GLOBALS['TL_DCA']['tl_form_field']['metapalettes']['bs_gridSeparator'] = [
     'type'      => ['type', 'bs_grid_parent'],
     'template'  => [':hide', 'customTpl'],
     'protected' => [':hide', 'protected'],
 ];
 
-$GLOBALS['TL_DCA']['tl_form_field']['metapalettes']['gridStop'] = [
+$GLOBALS['TL_DCA']['tl_form_field']['metapalettes']['bs_gridStop'] = [
     'type'      => ['type', 'bs_grid_parent'],
     'template'  => [':hide', 'customTpl'],
     'protected' => [':hide', 'protected'],

@@ -40,7 +40,7 @@ class GridStopFormField extends AbstractFormField
         }
 
         if ($this->isBackendRequest()) {
-            return 'ads';
+            return $this->renderBackendView($this->getParent());
         }
 
         return parent::parse($attributes);
