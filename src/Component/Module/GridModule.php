@@ -133,7 +133,7 @@ class GridModule extends Module
                 $iterator->next();
 
                 $buffer[] = sprintf(
-                    '</div><div class="%s">',
+                    "\n" . '</div>' . "\n" . '<div class="%s">',
                     $iterator->current()
                 );
             }

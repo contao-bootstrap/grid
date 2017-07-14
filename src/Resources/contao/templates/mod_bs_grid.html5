@@ -3,7 +3,8 @@
 <div class="<?= $this->rowClasses ?>">
 <div class="<?= $this->firstColumn ?>">
 <?php foreach ($this->modules as $module): ?>
-    <?= $module; ?>
+<?= $module; ?>
 <?php endforeach; ?>
+
 </div>
 <?php $this->endblock(); ?>
