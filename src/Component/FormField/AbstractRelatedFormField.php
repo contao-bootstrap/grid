@@ -10,6 +10,8 @@
 
 namespace ContaoBootstrap\Grid\Component\FormField;
 
+use Contao\FormFieldModel;
+
 /**
  * Class AbstractRelatedFormField.
  *
