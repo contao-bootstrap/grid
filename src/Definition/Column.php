@@ -193,7 +193,7 @@ class Column
         $this->buildAlign($classes);
         $this->buildJustify($classes);
         $this->buildOrder($classes, $size);
-        $this->buildOffset($classes, $sizeSuffix, $widthSuffix);
+        $this->buildOffset($classes, $sizeSuffix);
 
         if ($this->cssClasses) {
             $classes = array_merge($classes, $this->cssClasses);
@@ -281,14 +281,13 @@ class Column
      *
      * @param array  $classes     Column classes.
      * @param string $sizeSuffix  Size suffix.
-     * @param string $widthSuffix Width suffix.
      *
      * @return void
      */
-    private function buildOffset(array &$classes, $sizeSuffix, $widthSuffix)
+    private function buildOffset(array &$classes, $sizeSuffix)
     {
         if ($this->offset) {
-            $classes[] = 'offset' . $sizeSuffix . $widthSuffix;
+            $classes[] = 'offset' . $sizeSuffix . '-' . $this->offset;
         }
     }
 }
