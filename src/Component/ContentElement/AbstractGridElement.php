@@ -45,7 +45,7 @@ abstract class AbstractGridElement extends ContentElement
      */
     protected function renderBackendView($start, GridIterator $iterator = null)
     {
-        $template = new BackendTemplate('be_grid');
+        $template = new BackendTemplate('be_bs_grid');
 
         if ($start) {
             $colorRotate = static::getContainer()->get('contao_bootstrap.core.helper.color_rotate');
