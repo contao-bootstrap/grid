@@ -64,7 +64,7 @@ class GridSeparatorFormField extends AbstractFormField
 
         if ($parent) {
             try {
-                return $provider->getIterator('ffl:' . $parent->id, $parent->bootstrap_grid);
+                return $provider->getIterator('ffl:' . $parent->id, $parent->bs_grid);
             } catch (\Exception $e) {}
         }
     }
@@ -76,6 +76,6 @@ class GridSeparatorFormField extends AbstractFormField
      */
     protected function getParent()
     {
-        return FormFieldModel::findByPk($this->bootstrap_grid_parent);
+        return FormFieldModel::findByPk($this->bs_grid_parent);
     }
 }

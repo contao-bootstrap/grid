@@ -58,7 +58,7 @@ class GridStartElement extends AbstractGridElement
     {
         try {
             $provider = $this->getGridProvider();
-            $iterator = $provider->getIterator('ce:' . $this->id, $this->bootstrap_grid);
+            $iterator = $provider->getIterator('ce:' . $this->id, $this->bs_grid);
 
             return $iterator;
         } catch (\Exception $e) {

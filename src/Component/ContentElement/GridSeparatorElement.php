@@ -36,9 +36,9 @@ class GridSeparatorElement extends AbstractGridElement
 
             if ($iterator) {
                 $iterator->next();
-
-                return $this->renderBackendView($this->getParent(), $iterator);
             }
+
+            return $this->renderBackendView($this->getParent(), $iterator);
         }
 
         return parent::generate();
@@ -71,8 +71,9 @@ class GridSeparatorElement extends AbstractGridElement
 
         if ($parent) {
             try {
-                return $provider->getIterator('ce:' . $parent->id, $parent->bootstrap_grid);
-            } catch (\Exception $e) {}
+                return $provider->getIterator('ce:' . $parent->id, $parent->bs_grid);
+            } catch (\Exception $e) {
+            }
         }
 
         return null;
@@ -85,6 +86,6 @@ class GridSeparatorElement extends AbstractGridElement
      */
     protected function getParent()
     {
-        return ContentModel::findByPk($this->bootstrap_grid_parent);
+        return ContentModel::findByPk($this->bs_grid_parent);
     }
 }

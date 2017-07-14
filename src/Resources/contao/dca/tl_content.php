@@ -15,10 +15,10 @@
 $GLOBALS['TL_DCA']['tl_content']['metapalettes']['gridStart'] = [
     'type'      => [
         'type',
-        'bootstrap_grid',
-        'bootstrap_grid_name',
+        'bs_grid',
+        'bs_grid_name',
     ],
-    'wizard'    => ['bootstrap_grid_generateColumns',],
+    'wizard'    => ['bs_grid_generateColumns',],
     'template'  => [':hide', 'customTpl'],
     'protected' => [':hide', 'protected'],
     'expert'    => [':hide', 'guests', 'cssID'],
@@ -26,7 +26,7 @@ $GLOBALS['TL_DCA']['tl_content']['metapalettes']['gridStart'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['metapalettes']['gridSeparator'] = [
-    'type'      => ['type', 'name', 'bootstrap_grid_parent'],
+    'type'      => ['type', 'name', 'bs_grid_parent'],
     'template'  => [':hide', 'customTpl'],
     'protected' => [':hide', 'protected'],
     'expert'    => [':hide', 'guests', 'cssID'],
@@ -34,7 +34,7 @@ $GLOBALS['TL_DCA']['tl_content']['metapalettes']['gridSeparator'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['metapalettes']['gridStop'] = [
-    'type'      => ['type', 'name', 'bootstrap_grid_parent'],
+    'type'      => ['type', 'name', 'bs_grid_parent'],
     'template'  => [':hide', 'customTpl'],
     'protected' => [':hide', 'protected'],
     'expert'    => [':hide', 'guests', 'cssID'],
@@ -46,8 +46,8 @@ $GLOBALS['TL_DCA']['tl_content']['metapalettes']['gridStop'] = [
  * Fields
  */
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_grid'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_grid'],
+$GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid'] = [
+    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.dca.content_data_container', 'getGridOptions'],
@@ -64,8 +64,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_grid'] = [
     'foreignKey'       => 'tl_grid.title'
 ];
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_grid_name'] = [
-    'label'         => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_grid_name'],
+$GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_name'] = [
+    'label'         => &$GLOBALS['TL_LANG']['tl_content']['bs_grid_name'],
     'exclude'       => true,
     'inputType'     => 'text',
     'reference'     => &$GLOBALS['TL_LANG']['tl_content'],
@@ -81,8 +81,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_grid_name'] = [
     'sql'           => "varchar(64) NOT NULL default ''",
 ];
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_grid_parent'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_grid'],
+$GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_parent'] = [
+    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.dca.content_data_container', 'getGridParentOptions'],
@@ -97,8 +97,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_grid_parent'] = [
     'sql'              => "int(10) unsigned NOT NULL default '0'"
 ];
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_grid_generateColumns'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_grid'],
+$GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_generateColumns'] = [
+    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.dca.content_data_container', 'getGridColumns'],

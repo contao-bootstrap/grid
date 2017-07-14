@@ -32,7 +32,7 @@ class GridStopElement extends AbstractGridElement
     public function generate()
     {
         if ($this->isBackendRequest()) {
-            return '';
+            return $this->renderBackendView($this->getParent());
         }
 
         return parent::generate();
@@ -51,16 +51,26 @@ class GridStopElement extends AbstractGridElement
     }
 
     /**
+     * Get the parent model.
+     *
+     * @return ContentModel|null
+     */
+    protected function getParent()
+    {
+        return ContentModel::findByPk($this->bs_grid_parent);
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected function getIterator()
     {
         $provider = $this->getGridProvider();
-        $parent   = ContentModel::findByPk($this->bootstrap_grid_parent);
+        $parent   = $this->getParent();
 
         if ($parent) {
             try {
-                return $provider->getIterator('ce:' . $parent->id, $parent->bootstrap_grid);
+                return $provider->getIterator('ce:' . $parent->id, $parent->bs_grid);
             } catch (\Exception $e) {}
         }
 

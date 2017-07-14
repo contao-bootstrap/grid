@@ -1,8 +1,10 @@
 <?php if ($this->error): ?>
-<span class="tl_error"><?= $this->error ?></span>
+<span class="tl_gerror"><?= $this->error ?></span>
 <?php else: ?>
 <span class="tl_gray">
     <span<?php if ($this->color): ?> style="color: <?= $this->color; ?>"<?php endif; ?>><?= $this->name ?></span>
+    <?php if ($this->classes): ?>
     [<?= $this->classes ?>]
+    <?php endif; ?>
 </span>
 <?php endif; ?>

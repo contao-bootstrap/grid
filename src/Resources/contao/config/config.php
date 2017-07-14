@@ -23,9 +23,9 @@ $GLOBALS['TL_MODELS']['tl_grid'] = GridModel::class;
 $GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_grid';
 
 // Content elements
-$GLOBALS['TL_CTE']['bootstrap_grid']['gridStart']     = GridStartElement::class;
-$GLOBALS['TL_CTE']['bootstrap_grid']['gridStop']      = GridStopElement::class;
-$GLOBALS['TL_CTE']['bootstrap_grid']['gridSeparator'] = GridSeparatorElement::class;
+$GLOBALS['TL_CTE']['bs_']['gridStart']     = GridStartElement::class;
+$GLOBALS['TL_CTE']['bs_']['gridStop']      = GridStopElement::class;
+$GLOBALS['TL_CTE']['bs_']['gridSeparator'] = GridSeparatorElement::class;
 
 // Form fields
 $GLOBALS['TL_FFL']['gridStart']     = GridStartFormField::class;

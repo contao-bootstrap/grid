@@ -70,8 +70,8 @@ class ContentDataContainer extends AbstractDcaHelper
             foreach ($collection as $model) {
                 $options[$model->id] = sprintf(
                     '%s [%s]',
-                    $model->bootstrap_grid_name,
-                    $model->getRelated('bootstrap_grid')->title
+                    $model->bs_grid_name,
+                    $model->getRelated('bs_grid')->title
                 );
             }
         }
@@ -127,7 +127,7 @@ class ContentDataContainer extends AbstractDcaHelper
         $model->ptable                = $current->ptable;
         $model->sorting               = $sorting;
         $model->type                  = $type;
-        $model->bootstrap_grid_parent = $current->id;
+        $model->bs_grid_parent = $current->id;
         $model->save();
 
         return $model;
@@ -187,7 +187,7 @@ class ContentDataContainer extends AbstractDcaHelper
     private function getStopElement($current)
     {
         $stopElement = ContentModel::findOneBy(
-            ['tl_content.type=?', 'tl_content.bootstrap_grid_parent=?'],
+            ['tl_content.type=?', 'tl_content.bs_grid_parent=?'],
             ['gridStop', $current->id]
         );
 

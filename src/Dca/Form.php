@@ -53,7 +53,7 @@ class Form extends AbstractDcaHelper
                 $options[$model->id] = sprintf(
                     '%s [%s]',
                     $model->name,
-                    $model->getRelated('bootstrap_grid')->title
+                    $model->getRelated('bs_grid')->title
                 );
             }
         }

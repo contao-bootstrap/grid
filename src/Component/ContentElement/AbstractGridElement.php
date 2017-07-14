@@ -50,14 +50,16 @@ abstract class AbstractGridElement extends ContentElement
         if ($start) {
             $colorRotate = static::getContainer()->get('contao_bootstrap.core.helper.color_rotate');
 
-            $template->name  = $start->bootstrap_grid_name;
+            $template->name  = $start->bs_grid_name;
             $template->color = $colorRotate->getColor('ce:' . $start->id);
         }
 
-        if ($iterator && $start) {
+        if (!$start) {
+            $template->error = $GLOBALS['TL_LANG']['ERR']['bsGridParentMissing'];
+        }
+
+        if ($iterator) {
             $template->classes = $iterator->current();
-        } else {
-            $template->error   = $GLOBALS['TL_LANG']['ERR']['bootstrapGridMissing'];
         }
 
         return $template->parse();
