@@ -63,7 +63,13 @@ abstract class AbstractDcaHelper
 
         if ($collection) {
             foreach ($collection as $model) {
-                $options[$model->id] = sprintf('%s [%s]', $model->title, $model->getRelated('pid')->name);
+                $parent = sprintf(
+                    '%s [ID %s]',
+                    $model->getRelated('pid')->name,
+                    $model->pid
+                );
+
+                $options[$parent][$model->id] = sprintf('%s [ID %s]', $model->title, $model->id);
             }
         }
 
