@@ -2,4 +2,4 @@
     <?php foreach ($this->resets as $reset): ?>
     <div class="clearfix <?= $reset ?>"></div>
     <?php endforeach; ?>
-    <div class="<?= $this->columnClasses ?>">
+    <div <?= $this->cssID; ?> class="<?= $this->class ?> <?= $this->columnClasses ?>">

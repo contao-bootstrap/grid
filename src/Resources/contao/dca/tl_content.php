@@ -37,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_content']['metapalettes']['bs_gridStop'] = [
     'type'      => ['type', 'name', 'bs_grid_parent'],
     'template'  => [':hide', 'customTpl'],
     'protected' => [':hide', 'protected'],
-    'expert'    => [':hide', 'guests', 'cssID'],
+    'expert'    => [':hide', 'guests'],
     'invisible' => ['invisible', 'start', 'stop'],
 ];
 
