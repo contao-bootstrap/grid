@@ -93,17 +93,16 @@ class Content extends AbstractDcaHelper
         }
 
         $current = $dataContainer->activeRecord;
-        $this->getStopElement($current);
 
         if ($value && $dataContainer->activeRecord) {
             $nextElements = $this->getNextElements($current);
-            $sorting      = $current->sorting;
+            $stopElement  = $this->getStopElement($current);
+            $sorting      = $stopElement->sorting;
 
             $sorting = $this->createSeparators($value, $current, $sorting);
 
-            if ($value) {
-                $this->updateSortings($nextElements, $sorting);
-            }
+            array_unshift($nextElements, $stopElement);
+            $this->updateSortings($nextElements, $sorting);
         }
 
         return null;
@@ -142,8 +141,13 @@ class Content extends AbstractDcaHelper
     private function getNextElements($current)
     {
         $collection = ContentModel::findBy(
-            ['tl_content.ptable=?', 'tl_content.pid=?', 'sorting > ?'],
-            [$current->ptable, $current->pid, $current->sorting],
+            [
+                'tl_content.ptable=?',
+                'tl_content.pid=?',
+                '(tl_content.type != ? AND tl_content.bs_grid_parent = ?)',
+                'tl_content.sorting > ?'
+            ],
+            [$current->ptable, $current->pid, 'bs_gridStop', $current->id, $current->sorting],
             ['order' => 'tl_content.sorting ASC']
         );
 
