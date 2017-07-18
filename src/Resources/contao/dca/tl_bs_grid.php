@@ -146,7 +146,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                     ],
                     'offset' => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
+                        'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -161,7 +161,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                     ],
                     'order'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
+                        'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.dca.grid',
@@ -174,7 +174,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                     ],
                     'align'  => [
-                        'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
@@ -253,7 +253,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                     ],
                     'align'  => [
-                        'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
@@ -333,7 +333,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                     ],
                     'align'  => [
-                        'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
@@ -413,7 +413,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                     ],
                     'align'  => [
-                        'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
@@ -493,7 +493,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                     ],
                     'align'  => [
-                        'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
@@ -525,7 +525,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => "blob NULL"
         ],
         'align'       => [
-            'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['align'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
             'inputType' => 'select',
             'options'   => ['start', 'center', 'end'],
             'eval'      => [
@@ -536,7 +536,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => 'varchar(64) NOT NULL default \'\''
         ],
         'justify'     => [
-            'label'     => $GLOBALS['TL_LANG']['tl_bs_grid']['justify'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['justify'],
             'inputType' => 'select',
             'options'   => ['start', 'center', 'end', 'around', 'between'],
             'eval'      => [
