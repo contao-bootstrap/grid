@@ -11,7 +11,8 @@
 namespace ContaoBootstrap\Grid\Dca;
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
-use ContaoBootstrap\Core\Config;
+use ContaoBootstrap\Core\Environment;
+use ContaoBootstrap\Core\Environment\ThemeContext;
 use ContaoBootstrap\Grid\Model\GridModel;
 
 /**
@@ -19,23 +20,39 @@ use ContaoBootstrap\Grid\Model\GridModel;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class GridDataContainer
+class Grid
 {
     /**
-     * Bootstrap config.
+     * Bootstrap environment.
      *
-     * @var Config
+     * @var Environment
      */
-    private $config;
+    private $environment;
 
     /**
-     * GridDataContainer constructor.
+     * Constructor.
      *
-     * @param Config $config Bootstrap config.
+     * @param Environment $environment Bootstrap environment.
      */
-    public function __construct(Config $config)
+    public function __construct(Environment $environment)
     {
-        $this->config = $config;
+        $this->environment = $environment;
+    }
+
+    /**
+     * Enter a bootstrap environment context.
+     *
+     * @return void
+     */
+    public function enterContext()
+    {
+        if (\Input::get('act') === 'edit') {
+            $model = GridModel::findByPk(\Input::get('id'));
+
+            if ($model) {
+                $this->environment->enterContext(ThemeContext::forTheme($model->pid));
+            }
+        }
     }
 
     /**
@@ -134,6 +151,6 @@ class GridDataContainer
      */
     private function getColumns()
     {
-        return $this->config->get('grid.columns', 12);
+        return $this->environment->getConfig()->get('grid.columns', 12);
     }
 }

@@ -1,13 +1,14 @@
 services:
   contao_bootstrap.grid.dca.grid:
-    class: ContaoBootstrap\Grid\Dca\GridDataContainer
+    class: ContaoBootstrap\Grid\Dca\Grid
+
     arguments:
-      - '@contao_bootstrap.config'
+      - '@contao_bootstrap.environment'
 
   contao_bootstrap.grid.dca.content:
-    class: ContaoBootstrap\Grid\Dca\ContentDataContainer
+    class: ContaoBootstrap\Grid\Dca\Content
     arguments:
-      - '@contao_bootstrap.config'
+      - '@contao_bootstrap.environment'
       - '@database_connection'
 
   contao_bootstrap.grid.dca.form:

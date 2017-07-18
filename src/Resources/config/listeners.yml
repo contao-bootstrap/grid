@@ -1,0 +1,5 @@
+services:
+  contao_bootstrap.grid.listeners.build_context_config:
+    class: ContaoBootstrap\Grid\Message\Subscriber\BuildContextConfigListener
+    tags:
+      - { name: kernel.event_listener, event: contao_bootstrap.core.build_context_config, method: buildThemeConfig }

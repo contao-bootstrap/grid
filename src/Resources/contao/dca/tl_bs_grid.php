@@ -15,6 +15,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
         'enableVersioning' => true,
         'ptable'           => 'tl_theme',
         'onload_callback'  => [
+            ['contao_bootstrap.grid.dca.grid', 'enterContext'],
             ['contao_bootstrap.grid.dca.grid', 'initializePalette']
         ],
         'sql'              => [

@@ -12,7 +12,7 @@ namespace ContaoBootstrap\Grid\Dca;
 
 use Contao\ContentModel;
 use Contao\DataContainer;
-use ContaoBootstrap\Core\Config;
+use ContaoBootstrap\Core\Environment;
 use Doctrine\DBAL\Connection;
 
 /**
@@ -20,7 +20,7 @@ use Doctrine\DBAL\Connection;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class ContentDataContainer extends AbstractDcaHelper
+class Content extends AbstractDcaHelper
 {
     /**
      * Database connection.
@@ -32,12 +32,12 @@ class ContentDataContainer extends AbstractDcaHelper
     /**
      * ContentDataContainer constructor.
      *
-     * @param Config     $config     Bootstrap config.
-     * @param Connection $connection Database connection.
+     * @param Environment $environment Bootstrap environment.
+     * @param Connection  $connection  Database connection.
      */
-    public function __construct(Config $config, Connection $connection)
+    public function __construct(Environment $environment, Connection $connection)
     {
-        parent::__construct($config);
+        parent::__construct($environment);
 
         $this->connection = $connection;
     }

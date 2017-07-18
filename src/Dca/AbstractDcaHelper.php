@@ -11,7 +11,7 @@
 namespace ContaoBootstrap\Grid\Dca;
 
 use Contao\DataContainer;
-use ContaoBootstrap\Core\Config;
+use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Grid\Model\GridModel;
 
 /**
@@ -22,20 +22,20 @@ use ContaoBootstrap\Grid\Model\GridModel;
 abstract class AbstractDcaHelper
 {
     /**
-     * Bootstrap config.
+     * Bootstrap environment.
      *
-     * @var Config
+     * @var Environment
      */
-    private $config;
+    private $environment;
 
     /**
      * Form constructor.
      *
-     * @param Config $config Bootstrap config.
+     * @param Environment $environment Bootstrap environment.
      */
-    public function __construct(Config $config)
+    public function __construct(Environment $environment)
     {
-        $this->config = $config;
+        $this->environment = $environment;
     }
 
     /**
@@ -47,7 +47,7 @@ abstract class AbstractDcaHelper
     {
         return range(
             1,
-            (int) $this->config->get('grid.columns', 12)
+            (int) $this->environment->getConfig()->get('grid.columns', 12)
         );
     }
 
