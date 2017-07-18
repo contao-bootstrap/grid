@@ -12,6 +12,7 @@ namespace ContaoBootstrap\Grid\Dca;
 
 use Contao\ContentModel;
 use Contao\DataContainer;
+use Contao\Model;
 use ContaoBootstrap\Core\Environment;
 use Doctrine\DBAL\Connection;
 
@@ -20,7 +21,7 @@ use Doctrine\DBAL\Connection;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class Content extends AbstractDcaHelper
+class Content extends AbstractWrapperDcaHelper
 {
     /**
      * Database connection.
@@ -79,36 +80,6 @@ class Content extends AbstractDcaHelper
     }
 
     /**
-     * Generate the columns.
-     *
-     * @param int           $value         Number of columns which should be generated.
-     * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return null
-     */
-    public function generateColumns($value, $dataContainer)
-    {
-        if (!$dataContainer->activeRecord) {
-            return null;
-        }
-
-        $current = $dataContainer->activeRecord;
-
-        if ($value && $dataContainer->activeRecord) {
-            $nextElements = $this->getNextElements($current);
-            $stopElement  = $this->getStopElement($current);
-            $sorting      = $stopElement->sorting;
-
-            $sorting = $this->createSeparators($value, $current, $sorting);
-
-            array_unshift($nextElements, $stopElement);
-            $this->updateSortings($nextElements, $sorting);
-        }
-
-        return null;
-    }
-
-    /**
      * Create a grid element.
      *
      * @param ContentModel $current Current content model.
@@ -117,7 +88,7 @@ class Content extends AbstractDcaHelper
      *
      * @return ContentModel
      */
-    private function createGridElement($current, $type, &$sorting)
+    protected function createGridElement($current, $type, &$sorting)
     {
         $model                 = new ContentModel();
         $model->tstamp         = time();
@@ -138,13 +109,13 @@ class Content extends AbstractDcaHelper
      *
      * @return ContentModel[]
      */
-    private function getNextElements($current)
+    protected function getNextElements($current)
     {
         $collection = ContentModel::findBy(
             [
                 'tl_content.ptable=?',
                 'tl_content.pid=?',
-                '(tl_content.type != ? AND tl_content.bs_grid_parent = ?)',
+                '(tl_content.type != ? AND tl_content.bs_grid_parent != ?)',
                 'tl_content.sorting > ?'
             ],
             [$current->ptable, $current->pid, 'bs_gridStop', $current->id, $current->sorting],
@@ -159,35 +130,13 @@ class Content extends AbstractDcaHelper
     }
 
     /**
-     * Update the sorting of given elements.
-     *
-     * @param ContentModel[] $elements    Content model.
-     * @param int            $lastSorting Last sorting value.
-     *
-     * @return int
-     */
-    private function updateSortings($elements, $lastSorting)
-    {
-        foreach ($elements as $element) {
-            if ($lastSorting > $element->sorting) {
-                $element->sorting = ($lastSorting + 8);
-                $element->save();
-            }
-
-            $lastSorting = $element->sorting;
-        }
-
-        return $lastSorting;
-    }
-
-    /**
      * Get related stop element.
      *
      * @param ContentModel $current Current element.
      *
-     * @return ContentModel|null
+     * @return ContentModel|Model
      */
-    private function getStopElement($current)
+    protected function getStopElement($current)
     {
         $stopElement = ContentModel::findOneBy(
             ['tl_content.type=?', 'tl_content.bs_grid_parent=?'],
@@ -198,40 +147,10 @@ class Content extends AbstractDcaHelper
             return $stopElement;
         }
 
-        return $this->createStopElement($current, $current->sorting);
-    }
+        $nextElements = $this->getNextElements($current);
+        $stopElement  = $this->createStopElement($current, $current->sorting);
+        $this->updateSortings($nextElements, $stopElement->sorting);
 
-    /**
-     * Create the stop element.
-     *
-     * @param ContentModel $current Content model.
-     * @param int          $sorting Last sorting value.
-     *
-     * @return ContentModel
-     */
-    private function createStopElement($current, $sorting)
-    {
-        $sorting = ($sorting + 8);
-
-        return $this->createGridElement($current, 'bs_gridStop', $sorting);
-    }
-
-    /**
-     * Create separators.
-     *
-     * @param int          $value   Number of separators being created.
-     * @param ContentModel $current Content model.
-     * @param int          $sorting Current sorting value.
-     *
-     * @return int
-     */
-    private function createSeparators($value, $current, $sorting)
-    {
-        for ($count = 1; $count <= $value; $count++) {
-            $sorting = ($sorting + 8);
-            $this->createGridElement($current, 'bs_gridSeparator', $sorting);
-        }
-
-        return $sorting;
+        return $stopElement;
     }
 }

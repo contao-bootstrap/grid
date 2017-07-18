@@ -12,13 +12,14 @@ namespace ContaoBootstrap\Grid\Dca;
 
 use Contao\DataContainer;
 use Contao\FormFieldModel;
+use Contao\Model;
 
 /**
  * Data container helper class for form.
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class Form extends AbstractDcaHelper
+class Form extends AbstractWrapperDcaHelper
 {
     /**
      * Generate the columns.
@@ -31,7 +32,99 @@ class Form extends AbstractDcaHelper
      */
     public function generateColumns($value, $dataContainer)
     {
+        if (!$dataContainer->activeRecord) {
+            return null;
+        }
+
+        $current = $dataContainer->activeRecord;
+
+        if ($value && $dataContainer->activeRecord) {
+            $stopElement  = $this->getStopElement($current);
+            $nextElements = $this->getNextElements($stopElement);
+            $sorting      = $stopElement->sorting;
+
+            $sorting = $this->createSeparators($value, $current, $sorting);
+
+            array_unshift($nextElements, $stopElement);
+            $this->updateSortings($nextElements, $sorting);
+        }
+
         return null;
+    }
+
+
+    /**
+     * Get the next content elements.
+     *
+     * @param FormFieldModel $current Current content model.
+     *
+     * @return FormFieldModel[]
+     */
+    protected function getNextElements($current)
+    {
+        $collection = FormFieldModel::findBy(
+            [
+                'tl_form_field.pid=?',
+                '(tl_form_field.type != ? AND tl_form_field.bs_grid_parent = ?)',
+                'tl_form_field.sorting > ?'
+            ],
+            [$current->pid, 'bs_gridStop', $current->id, $current->sorting],
+            ['order' => 'tl_form_field.sorting ASC']
+        );
+
+        if ($collection) {
+            return $collection->getIterator()->getArrayCopy();
+        }
+
+        return [];
+    }
+
+    /**
+     * Get related stop element.
+     *
+     * @param FormFieldModel $current Current element.
+     *
+     * @return FormFieldModel|Model
+     */
+    protected function getStopElement($current)
+    {
+        $stopElement = FormFieldModel::findOneBy(
+            ['tl_form_field.type=?', 'tl_form_field.bs_grid_parent=?'],
+            ['bs_gridStop', $current->id]
+        );
+
+
+        if ($stopElement) {
+            return $stopElement;
+        }
+
+        $nextElements = $this->getNextElements($current);
+        $stopElement  = $this->createStopElement($current, $current->sorting);
+        $this->updateSortings($nextElements, $stopElement->sorting);
+
+        return $stopElement;
+    }
+
+    /**
+     * Create a grid element.
+     *
+     * @param FormFieldModel $current Current content model.
+     * @param string         $type    Type of the content model.
+     * @param int            $sorting The sorting value.
+     *
+     * @return FormFieldModel
+     */
+    protected function createGridElement($current, $type, &$sorting)
+    {
+        $model                 = new FormFieldModel();
+        $model->tstamp         = time();
+        $model->pid            = $current->pid;
+        $model->sorting        = $sorting;
+        $model->type           = $type;
+        $model->bs_grid_parent = $current->id;
+        $model->save();
+
+        return $model;
     }
 
     /**

@@ -14,12 +14,12 @@ services:
   contao_bootstrap.grid.dca.form:
     class: ContaoBootstrap\Grid\Dca\Form
     arguments:
-      - '@contao_bootstrap.config'
+      - '@contao_bootstrap.environment'
 
   contao_bootstrap.grid.dca.module:
     class: ContaoBootstrap\Grid\Dca\Module
     arguments:
-      - '@contao_bootstrap.config'
+      - '@contao_bootstrap.environment'
 
   contao_bootstrap.grid.grid_builder:
     class: ContaoBootstrap\Grid\GridBuilder
