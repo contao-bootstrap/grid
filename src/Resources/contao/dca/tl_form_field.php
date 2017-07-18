@@ -18,7 +18,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['metapalettes']['bs_gridStart'] = [
         'bs_grid',
         'bs_grid_name',
     ],
-    'bs_grid_wizard' => ['bs_grid_generateColumns',],
+    'bs_grid_wizard' => ['bs_grid_wizard',],
     'template'       => [':hide', 'customTpl'],
     'protected'      => [':hide', 'protected'],
 ];
@@ -91,8 +91,8 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_parent'] = [
     'sql'              => "int(10) unsigned NOT NULL default '0'"
 ];
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_generateColumns'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid'],
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_wizard'] = [
+    'label'            => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid_wizard'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.dca.form', 'getGridColumns'],
