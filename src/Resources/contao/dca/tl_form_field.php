@@ -86,6 +86,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_parent'] = [
         'submitOnChange'     => true,
         'includeBlankOption' => true,
         'chosen'             => true,
+        'doNotCopy'          => true,
         'tl_class'           => 'w50'
     ],
     'sql'              => "int(10) unsigned NOT NULL default '0'"
