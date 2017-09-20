@@ -22,7 +22,7 @@ use ContaoBootstrap\Grid\Definition\Grid;
  *
  * @package ContaoBootstrap\Grid
  */
-class GridIterator implements \Iterator
+final class GridIterator implements \Iterator
 {
     /**
      * Grid.
@@ -103,7 +103,7 @@ class GridIterator implements \Iterator
     /**
      * {@inheritdoc}
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
     }

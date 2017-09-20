@@ -11,6 +11,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Dca;
 
 use Contao\ContentModel;
@@ -53,7 +55,7 @@ class Content extends AbstractWrapperDcaHelper
      *
      * @return array
      */
-    public function getGridParentOptions(DataContainer $dataContainer = null)
+    public function getGridParentOptions(DataContainer $dataContainer = null): array
     {
         $columns[] = 'tl_content.type = ?';
         $values[]  = 'bs_gridStart';
@@ -89,9 +91,9 @@ class Content extends AbstractWrapperDcaHelper
      * @param string       $type    Type of the content model.
      * @param int          $sorting The sorting value.
      *
-     * @return ContentModel
+     * @return Model
      */
-    protected function createGridElement($current, $type, &$sorting)
+    protected function createGridElement($current, string $type, int &$sorting): Model
     {
         $model                 = new ContentModel();
         $model->tstamp         = time();
@@ -112,7 +114,7 @@ class Content extends AbstractWrapperDcaHelper
      *
      * @return ContentModel[]
      */
-    protected function getNextElements($current)
+    protected function getNextElements($current): array
     {
         $collection = ContentModel::findBy(
             [
@@ -139,7 +141,7 @@ class Content extends AbstractWrapperDcaHelper
      *
      * @return ContentModel|Model
      */
-    protected function getStopElement($current)
+    protected function getStopElement($current): Model
     {
         $stopElement = ContentModel::findOneBy(
             ['tl_content.type=?', 'tl_content.bs_grid_parent=?'],
@@ -152,7 +154,7 @@ class Content extends AbstractWrapperDcaHelper
 
         $nextElements = $this->getNextElements($current);
         $stopElement  = $this->createStopElement($current, $current->sorting);
-        $this->updateSortings($nextElements, $stopElement->sorting);
+        $this->updateSortings($nextElements, (int) $stopElement->sorting);
 
         return $stopElement;
     }

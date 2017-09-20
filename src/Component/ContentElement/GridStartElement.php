@@ -11,14 +11,18 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Component\ContentElement;
+
+use ContaoBootstrap\Grid\GridIterator;
 
 /**
  * Class GridStartElement.
  *
  * @package ContaoBootstrap\Grid\Component\ContentElement
  */
-class GridStartElement extends AbstractGridElement
+final class GridStartElement extends AbstractGridElement
 {
     /**
      * Template name.
@@ -57,15 +61,17 @@ class GridStartElement extends AbstractGridElement
     /**
      * {@inheritDoc}
      */
-    protected function getIterator()
+    protected function getIterator():? GridIterator
     {
         try {
             $provider = $this->getGridProvider();
-            $iterator = $provider->getIterator('ce:' . $this->id, $this->bs_grid);
+            $iterator = $provider->getIterator('ce:' . $this->id, (int) $this->bs_grid);
 
             return $iterator;
         } catch (\Exception $e) {
             // Do nothing. In backend view an error is shown anyway.
         }
+
+        return null;
     }
 }

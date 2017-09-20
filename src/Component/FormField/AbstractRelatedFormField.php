@@ -11,9 +11,12 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Component\FormField;
 
 use Contao\FormFieldModel;
+use ContaoBootstrap\Grid\GridIterator;
 
 /**
  * Class AbstractRelatedFormField.
@@ -33,14 +36,14 @@ abstract class AbstractRelatedFormField extends AbstractFormField
     /**
      * {@inheritDoc}
      */
-    protected function getIterator()
+    protected function getIterator():? GridIterator
     {
         $provider = $this->getGridProvider();
         $parent   = $this->getParent();
 
         if ($parent) {
             try {
-                return $provider->getIterator('ffl:' . $parent->id, $parent->bs_grid);
+                return $provider->getIterator('ffl:' . $parent->id, (int) $parent->bs_grid);
             } catch (\Exception $e) {
                 // Do nothing. Error is displayed in backend view.
             }
@@ -52,7 +55,7 @@ abstract class AbstractRelatedFormField extends AbstractFormField
      *
      * @return FormFieldModel|null
      */
-    protected function getParent()
+    protected function getParent():? FormFieldModel
     {
         return FormFieldModel::findByPk($this->bs_grid_parent);
     }

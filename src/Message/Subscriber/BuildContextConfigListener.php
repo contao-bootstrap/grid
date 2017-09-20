@@ -11,6 +11,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Message\Subscriber;
 
 use Contao\ThemeModel;
@@ -31,7 +33,7 @@ class BuildContextConfigListener
      *
      * @return void
      */
-    public function buildThemeConfig(BuildContextConfig $command)
+    public function buildThemeConfig(BuildContextConfig $command): void
     {
         $context = $command->getContext();
 

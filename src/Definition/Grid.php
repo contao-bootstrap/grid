@@ -11,6 +11,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Definition;
 
 /**
@@ -63,7 +65,7 @@ class Grid
      *
      * @return Column
      */
-    public function addColumn(Column $column = null, $size = '')
+    public function addColumn(Column $column = null, string $size = ''): Column
     {
         if (!$column) {
             $column = new Column();
@@ -81,7 +83,7 @@ class Grid
      *
      * @return array|string
      */
-    public function buildRow($flat = false)
+    public function buildRow(bool $flat = false)
     {
         $classes = $this->rowClasses;
 
@@ -112,7 +114,7 @@ class Grid
      *
      * @return array|string
      */
-    public function buildColumn($index, $flat = false)
+    public function buildColumn(int $index, bool $flat = false)
     {
         $classes = [];
         foreach ($this->columns as $size => $columns) {
@@ -139,7 +141,7 @@ class Grid
      *
      * @return array
      */
-    public function buildResets($index)
+    public function buildResets(int $index): array
     {
         $resets = [];
 
@@ -162,7 +164,7 @@ class Grid
      *
      * @return null|Column
      */
-    private function getColumnByIndex($columns, $index)
+    private function getColumnByIndex(array $columns, int $index):? Column
     {
         $currentIndex = $index;
 

@@ -13,8 +13,10 @@
 
 namespace ContaoBootstrap\Grid\Dca;
 
+use Contao\Database\Result;
 use Contao\DataContainer;
 use Contao\FormFieldModel;
+use Contao\FormModel;
 use Contao\Model;
 
 /**
@@ -40,6 +42,7 @@ class Form extends AbstractWrapperDcaHelper
             return null;
         }
 
+        /** @var FormModel|Result $current */
         $current = $dataContainer->activeRecord;
 
         if ($value && $dataContainer->activeRecord) {
@@ -64,7 +67,7 @@ class Form extends AbstractWrapperDcaHelper
      *
      * @return FormFieldModel[]
      */
-    protected function getNextElements($current)
+    protected function getNextElements($current): array
     {
         $collection = FormFieldModel::findBy(
             [
@@ -86,11 +89,11 @@ class Form extends AbstractWrapperDcaHelper
     /**
      * Get related stop element.
      *
-     * @param FormFieldModel $current Current element.
+     * @param FormFieldModel|Result $current Current element.
      *
      * @return FormFieldModel|Model
      */
-    protected function getStopElement($current)
+    protected function getStopElement($current): Model
     {
         $stopElement = FormFieldModel::findOneBy(
             ['tl_form_field.type=?', 'tl_form_field.bs_grid_parent=?'],
@@ -116,9 +119,9 @@ class Form extends AbstractWrapperDcaHelper
      * @param string         $type    Type of the content model.
      * @param int            $sorting The sorting value.
      *
-     * @return FormFieldModel
+     * @return FormFieldModel|Model
      */
-    protected function createGridElement($current, $type, &$sorting)
+    protected function createGridElement($current, string $type, int &$sorting): Model
     {
         $model                 = new FormFieldModel();
         $model->tstamp         = time();
@@ -138,7 +141,7 @@ class Form extends AbstractWrapperDcaHelper
      *
      * @return array
      */
-    public function getGridParentOptions(DataContainer $dataContainer = null)
+    public function getGridParentOptions(DataContainer $dataContainer = null): array
     {
         $columns[] = 'tl_form_field.type = ?';
         $values[]  = 'bs_gridStart';

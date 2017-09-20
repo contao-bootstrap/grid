@@ -11,6 +11,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Definition;
 
 /**
@@ -78,7 +80,7 @@ class Column
      *
      * @return $this
      */
-    public function width($width)
+    public function width(int $width): self
     {
         $this->width = $width;
 
@@ -92,7 +94,7 @@ class Column
      *
      * @return $this
      */
-    public function order($flexOrder)
+    public function order(string $flexOrder): self
     {
         $this->order = ['flex', $flexOrder];
 
@@ -106,7 +108,7 @@ class Column
      *
      * @return $this
      */
-    public function push($width)
+    public function push(int $width): self
     {
         $this->order = ['push', $width];
 
@@ -120,7 +122,7 @@ class Column
      *
      * @return $this
      */
-    public function pull($width)
+    public function pull(int $width): self
     {
         $this->order = ['pull', $width];
 
@@ -134,7 +136,7 @@ class Column
      *
      * @return $this
      */
-    public function offset($offset)
+    public function offset(int $offset): self
     {
         $this->offset = $offset;
 
@@ -148,7 +150,7 @@ class Column
      *
      * @return $this
      */
-    public function align($align)
+    public function align(string $align): self
     {
         $this->align = $align;
 
@@ -160,7 +162,7 @@ class Column
      *
      * @return $this
      */
-    public function reset()
+    public function reset(): self
     {
         $this->reset = true;
 
@@ -174,7 +176,7 @@ class Column
      *
      * @return $this
      */
-    public function cssClass($class)
+    public function cssClass(string $class): self
     {
         $this->cssClasses[] = $class;
 
@@ -189,7 +191,7 @@ class Column
      *
      * @return array
      */
-    public function build(array $classes, $size = '')
+    public function build(array $classes, string $size = ''): array
     {
         $sizeSuffix  = $size ? '-' . $size : $size;
         $widthSuffix = strlen($this->width) ? '-' . $this->width : $this->width;
@@ -215,7 +217,7 @@ class Column
      *
      * @return array
      */
-    public function buildReset(array $resets, $size)
+    public function buildReset(array $resets, string $size = ''): array
     {
         if ($this->hasReset()) {
             $resets[] = sprintf('d%s-none', $size ? '-' . $size : '');
@@ -229,7 +231,7 @@ class Column
      *
      * @return bool
      */
-    public function hasReset()
+    public function hasReset(): bool
     {
         return $this->reset;
     }
@@ -241,7 +243,7 @@ class Column
      *
      * @return void
      */
-    private function buildAlign(array &$classes)
+    private function buildAlign(array &$classes): void
     {
         if ($this->align) {
             $classes[] = 'align-self-' . $this->align;
@@ -255,7 +257,7 @@ class Column
      *
      * @return void
      */
-    private function buildJustify(array &$classes)
+    private function buildJustify(array &$classes): void
     {
         if ($this->justify) {
             $classes[] = 'justify-content-' . $this->justify;
@@ -270,7 +272,7 @@ class Column
      *
      * @return void
      */
-    private function buildOrder(array &$classes, $size)
+    private function buildOrder(array &$classes, string $size): void
     {
         if ($this->order) {
             if ($this->order[0] === 'flex' || !$size) {
@@ -289,7 +291,7 @@ class Column
      *
      * @return void
      */
-    private function buildOffset(array &$classes, $sizeSuffix)
+    private function buildOffset(array &$classes, string $sizeSuffix): void
     {
         if (strlen($this->offset)) {
             $classes[] = 'offset' . $sizeSuffix . '-' . $this->offset;

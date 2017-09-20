@@ -11,6 +11,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Dca;
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
@@ -47,7 +49,7 @@ class Grid
      *
      * @return void
      */
-    public function enterContext()
+    public function enterContext(): void
     {
         if (\Input::get('act') === 'edit') {
             $model = GridModel::findByPk(\Input::get('id'));
@@ -63,7 +65,7 @@ class Grid
      *
      * @return void
      */
-    public function initializePalette()
+    public function initializePalette(): void
     {
         if (\Input::get('act') === 'edit') {
             $model = GridModel::findByPk(\Input::get('id'));
@@ -87,7 +89,7 @@ class Grid
      *
      * @return string
      */
-    public function generateLabel($row)
+    public function generateLabel(array $row): string
     {
         return sprintf(
             '%s <div class="tl_gray">%s</div>',
@@ -101,7 +103,7 @@ class Grid
      *
      * @return array
      */
-    public function getWidths()
+    public function getWidths(): array
     {
         $columns = $this->getColumns();
         $values  = ['auto'];
@@ -114,7 +116,7 @@ class Grid
      *
      * @return array
      */
-    public function getOrders()
+    public function getOrders(): array
     {
         $columns = $this->getColumns();
         $values  = [
@@ -136,7 +138,7 @@ class Grid
      *
      * @return array
      */
-    public function getOffsets()
+    public function getOffsets(): array
     {
         $columns = $this->getColumns();
         $values  = array_merge(
@@ -152,8 +154,8 @@ class Grid
      *
      * @return int
      */
-    private function getColumns()
+    private function getColumns(): int
     {
-        return $this->environment->getConfig()->get('grid.columns', 12);
+        return (int) $this->environment->getConfig()->get('grid.columns', 12);
     }
 }

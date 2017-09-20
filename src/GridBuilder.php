@@ -11,6 +11,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid;
 
 use ContaoBootstrap\Grid\Definition\Column;
@@ -22,7 +24,7 @@ use ContaoBootstrap\Grid\Model\GridModel;
  *
  * @package ContaoBootstrap\Grid
  */
-class GridBuilder
+final class GridBuilder
 {
     /**
      * Grid model.
@@ -47,7 +49,7 @@ class GridBuilder
      *
      * @throws \RuntimeException When Grid does not exist.
      */
-    public function build($gridId)
+    public function build(int $gridId): Grid
     {
         $this->loadModel($gridId);
         $this->createGrid();
@@ -64,7 +66,7 @@ class GridBuilder
      *
      * @throws \RuntimeException When Grid does not exist.
      */
-    protected function loadModel($gridId)
+    protected function loadModel(int $gridId): void
     {
         $model = GridModel::findByPk($gridId);
         if (!$model) {
@@ -79,7 +81,7 @@ class GridBuilder
      *
      * @return void
      */
-    private function createGrid()
+    private function createGrid(): void
     {
         $this->grid = new Grid();
         $sizes      = deserialize($this->model->sizes, true);
@@ -104,7 +106,7 @@ class GridBuilder
      *
      * @return void
      */
-    private function buildSize($size, array $definition)
+    private function buildSize(string $size, array $definition): void
     {
         foreach ($definition as $columnDefinition) {
             $column = $this->buildColumn($columnDefinition);
@@ -120,7 +122,7 @@ class GridBuilder
      *
      * @return Column
      */
-    private function buildColumn(array $definition)
+    private function buildColumn(array $definition): Column
     {
         $column = new Column();
         $column->width($definition['width']);

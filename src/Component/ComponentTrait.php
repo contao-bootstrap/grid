@@ -11,10 +11,12 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Component;
 
 use Contao\BackendTemplate;
-use Contao\ContentModel;
+use Contao\Model;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
 
@@ -30,7 +32,7 @@ trait ComponentTrait
      *
      * @return GridProvider
      */
-    protected function getGridProvider()
+    protected function getGridProvider(): GridProvider
     {
         return static::getContainer()->get('contao_bootstrap.grid.grid_provider');
     }
@@ -38,14 +40,14 @@ trait ComponentTrait
     /**
      * Render the backend view.
      *
-     * @param ContentModel $start    Start element.
+     * @param Model|null   $start    Start element.
      * @param GridIterator $iterator Iterator.
      *
      * @return string
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    protected function renderBackendView($start, GridIterator $iterator = null)
+    protected function renderBackendView($start, GridIterator $iterator = null): string
     {
         $template = new BackendTemplate('be_bs_grid');
 
@@ -72,7 +74,7 @@ trait ComponentTrait
      *
      * @return bool
      */
-    protected function isBackendRequest()
+    protected function isBackendRequest(): bool
     {
         $scopeMatcher   = static::getContainer()->get('contao.routing.scope_matcher');
         $currentRequest = static::getContainer()->get('request_stack')->getCurrentRequest();
@@ -85,5 +87,5 @@ trait ComponentTrait
      *
      * @return GridIterator
      */
-    abstract protected function getIterator();
+    abstract protected function getIterator():? GridIterator;
 }

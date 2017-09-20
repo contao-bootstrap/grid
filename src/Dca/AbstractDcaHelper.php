@@ -11,6 +11,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Dca;
 
 use Contao\DataContainer;
@@ -46,7 +48,7 @@ abstract class AbstractDcaHelper
      *
      * @return array
      */
-    public function getGridColumns()
+    public function getGridColumns(): array
     {
         return range(
             1,
@@ -59,7 +61,7 @@ abstract class AbstractDcaHelper
      *
      * @return array
      */
-    public function getGridOptions()
+    public function getGridOptions(): array
     {
         $collection = GridModel::findAll();
         $options    = [];
@@ -87,7 +89,7 @@ abstract class AbstractDcaHelper
      *
      * @return string
      */
-    public function generateGridName($value, $dataContainer)
+    public function generateGridName($value, $dataContainer): string
     {
         if (!$value) {
             $value = 'grid_' . $dataContainer->activeRecord->id;

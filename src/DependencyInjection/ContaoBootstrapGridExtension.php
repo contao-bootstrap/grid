@@ -11,6 +11,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;

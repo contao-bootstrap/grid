@@ -11,16 +11,19 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Component\ContentElement;
 
 use Contao\ContentModel;
+use ContaoBootstrap\Grid\GridIterator;
 
 /**
  * Class GridStopElement.
  *
  * @package ContaoBootstrap\Grid\Component\ContentElement
  */
-class GridStopElement extends AbstractGridElement
+final class GridStopElement extends AbstractGridElement
 {
     /**
      * Template name.
@@ -58,7 +61,7 @@ class GridStopElement extends AbstractGridElement
      *
      * @return ContentModel|null
      */
-    protected function getParent()
+    protected function getParent():? ContentModel
     {
         return ContentModel::findByPk($this->bs_grid_parent);
     }
@@ -66,14 +69,14 @@ class GridStopElement extends AbstractGridElement
     /**
      * {@inheritDoc}
      */
-    protected function getIterator()
+    protected function getIterator():? GridIterator
     {
         $provider = $this->getGridProvider();
         $parent   = $this->getParent();
 
         if ($parent) {
             try {
-                return $provider->getIterator('ce:' . $parent->id, $parent->bs_grid);
+                return $provider->getIterator('ce:' . $parent->id, (int) $parent->bs_grid);
             } catch (\Exception $e) {
                 // Do nothing. In backend view an error is shown anyway.
             }

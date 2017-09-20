@@ -11,7 +11,11 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Component\FormField;
+
+use ContaoBootstrap\Grid\GridIterator;
 
 /**
  * Class GridFormField.
@@ -30,11 +34,11 @@ class GridStartFormField extends AbstractFormField
     /**
      * {@inheritDoc}
      */
-    protected function getIterator()
+    protected function getIterator():? GridIterator
     {
         try {
             $provider = $this->getGridProvider();
-            $iterator = $provider->getIterator('ffl:' . $this->id, $this->bs_grid);
+            $iterator = $provider->getIterator('ffl:' . $this->id, (int) $this->bs_grid);
 
             return $iterator;
         } catch (\Exception $e) {
@@ -52,7 +56,7 @@ class GridStartFormField extends AbstractFormField
     /**
      * {@inheritdoc}
      */
-    public function parse($attributes = null)
+    public function parse($attributes = null): string
     {
         $iterator = $this->getIterator();
 

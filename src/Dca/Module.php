@@ -11,6 +11,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Dca;
 
 use Contao\ModuleModel;
@@ -31,7 +33,7 @@ class Module extends AbstractDcaHelper
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getAllModules(\MultiColumnWizard $multiColumnWizard = null)
+    public function getAllModules(\MultiColumnWizard $multiColumnWizard = null): array
     {
         if ($multiColumnWizard
             && $multiColumnWizard->dataContainer

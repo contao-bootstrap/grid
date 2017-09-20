@@ -11,8 +11,11 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Dca;
 
+use Contao\Database\Result;
 use Contao\DataContainer;
 use Contao\Model;
 
@@ -37,12 +40,13 @@ abstract class AbstractWrapperDcaHelper extends AbstractDcaHelper
             return null;
         }
 
+        /** @var Model|Result $current */
         $current = $dataContainer->activeRecord;
 
         if ($value && $dataContainer->activeRecord) {
             $stopElement  = $this->getStopElement($current);
             $nextElements = $this->getNextElements($stopElement);
-            $sorting      = $stopElement->sorting;
+            $sorting      = (int) $stopElement->sorting;
 
             $sorting = $this->createSeparators($value, $current, $sorting);
 
@@ -62,7 +66,7 @@ abstract class AbstractWrapperDcaHelper extends AbstractDcaHelper
      *
      * @return int
      */
-    protected function createSeparators($value, $current, $sorting)
+    protected function createSeparators(int $value, $current, int $sorting): int
     {
         for ($count = 1; $count <= $value; $count++) {
             $sorting = ($sorting + 8);
@@ -80,7 +84,7 @@ abstract class AbstractWrapperDcaHelper extends AbstractDcaHelper
      *
      * @return int
      */
-    protected function updateSortings($elements, $lastSorting)
+    protected function updateSortings(array $elements, int $lastSorting): int
     {
         foreach ($elements as $element) {
             if ($lastSorting > $element->sorting) {
@@ -102,7 +106,7 @@ abstract class AbstractWrapperDcaHelper extends AbstractDcaHelper
      *
      * @return Model
      */
-    protected function createStopElement($current, $sorting)
+    protected function createStopElement($current, int $sorting): Model
     {
         $sorting = ($sorting + 8);
 
@@ -118,7 +122,7 @@ abstract class AbstractWrapperDcaHelper extends AbstractDcaHelper
      *
      * @return Model
      */
-    abstract protected function createGridElement($current, $type, &$sorting);
+    abstract protected function createGridElement($current, string $type, int &$sorting): Model;
 
     /**
      * Get the next content elements.
@@ -127,7 +131,7 @@ abstract class AbstractWrapperDcaHelper extends AbstractDcaHelper
      *
      * @return Model[]
      */
-    abstract protected function getNextElements($current);
+    abstract protected function getNextElements($current): array;
 
     /**
      * Get related stop element.
@@ -136,5 +140,5 @@ abstract class AbstractWrapperDcaHelper extends AbstractDcaHelper
      *
      * @return Model
      */
-    abstract protected function getStopElement($current);
+    abstract protected function getStopElement($current): Model;
 }

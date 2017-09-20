@@ -11,6 +11,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Component\FormField;
 
 /**
@@ -30,7 +32,7 @@ class GridStopFormField extends AbstractRelatedFormField
     /**
      * {@inheritdoc}
      */
-    public function parse($attributes = null)
+    public function parse($attributes = null): string
     {
         $iterator = $this->getIterator();
         if ($iterator) {

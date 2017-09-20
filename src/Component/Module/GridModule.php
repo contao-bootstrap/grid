@@ -11,6 +11,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Grid\Component\Module;
 
 use Contao\BackendTemplate;
@@ -81,7 +83,7 @@ class GridModule extends Module
      *
      * @return bool
      */
-    protected function isBackendRequest()
+    protected function isBackendRequest(): bool
     {
         $scopeMatcher   = static::getContainer()->get('contao.routing.scope_matcher');
         $currentRequest = static::getContainer()->get('request_stack')->getCurrentRequest();
@@ -93,7 +95,7 @@ class GridModule extends Module
      *
      * @return GridIterator|null
      */
-    protected function getGridIterator()
+    protected function getGridIterator():? GridIterator
     {
         $provider = static::getContainer()->get('contao_bootstrap.grid.grid_provider');
 
@@ -109,13 +111,13 @@ class GridModule extends Module
     /**
      * Generate all modules.
      *
-     * @param array        $config   Module config.
-     * @param array        $modules  Generated modules.
-     * @param GridIterator $iterator Grid iterator.
+     * @param array             $config   Module config.
+     * @param array             $modules  Generated modules.
+     * @param GridIterator|null $iterator Grid iterator.
      *
      * @return array
      */
-    protected function generateModules($config, $modules, $iterator)
+    protected function generateModules(array $config, array $modules, ?GridIterator $iterator = null): array
     {
         $buffer = [];
 
@@ -152,7 +154,7 @@ class GridModule extends Module
      *
      * @return array
      */
-    protected function getModuleIds($config)
+    protected function getModuleIds(array $config): array
     {
         $moduleIds = array_filter(
             array_map(
@@ -179,7 +181,7 @@ class GridModule extends Module
      *
      * @return array
      */
-    protected function preCompileModules($moduleIds)
+    protected function preCompileModules(array $moduleIds): array
     {
         $collection = ModuleModel::findMultipleByIds($moduleIds);
         $modules    = [];

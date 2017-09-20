@@ -19,6 +19,9 @@ use Contao\Model;
  * Class GridModel.
  *
  * @package ContaoBootstrap\Grid\Model
+ *
+ * @property string|array sizes
+ * @property int pid
  */
 class GridModel extends Model
 {
