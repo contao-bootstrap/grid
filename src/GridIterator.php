@@ -1,12 +1,17 @@
 <?php
 
 /**
+ * Contao Bootstrap grid.
+ *
  * @package    contao-bootstrap
+ * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2017 netzmacht David Molineus. All rights reserved.
+ * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid;
 
@@ -48,7 +53,7 @@ class GridIterator implements \Iterator
      *
      * @return string
      */
-    public function row()
+    public function row(): string
     {
         return $this->grid->buildRow(true);
     }
@@ -58,7 +63,7 @@ class GridIterator implements \Iterator
      *
      * @return array
      */
-    public function resets()
+    public function resets(): array
     {
         return $this->grid->buildResets($this->index);
     }
@@ -66,7 +71,7 @@ class GridIterator implements \Iterator
     /**
      * {@inheritdoc}
      */
-    public function current()
+    public function current(): string
     {
         return $this->grid->buildColumn($this->index, true);
     }
@@ -74,7 +79,7 @@ class GridIterator implements \Iterator
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function next(): void
     {
         $this->index++;
     }
@@ -90,7 +95,7 @@ class GridIterator implements \Iterator
     /**
      * {@inheritdoc}
      */
-    public function valid()
+    public function valid(): bool
     {
         return true;
     }

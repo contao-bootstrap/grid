@@ -1,11 +1,14 @@
 <?php
 
 /**
+ * Contao Bootstrap grid.
+ *
  * @package    contao-bootstrap
+ * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2017 netzmacht David Molineus. All rights reserved.
+ * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
  * @filesource
- *
  */
 
 $GLOBALS['TL_DCA']['tl_module']['metapalettes']['bs_grid'] = [
@@ -27,11 +30,11 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['bs_grid'] = [
         'submitOnChange'     => true,
         'includeBlankOption' => true,
         'chosen'             => true,
-        'tl_class'           => 'w50'
+        'tl_class'           => 'w50',
     ],
     'sql'              => "int(10) unsigned NOT NULL default '0'",
     'relation'         => ['type' => 'hasOne', 'load' => 'lazy'],
-    'foreignKey'       => 'tl_grid.title'
+    'foreignKey'       => 'tl_grid.title',
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['bs_gridModules'] = [
@@ -49,7 +52,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['bs_gridModules'] = [
                 'eval'             => [
                     'style'              => 'width: 500px',
                     'includeBlankOption' => true,
-                    'chosen'             => true
+                    'chosen'             => true,
                 ],
             ],
             'inactive' => [
@@ -57,7 +60,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['bs_gridModules'] = [
                 'inputType' => 'checkbox',
                 'eval'      => ['style' => 'width: 20px'],
             ],
-        ]
+        ],
     ],
-    'sql'       => "blob NULL"
+    'sql'       => 'blob NULL',
 ];

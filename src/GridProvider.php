@@ -1,12 +1,17 @@
 <?php
 
 /**
+ * Contao Bootstrap grid.
+ *
  * @package    contao-bootstrap
+ * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2017 netzmacht David Molineus. All rights reserved.
+ * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid;
 
@@ -17,7 +22,7 @@ use ContaoBootstrap\Grid\Definition\Grid;
  *
  * @package ContaoBootstrap\Grid
  */
-class GridProvider
+final class GridProvider
 {
     /**
      * Grid builder.
@@ -59,7 +64,7 @@ class GridProvider
      *
      * @throws \RuntimeException When grid could not be build.
      */
-    public function getGrid($gridId)
+    public function getGrid(int $gridId): Grid
     {
         if (!isset($this->grids[$gridId])) {
             $this->grids[$gridId] = $this->builder->build($gridId);
@@ -71,14 +76,14 @@ class GridProvider
     /**
      * Get the grid iterator.
      *
-     * @param string $uniqueId Unique id to reference a grid iterator.
-     * @param int    $gridId   The grid id.
+     * @param string   $uniqueId Unique id to reference a grid iterator.
+     * @param int|null $gridId   The grid id.
      *
      * @return GridIterator
      *
      * @throws \RuntimeException When grid could not be build.
      */
-    public function getIterator($uniqueId, $gridId = null)
+    public function getIterator(string $uniqueId, ?int $gridId = null): GridIterator
     {
         if (!isset($this->iterators[$uniqueId])) {
             $grid     = $this->getGrid($gridId);
