@@ -51,7 +51,7 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
             $nextElements = $this->getNextElements($stopElement);
             $sorting      = (int) $stopElement->sorting;
 
-            $sorting = $this->createSeparators($value, $current, $sorting);
+            $sorting = $this->createSeparators((int) $value, $current, $sorting);
 
             array_unshift($nextElements, $stopElement);
             $this->updateSortings($nextElements, $sorting);
