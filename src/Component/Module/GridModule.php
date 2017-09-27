@@ -137,6 +137,10 @@ class GridModule extends Module
             if ($iterator) {
                 $iterator->next();
 
+                foreach ($iterator->resets() as $reset) {
+                    $buffer[] = '<div class="clearfix w-100 ' . $reset . '"></div>';
+                }
+
                 $buffer[] = sprintf(
                     "\n" . '</div>' . "\n" . '<div class="%s">',
                     $iterator->current()
