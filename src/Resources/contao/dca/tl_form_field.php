@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid'] = [
     'label'            => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
-    'options_callback' => ['contao_bootstrap.grid.dca.form', 'getGridOptions'],
+    'options_callback' => ['contao_bootstrap.grid.listeners.dca.form', 'getGridOptions'],
     'reference'        => &$GLOBALS['TL_LANG']['tl_form_field'],
     'eval'             => [
         'mandatory'          => true,
@@ -72,7 +72,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_name'] = [
         'tl_class'           => 'w50'
     ],
     'save_callback' => [
-        ['contao_bootstrap.grid.dca.form', 'generateGridName']
+        ['contao_bootstrap.grid.listeners.dca.form', 'generateGridName']
     ],
     'sql'           => "varchar(64) NOT NULL default ''",
 ];
@@ -82,7 +82,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_parent'] = [
     'label'            => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
-    'options_callback' => ['contao_bootstrap.grid.dca.form', 'getGridParentOptions'],
+    'options_callback' => ['contao_bootstrap.grid.listeners.dca.form', 'getGridParentOptions'],
     'reference'        => &$GLOBALS['TL_LANG']['tl_form_field'],
     'eval'             => [
         'mandatory'          => true,
@@ -99,9 +99,9 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_wizard'] = [
     'label'            => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid_wizard'],
     'exclude'          => true,
     'inputType'        => 'select',
-    'options_callback' => ['contao_bootstrap.grid.dca.form', 'getGridColumns'],
+    'options_callback' => ['contao_bootstrap.grid.listeners.dca.form', 'getGridColumns'],
     'save_callback'    => [
-        ['contao_bootstrap.grid.dca.form', 'generateColumns'],
+        ['contao_bootstrap.grid.listeners.dca.form', 'generateColumns'],
     ],
     'eval'             => [
         'includeBlankOption' => true,

@@ -13,7 +13,7 @@
 
 declare(strict_types=1);
 
-namespace ContaoBootstrap\Grid\Dca;
+namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\ModuleModel;
 
@@ -22,7 +22,7 @@ use Contao\ModuleModel;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class Module extends AbstractDcaHelper
+class Module extends AbstractDcaListener
 {
     /**
      * Get all modules for the grid module.

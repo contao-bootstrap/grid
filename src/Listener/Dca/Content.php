@@ -13,7 +13,7 @@
 
 declare(strict_types=1);
 
-namespace ContaoBootstrap\Grid\Dca;
+namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\ContentModel;
 use Contao\DataContainer;
@@ -26,7 +26,7 @@ use Doctrine\DBAL\Connection;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class Content extends AbstractWrapperDcaHelper
+class Content extends AbstractWrapperDcaListener
 {
     /**
      * Database connection.

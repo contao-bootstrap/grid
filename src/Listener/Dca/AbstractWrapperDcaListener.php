@@ -13,7 +13,7 @@
 
 declare(strict_types=1);
 
-namespace ContaoBootstrap\Grid\Dca;
+namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\Database\Result;
 use Contao\DataContainer;
@@ -24,7 +24,7 @@ use Contao\Model;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-abstract class AbstractWrapperDcaHelper extends AbstractDcaHelper
+abstract class AbstractWrapperDcaListener extends AbstractDcaListener
 {
     /**
      * Generate the columns.

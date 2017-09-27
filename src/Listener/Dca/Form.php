@@ -11,7 +11,7 @@
  * @filesource
  */
 
-namespace ContaoBootstrap\Grid\Dca;
+namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\Database\Result;
 use Contao\DataContainer;
@@ -24,7 +24,7 @@ use Contao\Model;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class Form extends AbstractWrapperDcaHelper
+class Form extends AbstractWrapperDcaListener
 {
     /**
      * Generate the columns.
