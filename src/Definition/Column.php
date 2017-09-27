@@ -192,7 +192,7 @@ class Column
     public function buildReset(array $resets, string $size = ''): array
     {
         if ($this->hasReset()) {
-            $resets[] = sprintf('d%s-none', $size ? '-' . $size : '');
+            $resets[] = sprintf('d-none d%s-block', $size ? '-' . $size : '');
         }
 
         return $resets;
