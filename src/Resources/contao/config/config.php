@@ -43,3 +43,8 @@ $GLOBALS['TL_FFL']['bs_gridStop']      = GridStopFormField::class;
 $GLOBALS['TL_WRAPPERS']['start'][]     = 'bs_gridStart';
 $GLOBALS['TL_WRAPPERS']['separator'][] = 'bs_gridSeparator';
 $GLOBALS['TL_WRAPPERS']['stop'][]      = 'bs_gridStop';
+
+// Easy Themes
+$GLOBALS['TL_EASY_THEMES_MODULES']['bs_grid'] = [
+    'href_fragment' => 'table=tl_bs_grid',
+];
