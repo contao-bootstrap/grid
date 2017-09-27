@@ -5,23 +5,23 @@ services:
       - { name: kernel.event_listener, event: contao_bootstrap.core.build_context_config, method: buildThemeConfig }
 
   contao_bootstrap.grid.listeners.dca.grid:
-    class: ContaoBootstrap\Grid\Listener\Dca\Grid
+    class: ContaoBootstrap\Grid\Listener\Dca\GridListener
 
     arguments:
       - '@contao_bootstrap.environment'
 
   contao_bootstrap.grid.listeners.dca.content:
-    class: ContaoBootstrap\Grid\Listener\Dca\Content
+    class: ContaoBootstrap\Grid\Listener\Dca\ContentListener
     arguments:
       - '@contao_bootstrap.environment'
       - '@database_connection'
 
   contao_bootstrap.grid.listeners.dca.form:
-    class: ContaoBootstrap\Grid\Listener\Dca\Form
+    class: ContaoBootstrap\Grid\Listener\Dca\FormListener
     arguments:
       - '@contao_bootstrap.environment'
 
   contao_bootstrap.grid.listeners.dca.module:
-    class: ContaoBootstrap\Grid\Listener\Dca\Module
+    class: ContaoBootstrap\Grid\Listener\Dca\ModuleListener
     arguments:
       - '@contao_bootstrap.environment'

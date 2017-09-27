@@ -24,7 +24,7 @@ use Contao\Model;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class Form extends AbstractWrapperDcaListener
+class FormListener extends AbstractWrapperDcaListener
 {
     /**
      * Generate the columns.

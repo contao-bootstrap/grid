@@ -25,7 +25,7 @@ use ContaoBootstrap\Grid\Model\GridModel;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class Grid
+class GridListener
 {
     /**
      * Bootstrap environment.

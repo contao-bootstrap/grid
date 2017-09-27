@@ -22,7 +22,7 @@ use Contao\ModuleModel;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class Module extends AbstractDcaListener
+class ModuleListener extends AbstractDcaListener
 {
     /**
      * Get all modules for the grid module.

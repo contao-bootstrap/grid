@@ -26,7 +26,7 @@ use Doctrine\DBAL\Connection;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class Content extends AbstractWrapperDcaListener
+class ContentListener extends AbstractWrapperDcaListener
 {
     /**
      * Database connection.
