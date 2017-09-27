@@ -13,7 +13,7 @@
 
 declare(strict_types=1);
 
-namespace ContaoBootstrap\Grid\Message\Subscriber;
+namespace ContaoBootstrap\Grid\Listener;
 
 use Contao\ThemeModel;
 use ContaoBootstrap\Core\Environment\ThemeContext;
