@@ -55,7 +55,7 @@ class Grid
             $model = GridModel::findByPk(\Input::get('id'));
 
             if ($model) {
-                $this->environment->enterContext(ThemeContext::forTheme($model->pid));
+                $this->environment->enterContext(ThemeContext::forTheme((int) $model->pid));
             }
         }
     }
@@ -140,13 +140,20 @@ class Grid
      */
     public function getOffsets(): array
     {
+
         $columns = $this->getColumns();
         $values  = array_merge(
             ['null'],
             range(1, $columns)
         );
 
-        return $values;
+        return [
+            'align' => [
+                'right',
+                'left'
+            ],
+            'offset' => $values
+        ];
     }
 
     /**
