@@ -97,7 +97,7 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
                 $element->save();
             }
 
-            $lastSorting = $element->sorting;
+            $lastSorting = (int) $element->sorting;
         }
 
         return $lastSorting;

@@ -153,7 +153,7 @@ class ContentListener extends AbstractWrapperDcaListener
         }
 
         $nextElements = $this->getNextElements($current);
-        $stopElement  = $this->createStopElement($current, $current->sorting);
+        $stopElement  = $this->createStopElement($current, (int) $current->sorting);
         $this->updateSortings($nextElements, (int) $stopElement->sorting);
 
         return $stopElement;
