@@ -149,8 +149,8 @@ class Grid
 
         return [
             'align' => [
-                'right',
-                'left'
+                'ml-auto',
+                'mr-auto'
             ],
             'offset' => $values
         ];

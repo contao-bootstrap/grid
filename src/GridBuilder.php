@@ -136,15 +136,8 @@ final class GridBuilder
         }
 
         if ($definition['offset']) {
-            if ($definition['offset'] === 'null') {
-                $definition['offset'] = 0;
-            } elseif ($definition['offset'] === 'left') {
-                $definition['offset'] = 'mr-auto';
-            } elseif ($definition['offset'] === 'right') {
-                $definition['offset'] = 'ml-auto';
-            }
-
-            $column->offset($definition['offset']);
+            $offset = $this->parseOffset($definition['offset']);
+            $column->offset($offset);
         }
 
         if ($definition['reset']) {
@@ -170,5 +163,23 @@ final class GridBuilder
         $this->model = null;
 
         return $grid;
+    }
+
+    /**
+     * Parse the offset definition value.
+     *
+     * @param mixed $offset Raw offset value.
+     *
+     * @return mixed
+     */
+    private function parseOffset($offset)
+    {
+        if ($offset === 'null') {
+            $offset = 0;
+        } elseif (is_numeric($offset)) {
+            $offset = (int) $offset;
+        }
+
+        return $offset;
     }
 }
