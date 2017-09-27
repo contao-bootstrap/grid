@@ -42,8 +42,11 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
 
         /** @var Model|Result $current */
         $current = $dataContainer->activeRecord;
+        if (!$dataContainer->activeRecord) {
+            return null;
+        }
 
-        if ($value && $dataContainer->activeRecord) {
+        if ($value) {
             $stopElement  = $this->getStopElement($current);
             $nextElements = $this->getNextElements($stopElement);
             $sorting      = (int) $stopElement->sorting;
@@ -52,6 +55,8 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
 
             array_unshift($nextElements, $stopElement);
             $this->updateSortings($nextElements, $sorting);
+        } else {
+            $this->getStopElement($current);
         }
 
         return null;
