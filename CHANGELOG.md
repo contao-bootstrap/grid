@@ -8,6 +8,7 @@ Implemented enhancements:
  - Require PHP 7.1
  - Support Bootstrap 4 beta changes
  - Complete english translation
+ - Support easy themes
  - Added README.md
  - Added .gitattributes
  - Added CHANGELOG.md
