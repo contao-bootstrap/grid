@@ -1,5 +1,5 @@
     </div>
     <?php foreach ($this->resets as $reset): ?>
-    <div class="clearfix <?= $reset ?>"></div>
+    <div class="clearfix w-100 <?= $reset ?>"></div>
     <?php endforeach; ?>
     <div class="<?= $this->columnClasses ?>">
