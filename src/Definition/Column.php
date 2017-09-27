@@ -41,7 +41,7 @@ class Column
     /**
      * Offset setting.
      *
-     * @var string
+     * @var string|int
      */
     private $offset;
 
@@ -57,7 +57,7 @@ class Column
      *
      * @var bool
      */
-    private $reset;
+    private $reset = false;
 
     /**
      * Justify setting.
@@ -132,11 +132,11 @@ class Column
     /**
      * Set the offset.
      *
-     * @param int $offset Offset.
+     * @param int|string $offset Offset.
      *
      * @return $this
      */
-    public function offset(int $offset): self
+    public function offset($offset): self
     {
         $this->offset = $offset;
 
@@ -194,7 +194,7 @@ class Column
     public function build(array $classes, string $size = ''): array
     {
         $sizeSuffix  = $size ? '-' . $size : $size;
-        $widthSuffix = strlen($this->width) ? '-' . $this->width : $this->width;
+        $widthSuffix = ($this->width > 0) ? '-' . $this->width : $this->width;
         $classes[]   = 'col' . $sizeSuffix . $widthSuffix;
 
         $this->buildAlign($classes);
@@ -293,8 +293,14 @@ class Column
      */
     private function buildOffset(array &$classes, string $sizeSuffix): void
     {
-        if (strlen($this->offset)) {
+        if ($this->offset === null) {
+            return;
+        }
+
+        if (is_int($this->offset)) {
             $classes[] = 'offset' . $sizeSuffix . '-' . $this->offset;
+        } elseif (strlen($this->offset)) {
+            $classes[] = $this->offset;
         }
     }
 }

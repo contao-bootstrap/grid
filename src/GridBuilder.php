@@ -125,7 +125,9 @@ final class GridBuilder
     private function buildColumn(array $definition): Column
     {
         $column = new Column();
-        $column->width($definition['width']);
+        if ($definition['width']) {
+            $column->width((int) $definition['width']);
+        }
 
         foreach (['order', 'align'] as $key) {
             if ($definition[$key]) {
@@ -136,6 +138,10 @@ final class GridBuilder
         if ($definition['offset']) {
             if ($definition['offset'] === 'null') {
                 $definition['offset'] = 0;
+            } elseif ($definition['offset'] === 'left') {
+                $definition['offset'] = 'mr-auto';
+            } elseif ($definition['offset'] === 'right') {
+                $definition['offset'] = 'ml-auto';
             }
 
             $column->offset($definition['offset']);
