@@ -1,5 +1,23 @@
-.tx/
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs 
+.buildpath
+.project
+.settings/
+.build/
+.external*/
 .idea/
+nbproject/
+
+# composer related
 vendor/
-module/.skip
 composer.lock
+
+# build
+build/
+build.properties
+
+# Translations
+.tx
