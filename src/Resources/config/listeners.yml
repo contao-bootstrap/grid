@@ -25,3 +25,11 @@ services:
     class: ContaoBootstrap\Grid\Listener\Dca\ModuleListener
     arguments:
       - '@contao_bootstrap.environment'
+
+  contao_bootstrap.grid.listeners.theme_export:
+    class: ContaoBootstrap\Grid\Listener\ThemeExportListener
+    arguments:
+     - '@contao.framework'
+
+  contao_bootstrap.grid.listeners.theme_import:
+    class: ContaoBootstrap\Grid\Listener\ThemeImportListener
