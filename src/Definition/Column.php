@@ -34,7 +34,7 @@ class Column
     /**
      * Order setting.
      *
-     * @var array
+     * @var int
      */
     private $order;
 
@@ -90,41 +90,13 @@ class Column
     /**
      * Set the flex order.
      *
-     * @param string $flexOrder Flex order setting.
+     * @param int $order Order value.
      *
      * @return $this
      */
-    public function order(string $flexOrder): self
+    public function order(int $order): self
     {
-        $this->order = ['flex', $flexOrder];
-
-        return $this;
-    }
-
-    /**
-     * Set push order.
-     *
-     * @param int $width Width.
-     *
-     * @return $this
-     */
-    public function push(int $width): self
-    {
-        $this->order = ['push', $width];
-
-        return $this;
-    }
-
-    /**
-     * Set pull order.
-     *
-     * @param int $width Width.
-     *
-     * @return $this
-     */
-    public function pull(int $width): self
-    {
-        $this->order = ['pull', $width];
+        $this->order = $order;
 
         return $this;
     }
@@ -199,7 +171,7 @@ class Column
 
         $this->buildAlign($classes);
         $this->buildJustify($classes);
-        $this->buildOrder($classes, $size);
+        $this->buildOrder($classes, $sizeSuffix);
         $this->buildOffset($classes, $sizeSuffix);
 
         if ($this->cssClasses) {
@@ -267,19 +239,16 @@ class Column
     /**
      * Build the order setting.
      *
-     * @param array  $classes Column classes.
-     * @param string $size    Device size.
+     * @param array  $classes    Column classes.
+     * @param string $sizeSuffix Size suffix.
      *
      * @return void
      */
-    private function buildOrder(array &$classes, string $size): void
+    private function buildOrder(array &$classes, string $sizeSuffix): void
     {
         if ($this->order) {
-            if ($this->order[0] === 'flex' || !$size) {
-                $classes[] = implode('-', $this->order);
-            } else {
-                $classes[] = sprintf('%s-%s-%s', $this->order[0], $size, $this->order[1]);
-            }
+            $classes[] = 'order' . $sizeSuffix . '-' . $this->order;
+
         }
     }
 

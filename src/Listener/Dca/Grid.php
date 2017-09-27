@@ -119,18 +119,8 @@ class Grid
     public function getOrders(): array
     {
         $columns = $this->getColumns();
-        $values  = [
-            'flex' => ['unordered', 'first', 'last'],
-            'push' => [],
-            'pull' => [],
-        ];
 
-        for ($i = 0; $i <= $columns; $i++) {
-            $values['push'][] = 'push-' . $i;
-            $values['pull'][] = 'pull-' . $i;
-        }
-
-        return $values;
+        return range(1, $columns);
     }
 
     /**
