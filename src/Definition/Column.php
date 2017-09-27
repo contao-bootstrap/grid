@@ -248,7 +248,6 @@ class Column
     {
         if ($this->order) {
             $classes[] = 'order' . $sizeSuffix . '-' . $this->order;
-
         }
     }
 
