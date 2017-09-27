@@ -77,6 +77,54 @@ class Grid
     }
 
     /**
+     * Set vertical align value.
+     *
+     * @param string $align Vertical align value.
+     *
+     * @return Grid
+     */
+    public function align(string $align): self
+    {
+        $this->align = $align;
+
+        return $this;
+    }
+
+    /**
+     * Set justify.
+     *
+     * @param string $justify Justify value.
+     *
+     * @return Grid
+     */
+    public function justify(string $justify): self
+    {
+        $this->justify = $justify;
+
+        return $this;
+    }
+
+    /**
+     * Add a class to the row.
+     *
+     * @param string $class Row class.
+     *
+     * @return Grid
+     */
+    public function addClass(string $class): self
+    {
+        $classes = explode(' ', $class);
+
+        foreach ($classes as $class) {
+            if (!in_array($class, $this->rowClasses)) {
+                $this->rowClasses[] = $class;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Build the row.
      *
      * @param bool $flat If true a string is returned.
@@ -92,7 +140,7 @@ class Grid
         }
 
         if ($this->justify) {
-            $classes[] = 'justify-' . $this->justify;
+            $classes[] = 'justify-content-' . $this->justify;
         }
 
         if ($this->noGutters) {

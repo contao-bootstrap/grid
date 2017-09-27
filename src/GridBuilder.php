@@ -86,6 +86,8 @@ final class GridBuilder
         $this->grid = new Grid();
         $sizes      = deserialize($this->model->sizes, true);
 
+        $this->buildRow();
+
         foreach ($sizes as $size) {
             $field      = $size . 'Size';
             $definition = deserialize($this->model->{$field}, true);
@@ -95,6 +97,30 @@ final class GridBuilder
             }
 
             $this->buildSize($size, $definition);
+        }
+    }
+
+    /**
+     * Build the row.
+     *
+     * @return void
+     */
+    private function buildRow(): void
+    {
+        if ($this->model->noGutters) {
+            $this->grid->addClass('no-gutters');
+        }
+
+        if ($this->model->rowClass) {
+            $this->grid->addClass($this->model->rowClass);
+        }
+
+        if ($this->model->align) {
+            $this->grid->align($this->model->align);
+        }
+
+        if ($this->model->justify) {
+            $this->grid->justify($this->model->justify);
         }
     }
 

@@ -21,7 +21,11 @@ use Contao\Model;
  * @package ContaoBootstrap\Grid\Model
  *
  * @property string|array sizes
- * @property int pid
+ * @property int          pid
+ * @property string       noGutters
+ * @property string       rowClass
+ * @property string       align
+ * @property string       justify
  */
 class GridModel extends Model
 {
