@@ -8,8 +8,8 @@
     {
       "name":"David Molineus",
       "email":"mail@netzmacht.de",
-      "homepage":"http://www.netzmacht.de",
-      "role":"Project leader"
+      "homepage":"https://netzmacht.de",
+      "role":"Developer"
     }
   ],
   "support":{
@@ -21,7 +21,7 @@
   "require":{
     "php":">=7.1",
     "contao/core-bundle":"^4.4",
-    "contao-bootstrap/core": "^2.0",
+    "contao-bootstrap/core": "^2.0@alpha",
     "menatwork/contao-multicolumnwizard":"^3.3.4",
     "contao-community-alliance/meta-palettes":"^1.10"
   },
@@ -30,8 +30,7 @@
     "phpcq/all-tasks": "^1.2"
   },
   "conflict": {
-    "netzmacht/contao-bootstrap": "*",
-    "contao/manager-plugin": "<2.0 || >=3.0"
+    "netzmacht/contao-bootstrap": "*"
   },
   "autoload": {
     "psr-4": { "ContaoBootstrap\\Grid\\": "src/" }
@@ -50,7 +49,5 @@
       "dev-develop": "2.1.x-dev"
     },
     "contao-manager-plugin": "ContaoBootstrap\\Grid\\ContaoManager\\Plugin"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+  }
 }
