@@ -15,6 +15,7 @@ services:
     arguments:
       - '@contao_bootstrap.environment'
       - '@database_connection'
+      - '@contao.framework'
 
   contao_bootstrap.grid.listeners.dca.form:
     class: ContaoBootstrap\Grid\Listener\Dca\FormListener

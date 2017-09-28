@@ -12,6 +12,14 @@
  */
 
 /*
+ * Config
+ */
+$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = [
+    'contao_bootstrap.grid.listeners.dca.content',
+    'initializeDca',
+];
+
+/*
  * Palettes
  */
 
@@ -44,6 +52,15 @@ $GLOBALS['TL_DCA']['tl_content']['metapalettes']['bs_gridStop'] = [
     'invisible' => ['invisible', 'start', 'stop'],
 ];
 
+$GLOBALS['TL_DCA']['tl_content']['metapalettes']['bs_grid_gallery'] = [
+    'type'      => ['type', 'headline'],
+    'source'    => ['multiSRC', 'sortBy', 'metaIgnore'],
+    'image'     => ['bs_grid', 'fullsize', 'bs_image_sizes', 'perPage', 'numberOfItems'],
+    'template'  => [':hide', 'galleryTpl', 'customTpl'],
+    'protected' => [':hide', 'protected'],
+    'expert'    => [':hide', 'guests', 'cssID', 'useHomeDir'],
+    'invisible' => ['invisible', 'start', 'stop'],
+];
 
 /*
  * Fields
@@ -60,11 +77,11 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid'] = [
         'submitOnChange'     => true,
         'includeBlankOption' => true,
         'chosen'             => true,
-        'tl_class'           => 'w50'
+        'tl_class'           => 'w50',
     ],
     'sql'              => "int(10) unsigned NOT NULL default '0'",
     'relation'         => ['type' => 'hasOne', 'load' => 'lazy'],
-    'foreignKey'       => 'tl_bs_grid.title'
+    'foreignKey'       => 'tl_bs_grid.title',
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_name'] = [
@@ -76,10 +93,10 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_name'] = [
         'submitOnChange'     => true,
         'includeBlankOption' => true,
         'chosen'             => true,
-        'tl_class'           => 'w50'
+        'tl_class'           => 'w50',
     ],
     'save_callback' => [
-        ['contao_bootstrap.grid.listeners.dca.content', 'generateGridName']
+        ['contao_bootstrap.grid.listeners.dca.content', 'generateGridName'],
     ],
     'sql'           => "varchar(64) NOT NULL default ''",
 ];
@@ -96,9 +113,9 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_parent'] = [
         'includeBlankOption' => true,
         'chosen'             => true,
         'doNotCopy'          => true,
-        'tl_class'           => 'w50'
+        'tl_class'           => 'w50',
     ],
-    'sql'              => "int(10) unsigned NOT NULL default '0'"
+    'sql'              => "int(10) unsigned NOT NULL default '0'",
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_wizard'] = [
@@ -115,4 +132,54 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_wizard'] = [
         'tl_class'           => 'clr w50',
         'doNotSaveEmpty'     => true,
     ],
+];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
+    'label'         => &$GLOBALS['TL_LANG']['tl_content']['bs_image_sizes'],
+    'exclude'       => true,
+    'inputType'     => 'multiColumnWizard',
+    'eval'          => [
+        'tl_class'     => 'clr lng bs-image-sizes',
+        'columnFields' => [
+            'size' => [
+                'label'            => &$GLOBALS['TL_LANG']['tl_content']['size'],
+                'exclude'          => true,
+                'inputType'        => 'select',
+                'reference'        => &$GLOBALS['TL_LANG']['MSC'],
+                'eval'             => [
+                    'includeBlankOption' => true,
+                    'nospace'            => true,
+                    'helpwizard'         => true,
+                ],
+                'options_callback' => function () {
+                    return System::getContainer()->get('contao.image.image_sizes')->getOptionsForUser(
+                        BackendUser::getInstance()
+                    );
+                },
+            ],
+            'width' => [
+                'label'         => &$GLOBALS['TL_LANG']['tl_content']['bs_image_size_width'],
+                'exclude'       => true,
+                'inputType'     => 'text',
+                'reference'     => &$GLOBALS['TL_LANG']['tl_content'],
+                'eval'          => [
+                    'includeBlankOption' => true,
+                    'chosen'             => true,
+                    'class'           => 'tl_imageSize_0',
+                ],
+            ],
+            'height' => [
+                'label'         => &$GLOBALS['TL_LANG']['tl_content']['bs_image_size_height'],
+                'exclude'       => true,
+                'inputType'     => 'text',
+                'reference'     => &$GLOBALS['TL_LANG']['tl_content'],
+                'eval'          => [
+                    'includeBlankOption' => true,
+                    'chosen'             => true,
+                    'class'           => 'tl_imageSize_1',
+                ],
+            ]
+        ],
+    ],
+    'sql'           => "blob NULL",
 ];

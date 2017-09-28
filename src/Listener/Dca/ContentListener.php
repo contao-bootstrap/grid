@@ -16,7 +16,11 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\ContentModel;
+use Contao\Controller;
+use Contao\CoreBundle\Framework\Adapter;
+use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
 use Contao\DataContainer;
+use Contao\Input;
 use Contao\Model;
 use ContaoBootstrap\Core\Environment;
 use Doctrine\DBAL\Connection;
@@ -36,16 +40,60 @@ class ContentListener extends AbstractWrapperDcaListener
     private $connection;
 
     /**
+     * Contao framework.
+     *
+     * @var ContaoFramework
+     */
+    private $framework;
+
+    /**
+     * Content Model repository.
+     *
+     * @var Adapter|ContentModel
+     */
+    private $repository;
+
+    /**
      * ContentDataContainer constructor.
      *
-     * @param Environment $environment Bootstrap environment.
-     * @param Connection  $connection  Database connection.
+     * @param Environment     $environment Bootstrap environment.
+     * @param Connection      $connection  Database connection.
+     * @param ContaoFramework $framework   Contao framework.
      */
-    public function __construct(Environment $environment, Connection $connection)
+    public function __construct(Environment $environment, Connection $connection, ContaoFramework $framework)
     {
         parent::__construct($environment);
 
         $this->connection = $connection;
+        $this->framework  = $framework;
+        $this->repository = $this->framework->getAdapter(ContentModel::class);
+    }
+
+    /**
+     * Initialize the dca.
+     *
+     * @return void
+     */
+    public function initializeDca(): void
+    {
+        /** @var Input $input */
+        $input = $this->framework->getAdapter(Input::class);
+
+        if ($input->get('act') !== 'edit') {
+            return;
+        }
+
+        $model = $this->repository->findByPk(Input::get('id'));
+        if (!$model || $model->type !== 'bs_grid_gallery') {
+            return;
+        }
+
+        $GLOBALS['TL_CSS'][] = 'bundles/contaobootstrapgrid/css/backend.css';
+
+        $GLOBALS['TL_DCA']['tl_content']['fields']['galleryTpl']['options_callback'] = [
+            'contao_bootstrap.grid.listeners.dca.content',
+            'getGalleryTemplates'
+        ];
     }
 
     /**
@@ -68,7 +116,7 @@ class ContentListener extends AbstractWrapperDcaListener
             $values[] = $dataContainer->activeRecord->ptable;
         }
 
-        $collection = ContentModel::findBy($columns, $values);
+        $collection = $this->repository->findBy($columns, $values);
         $options    = [];
 
         if ($collection) {
@@ -82,6 +130,19 @@ class ContentListener extends AbstractWrapperDcaListener
         }
 
         return $options;
+    }
+
+    /**
+     * Get all gallery templates.
+     *
+     * @return array
+     */
+    public function getGalleryTemplates()
+    {
+        /** @var Controller $adapter */
+        $adapter = $this->framework->getAdapter(Controller::class);
+
+        return $adapter->getTemplateGroup('bs_gallery_');
     }
 
     /**
@@ -116,7 +177,7 @@ class ContentListener extends AbstractWrapperDcaListener
      */
     protected function getNextElements($current): array
     {
-        $collection = ContentModel::findBy(
+        $collection = $this->repository->findBy(
             [
                 'tl_content.ptable=?',
                 'tl_content.pid=?',
@@ -143,7 +204,7 @@ class ContentListener extends AbstractWrapperDcaListener
      */
     protected function getStopElement($current): Model
     {
-        $stopElement = ContentModel::findOneBy(
+        $stopElement = $this->repository->findOneBy(
             ['tl_content.type=?', 'tl_content.bs_grid_parent=?'],
             ['bs_gridStop', $current->id]
         );

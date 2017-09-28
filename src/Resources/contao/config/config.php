@@ -11,6 +11,7 @@
  * @filesource
  */
 
+use ContaoBootstrap\Grid\Component\ContentElement\GalleryElement;
 use ContaoBootstrap\Grid\Component\ContentElement\GridSeparatorElement;
 use ContaoBootstrap\Grid\Component\ContentElement\GridStartElement;
 use ContaoBootstrap\Grid\Component\ContentElement\GridStopElement;
@@ -33,6 +34,7 @@ $GLOBALS['FE_MOD']['miscellaneous']['bs_grid'] = GridModule::class;
 $GLOBALS['TL_CTE']['bs_grid']['bs_gridStart']     = GridStartElement::class;
 $GLOBALS['TL_CTE']['bs_grid']['bs_gridStop']      = GridStopElement::class;
 $GLOBALS['TL_CTE']['bs_grid']['bs_gridSeparator'] = GridSeparatorElement::class;
+$GLOBALS['TL_CTE']['media']['bs_grid_gallery']    = GalleryElement::class;
 
 // Form fields
 $GLOBALS['TL_FFL']['bs_gridStart']     = GridStartFormField::class;
