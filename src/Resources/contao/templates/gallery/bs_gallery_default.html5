@@ -11,10 +11,10 @@
                 <?php if ($col->href): ?>
                     <a href="<?= $col->href ?>"<?= $col->attributes ?><?php if ($col->linkTitle) echo ' title="' . $col->linkTitle . '"'; ?> itemprop="contentUrl"><?php $this->insert('picture_default', $col->picture); ?></a>
                 <?php else: ?>
-                    <?php $this->insert('picture_default', array_merge($col->picture)); ?>
+                    <?php $this->insert('picture_default', $col->picture); ?>
                 <?php endif; ?>
                 <?php if ($col->caption): ?>
-                    <figcaption class="caption" itemprop="caption"><?= $col->caption ?></figcaption>
+                    <figcaption class="figure-caption" itemprop="caption"><?= $col->caption ?></figcaption>
                 <?php endif; ?>
             </figure>
         </div>
