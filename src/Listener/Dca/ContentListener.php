@@ -73,6 +73,8 @@ class ContentListener extends AbstractWrapperDcaListener
      * Initialize the dca.
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function initializeDca(): void
     {
