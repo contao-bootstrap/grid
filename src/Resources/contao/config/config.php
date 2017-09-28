@@ -34,7 +34,14 @@ $GLOBALS['FE_MOD']['miscellaneous']['bs_grid'] = GridModule::class;
 $GLOBALS['TL_CTE']['bs_grid']['bs_gridStart']     = GridStartElement::class;
 $GLOBALS['TL_CTE']['bs_grid']['bs_gridStop']      = GridStopElement::class;
 $GLOBALS['TL_CTE']['bs_grid']['bs_gridSeparator'] = GridSeparatorElement::class;
-$GLOBALS['TL_CTE']['media']['bs_grid_gallery']    = GalleryElement::class;
+
+array_insert(
+    $GLOBALS['TL_CTE']['media'],
+    (array_search('gallery', array_keys($GLOBALS['TL_CTE']['media'])) + 1),
+    [
+        'bs_grid_gallery' => GalleryElement::class
+    ]
+);
 
 // Form fields
 $GLOBALS['TL_FFL']['bs_gridStart']     = GridStartFormField::class;
