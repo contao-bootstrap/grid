@@ -48,6 +48,8 @@ abstract class AbstractRelatedFormField extends AbstractFormField
                 // Do nothing. Error is displayed in backend view.
             }
         }
+
+        return null;
     }
 
     /**
