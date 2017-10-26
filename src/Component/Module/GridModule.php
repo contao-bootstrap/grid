@@ -100,7 +100,7 @@ class GridModule extends Module
         $provider = static::getContainer()->get('contao_bootstrap.grid.grid_provider');
 
         try {
-            return $provider->getIterator('ce:' . $this->id, $this->bs_grid);
+            return $provider->getIterator('ce:' . $this->id, (int) $this->bs_grid);
         } catch (\Exception $e) {
             // Do nothing.
         }
