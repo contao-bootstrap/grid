@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true;
+
   contao_bootstrap.grid.listeners.build_context_config:
     class: ContaoBootstrap\Grid\Listener\BuildContextConfigListener
     tags:
