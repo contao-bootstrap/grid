@@ -165,11 +165,13 @@ class Grid
     public function buildColumn(int $index, bool $flat = false)
     {
         $classes = [];
-        foreach ($this->columns as $size => $columns) {
-            $column = $this->getColumnByIndex($columns, $index);
+        if(is_array($this->columns)) {
+            foreach ($this->columns as $size => $columns) {
+                $column = $this->getColumnByIndex($columns, $index);
 
-            if ($column) {
-                $classes = $column->build($classes, $size);
+                if ($column) {
+                    $classes = $column->build($classes, $size);
+                }
             }
         }
 
