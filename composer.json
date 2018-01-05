@@ -23,7 +23,7 @@
     "contao/core-bundle":"^4.4",
     "contao-bootstrap/core": "^2.0@alpha",
     "menatwork/contao-multicolumnwizard":"^3.3.4",
-    "contao-community-alliance/meta-palettes":"^1.10"
+    "contao-community-alliance/meta-palettes":"^2.0 || ^1.11"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.0",
