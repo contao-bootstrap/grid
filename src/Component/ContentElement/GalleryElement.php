@@ -330,10 +330,14 @@ class GalleryElement extends ContentGallery
      */
     private function getGridIterator(): ?GridIterator
     {
-        if ($this->bs_grid) {
-            $provider = $this->getGridProvider();
+        try {
+            if ($this->bs_grid) {
+                $provider = $this->getGridProvider();
 
-            return $provider->getIterator('ce:' . $this->id, (int) $this->bs_grid);
+                return $provider->getIterator('ce:' . $this->id, (int) $this->bs_grid);
+            }
+        } catch (\RuntimeException $e) {
+            // No Grid found, return null.
         }
 
         return null;
