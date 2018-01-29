@@ -260,7 +260,7 @@ class GalleryElement extends ContentGallery
                 $this->images[$index]['filesModel']
             );
 
-            $cell->picture['attributes'] = 'class="img-fluid figure-img"';
+            $cell->picture['attributes'] = 'class="img-fluid figure-img img-thumbnail"';
 
             $body[] = $cell;
         }

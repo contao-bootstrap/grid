@@ -10,6 +10,7 @@ Changelog
  - Catch error in grid gallery element if grid does not exist
  - Fix broken gallery image sorting
  - Fix grid order in the options
+ - Fix img thumbnail for the gallery images.
 
 2.0.0 (2018-01-05)
 ------------------
