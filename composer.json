@@ -3,7 +3,7 @@
   "description":"Bootstrap grid component",
   "keywords":["bootstrap", "components", "contao", "grid"],
   "type":"contao-bundle",
-  "license":"LGPL-3.0+",
+  "license":"LGPL-3.0-or-later",
   "authors":[
     {
       "name":"David Molineus",
@@ -21,7 +21,7 @@
   "require":{
     "php":">=7.1",
     "contao/core-bundle":"^4.4",
-    "contao-bootstrap/core": "^2.0@alpha",
+    "contao-bootstrap/core": "^2.0",
     "menatwork/contao-multicolumnwizard":"^3.3.4",
     "contao-community-alliance/meta-palettes":"^2.0 || ^1.11"
   },
