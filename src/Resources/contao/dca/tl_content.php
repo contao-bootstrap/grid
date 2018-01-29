@@ -184,3 +184,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
     ],
     'sql'           => 'blob NULL',
 ];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['multiSRC']['load_callback'][] = [
+    'contao_bootstrap.grid.listeners.dca.content',
+    'setMultiSrcFlags'
+];

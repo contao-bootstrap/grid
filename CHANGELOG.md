@@ -7,7 +7,8 @@ Changelog
 
 [Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.0...2.0.1)
 
- - Catch error in grid gallery element if grid does not exist ()
+ - Catch error in grid gallery element if grid does not exist
+ - Fix broken gallery image sorting
 
 2.0.0 (2018-01-05)
 ------------------
