@@ -22,7 +22,7 @@
     "php":">=7.1",
     "contao/core-bundle":"^4.4",
     "contao-bootstrap/core": "^2.0",
-    "menatwork/contao-multicolumnwizard":"^3.3.4",
+    "menatwork/contao-multicolumnwizard":"^3.3.14",
     "contao-community-alliance/meta-palettes":"^2.0 || ^1.11"
   },
   "require-dev": {
