@@ -75,7 +75,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid'] = [
     'reference'        => &$GLOBALS['TL_LANG']['tl_content'],
     'eval'             => [
         'mandatory'          => true,
-        'submitOnChange'     => true,
         'includeBlankOption' => true,
         'chosen'             => true,
         'tl_class'           => 'w50',
@@ -91,7 +90,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_name'] = [
     'inputType'     => 'text',
     'reference'     => &$GLOBALS['TL_LANG']['tl_content'],
     'eval'          => [
-        'submitOnChange'     => true,
         'includeBlankOption' => true,
         'chosen'             => true,
         'tl_class'           => 'w50',
@@ -110,7 +108,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_parent'] = [
     'reference'        => &$GLOBALS['TL_LANG']['tl_content'],
     'eval'             => [
         'mandatory'          => true,
-        'submitOnChange'     => true,
         'includeBlankOption' => true,
         'chosen'             => true,
         'doNotCopy'          => true,
@@ -183,4 +180,9 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
         ],
     ],
     'sql'           => 'blob NULL',
+];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['multiSRC']['load_callback'][] = [
+    'contao_bootstrap.grid.listeners.dca.content',
+    'setMultiSrcFlags'
 ];

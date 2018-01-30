@@ -260,7 +260,7 @@ class GalleryElement extends ContentGallery
                 $this->images[$index]['filesModel']
             );
 
-            $cell->picture['attributes'] = 'class="img-fluid figure-img"';
+            $cell->picture['attributes'] = 'class="img-fluid figure-img img-thumbnail"';
 
             $body[] = $cell;
         }
@@ -330,10 +330,14 @@ class GalleryElement extends ContentGallery
      */
     private function getGridIterator(): ?GridIterator
     {
-        if ($this->bs_grid) {
-            $provider = $this->getGridProvider();
+        try {
+            if ($this->bs_grid) {
+                $provider = $this->getGridProvider();
 
-            return $provider->getIterator('ce:' . $this->id, (int) $this->bs_grid);
+                return $provider->getIterator('ce:' . $this->id, (int) $this->bs_grid);
+            }
+        } catch (\RuntimeException $e) {
+            // No Grid found, return null.
         }
 
         return null;

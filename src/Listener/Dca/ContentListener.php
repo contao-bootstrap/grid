@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
+use Contao\Config;
 use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Framework\Adapter;
@@ -145,6 +146,28 @@ class ContentListener extends AbstractWrapperDcaListener
         $adapter = $this->framework->getAdapter(Controller::class);
 
         return $adapter->getTemplateGroup('bs_gallery_');
+    }
+
+    /**
+     * Dynamically add flags to the "multiSRC" field.
+     *
+     * @param mixed         $value         Given value.
+     * @param DataContainer $dataContainer Data Container driver.
+     *
+     * @return mixed
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
+    public function setMultiSrcFlags($value, DataContainer $dataContainer)
+    {
+        if ($dataContainer->activeRecord && $dataContainer->activeRecord->type === 'bs_grid_gallery') {
+            $fieldsDca =& $GLOBALS['TL_DCA'][$dataContainer->table]['fields'][$dataContainer->field]['eval'];
+
+            $fieldsDca['isGallery']  = true;
+            $fieldsDca['extensions'] = Config::get('validImageTypes');
+        }
+
+        return $value;
     }
 
     /**

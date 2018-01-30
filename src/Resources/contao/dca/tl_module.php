@@ -27,7 +27,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['bs_grid'] = [
     'reference'        => &$GLOBALS['TL_LANG']['tl_content'],
     'eval'             => [
         'mandatory'          => true,
-        'submitOnChange'     => true,
         'includeBlankOption' => true,
         'chosen'             => true,
         'tl_class'           => 'w50',

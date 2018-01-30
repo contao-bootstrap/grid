@@ -63,7 +63,7 @@ abstract class AbstractDcaListener
      */
     public function getGridOptions(): array
     {
-        $collection = GridModel::findAll();
+        $collection = GridModel::findAll(['order' => 'tl_bs_grid.title']);
         $options    = [];
 
         if ($collection) {

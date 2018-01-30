@@ -2,8 +2,19 @@
 Changelog
 =========
 
+2.0.1 (2018-01-29)
+------------------
+
+[Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.0...2.0.1)
+
+ - Catch error in grid gallery element if grid does not exist
+ - Fix broken gallery image sorting
+ - Fix grid order in the options
+ - Fix img thumbnail for the gallery images.
+ - Fix auto submitting of the grid input fields.
+
 2.0.0 (2018-01-05)
-------------------------
+------------------
 
 [Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.0-beta3...2.0.0)
 
