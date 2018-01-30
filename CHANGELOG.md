@@ -11,6 +11,7 @@ Changelog
  - Fix broken gallery image sorting
  - Fix grid order in the options
  - Fix img thumbnail for the gallery images.
+ - Fix auto submitting of the grid input fields.
 
 2.0.0 (2018-01-05)
 ------------------
