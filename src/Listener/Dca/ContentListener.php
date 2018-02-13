@@ -23,6 +23,7 @@ use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
 use Contao\DataContainer;
 use Contao\Input;
 use Contao\Model;
+use Contao\StringUtil;
 use ContaoBootstrap\Core\Environment;
 use Doctrine\DBAL\Connection;
 
@@ -168,6 +169,48 @@ class ContentListener extends AbstractWrapperDcaListener
         }
 
         return $value;
+    }
+
+    /**
+     * Migrate image sizes so that the repeat value is given.
+     *
+     * @param $value
+     *
+     * @return array|null|string
+     */
+    public function migrateImageSizes($value)
+    {
+        //return $value;
+        $value   = StringUtil::deserialize($value, true);
+        $current = null;
+
+        foreach ($value as $index => $row) {
+            if (array_key_exists('repeat', $value)) {
+                // Already migrated, so skip migration
+                $current = null;
+                break;
+            } elseif ($current === null) {
+                // No current row set, use current one
+                $current = $index;
+                continue;
+            }
+
+            $value[$index]['repeat'] = null;
+
+            // Check if row is identical to the last one
+            if ((is_numeric($row['size']) && $value[$current]['size'] == $row['size'])
+                || ($value[$current]['size'] == $row['size']
+                    && $value[$current]['width'] == $row['width']
+                    && $value[$current]['height'] == $row['height'])
+            ) {
+                $value[$current]['repeat'] ++;
+                unset ($value[$index]);
+            } else {
+                $current = null;
+            }
+        }
+
+        return array_values($value);
     }
 
     /**

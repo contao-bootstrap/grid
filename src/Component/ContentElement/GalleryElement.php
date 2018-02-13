@@ -239,8 +239,20 @@ class GalleryElement extends ContentGallery
 
             // Loop through images sizes.
             $size = current($imageSizes);
-            if (next($imageSizes) === false) {
+            $key  = key($imageSizes);
+
+            if (!array_key_exists('repeat', $size) && next($imageSizes) === false) {
                 reset($imageSizes);
+            } elseif (array_key_exists('repeat', $imageSizes[$key])) {
+                if ($imageSizes[$key] === '') {
+                    $imageSizes[$key] = 1;
+                }
+
+                if ($imageSizes[$key]['repeat'] > 1) {
+                    $imageSizes[$key]['repeat']--;
+                } elseif (next($imageSizes) === false) {
+                    reset($imageSizes);
+                }
             }
 
             // Build legacy size format.
@@ -260,7 +272,7 @@ class GalleryElement extends ContentGallery
                 $this->images[$index]['filesModel']
             );
 
-            $cell->picture['attributes'] = 'class="img-fluid figure-img img-thumbnail"';
+            $cell->picture['attributes'] = 'class="img-fluid figure-img"';
 
             $body[] = $cell;
         }

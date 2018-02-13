@@ -161,8 +161,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
                 'inputType'     => 'text',
                 'reference'     => &$GLOBALS['TL_LANG']['tl_content'],
                 'eval'          => [
-                    'includeBlankOption' => true,
-                    'chosen'             => true,
                     'class'           => 'tl_imageSize_0',
                 ],
             ],
@@ -172,12 +170,23 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
                 'inputType'     => 'text',
                 'reference'     => &$GLOBALS['TL_LANG']['tl_content'],
                 'eval'          => [
-                    'includeBlankOption' => true,
-                    'chosen'             => true,
                     'class'           => 'tl_imageSize_1',
+                ],
+            ],
+            'repeat' => [
+                'label'         => &$GLOBALS['TL_LANG']['tl_content']['bs_image_size_repeat'],
+                'exclude'       => true,
+                'inputType'     => 'text',
+                'reference'     => &$GLOBALS['TL_LANG']['tl_content'],
+                'eval'          => [
+                    'rgxp'  => 'natural',
+                    'class' => '',
                 ],
             ]
         ],
+    ],
+    'load_callback' => [
+        ['contao_bootstrap.grid.listeners.dca.content', 'migrateImageSizes']
     ],
     'sql'           => 'blob NULL',
 ];
