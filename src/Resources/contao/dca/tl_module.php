@@ -33,7 +33,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['bs_grid'] = [
     ],
     'sql'              => "int(10) unsigned NOT NULL default '0'",
     'relation'         => ['type' => 'hasOne', 'load' => 'lazy'],
-    'foreignKey'       => 'tl_grid.title',
+    'foreignKey'       => 'tl_bs_grid.title',
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['bs_gridModules'] = [

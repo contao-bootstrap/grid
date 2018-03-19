@@ -2,6 +2,13 @@
 Changelog
 =========
 
+2.0.2 (xxxx-xx-xx)
+------------------
+
+[Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.1...2.0.2)
+
+ - Fix issue of attempt to load `GridModel` from the global namespace (#9).
+
 2.0.1 (2018-01-29)
 ------------------
 
