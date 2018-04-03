@@ -107,6 +107,9 @@ final class GridBuilder
      */
     private function buildRow(): void
     {
+        if ($this->model->overwriteReset) {
+            $this->grid->overwriteReset(true);
+        }
         if ($this->model->noGutters) {
             $this->grid->addClass('no-gutters');
         }

@@ -23,6 +23,7 @@ use Contao\Model;
  * @property string|array sizes
  * @property int          pid
  * @property string       noGutters
+ * @property string       overwriteReset
  * @property string       rowClass
  * @property string       align
  * @property string       justify

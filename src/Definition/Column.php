@@ -184,15 +184,22 @@ class Column
     /**
      * Build the reset for the column.
      *
-     * @param array  $resets Reset definitions.
-     * @param string $size   Column size.
+     * @param array  $resets  Reset definitions.
+     * @param string $size    Column size.
+     * @param string $endSize Column endSize.
      *
      * @return array
      */
-    public function buildReset(array $resets, string $size = ''): array
+    public function buildReset(array $resets, string $size = '', string $endSize): array
     {
         if ($this->hasReset()) {
-            $resets[] = sprintf('d-none d%s-block', $size ? '-' . $size : '');
+            $reset = sprintf('d-none d%s-block', $size ? '-' . $size : '');
+
+            if ($endSize !== '') {
+                $reset .= sprintf(' d-%s-none', $endSize);
+            }
+
+            $resets[] = $reset;
         }
 
         return $resets;

@@ -58,6 +58,13 @@ class Grid
     private $noGutters = false;
 
     /**
+     * Prevent heredity of resets.
+     *
+     * @var bool
+     */
+    private $overwriteReset = false;
+
+    /**
      * Add a column.
      *
      * @param Column|null $column New column.
@@ -125,6 +132,20 @@ class Grid
     }
 
     /**
+     * Set overwriteRest.
+     *
+     * @param bool $overwriteRest overwriteRest value.
+     *
+     * @return Grid
+     */
+    public function overwriteReset(bool $overwriteReset): self
+    {
+        $this->overwriteReset = $overwriteReset;
+
+        return $this;
+    }
+
+    /**
      * Build the row.
      *
      * @param bool $flat If true a string is returned.
@@ -183,6 +204,26 @@ class Grid
     }
 
     /**
+     * Get end size.
+     *
+     * @param string $size Size string.
+     *
+     * @return bool|string
+     */
+    public function getEndSize($size)
+    {
+        $endSize = '';
+
+        if ($this->overwriteReset) {
+            $sizeKeys = array_keys($this->columns);
+            $sizeIndex = array_search($size,$sizeKeys);
+            $endSize = isset($sizeKeys[$sizeIndex+1]) ? $sizeKeys[$sizeIndex+1] : '';
+        }
+
+        return $endSize;
+    }
+
+    /**
      * Build reset classes.
      *
      * @param int $index Column index.
@@ -195,9 +236,10 @@ class Grid
 
         foreach ($this->columns as $size => $columns) {
             $column = $this->getColumnByIndex($columns, $index);
+            $endSize = $this->getEndSize($size);
 
             if ($column) {
-                $resets = $column->buildReset($resets, $size);
+                $resets = $column->buildReset($resets, $size, $endSize);
             }
         }
 

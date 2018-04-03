@@ -85,7 +85,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
         'default' => [
             'title' => ['title', 'description'],
             'grid'  => ['sizes'],
-            'row'   => [':hide', 'align', 'justify', 'rowClass', 'noGutters'],
+            'row'   => [':hide', 'align', 'justify', 'rowClass', 'noGutters', 'overwriteReset'],
         ],
     ],
     'fields'       => [
@@ -573,5 +573,15 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             ],
             'sql'       => 'char(1) NULL',
         ],
+        'overwriteReset'   => [
+            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['overwriteReset'],
+            'exclude'   => true,
+            'default'   => '',
+            'inputType' => 'checkbox',
+            'eval'      => [
+                'tl_class' => 'clr w50 m12',
+            ],
+            'sql'       => 'char(1) NULL',
+        ]
     ],
 ];
