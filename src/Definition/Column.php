@@ -190,7 +190,7 @@ class Column
      *
      * @return array
      */
-    public function buildReset(array $resets, string $size = '', string $endSize): array
+    public function buildReset(array $resets, string $size = '', string $endSize = ''): array
     {
         if ($this->hasReset()) {
             $reset = sprintf('d-none d%s-block', $size ? '-' . $size : '');
