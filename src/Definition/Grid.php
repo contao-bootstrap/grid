@@ -132,9 +132,9 @@ class Grid
     }
 
     /**
-     * Set overwriteRest.
+     * Set overwriteReset.
      *
-     * @param bool $overwriteRest overwriteRest value.
+     * @param bool $overwriteReset overwriteReset value.
      *
      * @return Grid
      */
