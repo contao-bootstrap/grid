@@ -1,4 +1,4 @@
-Contao-Bootstrap Grid Component
+Fork of Contao-Bootstrap Grid Component for multiple resets
 ===============================
 
 [![Build Status](http://img.shields.io/travis/contao-bootstrap/grid/master.svg?style=flat-square)](https://travis-ci.org/contao-bootstrap/grid)
