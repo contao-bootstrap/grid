@@ -2,7 +2,7 @@
 Changelog
 =========
 
-2.0.2 (xxxx-xx-xx)
+2.0.2 (2018-04-23)
 ------------------
 
 [Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.1...2.0.2)
