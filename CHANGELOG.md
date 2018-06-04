@@ -2,6 +2,13 @@
 Changelog
 =========
 
+2.0.3 (2018-xx-xx)
+------------------
+
+[Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.2...2.0.3)
+
+ - Fix null column width.
+
 2.0.2 (2018-04-23)
 ------------------
 

@@ -166,8 +166,15 @@ class Column
     public function build(array $classes, string $size = ''): array
     {
         $sizeSuffix  = $size ? '-' . $size : $size;
-        $widthSuffix = ($this->width > 0) ? '-' . $this->width : $this->width;
-        $classes[]   = 'col' . $sizeSuffix . $widthSuffix;
+
+        if ($this->width === null || $this->width > 0) {
+            $widthSuffix = ($this->width > 0) ? '-' . $this->width : '';
+            $classes[]   = 'col' . $sizeSuffix . $widthSuffix;
+        } elseif ($size) {
+            $classes[] = 'd-' . $size . '-none';
+        } else {
+            $classes[] = 'd-none';
+        }
 
         $this->buildAlign($classes);
         $this->buildJustify($classes);
