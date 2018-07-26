@@ -165,7 +165,7 @@ class Column
      */
     public function build(array $classes, string $size = ''): array
     {
-        $sizeSuffix  = $size ? '-' . $size : $size;
+        $sizeSuffix = $size ? '-' . $size : $size;
 
         if ($this->width === null || $this->width > 0) {
             $widthSuffix = ($this->width > 0) ? '-' . $this->width : '';
