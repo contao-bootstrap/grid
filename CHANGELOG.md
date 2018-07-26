@@ -8,6 +8,7 @@ Changelog
 [Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.2...2.0.3)
 
  - Fix null column width.
+ - Fix auto value selection. Always 0 was selected.
 
 2.0.2 (2018-04-23)
 ------------------
