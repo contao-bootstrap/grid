@@ -152,7 +152,15 @@ final class GridBuilder
     {
         $column = new Column();
         if ($definition['width']) {
-            $column->width((int) $definition['width']);
+            switch ($definition['width']) {
+                case 'auto':
+                    break;
+                case 'null':
+                    $column->width(0);
+                    break;
+                default:
+                    $column->width((int) $definition['width']);
+            }
         }
 
         if ($definition['order']) {

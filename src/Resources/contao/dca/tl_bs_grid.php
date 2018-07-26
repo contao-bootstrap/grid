@@ -147,6 +147,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                         'eval'             => [
                             'style'              => 'width: 100px;',
+                            'isAssociative'      => true,
                             'chosen'             => true,
                             'includeBlankOption' => true,
                         ],
@@ -226,6 +227,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                         'eval'             => [
                             'style'              => 'width: 100px;',
+                            'isAssociative'      => true,
                             'chosen'             => true,
                             'includeBlankOption' => true,
                         ],
@@ -306,6 +308,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                         'eval'             => [
                             'style'              => 'width: 100px;',
+                            'isAssociative'      => true,
                             'chosen'             => true,
                             'includeBlankOption' => true,
                         ],
@@ -386,6 +389,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                         'eval'             => [
                             'style'              => 'width: 100px;',
+                            'isAssociative'      => true,
                             'chosen'             => true,
                             'includeBlankOption' => true,
                         ],
@@ -466,6 +470,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         ],
                         'eval'             => [
                             'style'              => 'width: 100px;',
+                            'isAssociative'      => true,
                             'chosen'             => true,
                             'includeBlankOption' => true,
                         ],

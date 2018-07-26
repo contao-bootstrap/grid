@@ -106,9 +106,9 @@ class GridListener
     public function getWidths(): array
     {
         $columns = $this->getColumns();
-        $values  = ['auto'];
+        $values  = ['auto', 'null'];
 
-        return array_merge($values, range(0, $columns));
+        return array_merge($values, range(1, $columns));
     }
 
     /**
