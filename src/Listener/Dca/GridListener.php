@@ -107,8 +107,9 @@ class GridListener
     {
         $columns = $this->getColumns();
         $values  = ['auto', 'null'];
+        $values  = array_merge($values, range(1, $columns));
 
-        return array_merge($values, range(1, $columns));
+        return array_combine($values, $values);
     }
 
     /**
