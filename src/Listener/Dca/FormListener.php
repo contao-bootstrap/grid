@@ -154,7 +154,7 @@ class FormListener extends AbstractWrapperDcaListener
             foreach ($collection as $model) {
                 $options[$model->id] = sprintf(
                     '%s [%s]',
-                    $model->name,
+                    $model->bs_grid_name,
                     $model->getRelated('bs_grid')->title
                 );
             }
