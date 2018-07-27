@@ -101,7 +101,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_name'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_parent'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid'],
+    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid_parent'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.content', 'getGridParentOptions'],
