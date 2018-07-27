@@ -29,7 +29,7 @@ class GridStartFormField extends AbstractFormField
      *
      * @var string
      */
-    protected $strTemplate = 'form_grid_start';
+    protected $strTemplate = 'form_bs_gridStart';
 
     /**
      * {@inheritDoc}

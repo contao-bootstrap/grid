@@ -27,7 +27,7 @@ class GridSeparatorFormField extends AbstractRelatedFormField
      *
      * @var string
      */
-    protected $strTemplate = 'form_grid_separator';
+    protected $strTemplate = 'form_bs_gridSeparator';
 
     /**
      * {@inheritdoc}

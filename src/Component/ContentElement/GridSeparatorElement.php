@@ -30,7 +30,7 @@ final class GridSeparatorElement extends AbstractGridElement
      *
      * @var string
      */
-    protected $strTemplate = 'ce_grid_separator';
+    protected $strTemplate = 'ce_bs_gridSeparator';
 
     /**
      * {@inheritdoc}

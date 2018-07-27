@@ -1,2 +1,8 @@
-    </div>
-</div>
+<?php
+
+trigger_error(
+    sprintf('Template "ce_grid_stop" is deprecated and get removed in 2.1.0. Use ce_bs_gridStop instead'),
+    E_USER_DEPRECATED
+);
+
+$this->insert('ce_bs_gridStop');

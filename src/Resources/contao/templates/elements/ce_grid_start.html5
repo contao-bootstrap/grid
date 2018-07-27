@@ -1,2 +1,8 @@
-<div<?= $this->cssID; ?> class="<?= $this->class ?> <?= $this->rowClasses ?>">
-    <div class="<?= $this->columnClasses ?>">
+<?php
+
+trigger_error(
+    sprintf('Template "ce_grid_start" is deprecated and get removed in 2.1.0. Use ce_bs_gridStart instead'),
+    E_USER_DEPRECATED
+);
+
+$this->insert('ce_bs_gridStart');

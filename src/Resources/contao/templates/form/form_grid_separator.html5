@@ -1,5 +1,8 @@
-    </div>
-    <?php foreach ($this->resets as $reset): ?>
-    <div class="clearfix w-100 <?= $reset ?>"></div>
-    <?php endforeach; ?>
-    <div class="<?= $this->columnClasses ?>">
+<?php
+
+trigger_error(
+    sprintf('Template "form_grid_separator" is deprecated and get removed in 2.1.0. Use form_bs_gridSeparator instead'),
+    E_USER_DEPRECATED
+);
+
+$this->insert('form_bs_gridSeparator');

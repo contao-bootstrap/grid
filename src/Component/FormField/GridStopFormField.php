@@ -27,7 +27,7 @@ class GridStopFormField extends AbstractRelatedFormField
      *
      * @var string
      */
-    protected $strTemplate = 'form_grid_stop';
+    protected $strTemplate = 'form_bs_gridStop';
 
     /**
      * {@inheritdoc}

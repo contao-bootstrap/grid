@@ -30,7 +30,7 @@ final class GridStopElement extends AbstractGridElement
      *
      * @var string
      */
-    protected $strTemplate = 'ce_grid_stop';
+    protected $strTemplate = 'ce_bs_gridStop';
 
     /**
      * {@inheritdoc}

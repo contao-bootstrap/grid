@@ -29,7 +29,7 @@ final class GridStartElement extends AbstractGridElement
      *
      * @var string
      */
-    protected $strTemplate = 'ce_grid_start';
+    protected $strTemplate = 'ce_bs_gridStart';
 
     /**
      * {@inheritdoc}
