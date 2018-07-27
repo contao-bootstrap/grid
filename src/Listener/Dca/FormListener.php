@@ -137,19 +137,15 @@ class FormListener extends AbstractWrapperDcaListener
     /**
      * Get all grid parent options.
      *
-     * @param DataContainer|null $dataContainer Data container driver.
-     *
      * @return array
      */
-    public function getGridParentOptions(DataContainer $dataContainer = null): array
+    public function getGridParentOptions(): array
     {
         $columns[] = 'tl_form_field.type = ?';
-        $values[]  = 'bs_gridStart';
+        $columns[] = 'tl_form_field.pid = ?';
 
-        if ($dataContainer) {
-            $columns[] = 'tl_form_field.pid = ?';
-            $values[]  = $dataContainer->activeRecord->pid;
-        }
+        $values[] = 'bs_gridStart';
+        $values[] = CURRENT_ID;
 
         $collection = FormFieldModel::findBy($columns, $values);
         $options    = [];
