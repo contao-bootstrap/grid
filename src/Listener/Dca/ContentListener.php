@@ -109,17 +109,14 @@ class ContentListener extends AbstractWrapperDcaListener
     public function getGridParentOptions(DataContainer $dataContainer = null): array
     {
         $columns[] = 'tl_content.type = ?';
-        $values[]  = 'bs_gridStart';
+        $columns[] = 'tl_content.pid = ?';
+        $columns[] = 'tl_content.ptable = ?';
 
-        if ($dataContainer) {
-            $columns[] = 'tl_content.pid = ?';
-            $columns[] = 'tl_content.ptable = ?';
+        $values[] = 'bs_gridStart';
+        $values[] = CURRENT_ID;
+        $values[] = $GLOBALS['TL_DCA']['tl_content']['config']['ptable'];
 
-            $values[] = $dataContainer->activeRecord->pid;
-            $values[] = $dataContainer->activeRecord->ptable;
-        }
-
-        $collection = $this->repository->findBy($columns, $values);
+        $collection = $this->repository->findBy($columns, $values, ['tl_content.sorting']);
         $options    = [];
 
         if ($collection) {
