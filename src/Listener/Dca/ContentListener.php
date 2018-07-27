@@ -102,11 +102,11 @@ class ContentListener extends AbstractWrapperDcaListener
     /**
      * Get all grid parent options.
      *
-     * @param DataContainer|null $dataContainer Data container driver.
-     *
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getGridParentOptions(DataContainer $dataContainer = null): array
+    public function getGridParentOptions(): array
     {
         $columns[] = 'tl_content.type = ?';
         $columns[] = 'tl_content.pid = ?';
