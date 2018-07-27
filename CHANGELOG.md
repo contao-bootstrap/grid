@@ -2,10 +2,21 @@
 Changelog
 =========
 
-2.0.3 (xxxx-xx-xx)
+hotfix/2.0.5
+------------
+
+[Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.4...hotfix/2.0.5)
+
+
+2.0.4 (2018-07-27)
 ------------------
 
 [Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.3...hotfix/2.0.4)
+
+ - Fix broken grid width label.
+ - Fix broken grid parent select in override mode.
+ - Fix template naming so that custom templates can be applied. Old templates will get removed in 2.1.0!
+ - Fix label of grid parent field.
 
 
 2.0.3 (2018-07-26)
