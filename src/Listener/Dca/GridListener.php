@@ -16,6 +16,8 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Contao\Input;
+use Contao\StringUtil;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Environment\ThemeContext;
 use ContaoBootstrap\Grid\Model\GridModel;
@@ -51,8 +53,8 @@ class GridListener
      */
     public function enterContext(): void
     {
-        if (\Input::get('act') === 'edit') {
-            $model = GridModel::findByPk(\Input::get('id'));
+        if (Input::get('act') === 'edit') {
+            $model = GridModel::findByPk(Input::get('id'));
 
             if ($model) {
                 $this->environment->enterContext(ThemeContext::forTheme((int) $model->pid));
@@ -67,13 +69,13 @@ class GridListener
      */
     public function initializePalette(): void
     {
-        if (\Input::get('act') === 'edit') {
-            $model = GridModel::findByPk(\Input::get('id'));
+        if (Input::get('act') === 'edit') {
+            $model = GridModel::findByPk(Input::get('id'));
             $sizes = array_map(
                 function ($value) {
                     return $value . 'Size';
                 },
-                deserialize($model->sizes, true)
+                StringUtil::deserialize($model->sizes, true)
             );
 
             PaletteManipulator::create()

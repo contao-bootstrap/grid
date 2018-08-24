@@ -6,3 +6,34 @@ services:
     class: ContaoBootstrap\Grid\GridProvider
     arguments:
       - '@contao_bootstrap.grid.grid_builder'
+
+  ContaoBootstrap\Grid\Component\ContentElement\GridElementFactory:
+    arguments:
+      - "@templating"
+      - "@translator"
+      - "@netzmacht.contao_toolkit.routing.scope_matcher"
+      - "@contao_bootstrap.grid.grid_provider"
+      - "@contao_bootstrap.core.helper.color_rotate"
+    tags:
+      - { name: 'netzmacht.contao_toolkit.component.content_element_factory' }
+      - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'bs_grid', alias: 'bs_gridStart' }
+      - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'bs_grid', alias: 'bs_gridSeparator' }
+      - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'bs_grid', alias: 'bs_gridStop' }
+
+  ContaoBootstrap\Grid\Component\Module\GridModuleFactory:
+    arguments:
+      - "@templating"
+      - "@translator"
+      - "@contao_bootstrap.grid.grid_provider"
+    tags:
+      - { name: 'netzmacht.contao_toolkit.component.frontend_module_factory' }
+      - { name: 'netzmacht.contao_toolkit.component.frontend_module', category: 'miscellaneous', alias: 'bs_grid' }
+
+  contao_bootstrap.grid.view.renderer_helper:
+    class: ContaoBootstrap\Grid\View\ComponentRenderHelper
+    public: true
+    deprecated: "Service '%service_id%' will be removed in one of the next minor releases! Only for internal code transition."
+    arguments:
+      - "@contao_bootstrap.grid.grid_provider"
+      - "@netzmacht.contao_toolkit.routing.scope_matcher"
+      - "@contao_bootstrap.core.helper.color_rotate"

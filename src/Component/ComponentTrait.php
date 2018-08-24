@@ -17,16 +17,28 @@ namespace ContaoBootstrap\Grid\Component;
 
 use Contao\BackendTemplate;
 use Contao\Model;
+use Contao\System;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
+use ContaoBootstrap\Grid\View\ComponentRenderHelper;
 
 /**
  * Trait ComponentTrait.
  *
- * @package ContaoBootstrap\Grid\Component
+ * @deprecated
  */
 trait ComponentTrait
 {
+    /**
+     * Get hte component render helper.
+     *
+     * @return ComponentRenderHelper
+     */
+    private function getHelper(): ComponentRenderHelper
+    {
+        return System::getContainer()->get('contao_bootstrap.grid.view.renderer_helper');
+    }
+
     /**
      * Get the grid provider.
      *
@@ -34,7 +46,7 @@ trait ComponentTrait
      */
     protected function getGridProvider(): GridProvider
     {
-        return static::getContainer()->get('contao_bootstrap.grid.grid_provider');
+        return $this->getHelper()->getGridProvider();
     }
 
     /**
@@ -52,10 +64,8 @@ trait ComponentTrait
         $template = new BackendTemplate('be_bs_grid');
 
         if ($start) {
-            $colorRotate = static::getContainer()->get('contao_bootstrap.core.helper.color_rotate');
-
             $template->name  = $start->bs_grid_name;
-            $template->color = $colorRotate->getColor('ce:' . $start->id);
+            $template->color = $this->getHelper()->rotateColor('ce:' . $start->id);
         }
 
         if (!$start) {
@@ -76,10 +86,7 @@ trait ComponentTrait
      */
     protected function isBackendRequest(): bool
     {
-        $scopeMatcher   = static::getContainer()->get('contao.routing.scope_matcher');
-        $currentRequest = static::getContainer()->get('request_stack')->getCurrentRequest();
-
-        return $scopeMatcher->isBackendRequest($currentRequest);
+        return $this->getHelper()->isBackendRequest();
     }
 
     /**
@@ -87,5 +94,5 @@ trait ComponentTrait
      *
      * @return GridIterator
      */
-    abstract protected function getIterator():? GridIterator;
+    abstract protected function getIterator(): ?GridIterator;
 }

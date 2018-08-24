@@ -15,81 +15,83 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\Module;
 
-use Contao\BackendTemplate;
-use Contao\Module;
+use Contao\Controller;
+use Contao\Database\Result;
+use Contao\Model;
 use Contao\ModuleModel;
+use Contao\StringUtil;
 use ContaoBootstrap\Grid\GridIterator;
-use Patchwork\Utf8;
+use ContaoBootstrap\Grid\GridProvider;
+use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
+use Symfony\Component\Templating\EngineInterface as TemplateEngine;
+use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**
  * Class GridModule.
  *
  * @package ContaoBootstrap\Grid\Component
  */
-class GridModule extends Module
+final class GridModule extends AbstractModule
 {
+    /**
+     * Grid provider.
+     *
+     * @var GridProvider
+     */
+    private $gridProvider;
+
     /**
      * Template name.
      *
      * @var string
      */
-    protected $strTemplate = 'mod_bs_grid';
+    protected $templateName = 'mod_bs_grid';
 
     /**
-     * {@inheritDoc}
+     * GridModule constructor.
      *
-     * @SuppressWarnings(PHPMD.Superglobals)
+     * @param Model|Result   $model          Module configuration as model or result.
+     * @param TemplateEngine $templateEngine The template engine.
+     * @param Translator     $translator     The translator.
+     * @param GridProvider   $gridProvider   The grid provider.
+     * @param string         $column         Name of the column or section the module is rendered in.
      */
-    public function generate()
-    {
-        if ($this->isBackendRequest()) {
-            $template           = new BackendTemplate('be_wildcard');
-            $template->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['bs_grid'][0]) . ' ###';
-            $template->title    = $this->headline;
-            $template->id       = $this->id;
-            $template->link     = $this->name;
-            $template->href     = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+    public function __construct(
+        $model,
+        TemplateEngine $templateEngine,
+        Translator $translator,
+        GridProvider $gridProvider,
+        string $column = 'main'
+    ) {
+        parent::__construct($model, $templateEngine, $translator, $column);
 
-            return $template->parse();
-        }
-
-        return parent::generate();
+        $this->gridProvider = $gridProvider;
     }
-
 
     /**
      * {@inheritdoc}
      */
-    protected function compile()
+    protected function prepareTemplateData(array $data): array
     {
-        $config    = \StringUtil::deserialize($this->bs_gridModules, true);
+        $data = parent::prepareTemplateData($data);
+
+        $config    = StringUtil::deserialize($this->get('bs_gridModules'), true);
         $moduleIds = $this->getModuleIds($config);
         $modules   = $this->preCompileModules($moduleIds);
-
-        $iterator = $this->getGridIterator();
+        $iterator  = $this->getGridIterator();
 
         if ($iterator) {
             $iterator->rewind();
 
-            $this->Template->rowClasses  = $iterator->row();
-            $this->Template->firstColumn = $iterator->current();
+            $data['rowClasses']  = $iterator->row();
+            $data['firstColumn'] = $iterator->current();
         }
 
-        $this->Template->modules = $this->generateModules($config, $modules, $iterator);
+        $data['modules'] = $this->generateModules($config, $modules, $iterator);
+
+        return $data;
     }
 
-    /**
-     * Check if we are in backend mode.
-     *
-     * @return bool
-     */
-    protected function isBackendRequest(): bool
-    {
-        $scopeMatcher   = static::getContainer()->get('contao.routing.scope_matcher');
-        $currentRequest = static::getContainer()->get('request_stack')->getCurrentRequest();
-
-        return $scopeMatcher->isBackendRequest($currentRequest);
-    }
     /**
      * Get the grid iterator.
      *
@@ -97,10 +99,8 @@ class GridModule extends Module
      */
     protected function getGridIterator():? GridIterator
     {
-        $provider = static::getContainer()->get('contao_bootstrap.grid.grid_provider');
-
         try {
-            return $provider->getIterator('ce:' . $this->id, (int) $this->bs_grid);
+            return $this->gridProvider->getIterator('ce:' . $this->get('id'), (int) $this->get('bs_grid'));
         } catch (\Exception $e) {
             // Do nothing.
         }
@@ -192,7 +192,7 @@ class GridModule extends Module
 
         if ($collection) {
             foreach ($collection as $model) {
-                $modules[$model->id] = static::getFrontendModule($model, $this->strColumn);
+                $modules[$model->id] = Controller::getFrontendModule($model, $this->getColumn());
             }
         }
 
