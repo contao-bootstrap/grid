@@ -30,12 +30,12 @@ final class GridStopElement extends AbstractGridElement
      *
      * @var string
      */
-    protected $strTemplate = 'ce_bs_gridStop';
+    protected $templateName = 'ce_bs_gridStop';
 
     /**
      * {@inheritdoc}
      */
-    public function generate()
+    public function generate(): string
     {
         if ($this->isBackendRequest()) {
             return $this->renderBackendView($this->getParent());
@@ -63,7 +63,7 @@ final class GridStopElement extends AbstractGridElement
      */
     protected function getParent():? ContentModel
     {
-        return ContentModel::findByPk($this->bs_grid_parent);
+        return ContentModel::findByPk($this->get('bs_grid_parent'));
     }
 
     /**

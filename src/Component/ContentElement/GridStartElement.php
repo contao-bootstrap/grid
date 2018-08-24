@@ -29,17 +29,17 @@ final class GridStartElement extends AbstractGridElement
      *
      * @var string
      */
-    protected $strTemplate = 'ce_bs_gridStart';
+    protected $templateName = 'ce_bs_gridStart';
 
     /**
      * {@inheritdoc}
      */
-    public function generate()
+    public function generate(): string
     {
         if ($this->isBackendRequest()) {
             $iterator = $this->getIterator();
 
-            return $this->renderBackendView($this->objModel, $iterator);
+            return $this->renderBackendView($this->getModel(), $iterator);
         }
 
         return parent::generate();
@@ -48,14 +48,17 @@ final class GridStartElement extends AbstractGridElement
     /**
      * {@inheritdoc}
      */
-    protected function compile()
+    protected function prepareTemplateData(array $data): array
     {
-        $iterator = $this->getIterator();
+        $data = parent::prepareTemplateData($data);
 
+        $iterator = $this->getIterator();
         if ($iterator) {
-            $this->Template->rowClasses    = $iterator->row();
-            $this->Template->columnClasses = $iterator->current();
+            $data['rowClasses']    = $iterator->row();
+            $data['columnClasses'] = $iterator->current();
         }
+
+        return $data;
     }
 
     /**
@@ -65,7 +68,7 @@ final class GridStartElement extends AbstractGridElement
     {
         try {
             $provider = $this->getGridProvider();
-            $iterator = $provider->getIterator('ce:' . $this->id, (int) $this->bs_grid);
+            $iterator = $provider->getIterator('ce:' . $this->get('id'), (int) $this->get('bs_grid'));
 
             return $iterator;
         } catch (\Exception $e) {

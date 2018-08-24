@@ -30,12 +30,12 @@ final class GridSeparatorElement extends AbstractGridElement
      *
      * @var string
      */
-    protected $strTemplate = 'ce_bs_gridSeparator';
+    protected $templateName = 'ce_bs_gridSeparator';
 
     /**
      * {@inheritdoc}
      */
-    public function generate()
+    public function generate(): string
     {
         if ($this->isBackendRequest()) {
             $iterator = $this->getIterator();
@@ -53,18 +53,21 @@ final class GridSeparatorElement extends AbstractGridElement
     /**
      * {@inheritdoc}
      */
-    protected function compile()
+    protected function prepareTemplateData(array $data): array
     {
         $iterator = $this->getIterator();
+        $data     = parent::prepareTemplateData($data);
 
         if ($iterator) {
             $iterator->next();
 
-            $this->Template->columnClasses = $iterator->current();
-            $this->Template->resets        = $iterator->resets();
+            $data['columnClasses'] = $iterator->current();
+            $data['resets']        = $iterator->resets();
         } else {
-            $this->Template->resets = [];
+            $data['resets'] = [];
         }
+
+        return $data;
     }
 
     /**
@@ -93,6 +96,6 @@ final class GridSeparatorElement extends AbstractGridElement
      */
     protected function getParent():? ContentModel
     {
-        return ContentModel::findByPk($this->bs_grid_parent);
+        return ContentModel::findByPk($this->get('bs_grid_parent'));
     }
 }
