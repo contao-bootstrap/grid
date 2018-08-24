@@ -25,7 +25,6 @@ use ContaoBootstrap\Grid\View\ComponentRenderHelper;
 /**
  * Trait ComponentTrait.
  *
- * @package ContaoBootstrap\Grid\Component
  * @deprecated
  */
 trait ComponentTrait
@@ -37,7 +36,7 @@ trait ComponentTrait
      */
     private function getHelper(): ComponentRenderHelper
     {
-       return System::getContainer()->get('contao_bootstrap.grid.view.renderer_helper');
+        return System::getContainer()->get('contao_bootstrap.grid.view.renderer_helper');
     }
 
     /**
@@ -95,5 +94,5 @@ trait ComponentTrait
      *
      * @return GridIterator
      */
-    abstract protected function getIterator():? GridIterator;
+    abstract protected function getIterator(): ?GridIterator;
 }

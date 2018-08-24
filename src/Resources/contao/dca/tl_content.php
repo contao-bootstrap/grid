@@ -150,8 +150,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
                     'helpwizard'         => true,
                 ],
                 'options_callback' => function () {
-                    return System::getContainer()->get('contao.image.image_sizes')->getOptionsForUser(
-                        BackendUser::getInstance()
+                    return \Contao\System::getContainer()->get('contao.image.image_sizes')->getOptionsForUser(
+                        \Contao\BackendUser::getInstance()
                     );
                 },
             ],

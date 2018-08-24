@@ -19,6 +19,7 @@ use Contao\Controller;
 use Contao\Database\Result;
 use Contao\Model;
 use Contao\ModuleModel;
+use Contao\StringUtil;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
@@ -74,7 +75,7 @@ final class GridModule extends AbstractModule
     {
         $data = parent::prepareTemplateData($data);
 
-        $config    = \StringUtil::deserialize($this->get('bs_gridModules'), true);
+        $config    = StringUtil::deserialize($this->get('bs_gridModules'), true);
         $moduleIds = $this->getModuleIds($config);
         $modules   = $this->preCompileModules($moduleIds);
         $iterator  = $this->getGridIterator();

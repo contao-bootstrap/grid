@@ -22,7 +22,7 @@ use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Component\Component;
 use Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface as TemplateEngine;
+use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**

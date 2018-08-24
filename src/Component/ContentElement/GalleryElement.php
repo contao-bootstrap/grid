@@ -18,8 +18,11 @@ namespace ContaoBootstrap\Grid\Component\ContentElement;
 use Contao\Config;
 use Contao\ContentGallery;
 use Contao\CoreBundle\Exception\PageNotFoundException;
+use Contao\Environment;
+use Contao\File;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
+use Contao\Input;
 use Contao\Model\Collection;
 use Contao\Pagination;
 use Contao\StringUtil;
@@ -93,7 +96,7 @@ class GalleryElement extends ContentGallery
 
             if ($fileModel->type == 'file') {
                 // Single files
-                $file = new \File($fileModel->path);
+                $file = new File($fileModel->path);
 
                 if (!$file->isImage) {
                     continue;
@@ -105,7 +108,7 @@ class GalleryElement extends ContentGallery
                     'uuid'       => $fileModel->uuid,
                     'name'       => $file->basename,
                     'singleSRC'  => $fileModel->path,
-                    'title'      => \StringUtil::specialchars($file->basename),
+                    'title'      => StringUtil::specialchars($file->basename),
                     'filesModel' => $fileModel->current()
                 ];
 
@@ -192,11 +195,11 @@ class GalleryElement extends ContentGallery
         if ($this->perPage > 0 && $this->sortBy != 'random') {
             // Get the current page
             $parameter = 'page_g' . $this->id;
-            $page      = (\Input::get($parameter) !== null) ? \Input::get($parameter) : 1;
+            $page      = (Input::get($parameter) !== null) ? Input::get($parameter) : 1;
 
             // Do not index or cache the page if the page number is outside the range
             if ($page < 1 || $page > max(ceil($total / $this->perPage), 1)) {
-                throw new PageNotFoundException('Page not found: ' . \Environment::get('uri'));
+                throw new PageNotFoundException('Page not found: ' . Environment::get('uri'));
             }
 
             // Set limit and offset
@@ -293,7 +296,7 @@ class GalleryElement extends ContentGallery
     protected function applyCustomSorting(): void
     {
         if ($this->orderSRC != '') {
-            $tmp = \StringUtil::deserialize($this->orderSRC);
+            $tmp = StringUtil::deserialize($this->orderSRC);
 
             if (!empty($tmp) && is_array($tmp)) {
                 // Remove all values

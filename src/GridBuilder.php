@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid;
 
+use Contao\StringUtil;
 use ContaoBootstrap\Grid\Definition\Column;
 use ContaoBootstrap\Grid\Definition\Grid;
 use ContaoBootstrap\Grid\Model\GridModel;
@@ -84,13 +85,13 @@ final class GridBuilder
     private function createGrid(): void
     {
         $this->grid = new Grid();
-        $sizes      = deserialize($this->model->sizes, true);
+        $sizes      = StringUtil::deserialize($this->model->sizes, true);
 
         $this->buildRow();
 
         foreach ($sizes as $size) {
             $field      = $size . 'Size';
-            $definition = deserialize($this->model->{$field}, true);
+            $definition = StringUtil::deserialize($this->model->{$field}, true);
 
             if ($size === 'xs') {
                 $size = '';
