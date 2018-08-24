@@ -28,3 +28,12 @@ services:
     tags:
       - { name: 'netzmacht.contao_toolkit.component.frontend_module_factory' }
       - { name: 'netzmacht.contao_toolkit.component.frontend_module', category: 'miscellaneous', alias: 'bs_grid' }
+
+  contao_bootstrap.grid.view.renderer_helper:
+    class: ContaoBootstrap\Grid\View\ComponentRenderHelper
+    public: true
+    deprecated: "Service '%service_id%' will be removed in one of the next minor releases! Only for internal code transition."
+    arguments:
+      - "@contao_bootstrap.grid.grid_provider"
+      - "@netzmacht.contao_toolkit.routing.scope_matcher"
+      - "@contao_bootstrap.core.helper.color_rotate"
