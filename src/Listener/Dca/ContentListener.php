@@ -15,11 +15,13 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
+use Contao\BackendUser;
 use Contao\Config;
 use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
+use Contao\CoreBundle\Image\ImageSizes;
 use Contao\DataContainer;
 use Contao\Input;
 use Contao\Model;
@@ -31,7 +33,7 @@ use Doctrine\DBAL\Connection;
  *
  * @package ContaoBootstrap\Grid\Dca
  */
-class ContentListener extends AbstractWrapperDcaListener
+final class ContentListener extends AbstractWrapperDcaListener
 {
     /**
      * Database connection.
@@ -55,19 +57,42 @@ class ContentListener extends AbstractWrapperDcaListener
     private $repository;
 
     /**
+     * Image sizes.
+     *
+     * @var ImageSizes
+     */
+    private $imageSizes;
+
+    /**
+     * Contao backend user.
+     *
+     * @var BackendUser|Adapter
+     */
+    private $user;
+
+    /**
      * ContentDataContainer constructor.
      *
-     * @param Environment     $environment Bootstrap environment.
-     * @param Connection      $connection  Database connection.
-     * @param ContaoFramework $framework   Contao framework.
+     * @param Environment         $environment Bootstrap environment.
+     * @param Connection          $connection  Database connection.
+     * @param ContaoFramework     $framework   Contao framework.
+     * @param ImageSizes          $imageSizes  Image sizes.
+     * @param Adapter|BackendUser $user        Contao backend user.
      */
-    public function __construct(Environment $environment, Connection $connection, ContaoFramework $framework)
-    {
+    public function __construct(
+        Environment $environment,
+        Connection $connection,
+        ContaoFramework $framework,
+        ImageSizes $imageSizes,
+        $user
+    ) {
         parent::__construct($environment);
 
         $this->connection = $connection;
         $this->framework  = $framework;
         $this->repository = $this->framework->getAdapter(ContentModel::class);
+        $this->imageSizes = $imageSizes;
+        $this->user       = $user;
     }
 
     /**
@@ -95,7 +120,7 @@ class ContentListener extends AbstractWrapperDcaListener
 
         $GLOBALS['TL_DCA']['tl_content']['fields']['galleryTpl']['options_callback'] = [
             'contao_bootstrap.grid.listeners.dca.content',
-            'getGalleryTemplates'
+            'getGalleryTemplates',
         ];
     }
 
@@ -168,6 +193,16 @@ class ContentListener extends AbstractWrapperDcaListener
     }
 
     /**
+     * Get the image sizes.
+     *
+     * @return array
+     */
+    public function getImageSizes(): array
+    {
+        return $this->imageSizes->getOptionsForUser($this->user);
+    }
+
+    /**
      * Create a grid element.
      *
      * @param ContentModel $current Current content model.
@@ -204,7 +239,7 @@ class ContentListener extends AbstractWrapperDcaListener
                 'tl_content.ptable=?',
                 'tl_content.pid=?',
                 '(tl_content.type != ? AND tl_content.bs_grid_parent != ?)',
-                'tl_content.sorting > ?'
+                'tl_content.sorting > ?',
             ],
             [$current->ptable, $current->pid, 'bs_gridStop', $current->id, $current->sorting],
             ['order' => 'tl_content.sorting ASC']

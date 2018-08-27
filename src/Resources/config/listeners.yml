@@ -19,6 +19,8 @@ services:
       - '@contao_bootstrap.environment'
       - '@database_connection'
       - '@contao.framework'
+      - '@contao.image.image_sizes'
+      - '@netzmacht.contao_toolkit.contao.backend_user'
 
   contao_bootstrap.grid.listeners.dca.form:
     class: ContaoBootstrap\Grid\Listener\Dca\FormListener
