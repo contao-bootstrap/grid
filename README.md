@@ -1,12 +1,12 @@
 Contao-Bootstrap Grid Component
 ===============================
 
-[![Build Status](http://img.shields.io/travis/contao-bootstrap/grid/master.svg?style=flat-square)](https://travis-ci.org/contao-bootstrap/grid)
-[![Version](http://img.shields.io/packagist/v/contao-bootstrap/grid.svg?style=flat-square)](http://packagist.org/packages/contao-bootstrap/grid)
-[![License](http://img.shields.io/packagist/l/contao-bootstrap/grid.svg?style=flat-square)](http://packagist.org/packages/contao-bootstrap/grid)
-[![Downloads](http://img.shields.io/packagist/dt/contao-bootstrap/grid.svg?style=flat-square)](http://packagist.org/packages/contao-bootstrap/grid)
-[![Contao Community Alliance coding standard](http://img.shields.io/badge/cca-coding_standard-red.svg?style=flat-square)](https://github.com/contao-community-alliance/coding-standard)
 
+[![Version](http://img.shields.io/packagist/v/contao-bootstrap/grid.svg?style=for-the-badge&label=Latest)](http://packagist.org/packages/contao-bootstrap/grid)
+[![GitHub issues](https://img.shields.io/github/issues/contao-bootstrap/grid.svg?style=for-the-badge&logo=github)](https://github.com/contao-bootstrap/grid/issues)
+[![License](http://img.shields.io/packagist/l/contao-bootstrap/grid.svg?style=for-the-badge&label=License)](http://packagist.org/packages/contao-bootstrap/grid)
+[![Build Status](http://img.shields.io/travis/contao-bootstrap/grid/master.svg?style=for-the-badge&logo=travis)](https://travis-ci.org/contao-bootstrap/grid)
+[![Downloads](http://img.shields.io/packagist/dt/contao-bootstrap/grid.svg?style=for-the-badge&label=Downloads)](http://packagist.org/packages/contao-bootstrap/grid)
 
 This extension provides Bootstrap 4 grid tools for Contao CMS.
 
@@ -47,9 +47,10 @@ $ php contao-manager.phar.php composer require contao-bootstrap/grid~2.0@beta
 $ php composer.phar require contao-bootstrap/grid~2.0@beta
 ```
 
-### Standard edition
+### Symfony application
 
-Without the contao manager you also have to register the bundle
+If you use Contao in a symfony application without contao/manager-bundle, you have to register following bundles 
+manually:
 
 ```php
 
@@ -61,6 +62,7 @@ class AppKernel
             // ...
             new Contao\CoreBundle\HttpKernel\Bundle\ContaoModuleBundle('metapalettes', $this->getRootDir()),
             new Contao\CoreBundle\HttpKernel\Bundle\ContaoModuleBundle('multicolumnwizard', $this->getRootDir()),
+            new Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle(),
             new ContaoBootstrap\Core\ContaoBootstrapCoreBundle(),
             new ContaoBootstrap\Grid\ContaoBootstrapGridBundle()
         ];

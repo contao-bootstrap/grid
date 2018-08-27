@@ -149,11 +149,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
                     'nospace'            => true,
                     'helpwizard'         => true,
                 ],
-                'options_callback' => function () {
-                    return \Contao\System::getContainer()->get('contao.image.image_sizes')->getOptionsForUser(
-                        \Contao\BackendUser::getInstance()
-                    );
-                },
+                'options_callback' => ['contao_bootstrap.grid.listeners.dca.content', 'getImageSizes'],
             ],
             'width' => [
                 'label'         => &$GLOBALS['TL_LANG']['tl_content']['bs_image_size_width'],
