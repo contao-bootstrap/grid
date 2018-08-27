@@ -20,6 +20,15 @@ services:
       - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'bs_grid', alias: 'bs_gridSeparator' }
       - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'bs_grid', alias: 'bs_gridStop' }
 
+  ContaoBootstrap\Grid\Component\ContentElement\GalleryFactory:
+    arguments:
+    - "@templating"
+    - "@contao_bootstrap.grid.grid_provider"
+    - "@netzmacht.contao_toolkit.contao.frontend_user"
+    tags:
+    - { name: 'netzmacht.contao_toolkit.component.content_element_factory' }
+    - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'media', alias: 'bs_grid_gallery' }
+
   ContaoBootstrap\Grid\Component\Module\GridModuleFactory:
     arguments:
       - "@templating"

@@ -11,11 +11,11 @@
  * @filesource
  */
 
-use ContaoBootstrap\Grid\Component\ContentElement\GalleryElement;
 use ContaoBootstrap\Grid\Component\FormField\GridSeparatorFormField;
 use ContaoBootstrap\Grid\Component\FormField\GridStartFormField;
 use ContaoBootstrap\Grid\Component\FormField\GridStopFormField;
 use ContaoBootstrap\Grid\Model\GridModel;
+use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;
 
 // Models
 $GLOBALS['TL_MODELS']['tl_bs_grid'] = GridModel::class;
@@ -27,7 +27,7 @@ array_insert(
     $GLOBALS['TL_CTE']['media'],
     (array_search('gallery', array_keys($GLOBALS['TL_CTE']['media'])) + 1),
     [
-        'bs_grid_gallery' => GalleryElement::class
+        'bs_grid_gallery' => ContentElementDecorator::class
     ]
 );
 

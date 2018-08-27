@@ -6,7 +6,7 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
+ * @copyright  2017-2018 netzmacht David Molineus. All rights reserved.
  * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
  * @filesource
  */
@@ -16,18 +16,23 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Component\ContentElement;
 
 use Contao\Config;
-use Contao\ContentGallery;
+use Contao\Controller;
 use Contao\CoreBundle\Exception\PageNotFoundException;
+use Contao\Database\Result;
 use Contao\Environment;
 use Contao\File;
 use Contao\FilesModel;
-use Contao\FrontendTemplate;
 use Contao\Input;
+use Contao\Model;
 use Contao\Model\Collection;
 use Contao\Pagination;
 use Contao\StringUtil;
+use Contao\User;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
+use Netzmacht\Contao\Toolkit\Component\ContentElement\AbstractContentElement;
+use Netzmacht\Contao\Toolkit\View\Template\TemplateReference;
+use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 
 /**
  * Class GalleryElement.
@@ -35,8 +40,27 @@ use ContaoBootstrap\Grid\GridProvider;
  * @property string bs_grid        Bootstrap grid id.
  * @property mixed  bs_image_sizes Image sizes.
  */
-class GalleryElement extends ContentGallery
+final class GalleryElement extends AbstractContentElement
 {
+    /**
+     * Template name.
+     *
+     * @var string
+     */
+    protected $templateName = 'ce_gallery';
+
+    /**
+     * Grid provider.
+     *
+     * @var GridProvider
+     */
+    private   $gridProvider;
+
+    /**
+     * @var User
+     */
+    private $user;
+
     /**
      * Images.
      *
@@ -45,35 +69,96 @@ class GalleryElement extends ContentGallery
     private $images;
 
     /**
+     * Files collection.
+     *
+     * @var \Contao\Model\Collection|FilesModel
+     */
+    protected $files;
+
+    /**
+     * AbstractContentElement constructor.
+     *
+     * @param Model|Collection|Result $model          Object model or result.
+     * @param TemplateEngine          $templateEngine Template engine.
+     * @param GridProvider            $gridProvider   Grid provider.
+     * @param User                    $user           Contao user.
+     * @param string                  $column         Column.
+     *
+     */
+    public function __construct(
+        $model,
+        TemplateEngine $templateEngine,
+        GridProvider $gridProvider,
+        User $user,
+        string $column = 'main'
+    ) {
+        parent::__construct($model, $templateEngine, $column);
+
+        $this->gridProvider = $gridProvider;
+        $this->user         = $user;
+    }
+
+    /**
      * {@inheritdoc}
      */
-    protected function compile()
+    public function generate(): string
     {
-        $this->images = [];
-
-        $auxDate = $this->prepareFiles($this->objFiles);
-        $this->applySorting($auxDate);
-
-        // Limit the total number of items (see #2652)
-        if ($this->numberOfItems > 0) {
-            $this->images = array_slice($this->images, 0, (int) $this->numberOfItems);
+        if ($this->get('useHomeDir') && defined('FE_USER_LOGGED_IN') && FE_USER_LOGGED_IN) {
+            if ($this->user->assignDir && $this->user->homeDir) {
+                $this->set('multiSRC', [$this->user->homeDir]);
+            }
+        } else {
+            $this->set('multiSRC', StringUtil::deserialize($this->get('multiSRC'), true));
         }
 
-        $offset = 0;
-        $limit  = count($this->images);
+        // Return if there are no files
+        if (!empty($this->get('multiSRC'))) {
+            $this->files = FilesModel::findMultipleByUuids($this->get('multiSRC'));
+        }
 
-        $this->preparePagination($offset, $limit);
+        if (empty($this->files)) {
+            return '';
+        }
 
-        $template = new FrontendTemplate($this->getGalleryTemplateName());
-        $template->setData($this->arrData);
+        return parent::generate();
+    }
 
-        $template->body = $this->compileImages($offset, $limit);
-        $template->grid = $this->getGridIterator();
+    /**
+     * {@inheritdoc}
+     */
+    protected function prepareTemplateData(array $data): array
+    {
+        $data = parent::prepareTemplateData($data);
 
-        // see contao/core #1603
-        $template->headline = $this->headline;
+        $auxDate = $this->prepareFiles($this->files);
+        $this->applySorting($auxDate, $data);
 
-        $this->Template->images = $template->parse();
+        // Limit the total number of items (see #2652)
+        if ($this->get('numberOfItems') > 0) {
+            $this->images = array_slice($this->images, 0, (int) $this->get('numberOfItems'));
+        }
+
+        $offset             = 0;
+        $limit              = count($this->images);
+        $data['pagination'] = $this->preparePagination($offset, $limit);
+
+        $data['images'] = $this->render(
+            new TemplateReference(
+                $this->getGalleryTemplateName(),
+                'html5',
+                TemplateReference::SCOPE_FRONTEND
+            ),
+            array_merge(
+                $this->getData(),
+                [
+                    'body' => $this->compileImages($offset, $limit),
+                    'grid' => $this->getGridIterator(),
+                    'headline' => $this->get('headline')
+                ]
+            )
+        );
+
+        return $data;
     }
 
     /**
@@ -84,6 +169,8 @@ class GalleryElement extends ContentGallery
      * @param bool       $deep       If true sub files are added as well.
      *
      * @return array
+     *
+     * @throws \Exception If file could not be opened.
      */
     protected function prepareFiles(Collection $collection, array $auxDate = [], $deep = true): array
     {
@@ -130,13 +217,14 @@ class GalleryElement extends ContentGallery
      * Apply the sorting.
      *
      * @param array $auxDate Aux dates.
+     * @param array $data    Template data.
      *
      * @return void
      */
-    protected function applySorting(array $auxDate): void
+    protected function applySorting(array $auxDate, array &$data): void
     {
         // Sort array
-        switch ($this->sortBy) {
+        switch ($this->get('sortBy')) {
             default:
             case 'name_asc':
                 uksort($this->images, 'basename_natcasecmp');
@@ -170,7 +258,7 @@ class GalleryElement extends ContentGallery
 
             case 'random':
                 shuffle($this->images);
-                $this->Template->isRandomOrder = true;
+                $data['isRandomOrder'] = true;
                 break;
         }
 
@@ -183,38 +271,41 @@ class GalleryElement extends ContentGallery
      * @param int $offset Offset number.
      * @param int $limit  Limit.
      *
-     * @return void
+     * @return string|null
      *
      * @throws PageNotFoundException When page parameter is out of bounds.
      */
-    protected function preparePagination(&$offset, &$limit): void
+    protected function preparePagination(&$offset, &$limit): ?string
     {
-        $total = count($this->images);
+        $total   = count($this->images);
+        $perPage = $this->get('perPage');
 
         // Paginate the result of not randomly sorted (see #8033)
-        if ($this->perPage > 0 && $this->sortBy != 'random') {
+        if ($perPage > 0 && $this->get('sortBy') != 'random') {
             // Get the current page
-            $parameter = 'page_g' . $this->id;
+            $parameter = 'page_g' . $this->get('id');
             $page      = (Input::get($parameter) !== null) ? Input::get($parameter) : 1;
 
             // Do not index or cache the page if the page number is outside the range
-            if ($page < 1 || $page > max(ceil($total / $this->perPage), 1)) {
+            if ($page < 1 || $page > max(ceil($total / $perPage), 1)) {
                 throw new PageNotFoundException('Page not found: ' . Environment::get('uri'));
             }
 
             // Set limit and offset
-            $offset = (($page - 1) * $this->perPage);
-            $limit  = min(($this->perPage + $offset), $total);
+            $offset = (($page - 1) * $perPage);
+            $limit  = min(($perPage + $offset), $total);
 
             $pagination = new Pagination(
                 $total,
-                $this->perPage,
+                $perPage,
                 Config::get('maxPaginationLinks'),
                 $parameter
             );
 
-            $this->Template->pagination = $pagination->generate("\n  ");
+            return $pagination->generate("\n  ");
         }
+
+        return null;
     }
 
     /**
@@ -227,7 +318,7 @@ class GalleryElement extends ContentGallery
      */
     protected function compileImages($offset, $limit): array
     {
-        $lightBoxId = 'lightbox[lb' . $this->id . ']';
+        $lightBoxId = 'lightbox[lb' . $this->get('id') . ']';
         $body       = [];
 
         $imageSizes = StringUtil::deserialize($this->bs_image_sizes, true);
@@ -253,9 +344,9 @@ class GalleryElement extends ContentGallery
 
             // Add size and margin
             $this->images[$index]['size']     = $size;
-            $this->images[$index]['fullsize'] = $this->fullsize;
+            $this->images[$index]['fullsize'] = $this->get('fullsize');
 
-            $this->addImageToTemplate(
+            Controller::addImageToTemplate(
                 $cell,
                 $this->images[$index],
                 null,
@@ -281,8 +372,8 @@ class GalleryElement extends ContentGallery
         $templateName = 'bs_gallery_default';
 
         // Use a custom template
-        if (TL_MODE == 'FE' && $this->galleryTpl != '') {
-            $templateName = $this->galleryTpl;
+        if (TL_MODE == 'FE' && $this->get('galleryTpl') != '') {
+            return (string) $this->get('galleryTpl');
         }
 
         return $templateName;
@@ -295,8 +386,8 @@ class GalleryElement extends ContentGallery
      */
     protected function applyCustomSorting(): void
     {
-        if ($this->orderSRC != '') {
-            $tmp = StringUtil::deserialize($this->orderSRC);
+        if ($this->get('orderSRC') != '') {
+            $tmp = StringUtil::deserialize($this->get('orderSRC'));
 
             if (!empty($tmp) && is_array($tmp)) {
                 // Remove all values
@@ -335,23 +426,12 @@ class GalleryElement extends ContentGallery
     {
         try {
             if ($this->bs_grid) {
-                $provider = $this->getGridProvider();
-
-                return $provider->getIterator('ce:' . $this->id, (int) $this->bs_grid);
+                return $this->gridProvider->getIterator('ce:' . $this->get('id'), (int) $this->bs_grid);
             }
         } catch (\RuntimeException $e) {
             // No Grid found, return null.
         }
 
         return null;
-    }
-    /**
-     * Get the grid provider.
-     *
-     * @return GridProvider
-     */
-    private function getGridProvider(): GridProvider
-    {
-        return static::getContainer()->get('contao_bootstrap.grid.grid_provider');
     }
 }

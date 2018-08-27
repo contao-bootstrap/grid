@@ -2,11 +2,21 @@
 Changelog
 =========
 
-hotfix/2.0.5
-------------
+2.0.6 (2018-08-28)
+------------------
 
-[Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.4...hotfix/2.0.5)
+[Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.5...2.0.6)
 
+ - Rewrite gallery element for symfony 4 compatibility
+
+2.0.5 (2018-08-24)
+------------------
+
+[Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.4...2.0.5)
+
+ - Rewrite grid content elements using netzmacht/contao-toolkit for symfony 4 compatibility
+ - Implement a workaround so that form elements work again with symfony 4
+ - Run composer-require-checker and fix issues.
 
 2.0.4 (2018-07-27)
 ------------------
@@ -17,7 +27,6 @@ hotfix/2.0.5
  - Fix broken grid parent select in override mode.
  - Fix template naming so that custom templates can be applied. Old templates will get removed in 2.1.0!
  - Fix label of grid parent field.
-
 
 2.0.3 (2018-07-26)
 ------------------
