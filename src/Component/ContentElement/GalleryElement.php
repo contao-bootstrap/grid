@@ -54,9 +54,11 @@ final class GalleryElement extends AbstractContentElement
      *
      * @var GridProvider
      */
-    private   $gridProvider;
+    private $gridProvider;
 
     /**
+     * Frontend user.
+     *
      * @var User
      */
     private $user;
@@ -73,7 +75,7 @@ final class GalleryElement extends AbstractContentElement
      *
      * @var \Contao\Model\Collection|FilesModel
      */
-    protected $files;
+    private $files;
 
     /**
      * AbstractContentElement constructor.
@@ -83,7 +85,6 @@ final class GalleryElement extends AbstractContentElement
      * @param GridProvider            $gridProvider   Grid provider.
      * @param User                    $user           Contao user.
      * @param string                  $column         Column.
-     *
      */
     public function __construct(
         $model,
