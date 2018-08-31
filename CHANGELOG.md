@@ -2,6 +2,13 @@
 Changelog
 =========
 
+2.0.7 (2018-08-31)
+------------------
+
+[Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.6...2.0.7)
+
+ - Fix broken grid gallery element not handling grid and image sizes.
+
 2.0.6 (2018-08-28)
 ------------------
 

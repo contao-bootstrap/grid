@@ -37,8 +37,6 @@ use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 /**
  * Class GalleryElement.
  *
- * @property string bs_grid        Bootstrap grid id.
- * @property mixed  bs_image_sizes Image sizes.
  */
 final class GalleryElement extends AbstractContentElement
 {
@@ -152,9 +150,9 @@ final class GalleryElement extends AbstractContentElement
             array_merge(
                 $this->getData(),
                 [
-                    'body' => $this->compileImages($offset, $limit),
-                    'grid' => $this->getGridIterator(),
-                    'headline' => $this->get('headline')
+                    'body'     => $this->compileImages($offset, $limit),
+                    'grid'     => $this->getGridIterator(),
+                    'headline' => $this->get('headline'),
                 ]
             )
         );
@@ -322,7 +320,7 @@ final class GalleryElement extends AbstractContentElement
         $lightBoxId = 'lightbox[lb' . $this->get('id') . ']';
         $body       = [];
 
-        $imageSizes = StringUtil::deserialize($this->bs_image_sizes, true);
+        $imageSizes = StringUtil::deserialize($this->get('bs_image_sizes'), true);
 
         for ($index = $offset; $index < $limit; $index++) {
             if (!isset($this->images[$index])) {
@@ -426,8 +424,8 @@ final class GalleryElement extends AbstractContentElement
     private function getGridIterator(): ?GridIterator
     {
         try {
-            if ($this->bs_grid) {
-                return $this->gridProvider->getIterator('ce:' . $this->get('id'), (int) $this->bs_grid);
+            if ($this->get('bs_grid')) {
+                return $this->gridProvider->getIterator('ce:' . $this->get('id'), (int) $this->get('bs_grid'));
             }
         } catch (\RuntimeException $e) {
             // No Grid found, return null.
