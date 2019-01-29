@@ -1,31 +1,30 @@
 {
-  "name":"contao-bootstrap/grid",
-  "description":"Bootstrap grid component",
-  "keywords":["bootstrap", "components", "contao", "grid"],
-  "type":"contao-bundle",
-  "license":"LGPL-3.0-or-later",
-  "authors":[
+  "name": "contao-bootstrap/grid",
+  "type": "contao-bundle",
+  "description": "Bootstrap grid component",
+  "keywords": [
+    "bootstrap",
+    "components",
+    "contao",
+    "grid"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "authors": [
     {
-      "name":"David Molineus",
-      "email":"mail@netzmacht.de",
-      "homepage":"https://netzmacht.de",
-      "role":"Developer"
+      "name": "David Molineus",
+      "email": "mail@netzmacht.de",
+      "homepage": "https://netzmacht.de",
+      "role": "Developer"
     }
   ],
-  "support":{
-    "email":"mail@netzmacht.de",
-    "issues":"https://github.com/contao-bootstrap/grid/issues",
-    "wiki":"http://contao-bootstrap.netzmacht.de",
-    "source":"https://github.com/contao-bootstrap/grid"
-  },
-  "require":{
-    "php":">=7.1",
+  "require": {
+    "php": ">=7.1",
     "ext-dom": "*",
-    "contao/core-bundle":"^4.4",
     "contao-bootstrap/core": "^2.0",
+    "contao-community-alliance/meta-palettes": "^2.0 || ^1.11",
+    "contao/core-bundle": "^4.4",
     "doctrine/dbal": "^2.5",
-    "menatwork/contao-multicolumnwizard":"^3.3.14",
-    "contao-community-alliance/meta-palettes":"^2.0 || ^1.11",
+    "menatwork/contao-multicolumnwizard": "^3.3.14",
     "netzmacht/contao-toolkit": "^3.0",
     "symfony/config": "^3.3 || ^4.0",
     "symfony/dependency-injection": "^3.3 || ^4.0",
@@ -33,18 +32,19 @@
     "symfony/templating": "^3.3 || ^4.0",
     "symfony/translation": "^3.3 || ^4.0"
   },
-  "require-dev": {
-    "contao/manager-plugin": "^2.0",
-    "phpcq/all-tasks": "^1.2",
-    "php-http/guzzle6-adapter": "^1.1"
-  },
   "conflict": {
     "netzmacht/contao-bootstrap": "*"
   },
-  "autoload": {
-    "psr-4": { "ContaoBootstrap\\Grid\\": "src/" }
+  "require-dev": {
+    "contao/manager-plugin": "^2.0",
+    "php-http/guzzle6-adapter": "^1.1",
+    "phpcq/all-tasks": "^1.2"
   },
-  "extra":{
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev",
+      "dev-develop": "2.1.x-dev"
+    },
     "contao": {
       "transifex": {
         "project": "contao-bootstrap",
@@ -53,10 +53,17 @@
         "languages_tx": ".tx"
       }
     },
-    "branch-alias": {
-      "dev-master": "2.0.x-dev",
-      "dev-develop": "2.1.x-dev"
-    },
     "contao-manager-plugin": "ContaoBootstrap\\Grid\\ContaoManager\\Plugin"
+  },
+  "autoload": {
+    "psr-4": {
+      "ContaoBootstrap\\Grid\\": "src/"
+    }
+  },
+  "support": {
+    "email": "mail@netzmacht.de",
+    "issues": "https://github.com/contao-bootstrap/grid/issues",
+    "wiki": "http://contao-bootstrap.netzmacht.de",
+    "source": "https://github.com/contao-bootstrap/grid"
   }
 }
