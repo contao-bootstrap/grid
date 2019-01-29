@@ -35,8 +35,7 @@ use Netzmacht\Contao\Toolkit\View\Template\TemplateReference;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 
 /**
- * Class GalleryElement.
- *
+ * Class GalleryElement
  */
 final class GalleryElement extends AbstractContentElement
 {
@@ -429,6 +428,7 @@ final class GalleryElement extends AbstractContentElement
             }
         } catch (\RuntimeException $e) {
             // No Grid found, return null.
+            return null;
         }
 
         return null;

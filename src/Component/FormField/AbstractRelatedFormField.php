@@ -46,6 +46,7 @@ abstract class AbstractRelatedFormField extends AbstractFormField
                 return $provider->getIterator('ffl:' . $parent->id, (int) $parent->bs_grid);
             } catch (\Exception $e) {
                 // Do nothing. Error is displayed in backend view.
+                return null;
             }
         }
 

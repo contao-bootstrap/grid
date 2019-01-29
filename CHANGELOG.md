@@ -2,6 +2,16 @@
 Changelog
 =========
 
+2.0.8 (2019-01-29)
+------------------
+
+[Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.7...2.0.8)
+
+### Fixed
+
+ - Fix deprecated warning using PHP 7.3 ([#24](https://github.com/contao-bootstrap/grid/issues/24))
+ - Updated translations from transifex
+
 2.0.7 (2018-08-31)
 ------------------
 
