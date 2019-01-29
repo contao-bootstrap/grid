@@ -103,9 +103,8 @@ final class GridModule extends AbstractModule
             return $this->gridProvider->getIterator('ce:' . $this->get('id'), (int) $this->get('bs_grid'));
         } catch (\Exception $e) {
             // Do nothing.
+            return null;
         }
-
-        return null;
     }
 
     /**

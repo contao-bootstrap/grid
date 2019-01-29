@@ -79,6 +79,7 @@ final class GridStopElement extends AbstractGridElement
                 return $provider->getIterator('ce:' . $parent->id, (int) $parent->bs_grid);
             } catch (\Exception $e) {
                 // Do nothing. In backend view an error is shown anyway.
+                return null;
             }
         }
 
