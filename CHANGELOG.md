@@ -10,6 +10,7 @@ Changelog
 ### Fixed
 
  - Fix deprecated warning using PHP 7.3 ([#24](https://github.com/contao-bootstrap/grid/issues/24))
+ - Updated translations from transifex
 
 2.0.7 (2018-08-31)
 ------------------
