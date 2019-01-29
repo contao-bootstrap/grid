@@ -87,7 +87,7 @@ class ThemeImportListener
 
             switch ($name) {
                 case 'id':
-                    continue;
+                    break;
 
                 case 'pid':
                     $values[$name] = $themeId;
