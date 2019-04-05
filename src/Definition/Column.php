@@ -176,8 +176,8 @@ class Column
             $classes[] = 'd-none';
         }
 
-        $this->buildAlign($classes);
-        $this->buildJustify($classes);
+        $this->buildAlign($classes, $sizeSuffix);
+        $this->buildJustify($classes, $sizeSuffix);
         $this->buildOrder($classes, $sizeSuffix);
         $this->buildOffset($classes, $sizeSuffix);
 
@@ -219,13 +219,14 @@ class Column
      * Build the align setting.
      *
      * @param array $classes Column classes.
+     * @param string $sizeSuffix Bootstrap Size suffix like 'md' or 'lg'.
      *
      * @return void
      */
-    private function buildAlign(array &$classes): void
+    private function buildAlign(array &$classes, string $sizeSuffix = ''): void
     {
         if ($this->align) {
-            $classes[] = 'align-self-' . $this->align;
+            $classes[] = 'align-self'. $sizeSuffix . '-' . $this->align;
         }
     }
 
@@ -233,13 +234,14 @@ class Column
      * Build the justify setting.
      *
      * @param array $classes Column classes.
+     * @param string $sizeSuffix Bootstrap Size suffix like 'md' or 'lg'.
      *
      * @return void
      */
-    private function buildJustify(array &$classes): void
+    private function buildJustify(array &$classes, string $sizeSuffix = ''): void
     {
         if ($this->justify) {
-            $classes[] = 'justify-content-' . $this->justify;
+            $classes[] = 'justify-content' . $sizeSuffix . '-' . $this->justify;
         }
     }
 
