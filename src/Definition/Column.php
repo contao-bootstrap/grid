@@ -6,6 +6,7 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
+ * @author     Florian Vick <florian@florian-vick.de>
  * @copyright  2017 netzmacht David Molineus. All rights reserved.
  * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
  * @filesource
@@ -184,7 +185,7 @@ class Column
         if ($this->cssClasses) {
             $classes = array_merge($classes, $this->cssClasses);
         }
-        
+
         return array_unique($classes);
     }
 
@@ -218,7 +219,7 @@ class Column
     /**
      * Build the align setting.
      *
-     * @param array $classes Column classes.
+     * @param array  $classes    Column classes.
      * @param string $sizeSuffix Bootstrap Size suffix like 'md' or 'lg'.
      *
      * @return void
@@ -233,7 +234,7 @@ class Column
     /**
      * Build the justify setting.
      *
-     * @param array $classes Column classes.
+     * @param array  $classes    Column classes.
      * @param string $sizeSuffix Bootstrap Size suffix like 'md' or 'lg'.
      *
      * @return void
