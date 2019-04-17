@@ -43,7 +43,10 @@ abstract class AbstractRelatedFormField extends AbstractFormField
 
         if ($parent) {
             try {
-                return $provider->getIterator('ffl:' . $parent->id, (int) $parent->bs_grid);
+                $iterator = $provider->getIterator('ffl:' . $parent->id, (int) $parent->bs_grid);
+                $this->getResponseTagger()->addTags(['contao.db.tl_bs_grid.' . $parent->bs_grid]);
+
+                return $iterator;
             } catch (\Exception $e) {
                 // Do nothing. Error is displayed in backend view.
                 return null;
