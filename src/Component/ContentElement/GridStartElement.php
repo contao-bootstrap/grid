@@ -69,6 +69,7 @@ final class GridStartElement extends AbstractGridElement
         try {
             $provider = $this->getGridProvider();
             $iterator = $provider->getIterator('ce:' . $this->get('id'), (int) $this->get('bs_grid'));
+            $this->responseTagger->addTags(['contao.db.tl_bs_grid.' . $this->get('bs_grid')]);
 
             return $iterator;
         } catch (\Exception $e) {

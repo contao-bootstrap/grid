@@ -20,6 +20,7 @@ use Contao\ModuleModel;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Component\Component;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
+use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
@@ -52,17 +53,26 @@ final class GridModuleFactory implements ComponentFactory
     private $gridProvider;
 
     /**
+     * Response tagger.
+     *
+     * @var ResponseTagger
+     */
+    private $responseTagger;
+
+    /**
      * GridModuleFactory constructor.
      *
      * @param TemplateEngine $templateEngine Template engine.
      * @param Translator     $translator     Translator.
      * @param GridProvider   $gridProvider   Grid provider.
+     * @param ResponseTagger $responseTagger Response tagger.
      */
-    public function __construct(TemplateEngine $templateEngine, Translator $translator, GridProvider $gridProvider)
+    public function __construct(TemplateEngine $templateEngine, Translator $translator, GridProvider $gridProvider, ResponseTagger $responseTagger)
     {
         $this->templateEngine = $templateEngine;
         $this->translator     = $translator;
         $this->gridProvider   = $gridProvider;
+        $this->responseTagger = $responseTagger;
     }
 
     /**
@@ -87,6 +97,7 @@ final class GridModuleFactory implements ComponentFactory
             $this->templateEngine,
             $this->translator,
             $this->gridProvider,
+            $this->responseTagger,
             $column
         );
     }

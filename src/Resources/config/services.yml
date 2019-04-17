@@ -14,6 +14,7 @@ services:
       - "@netzmacht.contao_toolkit.routing.scope_matcher"
       - "@contao_bootstrap.grid.grid_provider"
       - "@contao_bootstrap.core.helper.color_rotate"
+      - '@netzmacht.contao_toolkit.response_tagger'
     tags:
       - { name: 'netzmacht.contao_toolkit.component.content_element_factory' }
       - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'bs_grid', alias: 'bs_gridStart' }
@@ -25,6 +26,7 @@ services:
     - "@templating"
     - "@contao_bootstrap.grid.grid_provider"
     - "@netzmacht.contao_toolkit.contao.frontend_user"
+    - '@netzmacht.contao_toolkit.response_tagger'
     tags:
     - { name: 'netzmacht.contao_toolkit.component.content_element_factory' }
     - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'media', alias: 'bs_grid_gallery' }
@@ -34,6 +36,7 @@ services:
       - "@templating"
       - "@translator"
       - "@contao_bootstrap.grid.grid_provider"
+      - '@netzmacht.contao_toolkit.response_tagger'
     tags:
       - { name: 'netzmacht.contao_toolkit.component.frontend_module_factory' }
       - { name: 'netzmacht.contao_toolkit.component.frontend_module', category: 'miscellaneous', alias: 'bs_grid' }
