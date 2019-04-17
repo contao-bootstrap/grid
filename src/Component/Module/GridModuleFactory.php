@@ -67,8 +67,12 @@ final class GridModuleFactory implements ComponentFactory
      * @param GridProvider   $gridProvider   Grid provider.
      * @param ResponseTagger $responseTagger Response tagger.
      */
-    public function __construct(TemplateEngine $templateEngine, Translator $translator, GridProvider $gridProvider, ResponseTagger $responseTagger)
-    {
+    public function __construct(
+        TemplateEngine $templateEngine,
+        Translator $translator,
+        GridProvider $gridProvider,
+        ResponseTagger $responseTagger
+    ) {
         $this->templateEngine = $templateEngine;
         $this->translator     = $translator;
         $this->gridProvider   = $gridProvider;
