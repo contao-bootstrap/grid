@@ -152,21 +152,8 @@ final class GridBuilder
     private function buildColumn(array $definition): Column
     {
         $column = new Column();
-        if ($definition['width']) {
-            switch ($definition['width']) {
-                case 'variable':
-                    $column->variableWidth();
-                    break;
-                case 'auto':
-                case 'equal':
-                    break;
-                case 'null':
-                    $column->width(0);
-                    break;
-                default:
-                    $column->width((int) $definition['width']);
-            }
-        }
+
+        $this->buildColumnWidth($definition, $column);
 
         if ($definition['order']) {
             $column->order((int) $definition['order']);
@@ -222,5 +209,32 @@ final class GridBuilder
         }
 
         return $offset;
+    }
+
+    /**
+     * Build the column width.
+     *
+     * @param array  $definition The grid column definition.
+     * @param Column $column     The column.
+     *
+     * @return void
+     */
+    private function buildColumnWidth(array $definition, Column $column): void
+    {
+        if ($definition['width']) {
+            switch ($definition['width']) {
+                case 'variable':
+                    $column->variableWidth();
+                    break;
+                case 'auto':
+                case 'equal':
+                    break;
+                case 'null':
+                    $column->width(0);
+                    break;
+                default:
+                    $column->width((int) $definition['width']);
+            }
+        }
     }
 }

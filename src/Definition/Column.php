@@ -183,7 +183,7 @@ class Column
         $sizeSuffix = $size ? '-' . $size : $size;
 
         if ($this->width === 'auto') {
-            $classes[]   = 'col' . $sizeSuffix . '-auto';
+            $classes[] = 'col' . $sizeSuffix . '-auto';
         } elseif ($this->width === null || $this->width > 0) {
             $widthSuffix = ($this->width > 0) ? '-' . $this->width : '';
             $classes[]   = 'col' . $sizeSuffix . $widthSuffix;
