@@ -137,6 +137,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
+                'dragAndDrop'  => true,
                 'columnFields' => [
                     'width'  => [
                         'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
@@ -203,9 +204,12 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
-                        'inputType' => 'checkbox',
+                        'inputType' => 'select',
+                        'options'   => ['1', '2'],
+                        'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
                         'eval'      => [
-                            'style' => 'width: 80px',
+                            'includeBlankOption' => true,
+                            'style'              => 'width: 100px',
                         ],
                     ],
                 ],
@@ -217,6 +221,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'eval'      => [
+                'dragAndDrop'  => true,
                 'columnFields' => [
                     'width'  => [
                         'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
@@ -283,9 +288,12 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
-                        'inputType' => 'checkbox',
+                        'inputType' => 'select',
+                        'options'   => ['1', '2'],
+                        'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
                         'eval'      => [
-                            'style' => 'width: 80px',
+                            'includeBlankOption' => true,
+                            'style'              => 'width: 100px',
                         ],
                     ],
                 ],
@@ -298,6 +306,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'inputType' => 'multiColumnWizard',
             'eval'      => [
                 'includeBlankOption' => true,
+                'dragAndDrop'        => true,
                 'columnFields'       => [
                     'width'  => [
                         'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
@@ -364,9 +373,12 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
-                        'inputType' => 'checkbox',
+                        'inputType' => 'select',
+                        'options'   => ['1', '2'],
+                        'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
                         'eval'      => [
-                            'style' => 'width: 80px',
+                            'includeBlankOption' => true,
+                            'style'              => 'width: 100px',
                         ],
                     ],
                 ],
@@ -379,6 +391,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'inputType' => 'multiColumnWizard',
             'eval'      => [
                 'includeBlankOption' => true,
+                'dragAndDrop'        => true,
                 'columnFields'       => [
                     'width'  => [
                         'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
@@ -445,9 +458,12 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
-                        'inputType' => 'checkbox',
+                        'inputType' => 'select',
+                        'options'   => ['1', '2'],
+                        'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
                         'eval'      => [
-                            'style' => 'width: 80px',
+                            'includeBlankOption' => true,
+                            'style'              => 'width: 100px',
                         ],
                     ],
                 ],
@@ -460,6 +476,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'inputType' => 'multiColumnWizard',
             'eval'      => [
                 'includeBlankOption' => true,
+                'dragAndDrop'        => true,
                 'columnFields'       => [
                     'width'  => [
                         'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
@@ -526,9 +543,12 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                         'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
-                        'inputType' => 'checkbox',
+                        'inputType' => 'select',
+                        'options'   => ['1', '2'],
+                        'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
                         'eval'      => [
-                            'style' => 'width: 80px',
+                            'includeBlankOption' => true,
+                            'style'              => 'width: 100px',
                         ],
                     ],
                 ],

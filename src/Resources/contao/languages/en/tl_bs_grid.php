@@ -72,3 +72,8 @@ $GLOBALS['TL_LANG']['tl_bs_grid']['class'][0]       = 'Classes';
 $GLOBALS['TL_LANG']['tl_bs_grid']['class'][1]       = 'Custom css classes.';
 $GLOBALS['TL_LANG']['tl_bs_grid']['reset'][0]       = 'Reset';
 $GLOBALS['TL_LANG']['tl_bs_grid']['reset'][1]       = 'Reset position before the column.';
+
+$GLOBALS['TL_LANG']['tl_bs_grid']['resets']['1'][0]       = 'all';
+$GLOBALS['TL_LANG']['tl_bs_grid']['resets']['1'][1]       = 'Reset all upcoming sizes.';
+$GLOBALS['TL_LANG']['tl_bs_grid']['resets']['2'][0]       = 'size';
+$GLOBALS['TL_LANG']['tl_bs_grid']['resets']['2'][1]       = 'Reset only this size.';
