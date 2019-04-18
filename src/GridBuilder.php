@@ -158,6 +158,7 @@ final class GridBuilder
                     $column->variableWidth();
                     break;
                 case 'auto':
+                case 'equal':
                     break;
                 case 'null':
                     $column->width(0);
