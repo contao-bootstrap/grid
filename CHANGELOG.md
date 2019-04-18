@@ -2,6 +2,23 @@
 Changelog
 =========
 
+[Unreleased]
+------------
+
+[2.1.0] (2019-04-18)
+--------------------
+
+### Added
+
+ - Allow to limit grid resets to a specific size ([#29](https://github.com/contao-bootstrap/grid/pull/29))
+ - Support auto grid size ([#28](https://github.com/contao-bootstrap/grid/pull/28))
+ - Support size suffixes for alignments ([#26](https://github.com/contao-bootstrap/grid/pull/26))
+ - Tag response with grid id when grid element or module is used ([#18](https://github.com/contao-bootstrap/grid/issues/18))
+ 
+### Fixed
+
+ - Translation of grid parent is missing ([#23](https://github.com/contao-bootstrap/grid/issues/23))
+
 2.0.8 (2019-01-29)
 ------------------
 
@@ -115,3 +132,7 @@ Fixed bugs:
 
  - Grid row settings were not recognized
  - Frontend module did not support resets
+
+
+[Unreleased]: https://github.com/contao-bootstrap/grid/compare/master...develop
+[2.1.0]: https://github.com/contao-bootstrap/grid/compare/2.0.8...2.1.0

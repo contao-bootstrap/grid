@@ -7,7 +7,7 @@
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2017-2018 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
+ * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
 
@@ -31,6 +31,7 @@ use Contao\User;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\AbstractContentElement;
+use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateReference;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 
@@ -68,6 +69,13 @@ final class GalleryElement extends AbstractContentElement
     private $images;
 
     /**
+     * Response Tagger.
+     *
+     * @var ResponseTagger
+     */
+    private $responseTagger;
+
+    /**
      * Files collection.
      *
      * @var \Contao\Model\Collection|FilesModel
@@ -81,6 +89,7 @@ final class GalleryElement extends AbstractContentElement
      * @param TemplateEngine          $templateEngine Template engine.
      * @param GridProvider            $gridProvider   Grid provider.
      * @param User                    $user           Contao user.
+     * @param ResponseTagger          $responseTagger Response tagger.
      * @param string                  $column         Column.
      */
     public function __construct(
@@ -88,12 +97,14 @@ final class GalleryElement extends AbstractContentElement
         TemplateEngine $templateEngine,
         GridProvider $gridProvider,
         User $user,
+        ResponseTagger $responseTagger,
         string $column = 'main'
     ) {
         parent::__construct($model, $templateEngine, $column);
 
-        $this->gridProvider = $gridProvider;
-        $this->user         = $user;
+        $this->gridProvider   = $gridProvider;
+        $this->user           = $user;
+        $this->responseTagger = $responseTagger;
     }
 
     /**
@@ -194,7 +205,7 @@ final class GalleryElement extends AbstractContentElement
                     'name'       => $file->basename,
                     'singleSRC'  => $fileModel->path,
                     'title'      => StringUtil::specialchars($file->basename),
-                    'filesModel' => $fileModel->current()
+                    'filesModel' => $fileModel->current(),
                 ];
 
                 $auxDate[] = $file->mtime;
@@ -247,7 +258,7 @@ final class GalleryElement extends AbstractContentElement
                     'The "meta" key in ContentGallery::compile() has been deprecated and will no longer work in Contao 5.0.',
                     E_USER_DEPRECATED
                 );
-                // @codingStandardsIgnoreEnd
+            // @codingStandardsIgnoreEnd
 
             // no break here. Handle meta the same as custom.
             case 'custom':
@@ -424,7 +435,10 @@ final class GalleryElement extends AbstractContentElement
     {
         try {
             if ($this->get('bs_grid')) {
-                return $this->gridProvider->getIterator('ce:' . $this->get('id'), (int) $this->get('bs_grid'));
+                $iterator = $this->gridProvider->getIterator('ce:' . $this->get('id'), (int) $this->get('bs_grid'));
+                $this->responseTagger->addTags(['contao.db.tl_bs_grid.' . $this->get('bs_grid')]);
+
+                return $iterator;
             }
         } catch (\RuntimeException $e) {
             // No Grid found, return null.

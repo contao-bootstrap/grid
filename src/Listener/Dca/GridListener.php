@@ -6,8 +6,8 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
+ * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
+ * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
 
@@ -108,7 +108,7 @@ class GridListener
     public function getWidths(): array
     {
         $columns = $this->getColumns();
-        $values  = ['auto', 'null'];
+        $values  = ['equal', 'variable', 'null'];
         $values  = array_merge($values, range(1, $columns));
 
         return array_combine($values, $values);

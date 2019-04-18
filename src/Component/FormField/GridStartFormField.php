@@ -6,8 +6,8 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
+ * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
+ * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
 
@@ -39,6 +39,7 @@ class GridStartFormField extends AbstractFormField
         try {
             $provider = $this->getGridProvider();
             $iterator = $provider->getIterator('ffl:' . $this->id, (int) $this->bs_grid);
+            $this->getResponseTagger()->addTags(['contao.db.tl_bs_grid.' . $this->bs_grid]);
 
             return $iterator;
         } catch (\Exception $e) {

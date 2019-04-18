@@ -6,8 +6,8 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
+ * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
+ * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
 
@@ -43,7 +43,10 @@ abstract class AbstractRelatedFormField extends AbstractFormField
 
         if ($parent) {
             try {
-                return $provider->getIterator('ffl:' . $parent->id, (int) $parent->bs_grid);
+                $iterator = $provider->getIterator('ffl:' . $parent->id, (int) $parent->bs_grid);
+                $this->getResponseTagger()->addTags(['contao.db.tl_bs_grid.' . $parent->bs_grid]);
+
+                return $iterator;
             } catch (\Exception $e) {
                 // Do nothing. Error is displayed in backend view.
                 return null;

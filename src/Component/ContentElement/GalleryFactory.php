@@ -7,7 +7,7 @@
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2017-2018 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
+ * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
 
@@ -21,6 +21,7 @@ use Contao\User;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Component\Component;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
+use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 
 /**
@@ -50,17 +51,30 @@ final class GalleryFactory implements ComponentFactory
     private $user;
 
     /**
+     * Response tagger.
+     *
+     * @var ResponseTagger
+     */
+    private $responseTagger;
+
+    /**
      * GalleryFactory constructor.
      *
      * @param TemplateEngine $templateEngine Template engine.
      * @param GridProvider   $gridProvider   The grid provider.
      * @param User           $user           Frontend user.
+     * @param ResponseTagger $responseTagger Response tagger.
      */
-    public function __construct(TemplateEngine $templateEngine, GridProvider $gridProvider, User $user)
-    {
+    public function __construct(
+        TemplateEngine $templateEngine,
+        GridProvider $gridProvider,
+        User $user,
+        ResponseTagger $responseTagger
+    ) {
         $this->templateEngine = $templateEngine;
         $this->gridProvider   = $gridProvider;
         $this->user           = $user;
+        $this->responseTagger = $responseTagger;
     }
 
     /**
@@ -85,6 +99,7 @@ final class GalleryFactory implements ComponentFactory
             $this->templateEngine,
             $this->gridProvider,
             $this->user,
+            $this->responseTagger,
             $column
         );
     }

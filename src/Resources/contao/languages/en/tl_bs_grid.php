@@ -6,8 +6,8 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
+ * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
+ * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
 
@@ -72,3 +72,8 @@ $GLOBALS['TL_LANG']['tl_bs_grid']['class'][0]       = 'Classes';
 $GLOBALS['TL_LANG']['tl_bs_grid']['class'][1]       = 'Custom css classes.';
 $GLOBALS['TL_LANG']['tl_bs_grid']['reset'][0]       = 'Reset';
 $GLOBALS['TL_LANG']['tl_bs_grid']['reset'][1]       = 'Reset position before the column.';
+
+$GLOBALS['TL_LANG']['tl_bs_grid']['resets']['1'][0]       = 'all';
+$GLOBALS['TL_LANG']['tl_bs_grid']['resets']['1'][1]       = 'Reset all upcoming sizes.';
+$GLOBALS['TL_LANG']['tl_bs_grid']['resets']['2'][0]       = 'size';
+$GLOBALS['TL_LANG']['tl_bs_grid']['resets']['2'][1]       = 'Reset only this size.';

@@ -6,14 +6,17 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
+ * @author     Florian Vick <florian@florian-vick.de>
+ * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
+ * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
 
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Definition;
+
+use function sprintf;
 
 /**
  * Class Column.
@@ -55,7 +58,7 @@ class Column
     /**
      * Add reset before the column.
      *
-     * @var bool
+     * @var bool|string
      */
     private $reset = false;
 
@@ -83,6 +86,20 @@ class Column
     public function width(int $width): self
     {
         $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * Force variable width of column.
+     *
+     * @return Column
+     *
+     * @see https://getbootstrap.com/docs/4.3/layout/grid/#variable-width-content
+     */
+    public function variableWidth(): self
+    {
+        $this->width = 'auto';
 
         return $this;
     }
@@ -142,6 +159,20 @@ class Column
     }
 
     /**
+     * Set the reset flag but limit the reset until a given size.
+     *
+     * @param string $limit The size to which the reset should be limited.
+     *
+     * @return Column
+     */
+    public function limitedReset(string $limit): self
+    {
+        $this->reset = $limit;
+
+        return $this;
+    }
+
+    /**
      * Add a css class.
      *
      * @param string $class Css class.
@@ -167,7 +198,9 @@ class Column
     {
         $sizeSuffix = $size ? '-' . $size : $size;
 
-        if ($this->width === null || $this->width > 0) {
+        if ($this->width === 'auto') {
+            $classes[] = 'col' . $sizeSuffix . '-auto';
+        } elseif ($this->width === null || $this->width > 0) {
             $widthSuffix = ($this->width > 0) ? '-' . $this->width : '';
             $classes[]   = 'col' . $sizeSuffix . $widthSuffix;
         } elseif ($size) {
@@ -176,15 +209,15 @@ class Column
             $classes[] = 'd-none';
         }
 
-        $this->buildAlign($classes);
-        $this->buildJustify($classes);
+        $this->buildAlign($classes, $sizeSuffix);
+        $this->buildJustify($classes, $sizeSuffix);
         $this->buildOrder($classes, $sizeSuffix);
         $this->buildOffset($classes, $sizeSuffix);
 
         if ($this->cssClasses) {
             $classes = array_merge($classes, $this->cssClasses);
         }
-        
+
         return array_unique($classes);
     }
 
@@ -198,8 +231,10 @@ class Column
      */
     public function buildReset(array $resets, string $size = ''): array
     {
-        if ($this->hasReset()) {
+        if ($this->reset === true) {
             $resets[] = sprintf('d-none d%s-block', $size ? '-' . $size : '');
+        } elseif ($this->reset !== false) {
+            $resets[] = sprintf('d-none d%s-block d-%s-none', $size ? '-' . $size : '', $this->reset);
         }
 
         return $resets;
@@ -212,34 +247,36 @@ class Column
      */
     public function hasReset(): bool
     {
-        return $this->reset;
+        return (bool) $this->reset;
     }
 
     /**
      * Build the align setting.
      *
-     * @param array $classes Column classes.
+     * @param array  $classes    Column classes.
+     * @param string $sizeSuffix Bootstrap Size suffix like 'md' or 'lg'.
      *
      * @return void
      */
-    private function buildAlign(array &$classes): void
+    private function buildAlign(array &$classes, string $sizeSuffix = ''): void
     {
         if ($this->align) {
-            $classes[] = 'align-self-' . $this->align;
+            $classes[] = 'align-self'. $sizeSuffix . '-' . $this->align;
         }
     }
 
     /**
      * Build the justify setting.
      *
-     * @param array $classes Column classes.
+     * @param array  $classes    Column classes.
+     * @param string $sizeSuffix Bootstrap Size suffix like 'md' or 'lg'.
      *
      * @return void
      */
-    private function buildJustify(array &$classes): void
+    private function buildJustify(array &$classes, string $sizeSuffix = ''): void
     {
         if ($this->justify) {
-            $classes[] = 'justify-content-' . $this->justify;
+            $classes[] = 'justify-content' . $sizeSuffix . '-' . $this->justify;
         }
     }
 

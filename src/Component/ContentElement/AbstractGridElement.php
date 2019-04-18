@@ -6,8 +6,8 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
+ * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
+ * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
 
@@ -21,6 +21,7 @@ use ContaoBootstrap\Core\Helper\ColorRotate;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\AbstractContentElement;
+use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateReference as ToolkitTemplateReference;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
@@ -62,6 +63,13 @@ abstract class AbstractGridElement extends AbstractContentElement
     private $gridProvider;
 
     /**
+     * Response tagger.
+     *
+     * @var ResponseTagger
+     */
+    protected $responseTagger;
+
+    /**
      * AbstractGridElement constructor.
      *
      * @param Model|Result        $model          Object model or result.
@@ -70,6 +78,7 @@ abstract class AbstractGridElement extends AbstractContentElement
      * @param GridProvider        $gridProvider   Grid provider.
      * @param RequestScopeMatcher $scopeMatcher   Request scope matcher.
      * @param ColorRotate         $colorRotate    Color rotate helper.
+     * @param ResponseTagger      $responseTagger Response tagger.
      * @param string              $column         Column.
      */
     public function __construct(
@@ -79,14 +88,16 @@ abstract class AbstractGridElement extends AbstractContentElement
         GridProvider $gridProvider,
         RequestScopeMatcher $scopeMatcher,
         ColorRotate $colorRotate,
+        ResponseTagger $responseTagger,
         string $column = 'main'
     ) {
         parent::__construct($model, $templateEngine, $column);
 
-        $this->translator   = $translator;
-        $this->gridProvider = $gridProvider;
-        $this->colorRotate  = $colorRotate;
-        $this->scopeMatcher = $scopeMatcher;
+        $this->translator     = $translator;
+        $this->gridProvider   = $gridProvider;
+        $this->colorRotate    = $colorRotate;
+        $this->scopeMatcher   = $scopeMatcher;
+        $this->responseTagger = $responseTagger;
     }
 
     /**

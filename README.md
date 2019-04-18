@@ -41,10 +41,10 @@ Contao Manager and install it. Alternatively you can use the CLI.
 
 ```bash
 # Using the contao manager
-$ php contao-manager.phar.php composer require contao-bootstrap/grid~2.0@beta
+$ php contao-manager.phar.php composer require contao-bootstrap/grid~2.0
 
 # Using composer directly
-$ php composer.phar require contao-bootstrap/grid~2.0@beta
+$ php composer.phar require contao-bootstrap/grid~2.0
 ```
 
 ### Symfony application

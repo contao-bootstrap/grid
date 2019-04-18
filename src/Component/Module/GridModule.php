@@ -6,8 +6,8 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0
+ * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
+ * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
 
@@ -23,6 +23,7 @@ use Contao\StringUtil;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
+use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
@@ -41,6 +42,13 @@ final class GridModule extends AbstractModule
     private $gridProvider;
 
     /**
+     * Response Tagger.
+     *
+     * @var ResponseTagger
+     */
+    private $responseTagger;
+
+    /**
      * Template name.
      *
      * @var string
@@ -54,6 +62,7 @@ final class GridModule extends AbstractModule
      * @param TemplateEngine $templateEngine The template engine.
      * @param Translator     $translator     The translator.
      * @param GridProvider   $gridProvider   The grid provider.
+     * @param ResponseTagger $responseTagger Response tagger.
      * @param string         $column         Name of the column or section the module is rendered in.
      */
     public function __construct(
@@ -61,11 +70,13 @@ final class GridModule extends AbstractModule
         TemplateEngine $templateEngine,
         Translator $translator,
         GridProvider $gridProvider,
+        ResponseTagger $responseTagger,
         string $column = 'main'
     ) {
         parent::__construct($model, $templateEngine, $translator, $column);
 
-        $this->gridProvider = $gridProvider;
+        $this->gridProvider   = $gridProvider;
+        $this->responseTagger = $responseTagger;
     }
 
     /**
@@ -97,10 +108,13 @@ final class GridModule extends AbstractModule
      *
      * @return GridIterator|null
      */
-    protected function getGridIterator():? GridIterator
+    protected function getGridIterator(): ?GridIterator
     {
         try {
-            return $this->gridProvider->getIterator('ce:' . $this->get('id'), (int) $this->get('bs_grid'));
+            $iterator = $this->gridProvider->getIterator('ce:' . $this->get('id'), (int) $this->get('bs_grid'));
+            $this->responseTagger->addTags(['contao.db.tl_bs_grid.' . $this->get('bs_grid')]);
+
+            return $iterator;
         } catch (\Exception $e) {
             // Do nothing.
             return null;

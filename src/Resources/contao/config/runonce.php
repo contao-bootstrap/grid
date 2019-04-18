@@ -11,18 +11,8 @@
  * @filesource
  */
 
-declare(strict_types=1);
+use ContaoBootstrap\Grid\Migration\MigrateAutoGridWidths;
 
-namespace ContaoBootstrap\Grid;
-
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
-/**
- * Class ContaoBootstrapGridBundle.
- *
- * @package ContaoBootstrap\Grid
- */
-class ContaoBootstrapGridBundle extends Bundle
-{
-
-}
+(function () {
+    \Contao\System::getContainer()->get(MigrateAutoGridWidths::class)();
+})();
