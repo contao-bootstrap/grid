@@ -89,6 +89,20 @@ class Column
     }
 
     /**
+     * Force variable width of column.
+     *
+     * @return Column
+     *
+     * @see https://getbootstrap.com/docs/4.3/layout/grid/#variable-width-content
+     */
+    public function variableWidth(): self
+    {
+        $this->width = 'auto';
+
+        return $this;
+    }
+
+    /**
      * Set the flex order.
      *
      * @param int $order Order value.
@@ -168,7 +182,9 @@ class Column
     {
         $sizeSuffix = $size ? '-' . $size : $size;
 
-        if ($this->width === null || $this->width > 0) {
+        if ($this->width === 'auto') {
+            $classes[] = 'col' . $sizeSuffix . '-auto';
+        } elseif ($this->width === null || $this->width > 0) {
             $widthSuffix = ($this->width > 0) ? '-' . $this->width : '';
             $classes[]   = 'col' . $sizeSuffix . $widthSuffix;
         } elseif ($size) {
