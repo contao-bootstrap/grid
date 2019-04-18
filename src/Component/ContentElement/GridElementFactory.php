@@ -21,6 +21,7 @@ use ContaoBootstrap\Core\Helper\ColorRotate;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Component\Component;
 use Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound;
+use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
@@ -79,6 +80,13 @@ final class GridElementFactory
     private $gridProvider;
 
     /**
+     * Response tagger.
+     *
+     * @var ResponseTagger
+     */
+    private $responseTagger;
+
+    /**
      * PanelElementFactory constructor.
      *
      * @param TemplateEngine      $templateEngine The template engine.
@@ -86,19 +94,22 @@ final class GridElementFactory
      * @param RequestScopeMatcher $scopeMatcher   Request scope matcher.
      * @param GridProvider        $gridProvider   Grid provider.
      * @param ColorRotate         $colorRotate    Color rotate helper.
+     * @param ResponseTagger      $responseTagger Response tagger.
      */
     public function __construct(
         TemplateEngine $templateEngine,
         Translator $translator,
         RequestScopeMatcher $scopeMatcher,
         GridProvider $gridProvider,
-        ColorRotate $colorRotate
+        ColorRotate $colorRotate,
+        ResponseTagger $responseTagger
     ) {
         $this->templateEngine = $templateEngine;
         $this->colorRotate    = $colorRotate;
         $this->scopeMatcher   = $scopeMatcher;
         $this->translator     = $translator;
         $this->gridProvider   = $gridProvider;
+        $this->responseTagger = $responseTagger;
     }
 
     /**
@@ -133,6 +144,7 @@ final class GridElementFactory
             $this->gridProvider,
             $this->scopeMatcher,
             $this->colorRotate,
+            $this->responseTagger,
             $column
         );
     }

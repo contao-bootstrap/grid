@@ -2,6 +2,13 @@
 Changelog
 =========
 
+[Unreleased]
+------------
+
+### Added
+
+ - Tag response with grid id when grid element or module is used.
+
 2.0.8 (2019-01-29)
 ------------------
 
@@ -115,3 +122,6 @@ Fixed bugs:
 
  - Grid row settings were not recognized
  - Frontend module did not support resets
+
+
+[Unreleased]: https://github.com/contao-bootstrap/grid/compare/master...feature/response-tagger

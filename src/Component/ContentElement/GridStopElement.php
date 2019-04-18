@@ -76,7 +76,10 @@ final class GridStopElement extends AbstractGridElement
 
         if ($parent) {
             try {
-                return $provider->getIterator('ce:' . $parent->id, (int) $parent->bs_grid);
+                $iterator = $provider->getIterator('ce:' . $parent->id, (int) $parent->bs_grid);
+                $this->responseTagger->addTags(['contao.db.tl_bs_grid.' . $parent->bs_grid]);
+
+                return $iterator;
             } catch (\Exception $e) {
                 // Do nothing. In backend view an error is shown anyway.
                 return null;

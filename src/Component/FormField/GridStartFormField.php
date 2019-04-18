@@ -39,6 +39,7 @@ class GridStartFormField extends AbstractFormField
         try {
             $provider = $this->getGridProvider();
             $iterator = $provider->getIterator('ffl:' . $this->id, (int) $this->bs_grid);
+            $this->getResponseTagger()->addTags(['contao.db.tl_bs_grid.' . $this->bs_grid]);
 
             return $iterator;
         } catch (\Exception $e) {
