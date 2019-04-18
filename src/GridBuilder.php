@@ -19,6 +19,8 @@ use Contao\StringUtil;
 use ContaoBootstrap\Grid\Definition\Column;
 use ContaoBootstrap\Grid\Definition\Grid;
 use ContaoBootstrap\Grid\Model\GridModel;
+use RuntimeException;
+use function array_search;
 
 /**
  * GridBuilder builds the grid class from the database definition.
@@ -48,7 +50,7 @@ final class GridBuilder
      *
      * @return Grid
      *
-     * @throws \RuntimeException When Grid does not exist.
+     * @throws RuntimeException When Grid does not exist.
      */
     public function build(int $gridId): Grid
     {
@@ -65,13 +67,13 @@ final class GridBuilder
      *
      * @return void
      *
-     * @throws \RuntimeException When Grid does not exist.
+     * @throws RuntimeException When Grid does not exist.
      */
     protected function loadModel(int $gridId): void
     {
         $model = GridModel::findByPk($gridId);
         if (!$model) {
-            throw new \RuntimeException(sprintf('Grid ID "%s" not found', $gridId));
+            throw new RuntimeException(sprintf('Grid ID "%s" not found', $gridId));
         }
 
         $this->model = $model;
@@ -97,7 +99,7 @@ final class GridBuilder
                 $size = '';
             }
 
-            $this->buildSize($size, $definition);
+            $this->buildSize($size, $definition, $sizes);
         }
     }
 
@@ -130,13 +132,14 @@ final class GridBuilder
      *
      * @param string $size       Grid size.
      * @param array  $definition Definition.
+     * @param array  $sizes      List of defined sizes.
      *
      * @return void
      */
-    private function buildSize(string $size, array $definition): void
+    private function buildSize(string $size, array $definition, array $sizes): void
     {
         foreach ($definition as $columnDefinition) {
-            $column = $this->buildColumn($columnDefinition);
+            $column = $this->buildColumn($columnDefinition, $size, $sizes);
 
             $this->grid->addColumn($column, $size);
         }
@@ -145,15 +148,18 @@ final class GridBuilder
     /**
      * Build a column.
      *
-     * @param array $definition Column definition.
+     * @param array  $definition Column definition.
+     * @param string $size       The column size.
+     * @param array  $sizes      List of defined sizes.
      *
      * @return Column
      */
-    private function buildColumn(array $definition): Column
+    private function buildColumn(array $definition, string $size, array $sizes): Column
     {
         $column = new Column();
 
         $this->buildColumnWidth($definition, $column);
+        $this->buildColumnResets($definition, $column, $size, $sizes);
 
         if ($definition['order']) {
             $column->order((int) $definition['order']);
@@ -168,10 +174,6 @@ final class GridBuilder
             $column->offset($offset);
         }
 
-        if ($definition['reset']) {
-            $column->reset();
-        }
-
         if ($definition['class']) {
             $column->cssClass($definition['class']);
         }
@@ -184,7 +186,7 @@ final class GridBuilder
      *
      * @return Grid
      */
-    private function finish()
+    private function finish(): Grid
     {
         $grid        = $this->grid;
         $this->grid  = null;
@@ -235,6 +237,39 @@ final class GridBuilder
                 default:
                     $column->width((int) $definition['width']);
             }
+        }
+    }
+
+    /**
+     * Build the column resets.
+     *
+     * @param array  $definition The grid column definition.
+     * @param Column $column     The column.
+     * @param string $size       The column size.
+     * @param array  $sizes      List of defined sizes.
+     *
+     * @return void
+     */
+    private function buildColumnResets(array $definition, Column $column, string $size, array $sizes): void
+    {
+        switch ($definition['reset']) {
+            case '2':
+                $key  = array_search($size, $sizes);
+                $next = ($sizes[($key + 1)] ?? null);
+
+                if ($next) {
+                    $column->limitedReset((string) $next);
+
+                    break;
+                }
+
+                // No break here,
+            case '1':
+                $column->reset();
+                break;
+
+            default:
+                // Do nothing.
         }
     }
 }

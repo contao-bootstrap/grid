@@ -16,6 +16,8 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Definition;
 
+use function sprintf;
+
 /**
  * Class Column.
  *
@@ -56,7 +58,7 @@ class Column
     /**
      * Add reset before the column.
      *
-     * @var bool
+     * @var bool|string
      */
     private $reset = false;
 
@@ -157,6 +159,20 @@ class Column
     }
 
     /**
+     * Set the reset flag but limit the reset until a given size.
+     *
+     * @param string $limit The size to which the reset should be limited.
+     *
+     * @return Column
+     */
+    public function limitedReset(string $limit): self
+    {
+        $this->reset = $limit;
+
+        return $this;
+    }
+
+    /**
      * Add a css class.
      *
      * @param string $class Css class.
@@ -215,8 +231,10 @@ class Column
      */
     public function buildReset(array $resets, string $size = ''): array
     {
-        if ($this->hasReset()) {
+        if ($this->reset === true) {
             $resets[] = sprintf('d-none d%s-block', $size ? '-' . $size : '');
+        } elseif ($this->reset !== false) {
+            $resets[] = sprintf('d-none d%s-block d-%s-none', $size ? '-' . $size : '', $this->reset);
         }
 
         return $resets;
@@ -229,7 +247,7 @@ class Column
      */
     public function hasReset(): bool
     {
-        return $this->reset;
+        return (bool) $this->reset;
     }
 
     /**
