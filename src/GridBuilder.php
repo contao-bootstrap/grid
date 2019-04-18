@@ -154,6 +154,9 @@ final class GridBuilder
         $column = new Column();
         if ($definition['width']) {
             switch ($definition['width']) {
+                case 'variable':
+                    $column->variableWidth();
+                    break;
                 case 'auto':
                     break;
                 case 'null':
