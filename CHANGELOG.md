@@ -5,6 +5,13 @@ Changelog
 [Unreleased]
 ------------
 
+[2.1.1] (2019-06-11)
+--------------------
+
+### Fixed
+
+ - Add missing closing div ([#30](https://github.com/contao-bootstrap/grid/issues/30))
+
 [2.1.0] (2019-04-18)
 --------------------
 
