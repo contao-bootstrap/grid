@@ -5,6 +5,6 @@
 <?php foreach ($this->modules as $module): ?>
 <?= $module; ?>
 <?php endforeach; ?>
-
+</div>
 </div>
 <?php $this->endblock(); ?>
