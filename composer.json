@@ -42,6 +42,9 @@
     "php-http/guzzle6-adapter": "^1.1",
     "phpcq/all-tasks": "^1.2"
   },
+  "suggest": {
+    "contao/news-bundle": "Use grid in news list and news archive modules"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "2.1.x-dev",
@@ -61,9 +64,6 @@
     "psr-4": {
       "ContaoBootstrap\\Grid\\": "src/"
     }
-  },
-  "suggest": {
-    "contao/news-bundle": ""
   },
   "support": {
     "email": "mail@netzmacht.de",
