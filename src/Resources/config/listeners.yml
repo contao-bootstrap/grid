@@ -39,3 +39,7 @@ services:
 
   contao_bootstrap.grid.listeners.theme_import:
     class: ContaoBootstrap\Grid\Listener\ThemeImportListener
+
+  ContaoBootstrap\Grid\Listener\Hook\NewsGridListener:
+    arguments:
+      - '@contao_bootstrap.grid.grid_provider'

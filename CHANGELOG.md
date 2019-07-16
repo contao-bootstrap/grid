@@ -5,6 +5,10 @@ Changelog
 [Unreleased]
 ------------
 
+### Added
+
+ - Add option to define a grid in newslist and newsarchive modules to wrap each news article in a grid column
+
 [2.1.1] (2019-06-11)
 --------------------
 

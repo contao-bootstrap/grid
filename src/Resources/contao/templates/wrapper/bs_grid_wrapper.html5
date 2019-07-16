@@ -1,0 +1,16 @@
+<?php if ($this->bsGrid['first']): ?>
+<div class="<?= $this->bsGrid['row'] ?>">
+<?php endif ?>
+
+<div class="<?= $this->bsGrid['grid'] ?>">
+    <?= $this->bsGrid['content']() ?>
+</div>
+
+<?php if (!$this->bsGrid['last']): ?>
+<?php foreach ($this->bsGrid['resets'] as $reset): ?>
+    <div class="clearfix w-100 <?= $reset ?>"></div>
+<?php endforeach; ?>
+
+<?php else: ?>
+</div>
+<?php endif ?>

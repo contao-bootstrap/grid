@@ -11,6 +11,11 @@
  * @filesource
  */
 
+$GLOBALS['TL_DCA']['tl_module']['config']['onload_callback'][] = [
+    'contao_bootstrap.grid.listeners.dca.module',
+    'initialize'
+];
+
 $GLOBALS['TL_DCA']['tl_module']['metapalettes']['bs_grid'] = [
     'title'     => ['name', 'headline', 'type'],
     'config'    => ['bs_grid', 'bs_gridModules'],
@@ -26,10 +31,13 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['bs_grid'] = [
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.module', 'getGridOptions'],
     'reference'        => &$GLOBALS['TL_LANG']['tl_content'],
     'eval'             => [
-        'mandatory'          => true,
+        'mandatory'          => false,
         'includeBlankOption' => true,
         'chosen'             => true,
         'tl_class'           => 'w50',
+    ],
+    'load_callback'  => [
+        ['contao_bootstrap.grid.listeners.dca.module', 'setGridWidgetOptions']
     ],
     'sql'              => "int(10) unsigned NOT NULL default '0'",
     'relation'         => ['type' => 'hasOne', 'load' => 'lazy'],
