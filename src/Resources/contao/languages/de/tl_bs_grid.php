@@ -8,9 +8,8 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2018-07-27T14:50:17+00:00
+ * last-updated: 2018-07-31T08:53:30+00:00
  */
-
 
 $GLOBALS['TL_LANG']['tl_bs_grid']['align']['0']       = 'Vertikale Ausrichtung';
 $GLOBALS['TL_LANG']['tl_bs_grid']['align']['1']       = 'Vertikale Ausrichtung mittels Flexbox-Tools.';
@@ -45,6 +44,10 @@ $GLOBALS['TL_LANG']['tl_bs_grid']['order']['0']       = 'Anordnung';
 $GLOBALS['TL_LANG']['tl_bs_grid']['order']['1']       = 'Verändern Sie die Reihenfolge mit Push- und Pull-Klassen oder Flexbox-Tools.';
 $GLOBALS['TL_LANG']['tl_bs_grid']['reset']['0']       = 'Zurücksetzen';
 $GLOBALS['TL_LANG']['tl_bs_grid']['reset']['1']       = 'Position vor der Spalte zurücksetzen.';
+$GLOBALS['TL_LANG']['tl_bs_grid']['resets']['1']['0'] = 'alle';
+$GLOBALS['TL_LANG']['tl_bs_grid']['resets']['1']['1'] = 'Alle weiteren Größen zurücksetzen.';
+$GLOBALS['TL_LANG']['tl_bs_grid']['resets']['2']['0'] = 'Größe';
+$GLOBALS['TL_LANG']['tl_bs_grid']['resets']['2']['1'] = 'Nur diese Größe zurücksetzen.';
 $GLOBALS['TL_LANG']['tl_bs_grid']['rowClass']['0']    = 'Zeilen-Klassen';
 $GLOBALS['TL_LANG']['tl_bs_grid']['rowClass']['1']    = 'Fügen Sie der Zeile benutzerdefinierte CSS-Klassen hinzu.';
 $GLOBALS['TL_LANG']['tl_bs_grid']['row_legend']       = 'Zeilenkonfiguration';
