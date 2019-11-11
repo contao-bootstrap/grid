@@ -1,5 +1,5 @@
 
-<div class="row <?= $this->grid ? $this->grid->row() : '' ?>" itemscope itemtype="http://schema.org/ImageGallery">
+<div class="<?= $this->grid ? $this->grid->row() : 'row' ?>" itemscope itemtype="http://schema.org/ImageGallery">
     <?php foreach ($this->body as $col): ?>
         <?php if ($this->grid): ?>
         <?php foreach ($this->grid->resets() as $reset): ?>

@@ -7,6 +7,7 @@ Changelog
 
 ### Fixed
 
+ - Do not add row class twiche [#33](https://github.com/contao-bootstrap/grid/issues/33)
  - Fix grid identifier for modules [#31](https://github.com/contao-bootstrap/grid/issues/31)
 
 [2.1.1] (2019-06-11)
