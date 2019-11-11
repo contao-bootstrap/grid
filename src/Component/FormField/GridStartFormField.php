@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\FormField;
 
+use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 
 /**
@@ -42,7 +43,7 @@ class GridStartFormField extends AbstractFormField
             $this->getResponseTagger()->addTags(['contao.db.tl_bs_grid.' . $this->bs_grid]);
 
             return $iterator;
-        } catch (\Exception $e) {
+        } catch (GridNotFound $e) {
             return null;
         }
     }

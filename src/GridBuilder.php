@@ -18,6 +18,7 @@ namespace ContaoBootstrap\Grid;
 use Contao\StringUtil;
 use ContaoBootstrap\Grid\Definition\Column;
 use ContaoBootstrap\Grid\Definition\Grid;
+use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\Model\GridModel;
 use RuntimeException;
 use function array_search;
@@ -67,13 +68,13 @@ final class GridBuilder
      *
      * @return void
      *
-     * @throws RuntimeException When Grid does not exist.
+     * @throws GridNotFound When Grid does not exist.
      */
     protected function loadModel(int $gridId): void
     {
         $model = GridModel::findByPk($gridId);
         if (!$model) {
-            throw new RuntimeException(sprintf('Grid ID "%s" not found', $gridId));
+            throw GridNotFound::withId($gridId);
         }
 
         $this->model = $model;

@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Component\ContentElement;
 
 use Contao\ContentModel;
+use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 
 /**
@@ -80,7 +81,7 @@ final class GridStopElement extends AbstractGridElement
                 $this->responseTagger->addTags(['contao.db.tl_bs_grid.' . $parent->bs_grid]);
 
                 return $iterator;
-            } catch (\Exception $e) {
+            } catch (GridNotFound $e) {
                 // Do nothing. In backend view an error is shown anyway.
                 return null;
             }

@@ -28,6 +28,7 @@ use Contao\Model\Collection;
 use Contao\Pagination;
 use Contao\StringUtil;
 use Contao\User;
+use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\AbstractContentElement;
@@ -363,7 +364,7 @@ final class GalleryElement extends AbstractContentElement
                 $this->images[$index]['filesModel']
             );
 
-            $cell->picture['attributes'] = 'class="img-fluid figure-img img-thumbnail"';
+            $cell->picture['class'] = trim($cell->picture['class'] . ' img-fluid figure-img img-thumbnail');
 
             $body[] = $cell;
         }
@@ -440,7 +441,7 @@ final class GalleryElement extends AbstractContentElement
 
                 return $iterator;
             }
-        } catch (\RuntimeException $e) {
+        } catch (GridNotFound $e) {
             // No Grid found, return null.
             return null;
         }
