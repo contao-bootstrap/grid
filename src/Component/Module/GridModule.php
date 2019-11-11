@@ -20,6 +20,7 @@ use Contao\Database\Result;
 use Contao\Model;
 use Contao\ModuleModel;
 use Contao\StringUtil;
+use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
@@ -115,7 +116,7 @@ final class GridModule extends AbstractModule
             $this->responseTagger->addTags(['contao.db.tl_bs_grid.' . $this->get('bs_grid')]);
 
             return $iterator;
-        } catch (\Exception $e) {
+        } catch (GridNotFound $e) {
             // Do nothing.
             return null;
         }
