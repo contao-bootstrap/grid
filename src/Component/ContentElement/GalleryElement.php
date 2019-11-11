@@ -364,7 +364,7 @@ final class GalleryElement extends AbstractContentElement
                 $this->images[$index]['filesModel']
             );
 
-            $cell->picture['attributes'] = 'class="img-fluid figure-img img-thumbnail"';
+            $cell->picture['class'] = trim($cell->picture['class'] . ' img-fluid figure-img img-thumbnail');
 
             $body[] = $cell;
         }

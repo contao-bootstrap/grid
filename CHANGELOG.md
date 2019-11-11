@@ -7,6 +7,7 @@ Changelog
 
 ### Fixed
 
+ - Prevent double class attributes [#34](https://github.com/contao-bootstrap/grid/issues/34)
  - Do not silence all exceptions [#32](https://github.com/contao-bootstrap/grid/issues/32)
  - Do not add row class twiche [#33](https://github.com/contao-bootstrap/grid/issues/33)
  - Fix grid identifier for modules [#31](https://github.com/contao-bootstrap/grid/issues/31)
