@@ -111,7 +111,7 @@ final class GridModule extends AbstractModule
     protected function getGridIterator(): ?GridIterator
     {
         try {
-            $iterator = $this->gridProvider->getIterator('ce:' . $this->get('id'), (int) $this->get('bs_grid'));
+            $iterator = $this->gridProvider->getIterator('mod:' . $this->get('id'), (int) $this->get('bs_grid'));
             $this->responseTagger->addTags(['contao.db.tl_bs_grid.' . $this->get('bs_grid')]);
 
             return $iterator;
