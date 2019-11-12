@@ -5,6 +5,9 @@ Changelog
 [Unreleased]
 ------------
 
+[2.1.2] (2019-11-11)
+--------------------
+
 ### Fixed
 
  - Prevent double class attributes [#34](https://github.com/contao-bootstrap/grid/issues/34)
@@ -149,4 +152,6 @@ Fixed bugs:
 
 
 [Unreleased]: https://github.com/contao-bootstrap/grid/compare/master...develop
+[2.1.2]: https://github.com/contao-bootstrap/grid/compare/2.1.1...2.1.2
+[2.1.2]: https://github.com/contao-bootstrap/grid/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/contao-bootstrap/grid/compare/2.0.8...2.1.0
