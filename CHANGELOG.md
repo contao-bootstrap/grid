@@ -9,6 +9,16 @@ Changelog
 
  - Add option to define a grid in newslist and newsarchive modules to wrap each news article in a grid column
 
+[2.1.2] (2019-11-11)
+--------------------
+
+### Fixed
+
+ - Prevent double class attributes [#34](https://github.com/contao-bootstrap/grid/issues/34)
+ - Do not silence all exceptions [#32](https://github.com/contao-bootstrap/grid/issues/32)
+ - Do not add row class twiche [#33](https://github.com/contao-bootstrap/grid/issues/33)
+ - Fix grid identifier for modules [#31](https://github.com/contao-bootstrap/grid/issues/31)
+
 [2.1.1] (2019-06-11)
 --------------------
 
@@ -146,4 +156,6 @@ Fixed bugs:
 
 
 [Unreleased]: https://github.com/contao-bootstrap/grid/compare/master...develop
+[2.1.2]: https://github.com/contao-bootstrap/grid/compare/2.1.1...2.1.2
+[2.1.2]: https://github.com/contao-bootstrap/grid/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/contao-bootstrap/grid/compare/2.0.8...2.1.0
