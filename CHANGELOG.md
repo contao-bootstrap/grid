@@ -8,6 +8,7 @@ Changelog
 ### Added
 
  - Add option to define a grid in newslist and newsarchive modules to wrap each news article in a grid column
+ - Add parent relation fixer which fix relations after an element or its parent got copied
 
 [2.1.2] (2019-11-11)
 --------------------

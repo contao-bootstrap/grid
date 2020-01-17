@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Contao Bootstrap grid.
  *
@@ -11,6 +13,8 @@
  * @filesource
  */
 
+use ContaoBootstrap\Grid\Listener\Dca\ContentFixParentRelationListener;
+
 /*
  * Config
  */
@@ -19,6 +23,8 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = [
     'contao_bootstrap.grid.listeners.dca.content',
     'initializeDca',
 ];
+
+$GLOBALS['TL_DCA']['tl_content']['config']['oncopy_callback'][] = [ContentFixParentRelationListener::class, 'onCopy'];
 
 /*
  * Palettes

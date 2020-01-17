@@ -1,5 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
+
 /**
  * Contao Bootstrap grid.
  *
@@ -10,6 +13,18 @@
  * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
+
+use ContaoBootstrap\Grid\Listener\Dca\FormFieldFixParentRelationListener;
+
+
+/*
+ * Config
+ */
+
+$GLOBALS['TL_DCA']['tl_form_field']['config']['oncopy_callback'][] = [
+    FormFieldFixParentRelationListener::class,
+    'onCopy'
+];
 
 /*
  * Palettes
