@@ -17,8 +17,8 @@ namespace ContaoBootstrap\Grid\Listener\Hook;
 
 use Contao\Template;
 use Contao\ModuleNews;
+use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridProvider;
-use RuntimeException;
 use function strpos;
 
 /**
@@ -66,7 +66,7 @@ final class NewsGridListener
 
         try {
             $gridIterator = $this->gridProvider->getIterator('mod:' . $module->id, (int) $module->bs_grid);
-        } catch (RuntimeException $e) {
+        } catch (GridNotFound $e) {
             return;
         }
 
