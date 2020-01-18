@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\ContentModel;
+use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use function in_array;
 use function time;
@@ -43,6 +44,26 @@ final class ContentFixParentRelationListener
     }
 
     /**
+     * Handle the onsubmit callback to automatically select closest parent id.
+     *
+     * @param DataContainer $dataContainer Data container driver.
+     *
+     * @return void
+     */
+    public function onSubmit(DataContainer $dataContainer): void
+    {
+        if (! in_array($dataContainer->activeRecord->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
+            return;
+        }
+
+        if ($dataContainer->activeRecord->bs_grid_parent > 0) {
+            return;
+        }
+
+        $this->fixContentElement((int) $dataContainer->activeRecord->id);
+    }
+
+    /**
      * Handle the oncopy callback.
      *
      * @param int|string $elementId Element id of copied element.
@@ -51,13 +72,17 @@ final class ContentFixParentRelationListener
      */
     public function onCopy($elementId): void
     {
-        /** @var ContentModel|null $contentModel */
-        $elementId    = (int) $elementId;
+        $this->fixContentElement((int) $elementId);
+    }
+
+    private function fixContentElement(int $elementId): void
+    {
         $contentModel = $this->repositoryManager->getRepository(ContentModel::class)->find($elementId);
         if ($contentModel === null || !in_array($contentModel->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
             return;
         }
 
+        assert($contentModel instanceof ContentModel);
         $parentModel = $this->loadParentModel($contentModel);
         if ($parentModel === null) {
             return;

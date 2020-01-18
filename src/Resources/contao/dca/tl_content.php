@@ -24,7 +24,15 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = [
     'initializeDca',
 ];
 
-$GLOBALS['TL_DCA']['tl_content']['config']['oncopy_callback'][] = [ContentFixParentRelationListener::class, 'onCopy'];
+$GLOBALS['TL_DCA']['tl_content']['config']['oncopy_callback'][] = [
+    ContentFixParentRelationListener::class,
+    'onCopy'
+];
+
+$GLOBALS['TL_DCA']['tl_content']['config']['onsubmit_callback'][] = [
+    ContentFixParentRelationListener::class,
+    'onSubmit'
+];
 
 /*
  * Palettes

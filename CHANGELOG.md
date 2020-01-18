@@ -9,6 +9,7 @@ Changelog
 
  - Add option to define a grid in newslist and newsarchive modules to wrap each news article in a grid column
  - Add parent relation fixer which fix relations after an element or its parent got copied
+ - Auto select closes grid start element/form field if type is changed
 
 [2.1.2] (2019-11-11)
 --------------------

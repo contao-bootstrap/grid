@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
+use Contao\DataContainer;
 use Contao\FormFieldModel;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use function in_array;
@@ -43,22 +44,53 @@ final class FormFieldFixParentRelationListener
     }
 
     /**
-     * Handle the oncopy callback.
+     * Handle the onsubmit callback to automatically select closest parent id.
      *
-     * @param int|string $elementId Element id of copied element.
+     * @param DataContainer $dataContainer Data container driver.
      *
      * @return void
      */
-    public function onCopy($elementId): void
+    public function onSubmit(DataContainer $dataContainer): void
     {
-        /** @var FormFieldModel|null $formFieldModel */
-        $elementId    = (int) $elementId;
-        $formFieldModel = $this->repositoryManager->getRepository(FormFieldModel::class)->find($elementId);
+        if (! in_array($dataContainer->activeRecord->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
+            return;
+        }
+
+        if ($dataContainer->activeRecord->bs_grid_parent > 0) {
+            return;
+        }
+
+        $this->fixFormField((int) $dataContainer->activeRecord->id);
+    }
+
+    /**
+     * Handle the oncopy callback.
+     *
+     * @param int|string $formFieldId Element id of copied element.
+     *
+     * @return void
+     */
+    public function onCopy($formFieldId): void
+    {
+        $this->fixFormField((int) $formFieldId);
+    }
+
+    /**
+     * Fix a relation of a form field.
+     *
+     * @param int $formFieldId The form field id.
+     *
+     * @return void
+     */
+    private function fixFormField(int $formFieldId): void
+    {
+        $formFieldModel = $this->repositoryManager->getRepository(FormFieldModel::class)->find($formFieldId);
         if ($formFieldModel === null || !in_array($formFieldModel->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
             return;
         }
 
-        $parentModel = $this->loadParentModel($formFieldModel);
+        assert($formFieldModel instanceof FormFieldModel);
+        $parentModel = $this->loadGridStartFormField($formFieldModel);
         if ($parentModel === null) {
             return;
         }
@@ -75,7 +107,14 @@ final class FormFieldFixParentRelationListener
         );
     }
 
-    private function loadParentModel(FormFieldModel $formFieldModel) : ?FormFieldModel
+    /**
+     * Load the closest grid start form field.
+     *
+     * @param FormFieldModel $formFieldModel The form field model.
+     *
+     * @return FormFieldModel|null
+     */
+    private function loadGridStartFormField(FormFieldModel $formFieldModel) : ?FormFieldModel
     {
         $constraints = ['.pid=?', '.type=?', '.sorting < ?'];
         $values      = [$formFieldModel->pid, 'bs_gridStart', $formFieldModel->sorting];

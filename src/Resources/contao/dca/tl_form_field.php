@@ -26,6 +26,11 @@ $GLOBALS['TL_DCA']['tl_form_field']['config']['oncopy_callback'][] = [
     'onCopy'
 ];
 
+$GLOBALS['TL_DCA']['tl_form_field']['config']['onsubmit_callback'][] = [
+    FormFieldFixParentRelationListener::class,
+    'onSubmit'
+];
+
 /*
  * Palettes
  */
