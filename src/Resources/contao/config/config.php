@@ -14,6 +14,7 @@
 use ContaoBootstrap\Grid\Component\FormField\GridSeparatorFormField;
 use ContaoBootstrap\Grid\Component\FormField\GridStartFormField;
 use ContaoBootstrap\Grid\Component\FormField\GridStopFormField;
+use ContaoBootstrap\Grid\Listener\Hook\NewsGridListener;
 use ContaoBootstrap\Grid\Model\GridModel;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;
 
@@ -51,6 +52,8 @@ $GLOBALS['TL_HOOKS']['extractThemeFiles'][] = [
     'contao_bootstrap.grid.listeners.theme_import',
     'onExtractThemeFiles'
 ];
+
+$GLOBALS['TL_HOOKS']['parseArticles'][] = [NewsGridListener::class, 'onParseArticles'];
 
 // Easy Themes
 $GLOBALS['TL_EASY_THEMES_MODULES']['bs_grid'] = [

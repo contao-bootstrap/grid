@@ -39,3 +39,31 @@ services:
 
   contao_bootstrap.grid.listeners.theme_import:
     class: ContaoBootstrap\Grid\Listener\ThemeImportListener
+
+  ContaoBootstrap\Grid\Listener\Hook\NewsGridListener:
+    arguments:
+      - '@contao_bootstrap.grid.grid_provider'
+
+  ContaoBootstrap\Grid\Listener\Hook\RegisterFixContentParentRelationsFixerListener:
+    arguments:
+      - '@netzmacht.contao_toolkit.dca.manager'
+    tags:
+      - { name: 'contao.hook', hook: 'loadDataContainer' }
+
+  ContaoBootstrap\Grid\Listener\Dca\ContentFixParentRelationListener:
+    arguments:
+      - '@netzmacht.contao_toolkit.repository_manager'
+
+  ContaoBootstrap\Grid\Listener\Dca\FormFixFormFieldParentRelationsListener:
+    arguments:
+      - '@netzmacht.contao_toolkit.repository_manager'
+
+  ContaoBootstrap\Grid\Listener\Dca\FormFieldFixParentRelationListener:
+    arguments:
+      - '@netzmacht.contao_toolkit.repository_manager'
+
+  ContaoBootstrap\Grid\Listener\Dca\ParentFixContentParentRelationsListener:
+    arguments:
+      - '@database_connection'
+      - '@netzmacht.contao_toolkit.dca.manager'
+      - '@netzmacht.contao_toolkit.repository_manager'

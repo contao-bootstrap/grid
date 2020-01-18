@@ -11,6 +11,10 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
+use ContaoBootstrap\Grid\Listener\Dca\ContentFixParentRelationListener;
+
 /*
  * Config
  */
@@ -18,6 +22,16 @@
 $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = [
     'contao_bootstrap.grid.listeners.dca.content',
     'initializeDca',
+];
+
+$GLOBALS['TL_DCA']['tl_content']['config']['oncopy_callback'][] = [
+    ContentFixParentRelationListener::class,
+    'onCopy'
+];
+
+$GLOBALS['TL_DCA']['tl_content']['config']['onsubmit_callback'][] = [
+    ContentFixParentRelationListener::class,
+    'onSubmit'
 ];
 
 /*

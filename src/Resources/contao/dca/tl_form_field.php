@@ -11,6 +11,24 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
+use ContaoBootstrap\Grid\Listener\Dca\FormFieldFixParentRelationListener;
+
+/*
+ * Config
+ */
+
+$GLOBALS['TL_DCA']['tl_form_field']['config']['oncopy_callback'][] = [
+    FormFieldFixParentRelationListener::class,
+    'onCopy'
+];
+
+$GLOBALS['TL_DCA']['tl_form_field']['config']['onsubmit_callback'][] = [
+    FormFieldFixParentRelationListener::class,
+    'onSubmit'
+];
+
 /*
  * Palettes
  */
