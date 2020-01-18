@@ -75,6 +75,15 @@ final class ContentFixParentRelationListener
         $this->fixContentElement((int) $elementId);
     }
 
+    /**
+     * Fix grid start relation of content element.
+     *
+     * @param int $elementId Content element id.
+     *
+     * @return void
+     *
+     * @throws \Doctrine\DBAL\DBALException When a database error occurs.
+     */
     private function fixContentElement(int $elementId): void
     {
         $contentModel = $this->repositoryManager->getRepository(ContentModel::class)->find($elementId);
@@ -83,7 +92,7 @@ final class ContentFixParentRelationListener
         }
 
         assert($contentModel instanceof ContentModel);
-        $parentModel = $this->loadParentModel($contentModel);
+        $parentModel = $this->loadClosestGridStartModel($contentModel);
         if ($parentModel === null) {
             return;
         }
@@ -100,7 +109,14 @@ final class ContentFixParentRelationListener
         );
     }
 
-    private function loadParentModel(ContentModel $contentModel) : ?ContentModel
+    /**
+     * Load closest grid start model.
+     *
+     * @param ContentModel $contentModel Content model.
+     *
+     * @return ContentModel|null
+     */
+    private function loadClosestGridStartModel(ContentModel $contentModel) : ?ContentModel
     {
         $constraints = ['.pid=?', '.type=?', '.sorting < ?'];
         $values      = [$contentModel->pid, 'bs_gridStart', $contentModel->sorting];

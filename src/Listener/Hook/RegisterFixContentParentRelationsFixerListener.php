@@ -76,7 +76,7 @@ final class RegisterFixContentParentRelationsFixerListener
     {
         $definition->modify(
             ['config', 'oncopy_callback'],
-            static function ($value) {
+            function ($value) {
                 if (!is_array($value)) {
                     $value = [];
                 }

@@ -87,6 +87,10 @@ final class ParentFixContentParentRelationsListener
      *
      * @param int    $recordId  The id of the prent record.
      * @param string $tableName The table name of the parent record.
+     *
+     * @return void
+     *
+     * @throws \Doctrine\DBAL\DBALException When an database error occurs.
      */
     private function fixChildRecords(int $recordId, string $tableName): void
     {
@@ -112,7 +116,9 @@ final class ParentFixContentParentRelationsListener
      * @param string $parentTable The parent table.
      * @param int    $parentId    The parent id.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @return void
+     *
+     * @throws \Doctrine\DBAL\DBALException When an database error occurs.
      */
     private function fixParentRelations(string $parentTable, int $parentId): void
     {

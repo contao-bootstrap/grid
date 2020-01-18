@@ -1,8 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
-
 /**
  * Contao Bootstrap grid.
  *
@@ -14,8 +11,9 @@ declare(strict_types=1);
  * @filesource
  */
 
-use ContaoBootstrap\Grid\Listener\Dca\FormFieldFixParentRelationListener;
+declare(strict_types=1);
 
+use ContaoBootstrap\Grid\Listener\Dca\FormFieldFixParentRelationListener;
 
 /*
  * Config

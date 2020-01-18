@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Contao Bootstrap grid.
  *
@@ -12,6 +10,8 @@ declare(strict_types=1);
  * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
+
+declare(strict_types=1);
 
 use ContaoBootstrap\Grid\Listener\Dca\ContentFixParentRelationListener;
 
