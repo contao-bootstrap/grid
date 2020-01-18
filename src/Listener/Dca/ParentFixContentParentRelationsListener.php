@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\ContentModel;
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\DataContainer;
 use Contao\Model\Collection;
 use Doctrine\DBAL\Connection;
@@ -54,17 +55,30 @@ final class ParentFixContentParentRelationsListener
     private $repositoryManager;
 
     /**
+     * Input adapter.
+     *
+     * @var Adapter
+     */
+    private $inputAdapter;
+
+    /**
      * FixContentParentRelationsListener constructor.
      *
      * @param Connection        $connection        Database connection.
      * @param DcaManager        $dcaManager        Data container manager.
      * @param RepositoryManager $repositoryManager Repository manager.
+     * @param Adapter           $inputAdapter      Input adapter.
      */
-    public function __construct(Connection $connection, DcaManager $dcaManager, RepositoryManager $repositoryManager)
-    {
+    public function __construct(
+        Connection $connection,
+        DcaManager $dcaManager,
+        RepositoryManager $repositoryManager,
+        Adapter $inputAdapter
+    ) {
         $this->connection        = $connection;
         $this->dcaManager        = $dcaManager;
         $this->repositoryManager = $repositoryManager;
+        $this->inputAdapter      = $inputAdapter;
     }
 
     /**
@@ -96,6 +110,16 @@ final class ParentFixContentParentRelationsListener
     {
         $definition  = $this->dcaManager->getDefinition($tableName);
         $childTables = (array) $definition->get(['config', 'ctable'], []);
+        $columns     = $this->repositoryManager
+            ->getConnection()
+            ->getSchemaManager()
+            ->listTableColumns($definition->getName());
+
+        if (!$definition->has(['config', 'ptable'])
+            && $this->inputAdapter->get('childs')
+            && isset($columns['pid'], $columns['sorting'])) {
+            $childTables[] = $definition->getName();
+        }
 
         foreach (array_unique($childTables) as $childTable) {
             if ($childTable === 'tl_content') {

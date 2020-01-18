@@ -67,3 +67,4 @@ services:
       - '@database_connection'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.repository_manager'
+      - '@netzmacht.contao_toolkit.contao.input_adapter'

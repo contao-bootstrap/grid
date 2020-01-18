@@ -5,7 +5,12 @@ Changelog
 [Unreleased]
 ------------
 
+### Fixed
+
+ - Repair parent relation of grid elements now also works if children of a page are also copied
+
 [2.2.0] (2020-01-18)
+--------------------
 
 ### Added
 
@@ -160,7 +165,7 @@ Fixed bugs:
 
 
 [Unreleased]: https://github.com/contao-bootstrap/grid/compare/master...develop
-[2.1.2]: https://github.com/contao-bootstrap/grid/compare/2.1.2...2.2.0
+[2.2.0]: https://github.com/contao-bootstrap/grid/compare/2.1.2...2.2.0
 [2.1.2]: https://github.com/contao-bootstrap/grid/compare/2.1.1...2.1.2
 [2.1.2]: https://github.com/contao-bootstrap/grid/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/contao-bootstrap/grid/compare/2.0.8...2.1.0
