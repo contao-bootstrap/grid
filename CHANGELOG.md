@@ -5,6 +5,8 @@ Changelog
 [Unreleased]
 ------------
 
+[2.2.0] (2020-01-18)
+
 ### Added
 
  - Add option to define a grid in newslist and newsarchive modules to wrap each news article in a grid column
@@ -158,6 +160,7 @@ Fixed bugs:
 
 
 [Unreleased]: https://github.com/contao-bootstrap/grid/compare/master...develop
+[2.1.2]: https://github.com/contao-bootstrap/grid/compare/2.1.2...2.2.0
 [2.1.2]: https://github.com/contao-bootstrap/grid/compare/2.1.1...2.1.2
 [2.1.2]: https://github.com/contao-bootstrap/grid/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/contao-bootstrap/grid/compare/2.0.8...2.1.0

@@ -28,7 +28,7 @@
     "menatwork/contao-multicolumnwizard": "^3.3.14",
     "netzmacht/contao-toolkit": "^3.1",
     "symfony/config": "^3.3 || ^4.0",
-    "symfony/dependency-injection": "^3.3 || ^4.0",
+    "symfony/dependency-injection": "^3.4.26 || ^4.1.12",
     "symfony/http-kernel": "^3.3 || ^4.0",
     "symfony/templating": "^3.3 || ^4.0",
     "symfony/translation": "^3.3 || ^4.0"
@@ -47,8 +47,8 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.1.x-dev",
-      "dev-develop": "2.2.x-dev"
+      "dev-master": "2.2.x-dev",
+      "dev-develop": "2.3.x-dev"
     },
     "contao": {
       "transifex": {
