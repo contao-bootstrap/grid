@@ -18,6 +18,7 @@ namespace ContaoBootstrap\Grid\Listener\Dca;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\DataContainer;
 use Contao\ModuleModel;
+use MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard;
 
 /**
  * Data container helper class for module.
@@ -67,13 +68,13 @@ class ModuleListener extends AbstractDcaListener
     /**
      * Get all modules for the grid module.
      *
-     * @param \MultiColumnWizard $multiColumnWizard Multicolumnwizard.
+     * @param MultiColumnWizard $multiColumnWizard Multicolumnwizard.
      *
      * @return array
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getAllModules(\MultiColumnWizard $multiColumnWizard = null): array
+    public function getAllModules(MultiColumnWizard $multiColumnWizard = null): array
     {
         if ($multiColumnWizard
             && $multiColumnWizard->dataContainer
