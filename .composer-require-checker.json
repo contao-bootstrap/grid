@@ -10,6 +10,8 @@
     "Contao\\ManagerPlugin\\Config\\ContainerBuilder",
     "Contao\\ManagerPlugin\\Config\\ExtensionPluginInterface",
     "Contao\\ManagerPlugin\\Dependency\\DependentPluginInterface",
+    "Contao\\NewsBundle\\ContaoNewsBundle",
+    "Contao\\ModuleNews",
     "TL_ERROR"
   ]
 }

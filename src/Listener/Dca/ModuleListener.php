@@ -6,7 +6,7 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
+ * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
  * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
@@ -18,6 +18,7 @@ namespace ContaoBootstrap\Grid\Listener\Dca;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\DataContainer;
 use Contao\ModuleModel;
+use MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard;
 
 /**
  * Data container helper class for module.
@@ -67,13 +68,13 @@ class ModuleListener extends AbstractDcaListener
     /**
      * Get all modules for the grid module.
      *
-     * @param \MultiColumnWizard $multiColumnWizard Multicolumnwizard.
+     * @param MultiColumnWizard $multiColumnWizard Multicolumnwizard.
      *
      * @return array
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getAllModules(\MultiColumnWizard $multiColumnWizard = null): array
+    public function getAllModules(MultiColumnWizard $multiColumnWizard = null): array
     {
         if ($multiColumnWizard
             && $multiColumnWizard->dataContainer
