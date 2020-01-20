@@ -5,6 +5,10 @@ Changelog
 [Unreleased]
 ------------
 
+### Changed
+
+ - Require `menatwork/contao-multicolumnwizard-bundle` instead of `menatwork/contao-multicolumnwizard`
+
 ### Fixed
 
  - Repair parent relation of grid elements now also works if children of a page are also copied
