@@ -121,7 +121,13 @@ final class ParentFixContentParentRelationsListener
             $childTables[] = $definition->getName();
         }
 
+        $schemaManager = $this->repositoryManager->getConnection()->getSchemaManager();
+
         foreach (array_unique($childTables) as $childTable) {
+            if (! $schemaManager->tablesExist([$childTable])) {
+                continue;
+            }
+
             if ($childTable === 'tl_content') {
                 $this->fixParentRelations($definition->getName(), $recordId);
                 continue;

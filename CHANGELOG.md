@@ -12,6 +12,7 @@ Changelog
 ### Fixed
 
  - Repair parent relation of grid elements now also works if children of a page are also copied
+ - Only check nested data structures if the data container is a table
 
 [2.2.0] (2020-01-18)
 --------------------
