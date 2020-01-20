@@ -78,7 +78,7 @@ final class FormFieldFixParentRelationListener
             return;
         }
 
-        $this->fixFormField((int) $formFieldId);
+        $this->fixFormField($formFieldModel);
     }
 
     /**

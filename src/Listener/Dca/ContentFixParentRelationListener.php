@@ -78,7 +78,7 @@ final class ContentFixParentRelationListener
             return;
         }
 
-        $this->fixContentElement((int) $elementId);
+        $this->fixContentElement($contentModel);
     }
 
     /**
