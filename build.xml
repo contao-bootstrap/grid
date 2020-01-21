@@ -4,33 +4,4 @@
     <import file="vendor/phpcq/phpcq/phpcq.main.xml" />
 
     <import file="vendor/phpcq/phpcq/tasks/macrodefs.xml" />
-
-    <target name="-detect-composer-require-checker" unless="composer-require-checker.task.bin">
-        <find-file-in-path
-                name="composer-require-checker"
-                property="composer-require-checker.task.bin"
-        />
-    </target>
-
-    <target name="composer-require-checker" depends="-detect-composer-require-checker">
-        <exec dir="${basedir}" executable="${composer-require-checker.task.bin}" failonerror="true" taskname="composer-require-checker">
-            <arg line="check composer.json --config-file .composer-require-checker.json"/>
-        </exec>
-    </target>
-
-    <target
-            name="analyze"
-            depends="
-            phploc,
-            pdepend,
-            phpmd,
-            phpcs,
-            phpcpd,
-            phpunit,
-            phpspec,
-            branch-alias-validation,
-            composer-require-checker,
-            travis-configuration-check"
-            description="Do static analysis of the code"
-    />
 </project>
