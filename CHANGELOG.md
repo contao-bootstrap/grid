@@ -5,6 +5,20 @@ Changelog
 [Unreleased]
 ------------
 
+[2.2.2] (2020-01-22)
+--------------------
+
+### Changed
+
+ - Allow symfony/templating version ^5.0
+
+### Fixed
+
+ - Fix issue when duplicating form field [#39](https://github.com/contao-bootstrap/grid/issues/39)
+
+[2.2.1] (2020-01-21)
+-------------------
+
 ### Changed
 
  - Require `menatwork/contao-multicolumnwizard-bundle` instead of `menatwork/contao-multicolumnwizard`
@@ -170,6 +184,8 @@ Fixed bugs:
 
 
 [Unreleased]: https://github.com/contao-bootstrap/grid/compare/master...develop
+[2.2.2]: https://github.com/contao-bootstrap/grid/compare/2.2.1...2.2.2
+[2.2.1]: https://github.com/contao-bootstrap/grid/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/contao-bootstrap/grid/compare/2.1.2...2.2.0
 [2.1.2]: https://github.com/contao-bootstrap/grid/compare/2.1.1...2.1.2
 [2.1.2]: https://github.com/contao-bootstrap/grid/compare/2.1.0...2.1.1

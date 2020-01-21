@@ -73,7 +73,10 @@ final class FormFieldFixParentRelationListener
      */
     public function onCopy($formFieldId): void
     {
-        $formFieldModel = $this->repositoryManager->getRepository(FormFieldModel::class)->find($formFieldId);
+        $formFieldModel = $this->repositoryManager
+            ->getRepository(FormFieldModel::class)
+            ->find((int) $formFieldId);
+
         if ($formFieldModel === null) {
             return;
         }
