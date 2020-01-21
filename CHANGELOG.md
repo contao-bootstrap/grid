@@ -5,6 +5,16 @@ Changelog
 [Unreleased]
 ------------
 
+[2.2.2] (2020-01-22)
+--------------------
+
+### Fixed
+
+ - Fix issue when duplicating form field [#39](https://github.com/contao-bootstrap/grid/issues/39)
+
+[2.2.1] (2020-01-21)
+-------------------
+
 ### Changed
 
  - Require `menatwork/contao-multicolumnwizard-bundle` instead of `menatwork/contao-multicolumnwizard`
