@@ -5,6 +5,13 @@ Changelog
 [Unreleased]
 ------------
 
+[2.2.3] (2020-02-04)
+--------------------
+
+### Fixed
+
+ - Do not register grid parent fixer for unsupported data container drivers [#40](https://github.com/contao-bootstrap/grid/issues/40)
+
 [2.2.2] (2020-01-22)
 --------------------
 
@@ -184,6 +191,7 @@ Fixed bugs:
 
 
 [Unreleased]: https://github.com/contao-bootstrap/grid/compare/master...develop
+[2.2.2]: https://github.com/contao-bootstrap/grid/compare/2.2.2...2.2.3
 [2.2.2]: https://github.com/contao-bootstrap/grid/compare/2.2.1...2.2.2
 [2.2.1]: https://github.com/contao-bootstrap/grid/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/contao-bootstrap/grid/compare/2.1.2...2.2.0
