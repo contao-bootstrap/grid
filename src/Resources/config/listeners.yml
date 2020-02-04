@@ -47,6 +47,7 @@ services:
   ContaoBootstrap\Grid\Listener\Hook\RegisterFixContentParentRelationsFixerListener:
     arguments:
       - '@netzmacht.contao_toolkit.dca.manager'
+      - '%contao_bootstrap.grid.content_parent_drivers%'
     tags:
       - { name: 'contao.hook', hook: 'loadDataContainer' }
 

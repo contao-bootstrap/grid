@@ -34,13 +34,22 @@ final class RegisterFixContentParentRelationsFixerListener
     private $dcaManager;
 
     /**
+     * Supported data container drivers.
+     *
+     * @var array
+     */
+    private $supportedDrivers;
+
+    /**
      * RegisterOnCopyCallbackListener constructor.
      *
-     * @param DcaManager $dcaManager Data container manager.
+     * @param DcaManager $dcaManager       Data container manager.
+     * @param array      $supportedDrivers Supported data container drivers.
      */
-    public function __construct(DcaManager $dcaManager)
+    public function __construct(DcaManager $dcaManager, array $supportedDrivers)
     {
-        $this->dcaManager = $dcaManager;
+        $this->dcaManager       = $dcaManager;
+        $this->supportedDrivers = $supportedDrivers;
     }
 
     /**
@@ -55,6 +64,10 @@ final class RegisterFixContentParentRelationsFixerListener
         try {
             $definition = $this->dcaManager->getDefinition($tableName);
         } catch (AssertionFailed $exception) {
+            return;
+        }
+
+        if (! in_array($definition->get(['config', 'dataContainer']), $this->supportedDrivers, true)) {
             return;
         }
 

@@ -1,0 +1,4 @@
+parameters:
+  contao_bootstrap.grid.content_parent_drivers:
+    - Table
+    - Multilingual
