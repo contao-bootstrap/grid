@@ -46,7 +46,7 @@ final class GalleryElement extends AbstractContentElement
      *
      * @var string
      */
-    protected $templateName = 'ce_gallery';
+    protected $templateName = 'ce_bs-grid-gallery';
 
     /**
      * Grid provider.
@@ -364,7 +364,7 @@ final class GalleryElement extends AbstractContentElement
                 $this->images[$index]['filesModel']
             );
 
-            $cell->picture['class'] = trim($cell->picture['class'] . ' img-fluid figure-img img-thumbnail');
+            $cell->picture['class'] = trim($cell->picture['class']);
 
             $body[] = $cell;
         }
