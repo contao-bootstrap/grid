@@ -47,7 +47,7 @@ final class GalleryElement extends AbstractContentElement
      *
      * @var string
      */
-    protected $templateName = 'ce_bs-grid-gallery';
+    protected $templateName = 'ce_bs_grid_gallery';
 
     /**
      * Grid provider.
