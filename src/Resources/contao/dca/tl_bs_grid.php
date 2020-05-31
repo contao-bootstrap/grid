@@ -122,7 +122,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['sizes'],
             'exclude'   => true,
             'inputType' => 'checkbox',
-            'options'   => ['xs', 'sm', 'md', 'lg', 'xl'],
+            'options'   => $GLOBALS['BOOTSTRAP_GRID']['breakpoints'],
             'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid'],
             'eval'      => [
                 'submitOnChange' => true,
@@ -131,429 +131,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
                 'helpwizard'     => true,
             ],
             'sql'       => 'tinyBlob NULL',
-        ],
-        'xsSize'      => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['xsSize'],
-            'exclude'   => true,
-            'inputType' => 'multiColumnWizard',
-            'eval'      => [
-                'dragAndDrop'  => true,
-                'columnFields' => [
-                    'width'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getWidths',
-                        ],
-                        'eval'             => [
-                            'style'              => 'width: 100px;',
-                            'isAssociative'      => true,
-                            'chosen'             => true,
-                            'includeBlankOption' => true,
-                        ],
-                    ],
-                    'offset' => [
-                        'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getOffsets',
-                        ],
-                        'reference'        => ['null' => '0 '],
-                        'eval'             => [
-                            'style'              => 'width: 100px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                            'isAssociative'      => false,
-                        ],
-                    ],
-                    'order'  => [
-                        'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['order'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getOrders',
-                        ],
-                        'eval'             => [
-                            'style'              => 'width: 120px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                        ],
-                    ],
-                    'align'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
-                        'inputType' => 'select',
-                        'options'   => ['start', 'center', 'end'],
-                        'eval'      => [
-                            'style'              => 'width: 100px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                        ],
-                    ],
-                    'class'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
-                        'exclude'   => true,
-                        'default'   => '',
-                        'inputType' => 'text',
-                        'eval'      => [
-                            'style' => 'width: 160px',
-                        ],
-                    ],
-                    'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
-                        'exclude'   => true,
-                        'default'   => '',
-                        'inputType' => 'select',
-                        'options'   => ['1', '2'],
-                        'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
-                        'eval'      => [
-                            'includeBlankOption' => true,
-                            'style'              => 'width: 100px',
-                        ],
-                    ],
-                ],
-            ],
-            'sql'       => 'blob NULL',
-        ],
-        'smSize'      => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['smSize'],
-            'exclude'   => true,
-            'inputType' => 'multiColumnWizard',
-            'eval'      => [
-                'dragAndDrop'  => true,
-                'columnFields' => [
-                    'width'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getWidths',
-                        ],
-                        'eval'             => [
-                            'style'              => 'width: 100px;',
-                            'isAssociative'      => true,
-                            'chosen'             => true,
-                            'includeBlankOption' => true,
-                        ],
-                    ],
-                    'offset' => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getOffsets',
-                        ],
-                        'reference'        => ['null' => '0 '],
-                        'eval'             => [
-                            'style'              => 'width: 100px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                            'isAssociative'      => false,
-                        ],
-                    ],
-                    'order'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getOrders',
-                        ],
-                        'eval'             => [
-                            'style'              => 'width: 120px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                        ],
-                    ],
-                    'align'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
-                        'inputType' => 'select',
-                        'options'   => ['start', 'center', 'end'],
-                        'eval'      => [
-                            'style'              => 'width: 100px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                        ],
-                    ],
-                    'class'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
-                        'exclude'   => true,
-                        'default'   => '',
-                        'inputType' => 'text',
-                        'eval'      => [
-                            'style' => 'width: 160px',
-                        ],
-                    ],
-                    'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
-                        'exclude'   => true,
-                        'default'   => '',
-                        'inputType' => 'select',
-                        'options'   => ['1', '2'],
-                        'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
-                        'eval'      => [
-                            'includeBlankOption' => true,
-                            'style'              => 'width: 100px',
-                        ],
-                    ],
-                ],
-            ],
-            'sql'       => 'blob NULL',
-        ],
-        'mdSize'      => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['mdSize'],
-            'exclude'   => true,
-            'inputType' => 'multiColumnWizard',
-            'eval'      => [
-                'includeBlankOption' => true,
-                'dragAndDrop'        => true,
-                'columnFields'       => [
-                    'width'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getWidths',
-                        ],
-                        'eval'             => [
-                            'style'              => 'width: 100px;',
-                            'isAssociative'      => true,
-                            'chosen'             => true,
-                            'includeBlankOption' => true,
-                        ],
-                    ],
-                    'offset' => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getOffsets',
-                        ],
-                        'reference'        => ['null' => '0 '],
-                        'eval'             => [
-                            'style'              => 'width: 100px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                            'isAssociative'      => false,
-                        ],
-                    ],
-                    'order'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getOrders',
-                        ],
-                        'eval'             => [
-                            'style'              => 'width: 120px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                        ],
-                    ],
-                    'align'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
-                        'inputType' => 'select',
-                        'options'   => ['start', 'center', 'end'],
-                        'eval'      => [
-                            'style'              => 'width: 100px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                        ],
-                    ],
-                    'class'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
-                        'exclude'   => true,
-                        'default'   => '',
-                        'inputType' => 'text',
-                        'eval'      => [
-                            'style' => 'width: 160px',
-                        ],
-                    ],
-                    'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
-                        'exclude'   => true,
-                        'default'   => '',
-                        'inputType' => 'select',
-                        'options'   => ['1', '2'],
-                        'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
-                        'eval'      => [
-                            'includeBlankOption' => true,
-                            'style'              => 'width: 100px',
-                        ],
-                    ],
-                ],
-            ],
-            'sql'       => 'blob NULL',
-        ],
-        'lgSize'      => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['lgSize'],
-            'exclude'   => true,
-            'inputType' => 'multiColumnWizard',
-            'eval'      => [
-                'includeBlankOption' => true,
-                'dragAndDrop'        => true,
-                'columnFields'       => [
-                    'width'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getWidths',
-                        ],
-                        'eval'             => [
-                            'style'              => 'width: 100px;',
-                            'isAssociative'      => true,
-                            'chosen'             => true,
-                            'includeBlankOption' => true,
-                        ],
-                    ],
-                    'offset' => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getOffsets',
-                        ],
-                        'reference'        => ['null' => '0 '],
-                        'eval'             => [
-                            'style'              => 'width: 100px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                            'isAssociative'      => false,
-                        ],
-                    ],
-                    'order'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getOrders',
-                        ],
-                        'eval'             => [
-                            'style'              => 'width: 120px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                        ],
-                    ],
-                    'align'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
-                        'inputType' => 'select',
-                        'options'   => ['start', 'center', 'end'],
-                        'eval'      => [
-                            'style'              => 'width: 100px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                        ],
-                    ],
-                    'class'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
-                        'exclude'   => true,
-                        'default'   => '',
-                        'inputType' => 'text',
-                        'eval'      => [
-                            'style' => 'width: 160px',
-                        ],
-                    ],
-                    'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
-                        'exclude'   => true,
-                        'default'   => '',
-                        'inputType' => 'select',
-                        'options'   => ['1', '2'],
-                        'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
-                        'eval'      => [
-                            'includeBlankOption' => true,
-                            'style'              => 'width: 100px',
-                        ],
-                    ],
-                ],
-            ],
-            'sql'       => 'blob NULL',
-        ],
-        'xlSize'      => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['xlSize'],
-            'exclude'   => true,
-            'inputType' => 'multiColumnWizard',
-            'eval'      => [
-                'includeBlankOption' => true,
-                'dragAndDrop'        => true,
-                'columnFields'       => [
-                    'width'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getWidths',
-                        ],
-                        'eval'             => [
-                            'style'              => 'width: 100px;',
-                            'isAssociative'      => true,
-                            'chosen'             => true,
-                            'includeBlankOption' => true,
-                        ],
-                    ],
-                    'offset' => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getOffsets',
-                        ],
-                        'reference'        => ['null' => '0 '],
-                        'eval'             => [
-                            'style'              => 'width: 100px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                            'isAssociative'      => false,
-                        ],
-                    ],
-                    'order'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getOrders',
-                        ],
-                        'eval'             => [
-                            'style'              => 'width: 120px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                        ],
-                    ],
-                    'align'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
-                        'inputType' => 'select',
-                        'options'   => ['start', 'center', 'end'],
-                        'eval'      => [
-                            'style'              => 'width: 100px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                        ],
-                    ],
-                    'class'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
-                        'exclude'   => true,
-                        'default'   => '',
-                        'inputType' => 'text',
-                        'eval'      => [
-                            'style' => 'width: 160px',
-                        ],
-                    ],
-                    'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
-                        'exclude'   => true,
-                        'default'   => '',
-                        'inputType' => 'select',
-                        'options'   => ['1', '2'],
-                        'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
-                        'eval'      => [
-                            'includeBlankOption' => true,
-                            'style'              => 'width: 100px',
-                        ],
-                    ],
-                ],
-            ],
-            'sql'       => 'blob NULL',
         ],
         'align'       => [
             'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
@@ -600,3 +177,93 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
         ],
     ],
 ];
+
+foreach ($GLOBALS['BOOTSTRAP_GRID']['breakpoints'] as $breakpoint) {
+    $sizeLabel = $breakpoint . 'Size';
+
+    $GLOBALS['TL_DCA']['tl_bs_grid']['fields'][$sizeLabel] = [
+        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid'][$sizeLabel],
+        'exclude'   => true,
+        'inputType' => 'multiColumnWizard',
+        'sql'       => 'blob NULL',
+        'eval'      => [
+            'includeBlankOption' => true,
+            'dragAndDrop'        => true,
+            'columnFields'       => [
+                'width'  => [
+                    'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
+                    'inputType'        => 'select',
+                    'options_callback' => [
+                        'contao_bootstrap.grid.listeners.dca.grid',
+                        'getWidths',
+                    ],
+                    'eval'             => [
+                        'style'              => 'width: 100px;',
+                        'isAssociative'      => true,
+                        'chosen'             => true,
+                        'includeBlankOption' => true,
+                    ],
+                ],
+                'offset' => [
+                    'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
+                    'inputType'        => 'select',
+                    'options_callback' => [
+                        'contao_bootstrap.grid.listeners.dca.grid',
+                        'getOffsets',
+                    ],
+                    'reference'        => ['null' => '0 '],
+                    'eval'             => [
+                        'style'              => 'width: 100px;',
+                        'includeBlankOption' => true,
+                        'chosen'             => true,
+                        'isAssociative'      => false,
+                    ],
+                ],
+                'order'  => [
+                    'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
+                    'inputType'        => 'select',
+                    'options_callback' => [
+                        'contao_bootstrap.grid.listeners.dca.grid',
+                        'getOrders',
+                    ],
+                    'eval'             => [
+                        'style'              => 'width: 120px;',
+                        'includeBlankOption' => true,
+                        'chosen'             => true,
+                    ],
+                ],
+                'align'  => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
+                    'inputType' => 'select',
+                    'options'   => ['start', 'center', 'end'],
+                    'eval'      => [
+                        'style'              => 'width: 100px;',
+                        'includeBlankOption' => true,
+                        'chosen'             => true,
+                    ],
+                ],
+                'class'  => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
+                    'exclude'   => true,
+                    'default'   => '',
+                    'inputType' => 'text',
+                    'eval'      => [
+                        'style' => 'width: 160px',
+                    ],
+                ],
+                'reset'  => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
+                    'exclude'   => true,
+                    'default'   => '',
+                    'inputType' => 'select',
+                    'options'   => ['1', '2'],
+                    'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
+                    'eval'      => [
+                        'includeBlankOption' => true,
+                        'style'              => 'width: 100px',
+                    ],
+                ],
+            ],
+        ],
+    ];
+}

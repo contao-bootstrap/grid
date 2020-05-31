@@ -18,6 +18,9 @@ use ContaoBootstrap\Grid\Listener\Hook\NewsGridListener;
 use ContaoBootstrap\Grid\Model\GridModel;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;
 
+
+$GLOBALS['BOOTSTRAP_GRID']['breakpoints'] = ['xs', 'sm', 'md', 'lg', 'xl'];
+
 // Models
 $GLOBALS['TL_MODELS']['tl_bs_grid'] = GridModel::class;
 
