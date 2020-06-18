@@ -1,2 +1,9 @@
 grid:
   columns: 12
+  sizes:
+    - xs
+    - sm
+    - md
+    - lg
+    - xl
+  default_size: xs

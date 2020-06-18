@@ -52,8 +52,18 @@ abstract class AbstractDcaListener
     {
         return range(
             1,
-            (int) $this->environment->getConfig()->get('grid.columns', 12)
+            (int) $this->environment->getConfig()->get('grid.columns')
         );
+    }
+
+    /**
+     * Get grid breakpoints.
+     *
+     * @return array
+     */
+    public function getGridSizes(): array
+    {
+        return $this->environment->getConfig()->get('grid.sizes');
     }
 
     /**
