@@ -108,7 +108,7 @@ final class GridBuilder
             $field      = $size . 'Size';
             $definition = StringUtil::deserialize($this->model->{$field}, true);
 
-            if ($size === $this->environment->getConfig()->get('grid.default_size')) {
+            if ($size === $this->environment->getConfig()->get('grid.default_size', 'xs')) {
                 $size = '';
             }
 

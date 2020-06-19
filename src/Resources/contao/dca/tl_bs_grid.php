@@ -12,6 +12,20 @@
  * @filesource
  */
 
+use ContaoBootstrap\Grid\Model\GridModel;
+
+$sizes = [];
+if (Input::get('act') === 'edit') {
+    $grid = GridModel::findByPk(Input::get('id'));
+    $theme = ThemeModel::findByPk($grid->pid);
+    $sizes = StringUtil::deserialize($theme->bs_grid_sizes, true);
+
+    if (!$sizes) {
+        $environment = System::getContainer()->get('contao_bootstrap.environment');
+        $sizes = $environment->getConfig()->get('grid.sizes', []);
+    }
+}
+
 $GLOBALS['TL_DCA']['tl_bs_grid'] = [
     // Config
     'config'       => [
@@ -123,7 +137,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['sizes'],
             'exclude'   => true,
             'inputType' => 'checkbox',
-            'options_callback' => ['contao_bootstrap.grid.listeners.dca.content', 'getGridSizes'],
+            'options'   => $sizes,
             'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid'],
             'eval'      => [
                 'submitOnChange' => true,
@@ -179,10 +193,8 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
     ],
 ];
 
-// FIX: we only get the default values here.
-$environment = System::getContainer()->get('contao_bootstrap.environment');
-foreach ($environment->getConfig()->get('grid.sizes') as $size) {
-    $sizeLabel = $breakpoint . 'Size';
+foreach ($sizes as $size) {
+    $sizeLabel = $size . 'Size';
 
     $GLOBALS['TL_DCA']['tl_bs_grid']['fields'][$sizeLabel] = [
         'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid'][$sizeLabel],

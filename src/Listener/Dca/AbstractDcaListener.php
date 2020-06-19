@@ -53,7 +53,7 @@ abstract class AbstractDcaListener
     {
         return range(
             1,
-            (int) $this->environment->getConfig()->get('grid.columns')
+            (int) $this->environment->getConfig()->get('grid.columns', 12)
         );
     }
 
@@ -64,7 +64,7 @@ abstract class AbstractDcaListener
      */
     public function getGridSizes(): array
     {
-        return $this->environment->getConfig()->get('grid.sizes');
+        return $this->environment->getConfig()->get('grid.sizes', []);
     }
 
     /**
