@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid;
 
 use Contao\StringUtil;
+use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Grid\Definition\Column;
 use ContaoBootstrap\Grid\Definition\Grid;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
@@ -43,6 +44,16 @@ final class GridBuilder
      * @var Grid
      */
     private $grid;
+
+    /**
+     * @var Environment
+     */
+    private $environment;
+
+    public function __construct(Environment $environment)
+    {
+        $this->environment = $environment;
+    }
 
     /**
      * Build a grid.
@@ -96,7 +107,7 @@ final class GridBuilder
             $field      = $size . 'Size';
             $definition = StringUtil::deserialize($this->model->{$field}, true);
 
-            if ($size === 'xs') {
+            if ($size === $this->environment->getConfig()->get('grid.default_size')) {
                 $size = '';
             }
 
