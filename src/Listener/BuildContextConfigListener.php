@@ -6,6 +6,7 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
+ * @author     Patrick Landolt <patrick.landolt@artack.ch>
  * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
  * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
@@ -48,7 +49,6 @@ class BuildContextConfigListener
         }
 
         $config = [];
-
         if ($theme->bs_grid_columns) {
             $config['grid']['columns'] = (int) $theme->bs_grid_columns;
         }
@@ -59,6 +59,6 @@ class BuildContextConfigListener
             $config['grid']['default_size'] = $theme->bs_grid_default_size;
         }
 
-        $command->setConfig($command->getConfig()->merge($config));
+        $command->setConfig($command->getConfig()->merge($config, true));
     }
 }
