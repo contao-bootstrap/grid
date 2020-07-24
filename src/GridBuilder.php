@@ -47,10 +47,17 @@ final class GridBuilder
     private $grid;
 
     /**
+     * Core Environment.
+     *
      * @var Environment
      */
     private $environment;
 
+    /**
+     * GridBuilder constructor.
+     *
+     * @param Environment $environment The Core Environment.
+     */
     public function __construct(Environment $environment)
     {
         $this->environment = $environment;

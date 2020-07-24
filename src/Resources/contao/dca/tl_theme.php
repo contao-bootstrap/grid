@@ -44,6 +44,7 @@ $GLOBALS['TL_DCA']['tl_theme']['fields']['bs_grid_columns'] = [
     ],
     'sql'               => 'int(10) NULL default NULL'
 ];
+
 $GLOBALS['TL_DCA']['tl_theme']['fields']['bs_grid_sizes'] = [
     'label'             => &$GLOBALS['TL_LANG']['tl_theme']['bs_grid_sizes'],
     'inputType'         => 'listWizard',
@@ -59,11 +60,12 @@ $GLOBALS['TL_DCA']['tl_theme']['fields']['bs_grid_sizes'] = [
     ],
     'sql'               => 'blob NULL'
 ];
+
 $GLOBALS['TL_DCA']['tl_theme']['fields']['bs_grid_default_size'] = [
     'label'             => &$GLOBALS['TL_LANG']['tl_theme']['bs_grid_default_size'],
     'inputType'         => 'select',
     'default'           => 'xs',
-    'options_callback'  => static function(\Contao\DataContainer $dataContainer) {
+    'options_callback'  => static function (\Contao\DataContainer $dataContainer) {
         return StringUtil::deserialize($dataContainer->activeRecord->bs_grid_sizes);
     },
     'eval'              => [

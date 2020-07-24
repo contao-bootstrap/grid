@@ -16,15 +16,24 @@ use ContaoBootstrap\Grid\Model\GridModel;
 
 $sizes = [];
 if (Input::get('act') === 'edit') {
-    $grid = GridModel::findByPk(Input::get('id'));
+    $grid  = GridModel::findByPk(Input::get('id'));
     $theme = ThemeModel::findByPk($grid->pid);
     $sizes = StringUtil::deserialize($theme->bs_grid_sizes, true);
+}
 
-    if (!$sizes) {
-        $environment = System::getContainer()->get('contao_bootstrap.environment');
-        $sizes = $environment->getConfig()->get('grid.sizes', []);
+if (!$sizes) {
+    $themes = ThemeModel::findAll();
+    foreach ($themes as $theme) {
+        $sizes = array_merge($sizes, StringUtil::deserialize($theme->bs_grid_sizes, true));
     }
 }
+
+if (!$sizes) {
+    $environment = System::getContainer()->get('contao_bootstrap.environment');
+    $sizes       = $environment->getConfig()->get('grid.sizes', []);
+}
+
+$sizes = array_values(array_unique($sizes));
 
 $GLOBALS['TL_DCA']['tl_bs_grid'] = [
     // Config
