@@ -13,14 +13,17 @@
  */
 
 // Palette
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\StringUtil;
 
-\Contao\CoreBundle\DataContainer\PaletteManipulator::create()
+PaletteManipulator::create()
     ->addLegend('bootstrap_legend', '')
     ->addField('bs_grid_columns', 'bootstrap')
     ->addField('bs_grid_sizes', 'bootstrap')
     ->addField('bs_grid_default_size', 'bootstrap')
     ->applyToPalette('default', 'tl_theme');
+
+\dump($GLOBALS['TL_DCA']['tl_theme']['palettes']);
 
 // Operations
 array_insert(

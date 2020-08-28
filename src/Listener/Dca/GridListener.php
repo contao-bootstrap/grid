@@ -18,6 +18,7 @@ namespace ContaoBootstrap\Grid\Listener\Dca;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\Input;
 use Contao\StringUtil;
+use Contao\ThemeModel;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Environment\ThemeContext;
 use ContaoBootstrap\Grid\Model\GridModel;
@@ -98,6 +99,33 @@ class GridListener
             $row['title'],
             $row['description']
         );
+    }
+
+    /**
+     * Get all sizes.
+     *
+     * @return array
+     */
+    public function getSizes(): array
+    {
+        $sizes = [];
+        if (Input::get('act') === 'edit') {
+            $theme = ThemeModel::findByPk(CURRENT_ID);
+            $sizes = StringUtil::deserialize($theme->bs_grid_sizes, true);
+
+            if (!$sizes) {
+                $sizes = $this->environment->getConfig()->get('grid.sizes', []);
+            }
+
+            return $sizes;
+        }
+
+        $themes = ThemeModel::findAll() ?: [];
+        foreach ($themes as $theme) {
+            $sizes = array_merge($sizes, StringUtil::deserialize($theme->bs_grid_sizes, true));
+        }
+
+        return array_values(array_unique($sizes));
     }
 
     /**
