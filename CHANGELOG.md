@@ -5,6 +5,18 @@ Changelog
 [Unreleased]
 ------------
 
+[2.3.0] (2020-08-28)
+--------------------
+
+### Added
+
+ - Add ability to support custom grid sizes [#44](https://github.com/contao-bootstrap/grid/pull/44) (@scuben)
+ - Use custom template for grid element [#41](https://github.com/contao-bootstrap/grid/pull/41) (@RoflCopter24)
+ 
+### Fixed
+
+ - Prevent ambiguous field names in parent relation fixer [#43](https://github.com/contao-bootstrap/grid/pull/43)
+
 [2.2.3] (2020-02-04)
 --------------------
 
@@ -191,6 +203,7 @@ Fixed bugs:
 
 
 [Unreleased]: https://github.com/contao-bootstrap/grid/compare/master...develop
+[2.3.0]: https://github.com/contao-bootstrap/grid/compare/2.2.3...2.3.0
 [2.2.2]: https://github.com/contao-bootstrap/grid/compare/2.2.2...2.2.3
 [2.2.2]: https://github.com/contao-bootstrap/grid/compare/2.2.1...2.2.2
 [2.2.1]: https://github.com/contao-bootstrap/grid/compare/2.2.0...2.2.1
