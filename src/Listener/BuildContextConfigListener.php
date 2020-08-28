@@ -18,6 +18,7 @@ namespace ContaoBootstrap\Grid\Listener;
 
 use Contao\StringUtil;
 use Contao\ThemeModel;
+use ContaoBootstrap\Core\Config\ArrayConfig;
 use ContaoBootstrap\Core\Environment\ThemeContext;
 use ContaoBootstrap\Core\Message\Command\BuildContextConfig;
 
@@ -48,17 +49,18 @@ class BuildContextConfigListener
             return;
         }
 
-        $config = [];
+        $config = $command->getConfig();
+        $data   = $config->get([]);
         if ($theme->bs_grid_columns) {
-            $config['grid']['columns'] = (int) $theme->bs_grid_columns;
+            $data['grid']['columns'] = (int) $theme->bs_grid_columns;
         }
         if ($theme->bs_grid_sizes) {
-            $config['grid']['sizes'] = StringUtil::deserialize($theme->bs_grid_sizes, true);
+            $data['grid']['sizes'] = StringUtil::deserialize($theme->bs_grid_sizes, true);
         }
         if ($theme->bs_grid_default_size) {
-            $config['grid']['default_size'] = $theme->bs_grid_default_size;
+            $data['grid']['default_size'] = $theme->bs_grid_default_size;
         }
 
-        $command->setConfig($command->getConfig()->merge($config, true));
+        $command->setConfig(new ArrayConfig($data));
     }
 }
