@@ -6,6 +6,7 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
+ * @author     Patrick Landolt <patrick.landolt@artack.ch>
  * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
  * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
@@ -16,6 +17,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid;
 
 use Contao\StringUtil;
+use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Grid\Definition\Column;
 use ContaoBootstrap\Grid\Definition\Grid;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
@@ -43,6 +45,23 @@ final class GridBuilder
      * @var Grid
      */
     private $grid;
+
+    /**
+     * Core Environment.
+     *
+     * @var Environment
+     */
+    private $environment;
+
+    /**
+     * GridBuilder constructor.
+     *
+     * @param Environment $environment The Core Environment.
+     */
+    public function __construct(Environment $environment)
+    {
+        $this->environment = $environment;
+    }
 
     /**
      * Build a grid.
@@ -96,7 +115,7 @@ final class GridBuilder
             $field      = $size . 'Size';
             $definition = StringUtil::deserialize($this->model->{$field}, true);
 
-            if ($size === 'xs') {
+            if ($size === $this->environment->getConfig()->get('grid.default_size', 'xs')) {
                 $size = '';
             }
 
