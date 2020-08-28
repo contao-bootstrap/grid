@@ -192,7 +192,7 @@ final class ParentFixContentParentRelationsListener
      */
     private function loadContentModels(string $parentTable, int $parentId): ?Collection
     {
-        $constraints = ['.pid=?', 'FIND_IN_SET(type, \'bs_gridStart,bs_gridSeparator,bs_gridStop\')'];
+        $constraints = ['.pid=?', 'FIND_IN_SET( .type, \'bs_gridStart,bs_gridSeparator,bs_gridStop\')'];
         $values      = [$parentId, $parentTable];
 
         if ($parentTable === 'tl_article') {
