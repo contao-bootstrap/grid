@@ -6,6 +6,7 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
+ * @author     Florian Vick <fvick@rapid-data.de>
  * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
  * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
@@ -46,7 +47,7 @@ final class GalleryElement extends AbstractContentElement
      *
      * @var string
      */
-    protected $templateName = 'ce_gallery';
+    protected $templateName = 'ce_bs_grid_gallery';
 
     /**
      * Grid provider.
@@ -364,7 +365,9 @@ final class GalleryElement extends AbstractContentElement
                 $this->images[$index]['filesModel']
             );
 
-            $cell->picture['class'] = trim($cell->picture['class'] . ' img-fluid figure-img img-thumbnail');
+            if ($cell->picture['class']) {
+                $cell->picture['class'] = trim($cell->picture['class']);
+            }
 
             $body[] = $cell;
         }

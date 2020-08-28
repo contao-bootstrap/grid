@@ -1,0 +1,10 @@
+<?php
+$this->class = $this->class." ce_bs-grid-gallery--$this->id";
+$this->extend($this->isRandomOrder ? 'block_unsearchable' : 'block_searchable');
+?>
+
+<?php $this->block('content'); ?>
+
+      <?= $this->images ?>
+
+<?php $this->endblock(); ?>
