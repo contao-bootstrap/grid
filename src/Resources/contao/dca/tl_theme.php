@@ -23,8 +23,6 @@ PaletteManipulator::create()
     ->addField('bs_grid_default_size', 'bootstrap')
     ->applyToPalette('default', 'tl_theme');
 
-\dump($GLOBALS['TL_DCA']['tl_theme']['palettes']);
-
 // Operations
 array_insert(
     $GLOBALS['TL_DCA']['tl_theme']['list']['operations'],
@@ -58,8 +56,20 @@ $GLOBALS['TL_DCA']['tl_theme']['fields']['bs_grid_sizes'] = [
         'lg',
         'xl',
     ],
+    'save_callback' => [
+        // @codingStandardsIgnoreStart - PHPCS doesnt understand static keyword
+        static function ($value) {
+            return array_values(
+                array_unique(
+                    array_filter(StringUtil::deserialize($value, true))
+                )
+            );
+        }
+        // @codingStandardsIgnoreEnd
+    ],
     'eval'              => [
         'tl_class' => 'clr w50',
+        'rgxp'     => 'fieldname',
     ],
     'sql'               => 'blob NULL'
 ];
@@ -69,7 +79,7 @@ $GLOBALS['TL_DCA']['tl_theme']['fields']['bs_grid_default_size'] = [
     'inputType'         => 'select',
     'default'           => 'xs',
     'options_callback'  => static function (\Contao\DataContainer $dataContainer) {
-        return StringUtil::deserialize($dataContainer->activeRecord->bs_grid_sizes);
+        return StringUtil::deserialize($dataContainer->activeRecord->bs_grid_sizes, true);
     },
     'eval'              => [
         'tl_class' => 'w50',

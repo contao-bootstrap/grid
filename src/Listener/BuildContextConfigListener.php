@@ -58,7 +58,7 @@ class BuildContextConfigListener
             $data['grid']['sizes'] = StringUtil::deserialize($theme->bs_grid_sizes, true);
         }
         if ($theme->bs_grid_default_size) {
-            $data['grid']['default_size'] = $theme->bs_grid_default_size;
+            $data['grid']['default_size'] = $theme->bs_grid_default_size ?: current($data['grid']['sizes']);
         }
 
         $command->setConfig(new ArrayConfig($data));
