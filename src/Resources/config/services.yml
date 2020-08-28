@@ -1,6 +1,8 @@
 services:
   contao_bootstrap.grid.grid_builder:
     class: ContaoBootstrap\Grid\GridBuilder
+    arguments:
+      - '@contao_bootstrap.environment'
 
   contao_bootstrap.grid.grid_provider:
     class: ContaoBootstrap\Grid\GridProvider

@@ -6,6 +6,7 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
+ * @author     Patrick Landolt <patrick.landolt@artack.ch>
  * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
  * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
@@ -14,6 +15,7 @@
 use ContaoBootstrap\Grid\Component\FormField\GridSeparatorFormField;
 use ContaoBootstrap\Grid\Component\FormField\GridStartFormField;
 use ContaoBootstrap\Grid\Component\FormField\GridStopFormField;
+use ContaoBootstrap\Grid\Listener\Hook\GridSizesListener;
 use ContaoBootstrap\Grid\Listener\Hook\NewsGridListener;
 use ContaoBootstrap\Grid\Model\GridModel;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;
@@ -43,6 +45,8 @@ $GLOBALS['TL_WRAPPERS']['separator'][] = 'bs_gridSeparator';
 $GLOBALS['TL_WRAPPERS']['stop'][]      = 'bs_gridStop';
 
 // Hooks
+$GLOBALS['TL_HOOKS']['loadDataContainer'][] = [GridSizesListener::class, 'initializeSizes'];
+
 $GLOBALS['TL_HOOKS']['exportTheme'][] = [
     'contao_bootstrap.grid.listeners.theme_export',
     'onExportTheme'

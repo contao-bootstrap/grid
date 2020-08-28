@@ -6,6 +6,7 @@
  * @package    contao-bootstrap
  * @subpackage Grid
  * @author     David Molineus <david.molineus@netzmacht.de>
+ * @author     Patrick Landolt <patrick.landolt@artack.ch>
  * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
  * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
@@ -54,6 +55,16 @@ abstract class AbstractDcaListener
             1,
             (int) $this->environment->getConfig()->get('grid.columns', 12)
         );
+    }
+
+    /**
+     * Get grid breakpoints.
+     *
+     * @return array
+     */
+    public function getGridSizes(): array
+    {
+        return $this->environment->getConfig()->get('grid.sizes', []);
     }
 
     /**
