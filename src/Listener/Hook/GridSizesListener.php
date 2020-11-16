@@ -68,6 +68,11 @@ final class GridSizesListener
             return;
         }
 
+        $schemaManager = $this->connection->getSchemaManager();
+        if ($schemaManager === null || !$schemaManager->tablesExist([GridModel::getTable(), 'tl_theme'])) {
+            return;
+        }
+
         foreach ($this->getSizes() as $size) {
             $this->createDcaField($size);
             $this->createDatabaseField($size);
