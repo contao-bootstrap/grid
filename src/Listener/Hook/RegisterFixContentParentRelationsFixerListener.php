@@ -23,6 +23,8 @@ use function is_array;
 
 /**
  * The RegisterOnCopyCallbackListener registers an onload_callback for each data container
+ *
+ * @SuppressWarnings(PHPMD.LongClassName)
  */
 final class RegisterFixContentParentRelationsFixerListener
 {

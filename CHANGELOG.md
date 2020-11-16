@@ -5,6 +5,14 @@ Changelog
 [Unreleased]
 ------------
 
+[2.3.1] (2020-11-16)
+--------------------
+
+### Fixed
+
+ - Prevent sql error if tables `tl_theme` or `tl_bs_grid` does not exist
+ - Prevent security issue occurred in `symfony/http-kernel`
+
 [2.3.0] (2020-08-28)
 --------------------
 
