@@ -24,14 +24,14 @@
     "contao-bootstrap/core": "^2.0",
     "contao-community-alliance/meta-palettes": "^2.0 || ^1.11",
     "contao/core-bundle": "^4.4",
-    "doctrine/dbal": "^2.5",
+    "doctrine/dbal": "^3.3",
     "menatwork/contao-multicolumnwizard-bundle": "^3.4",
     "netzmacht/contao-toolkit": "^3.1",
-    "symfony/config": "^3.3 || ^4.0",
-    "symfony/dependency-injection": "^3.4.26 || ^4.1.12",
-    "symfony/http-kernel": "^3.3 || ^4.4.13",
+    "symfony/config": "^3.3 || ^4.0 || ^5.4",
+    "symfony/dependency-injection": "^3.4.26 || ^4.1.12 || ^5.4",
+    "symfony/http-kernel": "^3.3 || ^4.4.13 || ^5.4",
     "symfony/templating": "^3.3 || ^4.0 || ^5.0",
-    "symfony/translation": "^3.3 || ^4.0"
+    "symfony/translation": "^3.3 || ^4.0 || ^5.4"
   },
   "conflict": {
     "netzmacht/contao-bootstrap": "*"
