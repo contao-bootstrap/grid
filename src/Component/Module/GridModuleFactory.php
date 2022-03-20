@@ -22,7 +22,7 @@ use Netzmacht\Contao\Toolkit\Component\Component;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 /**
  * Class GridModuleFactory
@@ -36,28 +36,28 @@ final class GridModuleFactory implements ComponentFactory
      *
      * @var TemplateEngine
      */
-    private $templateEngine;
+    private TemplateEngine $templateEngine;
 
     /**
      * Translator.
      *
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * Grid provider.
      *
      * @var GridProvider
      */
-    private $gridProvider;
+    private GridProvider $gridProvider;
 
     /**
      * Response tagger.
      *
      * @var ResponseTagger
      */
-    private $responseTagger;
+    private ResponseTagger $responseTagger;
 
     /**
      * GridModuleFactory constructor.

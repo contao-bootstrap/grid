@@ -27,7 +27,7 @@ class Grid
      *
      * @var Column[][]
      */
-    private $columns = [];
+    private array $columns = [];
 
     /**
      * Grid alignment.
@@ -48,14 +48,14 @@ class Grid
      *
      * @var array
      */
-    private $rowClasses = ['row'];
+    private array $rowClasses = ['row'];
 
     /**
      * Show gutters.
      *
      * @var bool
      */
-    private $noGutters = false;
+    private bool $noGutters = false;
 
     /**
      * Add a column.

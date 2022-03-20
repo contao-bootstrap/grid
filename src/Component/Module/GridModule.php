@@ -26,7 +26,7 @@ use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 /**
  * Class GridModule.
@@ -40,14 +40,14 @@ final class GridModule extends AbstractModule
      *
      * @var GridProvider
      */
-    private $gridProvider;
+    private GridProvider $gridProvider;
 
     /**
      * Response Tagger.
      *
      * @var ResponseTagger
      */
-    private $responseTagger;
+    private ResponseTagger $responseTagger;
 
     /**
      * Template name.

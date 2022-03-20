@@ -24,7 +24,7 @@ use Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 /**
  * Class GridElementFactory
@@ -38,7 +38,7 @@ final class GridElementFactory
      *
      * @var array
      */
-    private $gridElementTypes = [
+    private array $gridElementTypes = [
         'bs_gridStart'     => GridStartElement::class,
         'bs_gridSeparator' => GridSeparatorElement::class,
         'bs_gridStop'      => GridStopElement::class,
@@ -49,42 +49,42 @@ final class GridElementFactory
      *
      * @var TemplateEngine
      */
-    private $templateEngine;
+    private TemplateEngine $templateEngine;
 
     /**
      * Color rotate.
      *
      * @var ColorRotate
      */
-    private $colorRotate;
+    private ColorRotate $colorRotate;
 
     /**
      * Request scope matcher.
      *
      * @var RequestScopeMatcher
      */
-    private $scopeMatcher;
+    private RequestScopeMatcher $scopeMatcher;
 
     /**
      * Translator.
      *
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * Grid provider.
      *
      * @var GridProvider
      */
-    private $gridProvider;
+    private GridProvider $gridProvider;
 
     /**
      * Response tagger.
      *
      * @var ResponseTagger
      */
-    private $responseTagger;
+    private ResponseTagger $responseTagger;
 
     /**
      * PanelElementFactory constructor.

@@ -23,7 +23,6 @@ use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Manager as DcaManager;
-use PDO;
 use function array_unique;
 use function time;
 
@@ -38,28 +37,28 @@ final class ParentFixContentParentRelationsListener
      * @var Connection
      */
 
-    private $connection;
+    private Connection $connection;
 
     /**
      * Data container manager.
      *
      * @var DcaManager
      */
-    private $dcaManager;
+    private DcaManager $dcaManager;
 
     /**
      * Repository manager.
      *
      * @var RepositoryManager
      */
-    private $repositoryManager;
+    private RepositoryManager $repositoryManager;
 
     /**
      * Input adapter.
      *
      * @var Adapter
      */
-    private $inputAdapter;
+    private Adapter $inputAdapter;
 
     /**
      * FixContentParentRelationsListener constructor.
@@ -112,7 +111,7 @@ final class ParentFixContentParentRelationsListener
         $childTables = (array) $definition->get(['config', 'ctable'], []);
         $columns     = $this->repositoryManager
             ->getConnection()
-            ->getSchemaManager()
+            ->createSchemaManager()
             ->listTableColumns($definition->getName());
 
         if (!$definition->has(['config', 'ptable'])
@@ -121,7 +120,7 @@ final class ParentFixContentParentRelationsListener
             $childTables[] = $definition->getName();
         }
 
-        $schemaManager = $this->repositoryManager->getConnection()->getSchemaManager();
+        $schemaManager = $this->repositoryManager->getConnection()->createSchemaManager();
 
         foreach (array_unique($childTables) as $childTable) {
             if (! $schemaManager->tablesExist([$childTable])) {
@@ -220,7 +219,7 @@ final class ParentFixContentParentRelationsListener
     {
         $childDefinition = $this->dcaManager->getDefinition($childTable);
         $queryBuilder    = $this->connection->createQueryBuilder()
-            ->select('id')
+            ->select(['id', 'id'])
             ->from($childTable)
             ->where('pid=:pid')
             ->setParameter('pid', $recordId);
@@ -231,6 +230,6 @@ final class ParentFixContentParentRelationsListener
                 ->setParameter('ptable', $definition->getName());
         }
 
-        return $queryBuilder->execute()->fetchAll(PDO::FETCH_COLUMN);
+        return $queryBuilder->executeQuery()->fetchAllKeyValue();
     }
 }

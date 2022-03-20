@@ -31,21 +31,21 @@ final class ComponentRenderHelper
      *
      * @var GridProvider
      */
-    private $gridProvider;
+    private GridProvider $gridProvider;
 
     /**
      * Request scope matcher.
      *
      * @var RequestScopeMatcher
      */
-    private $scopeMatcher;
+    private RequestScopeMatcher $scopeMatcher;
 
     /**
      * Color rotate helper.
      *
      * @var ColorRotate
      */
-    private $colorRotate;
+    private ColorRotate $colorRotate;
 
     /**
      * ComponentRenderHelper constructor.

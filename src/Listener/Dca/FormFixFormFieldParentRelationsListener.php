@@ -31,7 +31,7 @@ final class FormFixFormFieldParentRelationsListener
      *
      * @var RepositoryManager
      */
-    private $repositoryManager;
+    private RepositoryManager $repositoryManager;
 
     /**
      * Constructor.

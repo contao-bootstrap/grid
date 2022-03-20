@@ -31,7 +31,7 @@ class ThemeExportListener extends Theme
      *
      * @var ContaoFrameworkInterface
      */
-    private $framework;
+    private ContaoFrameworkInterface $framework;
 
     /**
      * ThemeExportListener constructor.

@@ -32,7 +32,7 @@ final class ContentFixParentRelationListener
      *
      * @var RepositoryManager
      */
-    private $repositoryManager;
+    private RepositoryManager $repositoryManager;
 
     /**
      * ContentFixParentRelationListener constructor.

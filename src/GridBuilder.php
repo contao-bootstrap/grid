@@ -51,7 +51,7 @@ final class GridBuilder
      *
      * @var Environment
      */
-    private $environment;
+    private Environment $environment;
 
     /**
      * GridBuilder constructor.

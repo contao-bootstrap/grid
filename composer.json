@@ -15,10 +15,16 @@
       "email": "mail@netzmacht.de",
       "homepage": "https://netzmacht.de",
       "role": "Developer"
+    },
+    {
+      "name": "Alexander Kehr",
+      "email": "info@kehr-solutions.de",
+      "homepage": "https://www.kehr-solutions.de",
+      "role": "Developer"
     }
   ],
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.4",
     "ext-dom": "*",
     "ext-pdo": "*",
     "contao-bootstrap/core": "^2.0",
@@ -27,11 +33,11 @@
     "doctrine/dbal": "^3.3",
     "menatwork/contao-multicolumnwizard-bundle": "^3.4",
     "netzmacht/contao-toolkit": "^3.1",
-    "symfony/config": "^3.3 || ^4.0 || ^5.4",
-    "symfony/dependency-injection": "^3.4.26 || ^4.1.12 || ^5.4",
-    "symfony/http-kernel": "^3.3 || ^4.4.13 || ^5.4",
-    "symfony/templating": "^3.3 || ^4.0 || ^5.0",
-    "symfony/translation": "^3.3 || ^4.0 || ^5.4"
+    "symfony/config": "^5.4",
+    "symfony/dependency-injection": "^5.4",
+    "symfony/http-kernel": "^5.4",
+    "symfony/templating": "^5.4",
+    "symfony/translation": "^5.4"
   },
   "conflict": {
     "netzmacht/contao-bootstrap": "*"
