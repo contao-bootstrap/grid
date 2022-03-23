@@ -31,7 +31,7 @@ final class NewsGridListener
      *
      * @var GridProvider
      */
-    private $gridProvider;
+    private GridProvider $gridProvider;
 
     /**
      * NewsGridListener constructor.

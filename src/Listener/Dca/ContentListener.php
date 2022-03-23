@@ -20,7 +20,7 @@ use Contao\Config;
 use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Framework\Adapter;
-use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Image\ImageSizes;
 use Contao\DataContainer;
 use Contao\Input;
@@ -40,14 +40,14 @@ final class ContentListener extends AbstractWrapperDcaListener
      *
      * @var Connection
      */
-    private $connection;
+    private Connection $connection;
 
     /**
      * Contao framework.
      *
      * @var ContaoFramework
      */
-    private $framework;
+    private ContaoFramework $framework;
 
     /**
      * Content Model repository.
@@ -61,7 +61,7 @@ final class ContentListener extends AbstractWrapperDcaListener
      *
      * @var ImageSizes
      */
-    private $imageSizes;
+    private ImageSizes $imageSizes;
 
     /**
      * Contao backend user.

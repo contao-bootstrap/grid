@@ -34,7 +34,7 @@ final class MigrateAutoGridWidths
      *
      * @var Connection
      */
-    private $connection;
+    private Connection $connection;
 
     /**
      * MigrateAutoGridWidths constructor.
@@ -55,7 +55,7 @@ final class MigrateAutoGridWidths
     {
         $statement = $this->connection->executeQuery('SELECT * FROM tl_bs_grid');
 
-        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $statement->fetchAssociative()) {
             $this->migrateRow($row);
         }
     }

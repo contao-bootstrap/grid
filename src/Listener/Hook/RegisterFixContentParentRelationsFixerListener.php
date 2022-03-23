@@ -33,14 +33,14 @@ final class RegisterFixContentParentRelationsFixerListener
      *
      * @var DcaManager
      */
-    private $dcaManager;
+    private DcaManager $dcaManager;
 
     /**
      * Supported data container drivers.
      *
      * @var array
      */
-    private $supportedDrivers;
+    private array $supportedDrivers;
 
     /**
      * RegisterOnCopyCallbackListener constructor.
