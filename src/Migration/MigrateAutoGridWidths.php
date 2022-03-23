@@ -17,7 +17,6 @@ namespace ContaoBootstrap\Grid\Migration;
 
 use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
-use PDO;
 use function array_map;
 use function serialize;
 use function time;

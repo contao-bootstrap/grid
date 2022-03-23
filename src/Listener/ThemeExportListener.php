@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener;
 
-use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Theme;
 use Contao\ZipWriter;
 use ContaoBootstrap\Grid\Model\GridModel;
@@ -29,16 +29,16 @@ class ThemeExportListener extends Theme
     /**
      * Contao Framework.
      *
-     * @var ContaoFrameworkInterface
+     * @var ContaoFramework
      */
-    private $framework;
+    private ContaoFramework $framework;
 
     /**
      * ThemeExportListener constructor.
      *
-     * @param ContaoFrameworkInterface $framework Contao framework.
+     * @param ContaoFramework $framework Contao framework.
      */
-    public function __construct(ContaoFrameworkInterface $framework)
+    public function __construct(ContaoFramework $framework)
     {
         parent::__construct();
 

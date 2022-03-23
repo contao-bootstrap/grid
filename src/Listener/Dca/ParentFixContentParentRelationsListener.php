@@ -23,7 +23,6 @@ use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Manager as DcaManager;
-use PDO;
 use function array_unique;
 use function time;
 
@@ -112,7 +111,7 @@ final class ParentFixContentParentRelationsListener
         $childTables = (array) $definition->get(['config', 'ctable'], []);
         $columns     = $this->repositoryManager
             ->getConnection()
-            ->createSchemaManager()
+            ->getSchemaManager()
             ->listTableColumns($definition->getName());
 
         if (!$definition->has(['config', 'ptable'])
@@ -121,7 +120,7 @@ final class ParentFixContentParentRelationsListener
             $childTables[] = $definition->getName();
         }
 
-        $schemaManager = $this->repositoryManager->getConnection()->createSchemaManager();
+        $schemaManager = $this->repositoryManager->getConnection()->getSchemaManager();
 
         foreach (array_unique($childTables) as $childTable) {
             if (! $schemaManager->tablesExist([$childTable])) {
