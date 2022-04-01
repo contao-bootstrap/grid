@@ -34,28 +34,28 @@ final class GalleryFactory implements ComponentFactory
      *
      * @var TemplateEngine
      */
-    private $templateEngine;
+    private TemplateEngine $templateEngine;
 
     /**
      * The grid provider.
      *
      * @var GridProvider
      */
-    private $gridProvider;
+    private GridProvider $gridProvider;
 
     /**
      * Frontend user.
      *
      * @var User
      */
-    private $user;
+    private User $user;
 
     /**
      * Response tagger.
      *
      * @var ResponseTagger
      */
-    private $responseTagger;
+    private ResponseTagger $responseTagger;
 
     /**
      * GalleryFactory constructor.

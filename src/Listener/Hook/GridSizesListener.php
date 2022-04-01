@@ -20,6 +20,7 @@ use Contao\ThemeModel;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Grid\Model\GridModel;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
 
 /**
  * Class GridSizesListener initializes all dynamic grid size columns
@@ -34,14 +35,14 @@ final class GridSizesListener
      *
      * @var Connection
      */
-    private $connection;
+    private Connection $connection;
 
     /**
      * Contao bootstrap environment.
      *
      * @var Environment
      */
-    private $environment;
+    private Environment $environment;
 
     /**
      * GridSizesListener constructor.
@@ -198,7 +199,7 @@ final class GridSizesListener
             return;
         }
 
-        $this->connection->exec(sprintf('ALTER TABLE %s ADD %sSize BLOB DEFAULT NULL', GridModel::getTable(), $size));
+        $this->connection->executeStatement(sprintf('ALTER TABLE %s ADD %sSize BLOB DEFAULT NULL', GridModel::getTable(), $size));
     }
 
     /**

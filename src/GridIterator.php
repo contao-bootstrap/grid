@@ -29,14 +29,14 @@ final class GridIterator implements \Iterator
      *
      * @var Grid
      */
-    private $grid;
+    private Grid $grid;
 
     /**
      * Current index.
      *
      * @var int
      */
-    private $index = 0;
+    private int $index = 0;
 
     /**
      * GridIterator constructor.

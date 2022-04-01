@@ -25,7 +25,7 @@ use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateReference as ToolkitTemplateReference;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 /**
  * Class AbstractGridElement.
@@ -39,35 +39,35 @@ abstract class AbstractGridElement extends AbstractContentElement
      *
      * @var RequestScopeMatcher
      */
-    private $scopeMatcher;
+    private RequestScopeMatcher $scopeMatcher;
 
     /**
      * Color rotate.
      *
      * @var ColorRotate
      */
-    private $colorRotate;
+    private ColorRotate $colorRotate;
 
     /**
      * Translator.
      *
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * The grid provider.
      *
      * @var GridProvider
      */
-    private $gridProvider;
+    private GridProvider $gridProvider;
 
     /**
      * Response tagger.
      *
      * @var ResponseTagger
      */
-    protected $responseTagger;
+    protected ResponseTagger $responseTagger;
 
     /**
      * AbstractGridElement constructor.

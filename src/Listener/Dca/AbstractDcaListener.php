@@ -32,7 +32,7 @@ abstract class AbstractDcaListener
      *
      * @var Environment
      */
-    private $environment;
+    private Environment $environment;
 
     /**
      * Form constructor.

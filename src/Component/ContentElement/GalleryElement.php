@@ -54,28 +54,28 @@ final class GalleryElement extends AbstractContentElement
      *
      * @var GridProvider
      */
-    private $gridProvider;
+    private GridProvider $gridProvider;
 
     /**
      * Frontend user.
      *
      * @var User
      */
-    private $user;
+    private User $user;
 
     /**
      * Images.
      *
      * @var array
      */
-    private $images;
+    private array $images;
 
     /**
      * Response Tagger.
      *
      * @var ResponseTagger
      */
-    private $responseTagger;
+    private ResponseTagger $responseTagger;
 
     /**
      * Files collection.

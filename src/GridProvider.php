@@ -29,21 +29,21 @@ final class GridProvider
      *
      * @var GridBuilder
      */
-    private $builder;
+    private GridBuilder $builder;
 
     /**
      * Map of created grids.
      *
      * @var array
      */
-    private $grids = [];
+    private array $grids = [];
 
     /**
      * Map of grid iterators.
      *
      * @var array
      */
-    private $iterators = [];
+    private array $iterators = [];
 
     /**
      * GridProvider constructor.
