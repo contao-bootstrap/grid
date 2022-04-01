@@ -19,5 +19,6 @@ class GridModel extends Model
     /**
      * Table name.
      */
-    protected static string $strTable = 'tl_bs_grid';
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
+    protected static $strTable = 'tl_bs_grid';
 }

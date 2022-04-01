@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <psalm
-        errorLevel="3"
+        errorLevel="8"
         hideExternalErrors="true"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="https://getpsalm.org/schema/config"
@@ -16,5 +16,17 @@
                 <referencedFunction name="array_insert"/>
             </errorLevel>
         </UndefinedFunction>
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="Contao\CoreBundle\Framework\Adapter::__call"/>
+                <referencedMethod name="Contao\CoreBundle\Framework\Adapter::getAdapter"/>
+            </errorLevel>
+        </InternalMethod>
     </issueHandlers>
+
+    <universalObjectCrates>
+        <class name="Contao\ModuleNews" />
+        <class name="Contao\Template" />
+        <class name="Contao\ThemeModel" />
+    </universalObjectCrates>
 </psalm>

@@ -18,7 +18,7 @@ $GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_bs_grid';
 
 array_insert(
     $GLOBALS['TL_CTE']['media'],
-    array_search('gallery', array_keys($GLOBALS['TL_CTE']['media'])) + 1,
+    (int) array_search('gallery', array_keys($GLOBALS['TL_CTE']['media'])) + 1,
     [
         'bs_grid_gallery' => ContentElementDecorator::class,
     ]

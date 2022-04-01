@@ -61,7 +61,7 @@ final class NewsGridListener
             'row'     => $gridIterator->row(),
             'grid'    => $gridIterator->current(),
             'resets'  => $gridIterator->resets(),
-            'content' => static function () use ($newsTemplate, $template) {
+            'content' => static function () use ($newsTemplate, $template): string {
                 $newsTemplate->setData($template->getData());
 
                 return $newsTemplate->parse();

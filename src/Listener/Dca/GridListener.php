@@ -17,6 +17,7 @@ use function array_map;
 use function array_merge;
 use function array_unique;
 use function array_values;
+use function defined;
 use function range;
 use function sprintf;
 
@@ -100,7 +101,7 @@ class GridListener
     public function getSizes(): array
     {
         $sizes = [];
-        if (Input::get('act') === 'edit') {
+        if (defined('CURRENT_ID') && Input::get('act') === 'edit') {
             $theme = ThemeModel::findByPk(CURRENT_ID);
             $sizes = StringUtil::deserialize($theme->bs_grid_sizes, true);
 

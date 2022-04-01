@@ -207,6 +207,6 @@ final class ParentFixContentParentRelationsListener
                 ->setParameter('ptable', $definition->getName());
         }
 
-        return $queryBuilder->executeQuery()->fetchFirstColumn();
+        return $queryBuilder->execute()->fetchFirstColumn();
     }
 }

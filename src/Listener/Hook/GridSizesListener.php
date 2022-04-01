@@ -55,7 +55,7 @@ final class GridSizesListener
         }
 
         $schemaManager = $this->connection->getSchemaManager();
-        if ($schemaManager === null || ! $schemaManager->tablesExist([GridModel::getTable(), 'tl_theme'])) {
+        if (! $schemaManager->tablesExist([GridModel::getTable(), 'tl_theme'])) {
             return;
         }
 

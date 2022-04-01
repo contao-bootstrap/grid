@@ -46,15 +46,18 @@ $GLOBALS['TL_DCA']['tl_theme']['fields']['bs_grid_sizes'] = [
         'xl',
     ],
     'save_callback' => [
-        // @codingStandardsIgnoreStart - PHPCS doesnt understand static keyword
-        static function ($value) {
+        /**
+         * @param mixed $value
+         *
+         * @return list<string>
+         */
+        static function ($value): array {
             return array_values(
                 array_unique(
                     array_filter(StringUtil::deserialize($value, true))
                 )
             );
-        }
-        // @codingStandardsIgnoreEnd
+        },
     ],
     'eval'              => [
         'tl_class' => 'clr w50',
@@ -67,7 +70,11 @@ $GLOBALS['TL_DCA']['tl_theme']['fields']['bs_grid_default_size'] = [
     'label'             => &$GLOBALS['TL_LANG']['tl_theme']['bs_grid_default_size'],
     'inputType'         => 'select',
     'default'           => 'xs',
-    'options_callback'  => static function (DataContainer $dataContainer) {
+    'options_callback'  => static function (DataContainer $dataContainer): array {
+        if ($dataContainer->activeRecord === null) {
+            return [];
+        }
+
         return StringUtil::deserialize($dataContainer->activeRecord->bs_grid_sizes, true);
     },
     'eval'              => ['tl_class' => 'w50'],
