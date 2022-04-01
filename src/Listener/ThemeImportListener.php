@@ -1,40 +1,26 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener;
 
 use Contao\ZipReader;
 use ContaoBootstrap\Grid\Model\GridModel;
+use DOMDocument;
+use DOMElement;
 
-/**
- * Class ThemeImportListener.
- */
 class ThemeImportListener
 {
     /**
      * Handle the extract theme files hook.
      *
-     * @param \DOMDocument $xml     Theme xml document.
-     * @param ZipReader    $archive Zip archive.
-     * @param int|string   $themeId Theme id.
-     *
-     * @return void
+     * @param DOMDocument $xml     Theme xml document.
+     * @param ZipReader   $archive Zip archive.
+     * @param int|string  $themeId Theme id.
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function onExtractThemeFiles(\DOMDocument $xml, ZipReader $archive, $themeId): void
+    public function onExtractThemeFiles(DOMDocument $xml, ZipReader $archive, $themeId): void
     {
         $tables = $xml->getElementsByTagName('table');
 
@@ -50,12 +36,10 @@ class ThemeImportListener
     /**
      * Import the grid definition.
      *
-     * @param \DOMElement $item    Table item.
-     * @param int         $themeId Theme id.
-     *
-     * @return void
+     * @param DOMElement $item    Table item.
+     * @param int        $themeId Theme id.
      */
-    private function importGrid(\DOMElement $item, int $themeId): void
+    private function importGrid(DOMElement $item, int $themeId): void
     {
         $rows = $item->childNodes;
 
@@ -71,12 +55,12 @@ class ThemeImportListener
     /**
      * Prepare row values.
      *
-     * @param \DOMElement $item    Row item element.
-     * @param int         $themeId Theme id.
+     * @param DOMElement $item    Row item element.
+     * @param int        $themeId Theme id.
      *
-     * @return array
+     * @return array<string,mixed>
      */
-    private function getRowValues(\DOMElement $item, int $themeId): array
+    private function getRowValues(DOMElement $item, int $themeId): array
     {
         $fields = $item->childNodes;
         $values = [];

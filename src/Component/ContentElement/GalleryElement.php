@@ -1,17 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @author     Florian Vick <fvick@rapid-data.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\ContentElement;
@@ -32,61 +20,77 @@ use Contao\User;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
+use Exception;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\AbstractContentElement;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateReference;
+use stdClass;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 
-/**
- * Class GalleryElement
- */
+use function array_filter;
+use function array_flip;
+use function array_key_exists;
+use function array_map;
+use function array_merge;
+use function array_multisort;
+use function array_slice;
+use function array_values;
+use function ceil;
+use function count;
+use function current;
+use function defined;
+use function file_exists;
+use function is_array;
+use function max;
+use function min;
+use function next;
+use function reset;
+use function shuffle;
+use function trim;
+use function uksort;
+
+use const SORT_ASC;
+use const SORT_DESC;
+use const SORT_NUMERIC;
+
 final class GalleryElement extends AbstractContentElement
 {
     /**
      * Template name.
-     *
-     * @var string
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
     protected $templateName = 'ce_bs_grid_gallery';
 
     /**
      * Grid provider.
-     *
-     * @var GridProvider
      */
     private GridProvider $gridProvider;
 
     /**
      * Frontend user.
-     *
-     * @var User
      */
     private User $user;
 
     /**
      * Images.
      *
-     * @var array
+     * @var array<string,array<string,mixed>>
      */
     private array $images;
 
     /**
      * Response Tagger.
-     *
-     * @var ResponseTagger
      */
     private ResponseTagger $responseTagger;
 
     /**
      * Files collection.
      *
-     * @var \Contao\Model\Collection|FilesModel
+     * @var Collection|FilesModel
      */
     private $files;
 
     /**
-     * AbstractContentElement constructor.
-     *
      * @param Model|Collection|Result $model          Object model or result.
      * @param TemplateEngine          $templateEngine Template engine.
      * @param GridProvider            $gridProvider   Grid provider.
@@ -109,9 +113,6 @@ final class GalleryElement extends AbstractContentElement
         $this->responseTagger = $responseTagger;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generate(): string
     {
         if ($this->get('useHomeDir') && defined('FE_USER_LOGGED_IN') && FE_USER_LOGGED_IN) {
@@ -123,7 +124,7 @@ final class GalleryElement extends AbstractContentElement
         }
 
         // Return if there are no files
-        if (!empty($this->get('multiSRC'))) {
+        if (! empty($this->get('multiSRC'))) {
             $this->files = FilesModel::findMultipleByUuids($this->get('multiSRC'));
         }
 
@@ -175,28 +176,28 @@ final class GalleryElement extends AbstractContentElement
     /**
      * Prepare all file data and return the aux dates.
      *
-     * @param Collection $collection File model collection.
-     * @param array      $auxDate    Aux date array.
-     * @param bool       $deep       If true sub files are added as well.
+     * @param Collection   $collection File model collection.
+     * @param list<string> $auxDate    Aux date array.
+     * @param bool         $deep       If true sub files are added as well.
      *
-     * @return array
+     * @return list<string>
      *
-     * @throws \Exception If file could not be opened.
+     * @throws Exception If file could not be opened.
      */
     protected function prepareFiles(Collection $collection, array $auxDate = [], $deep = true): array
     {
         // Get all images
         foreach ($collection as $fileModel) {
             // Continue if the files has been processed or does not exist
-            if (isset($this->images[$fileModel->path]) || !file_exists(TL_ROOT . '/' . $fileModel->path)) {
+            if (isset($this->images[$fileModel->path]) || ! file_exists(TL_ROOT . '/' . $fileModel->path)) {
                 continue;
             }
 
-            if ($fileModel->type == 'file') {
+            if ($fileModel->type === 'file') {
                 // Single files
                 $file = new File($fileModel->path);
 
-                if (!$file->isImage) {
+                if (! $file->isImage) {
                     continue;
                 }
 
@@ -227,10 +228,8 @@ final class GalleryElement extends AbstractContentElement
     /**
      * Apply the sorting.
      *
-     * @param array $auxDate Aux dates.
-     * @param array $data    Template data.
-     *
-     * @return void
+     * @param list<string>        $auxDate Aux dates.
+     * @param array<string,mixed> $data    Template data.
      */
     protected function applySorting(array $auxDate, array &$data): void
     {
@@ -282,8 +281,6 @@ final class GalleryElement extends AbstractContentElement
      * @param int $offset Offset number.
      * @param int $limit  Limit.
      *
-     * @return string|null
-     *
      * @throws PageNotFoundException When page parameter is out of bounds.
      */
     protected function preparePagination(&$offset, &$limit): ?string
@@ -292,10 +289,10 @@ final class GalleryElement extends AbstractContentElement
         $perPage = $this->get('perPage');
 
         // Paginate the result of not randomly sorted (see #8033)
-        if ($perPage > 0 && $this->get('sortBy') != 'random') {
+        if ($perPage > 0 && $this->get('sortBy') !== 'random') {
             // Get the current page
             $parameter = 'page_g' . $this->get('id');
-            $page      = (Input::get($parameter) !== null) ? Input::get($parameter) : 1;
+            $page      = Input::get($parameter) ?? 1;
 
             // Do not index or cache the page if the page number is outside the range
             if ($page < 1 || $page > max(ceil($total / $perPage), 1)) {
@@ -303,8 +300,8 @@ final class GalleryElement extends AbstractContentElement
             }
 
             // Set limit and offset
-            $offset = (($page - 1) * $perPage);
-            $limit  = min(($perPage + $offset), $total);
+            $offset = ($page - 1) * $perPage;
+            $limit  = min($perPage + $offset, $total);
 
             $pagination = new Pagination(
                 $total,
@@ -325,7 +322,7 @@ final class GalleryElement extends AbstractContentElement
      * @param int $offset Offset.
      * @param int $limit  Limit.
      *
-     * @return array
+     * @return list<string>
      */
     protected function compileImages($offset, $limit): array
     {
@@ -335,11 +332,11 @@ final class GalleryElement extends AbstractContentElement
         $imageSizes = StringUtil::deserialize($this->get('bs_image_sizes'), true);
 
         for ($index = $offset; $index < $limit; $index++) {
-            if (!isset($this->images[$index])) {
+            if (! isset($this->images[$index])) {
                 break;
             }
 
-            $cell        = new \stdClass();
+            $cell        = new stdClass();
             $cell->class = 'image_' . $index;
 
             // Loop through images sizes.
@@ -377,15 +374,13 @@ final class GalleryElement extends AbstractContentElement
 
     /**
      * Get the gallery template name.
-     *
-     * @return string
      */
     protected function getGalleryTemplateName(): string
     {
         $templateName = 'bs_gallery_default';
 
         // Use a custom template
-        if (TL_MODE == 'FE' && $this->get('galleryTpl') != '') {
+        if (TL_MODE === 'FE' && $this->get('galleryTpl') !== '') {
             return (string) $this->get('galleryTpl');
         }
 
@@ -394,46 +389,48 @@ final class GalleryElement extends AbstractContentElement
 
     /**
      * Apply custom sorting.
-     *
-     * @return void
      */
     protected function applyCustomSorting(): void
     {
-        if ($this->get('orderSRC') != '') {
-            $tmp = StringUtil::deserialize($this->get('orderSRC'));
-
-            if (!empty($tmp) && is_array($tmp)) {
-                // Remove all values
-                $order = array_map(
-                    function () {
-                    },
-                    array_flip($tmp)
-                );
-
-                // Move the matching elements to their position in $arrOrder
-                foreach ($this->images as $k => $v) {
-                    if (array_key_exists($v['uuid'], $order)) {
-                        $order[$v['uuid']] = $v;
-                        unset($this->images[$k]);
-                    }
-                }
-
-                // Append the left-over images at the end
-                if (!empty($this->images)) {
-                    $order = array_merge($order, array_values($this->images));
-                }
-
-                // Remove empty (unreplaced) entries
-                $this->images = array_values(array_filter($order));
-                unset($order);
-            }
+        if ($this->get('orderSRC') === '') {
+            return;
         }
+
+        $tmp = StringUtil::deserialize($this->get('orderSRC'));
+
+        if (empty($tmp) || ! is_array($tmp)) {
+            return;
+        }
+
+        // Remove all values
+        $order = array_map(
+            static function (): void {
+            },
+            array_flip($tmp)
+        );
+
+        // Move the matching elements to their position in $arrOrder
+        foreach ($this->images as $k => $v) {
+            if (! array_key_exists($v['uuid'], $order)) {
+                continue;
+            }
+
+            $order[$v['uuid']] = $v;
+            unset($this->images[$k]);
+        }
+
+        // Append the left-over images at the end
+        if (! empty($this->images)) {
+            $order = array_merge($order, array_values($this->images));
+        }
+
+        // Remove empty (unreplaced) entries
+        $this->images = array_values(array_filter($order));
+        unset($order);
     }
 
     /**
      * Get the grid iterator.
-     *
-     * @return GridIterator|null
      */
     private function getGridIterator(): ?GridIterator
     {

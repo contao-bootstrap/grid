@@ -1,18 +1,6 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @author     Patrick Landolt <patrick.landolt@artack.ch>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
-use ContaoBootstrap\Grid\Model\GridModel;
+declare(strict_types=1);
 
 $GLOBALS['TL_DCA']['tl_bs_grid'] = [
     // Config
@@ -25,9 +13,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             ['contao_bootstrap.grid.listeners.dca.grid', 'initializePalette'],
         ],
         'sql'              => [
-            'keys' => [
-                'id' => 'primary',
-            ],
+            'keys' => ['id' => 'primary'],
         ],
     ],
     // List configuration
@@ -92,17 +78,13 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
         ],
     ],
     'fields'       => [
-        'id'          => [
-            'sql' => 'int(10) unsigned NOT NULL auto_increment',
-        ],
+        'id'          => ['sql' => 'int(10) unsigned NOT NULL auto_increment'],
         'pid'         => [
             'foreignKey' => 'tl_theme.name',
             'relation'   => ['type' => 'hasOne', 'load' => 'lazy'],
             'sql'        => 'int(10) unsigned NOT NULL default \'0\'',
         ],
-        'tstamp'      => [
-            'sql' => 'int(10) unsigned NOT NULL default \'0\'',
-        ],
+        'tstamp'      => ['sql' => 'int(10) unsigned NOT NULL default \'0\''],
         'title'       => [
             'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['title'],
             'exclude'   => true,
@@ -165,9 +147,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'exclude'   => true,
             'default'   => '',
             'inputType' => 'text',
-            'eval'      => [
-                'tl_class' => 'clr w50',
-            ],
+            'eval'      => ['tl_class' => 'clr w50'],
             'sql'       => 'varchar(64) NOT NULL default \'\'',
         ],
         'noGutters'   => [
@@ -176,9 +156,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'default'   => '',
             'inputType' => 'checkbox',
             'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid'],
-            'eval'      => [
-                'tl_class' => 'w50 m12',
-            ],
+            'eval'      => ['tl_class' => 'w50 m12'],
             'sql'       => 'char(1) NULL',
         ],
     ],

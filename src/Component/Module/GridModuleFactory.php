@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\Module;
@@ -24,44 +13,29 @@ use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
-/**
- * Class GridModuleFactory
- *
- * @package ContaoBootstrap\Grid\Component\Module
- */
 final class GridModuleFactory implements ComponentFactory
 {
     /**
      * Template engine.
-     *
-     * @var TemplateEngine
      */
     private TemplateEngine $templateEngine;
 
     /**
      * Translator.
-     *
-     * @var Translator
      */
     private Translator $translator;
 
     /**
      * Grid provider.
-     *
-     * @var GridProvider
      */
     private GridProvider $gridProvider;
 
     /**
      * Response tagger.
-     *
-     * @var ResponseTagger
      */
     private ResponseTagger $responseTagger;
 
     /**
-     * GridModuleFactory constructor.
-     *
      * @param TemplateEngine $templateEngine Template engine.
      * @param Translator     $translator     Translator.
      * @param GridProvider   $gridProvider   Grid provider.
@@ -84,7 +58,7 @@ final class GridModuleFactory implements ComponentFactory
      */
     public function supports($model): bool
     {
-        if (!$model instanceof ModuleModel && !($model instanceof Result)) {
+        if (! $model instanceof ModuleModel && ! ($model instanceof Result)) {
             return false;
         }
 

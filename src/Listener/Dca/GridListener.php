@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
@@ -23,23 +12,25 @@ use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Environment\ThemeContext;
 use ContaoBootstrap\Grid\Model\GridModel;
 
+use function array_combine;
+use function array_map;
+use function array_merge;
+use function array_unique;
+use function array_values;
+use function range;
+use function sprintf;
+
 /**
  * Data container helper for grid.
- *
- * @package ContaoBootstrap\Grid\Dca
  */
 class GridListener
 {
     /**
      * Bootstrap environment.
-     *
-     * @var Environment
      */
     private Environment $environment;
 
     /**
-     * Constructor.
-     *
      * @param Environment $environment Bootstrap environment.
      */
     public function __construct(Environment $environment)
@@ -49,48 +40,48 @@ class GridListener
 
     /**
      * Enter a bootstrap environment context.
-     *
-     * @return void
      */
     public function enterContext(): void
     {
-        if (Input::get('act') === 'edit') {
-            $model = GridModel::findByPk(Input::get('id'));
-
-            if ($model) {
-                $this->environment->enterContext(ThemeContext::forTheme((int) $model->pid));
-            }
+        if (Input::get('act') !== 'edit') {
+            return;
         }
+
+        $model = GridModel::findByPk(Input::get('id'));
+
+        if (! $model) {
+            return;
+        }
+
+        $this->environment->enterContext(ThemeContext::forTheme((int) $model->pid));
     }
 
     /**
      * Initialize the palette.
-     *
-     * @return void
      */
     public function initializePalette(): void
     {
-        if (Input::get('act') === 'edit') {
-            $model = GridModel::findByPk(Input::get('id'));
-            $sizes = array_map(
-                function ($value) {
-                    return $value . 'Size';
-                },
-                StringUtil::deserialize($model->sizes, true)
-            );
-
-            PaletteManipulator::create()
-                ->addField($sizes, 'sizes')
-                ->applyToPalette('default', 'tl_bs_grid');
+        if (Input::get('act') !== 'edit') {
+            return;
         }
+
+        $model = GridModel::findByPk(Input::get('id'));
+        $sizes = array_map(
+            static function ($value) {
+                return $value . 'Size';
+            },
+            StringUtil::deserialize($model->sizes, true)
+        );
+
+        PaletteManipulator::create()
+            ->addField($sizes, 'sizes')
+            ->applyToPalette('default', 'tl_bs_grid');
     }
 
     /**
      * Generate the label.
      *
-     * @param array $row Data row.
-     *
-     * @return string
+     * @param array<string,mixed> $row Data row.
      */
     public function generateLabel(array $row): string
     {
@@ -104,7 +95,7 @@ class GridListener
     /**
      * Get all sizes.
      *
-     * @return array
+     * @return list<string>
      */
     public function getSizes(): array
     {
@@ -113,7 +104,7 @@ class GridListener
             $theme = ThemeModel::findByPk(CURRENT_ID);
             $sizes = StringUtil::deserialize($theme->bs_grid_sizes, true);
 
-            if (!$sizes) {
+            if (! $sizes) {
                 $sizes = $this->environment->getConfig()->get('grid.sizes', []);
             }
 
@@ -131,7 +122,7 @@ class GridListener
     /**
      * Get all widths.
      *
-     * @return array
+     * @return array<string,string>
      */
     public function getWidths(): array
     {
@@ -145,7 +136,7 @@ class GridListener
     /**
      * Get the order options.
      *
-     * @return array
+     * @return list<int>
      */
     public function getOrders(): array
     {
@@ -157,11 +148,10 @@ class GridListener
     /**
      * Get offset values.
      *
-     * @return array
+     * @return array<string,list<string>>
      */
     public function getOffsets(): array
     {
-
         $columns = $this->getColumns();
         $values  = array_merge(
             ['null'],
@@ -171,16 +161,14 @@ class GridListener
         return [
             'align' => [
                 'ml-auto',
-                'mr-auto'
+                'mr-auto',
             ],
-            'offset' => $values
+            'offset' => $values,
         ];
     }
 
     /**
      * Get the number of defined columns.
-     *
-     * @return int
      */
     private function getColumns(): int
     {

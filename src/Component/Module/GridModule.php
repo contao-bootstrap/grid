@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\Module;
@@ -28,37 +17,29 @@ use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
-/**
- * Class GridModule.
- *
- * @package ContaoBootstrap\Grid\Component
- */
+use function array_filter;
+use function array_map;
+use function is_numeric;
+use function sprintf;
+
 final class GridModule extends AbstractModule
 {
     /**
      * Grid provider.
-     *
-     * @var GridProvider
      */
     private GridProvider $gridProvider;
 
     /**
      * Response Tagger.
-     *
-     * @var ResponseTagger
      */
     private ResponseTagger $responseTagger;
 
     /**
      * Template name.
-     *
-     * @var string
      */
-    protected $templateName = 'mod_bs_grid';
+    protected string $templateName = 'mod_bs_grid';
 
     /**
-     * GridModule constructor.
-     *
      * @param Model|Result   $model          Module configuration as model or result.
      * @param TemplateEngine $templateEngine The template engine.
      * @param Translator     $translator     The translator.
@@ -106,8 +87,6 @@ final class GridModule extends AbstractModule
 
     /**
      * Get the grid iterator.
-     *
-     * @return GridIterator|null
      */
     protected function getGridIterator(): ?GridIterator
     {
@@ -125,41 +104,43 @@ final class GridModule extends AbstractModule
     /**
      * Generate all modules.
      *
-     * @param array             $config   Module config.
-     * @param array             $modules  Generated modules.
-     * @param GridIterator|null $iterator Grid iterator.
+     * @param array<string,mixed>      $config   Module config.
+     * @param array<int|string,string> $modules  Generated modules.
+     * @param GridIterator|null        $iterator Grid iterator.
      *
-     * @return array
+     * @return array<int|string,string>
      */
     protected function generateModules(array $config, array $modules, ?GridIterator $iterator = null): array
     {
         $buffer = [];
 
         foreach ($config as $entry) {
-            if ($entry['inactive'] || !$entry['module']) {
+            if ($entry['inactive'] || ! $entry['module']) {
                 continue;
             }
 
             if (is_numeric($entry['module'])) {
-                if (!empty($modules[$entry['module']])) {
+                if (! empty($modules[$entry['module']])) {
                     $buffer[] = $modules[$entry['module']];
                 }
 
                 continue;
             }
 
-            if ($iterator) {
-                $iterator->next();
-
-                foreach ($iterator->resets() as $reset) {
-                    $buffer[] = '<div class="clearfix w-100 ' . $reset . '"></div>';
-                }
-
-                $buffer[] = sprintf(
-                    "\n" . '</div>' . "\n" . '<div class="%s">',
-                    $iterator->current()
-                );
+            if (! $iterator) {
+                continue;
             }
+
+            $iterator->next();
+
+            foreach ($iterator->resets() as $reset) {
+                $buffer[] = '<div class="clearfix w-100 ' . $reset . '"></div>';
+            }
+
+            $buffer[] = sprintf(
+                "\n" . '</div>' . "\n" . '<div class="%s">',
+                $iterator->current()
+            );
         }
 
         return $buffer;
@@ -168,36 +149,34 @@ final class GridModule extends AbstractModule
     /**
      * Get the module ids.
      *
-     * @param array $config Config.
+     * @param array<string,mixed> $config Config.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     protected function getModuleIds(array $config): array
     {
-        $moduleIds = array_filter(
+        return array_filter(
             array_map(
-                function ($item) {
+                static function ($item) {
                     return $item['module'];
                 },
                 array_filter(
                     $config,
-                    function ($item) {
-                        return $item['inactive'] == '';
+                    static function ($item) {
+                        return $item['inactive'] === '';
                     }
                 )
             ),
             'is_numeric'
         );
-
-        return $moduleIds;
     }
 
     /**
      * Precompile the modules.
      *
-     * @param array $moduleIds List of module ids.
+     * @param list<string|int> $moduleIds List of module ids.
      *
-     * @return array
+     * @return array<string|int,string>
      */
     protected function preCompileModules(array $moduleIds): array
     {

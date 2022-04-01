@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
@@ -18,7 +7,9 @@ namespace ContaoBootstrap\Grid\Listener\Dca;
 use Contao\ContentModel;
 use Contao\Database\Result;
 use Contao\DataContainer;
+use Doctrine\DBAL\DBALException;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
+
 use function in_array;
 use function time;
 
@@ -29,14 +20,10 @@ final class ContentFixParentRelationListener
 {
     /**
      * Repository manager.
-     *
-     * @var RepositoryManager
      */
     private RepositoryManager $repositoryManager;
 
     /**
-     * ContentFixParentRelationListener constructor.
-     *
      * @param RepositoryManager $repositoryManager Repository manager.
      */
     public function __construct(RepositoryManager $repositoryManager)
@@ -48,8 +35,6 @@ final class ContentFixParentRelationListener
      * Handle the onsubmit callback to automatically select closest parent id.
      *
      * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return void
      */
     public function onSubmit(DataContainer $dataContainer): void
     {
@@ -68,8 +53,6 @@ final class ContentFixParentRelationListener
      * Handle the oncopy callback.
      *
      * @param int|string $elementId Element id of copied element.
-     *
-     * @return void
      */
     public function onCopy($elementId): void
     {
@@ -86,13 +69,11 @@ final class ContentFixParentRelationListener
      *
      * @param ContentModel|Result $contentModel Content element.
      *
-     * @return void
-     *
-     * @throws \Doctrine\DBAL\DBALException When a database error occurs.
+     * @throws DBALException When a database error occurs.
      */
     private function fixContentElement($contentModel): void
     {
-        if (!in_array($contentModel->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
+        if (! in_array($contentModel->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
             return;
         }
 
@@ -105,10 +86,10 @@ final class ContentFixParentRelationListener
             ContentModel::getTable(),
             [
                 'bs_grid_parent' => $parentModel->id,
-                'tstamp'         => time()
+                'tstamp'         => time(),
             ],
             [
-                'id' => $contentModel->id
+                'id' => $contentModel->id,
             ]
         );
     }
@@ -117,10 +98,8 @@ final class ContentFixParentRelationListener
      * Load closest grid start model.
      *
      * @param ContentModel|Result $contentModel Content model.
-     *
-     * @return ContentModel|null
      */
-    private function loadClosestGridStartModel($contentModel) : ?ContentModel
+    private function loadClosestGridStartModel($contentModel): ?ContentModel
     {
         $constraints = ['.pid=?', '.type=?', '.sorting < ?'];
         $values      = [$contentModel->pid, 'bs_gridStart', $contentModel->sorting];

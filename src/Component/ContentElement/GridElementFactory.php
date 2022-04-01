@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\ContentElement;
@@ -26,17 +15,12 @@ use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
-/**
- * Class GridElementFactory
- *
- * @package ContaoBootstrap\Grid\Component\ContentElement
- */
 final class GridElementFactory
 {
     /**
      * Panel element types.
      *
-     * @var array
+     * @var array<string,string>
      */
     private array $gridElementTypes = [
         'bs_gridStart'     => GridStartElement::class,
@@ -46,49 +30,35 @@ final class GridElementFactory
 
     /**
      * Template engine.
-     *
-     * @var TemplateEngine
      */
     private TemplateEngine $templateEngine;
 
     /**
      * Color rotate.
-     *
-     * @var ColorRotate
      */
     private ColorRotate $colorRotate;
 
     /**
      * Request scope matcher.
-     *
-     * @var RequestScopeMatcher
      */
     private RequestScopeMatcher $scopeMatcher;
 
     /**
      * Translator.
-     *
-     * @var Translator
      */
     private Translator $translator;
 
     /**
      * Grid provider.
-     *
-     * @var GridProvider
      */
     private GridProvider $gridProvider;
 
     /**
      * Response tagger.
-     *
-     * @var ResponseTagger
      */
     private ResponseTagger $responseTagger;
 
     /**
-     * PanelElementFactory constructor.
-     *
      * @param TemplateEngine      $templateEngine The template engine.
      * @param Translator          $translator     Translator.
      * @param RequestScopeMatcher $scopeMatcher   Request scope matcher.
@@ -117,7 +87,7 @@ final class GridElementFactory
      */
     public function supports($model): bool
     {
-        if (!$model instanceof ContentModel && !($model instanceof Result)) {
+        if (! $model instanceof ContentModel && ! ($model instanceof Result)) {
             return false;
         }
 
@@ -131,7 +101,7 @@ final class GridElementFactory
      */
     public function create($model, string $column): Component
     {
-        if (!isset($this->gridElementTypes[$model->type])) {
+        if (! isset($this->gridElementTypes[$model->type])) {
             throw ComponentNotFound::forModel($model);
         }
 

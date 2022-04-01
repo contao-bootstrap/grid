@@ -3,11 +3,6 @@
 /**
  * Contao Bootstrap grid.
  *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
 
@@ -16,38 +11,33 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid;
 
 use ContaoBootstrap\Grid\Definition\Grid;
+use RuntimeException;
 
 /**
  * GridProvider is the main entry point to get grids or grid iterators.
- *
- * @package ContaoBootstrap\Grid
  */
 final class GridProvider
 {
     /**
      * Grid builder.
-     *
-     * @var GridBuilder
      */
     private GridBuilder $builder;
 
     /**
      * Map of created grids.
      *
-     * @var array
+     * @var array<int,Grid>
      */
     private array $grids = [];
 
     /**
      * Map of grid iterators.
      *
-     * @var array
+     * @var array<string,GridIterator>
      */
     private array $iterators = [];
 
     /**
-     * GridProvider constructor.
-     *
      * @param GridBuilder $builder The grid builder.
      */
     public function __construct(GridBuilder $builder)
@@ -60,13 +50,11 @@ final class GridProvider
      *
      * @param int $gridId Grid id.
      *
-     * @return Grid
-     *
-     * @throws \RuntimeException When grid could not be build.
+     * @throws RuntimeException When grid could not be build.
      */
     public function getGrid(int $gridId): Grid
     {
-        if (!isset($this->grids[$gridId])) {
+        if (! isset($this->grids[$gridId])) {
             $this->grids[$gridId] = $this->builder->build($gridId);
         }
 
@@ -79,13 +67,11 @@ final class GridProvider
      * @param string   $uniqueId Unique id to reference a grid iterator.
      * @param int|null $gridId   The grid id.
      *
-     * @return GridIterator
-     *
-     * @throws \RuntimeException When grid could not be build.
+     * @throws RuntimeException When grid could not be build.
      */
     public function getIterator(string $uniqueId, ?int $gridId = null): GridIterator
     {
-        if (!isset($this->iterators[$uniqueId])) {
+        if (! isset($this->iterators[$uniqueId])) {
             $grid     = $this->getGrid($gridId);
             $iterator = new GridIterator($grid);
 

@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component;
@@ -23,16 +12,12 @@ use ContaoBootstrap\Grid\GridProvider;
 use ContaoBootstrap\Grid\View\ComponentRenderHelper;
 
 /**
- * Trait ComponentTrait.
- *
  * @deprecated
  */
 trait ComponentTrait
 {
     /**
      * Get hte component render helper.
-     *
-     * @return ComponentRenderHelper
      */
     private function getHelper(): ComponentRenderHelper
     {
@@ -41,8 +26,6 @@ trait ComponentTrait
 
     /**
      * Get the grid provider.
-     *
-     * @return GridProvider
      */
     protected function getGridProvider(): GridProvider
     {
@@ -55,11 +38,9 @@ trait ComponentTrait
      * @param Model|null   $start    Start element.
      * @param GridIterator $iterator Iterator.
      *
-     * @return string
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    protected function renderBackendView($start, GridIterator $iterator = null): string
+    protected function renderBackendView($start, ?GridIterator $iterator = null): string
     {
         $template = new BackendTemplate('be_bs_grid');
 
@@ -68,7 +49,7 @@ trait ComponentTrait
             $template->color = $this->getHelper()->rotateColor('ce:' . $start->id);
         }
 
-        if (!$start) {
+        if (! $start) {
             $template->error = $GLOBALS['TL_LANG']['ERR']['bsGridParentMissing'];
         }
 
@@ -81,8 +62,6 @@ trait ComponentTrait
 
     /**
      * Check if we are in backend mode.
-     *
-     * @return bool
      */
     protected function isBackendRequest(): bool
     {
@@ -91,8 +70,6 @@ trait ComponentTrait
 
     /**
      * Get the iterator.
-     *
-     * @return GridIterator
      */
     abstract protected function getIterator(): ?GridIterator;
 }

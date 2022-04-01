@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\ContentElement;
@@ -27,51 +16,34 @@ use Netzmacht\Contao\Toolkit\View\Template\TemplateReference as ToolkitTemplateR
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
-/**
- * Class AbstractGridElement.
- *
- * @package ContaoBootstrap\Grid\Component\ContentElement
- */
 abstract class AbstractGridElement extends AbstractContentElement
 {
     /**
      * Request scope matcher.
-     *
-     * @var RequestScopeMatcher
      */
     private RequestScopeMatcher $scopeMatcher;
 
     /**
      * Color rotate.
-     *
-     * @var ColorRotate
      */
     private ColorRotate $colorRotate;
 
     /**
      * Translator.
-     *
-     * @var Translator
      */
     private Translator $translator;
 
     /**
      * The grid provider.
-     *
-     * @var GridProvider
      */
     private GridProvider $gridProvider;
 
     /**
      * Response tagger.
-     *
-     * @var ResponseTagger
      */
     protected ResponseTagger $responseTagger;
 
     /**
-     * AbstractGridElement constructor.
-     *
      * @param Model|Result        $model          Object model or result.
      * @param TemplateEngine      $templateEngine Template engine.
      * @param Translator          $translator     Translator.
@@ -106,11 +78,9 @@ abstract class AbstractGridElement extends AbstractContentElement
      * @param Model|null   $start    Start element.
      * @param GridIterator $iterator Iterator.
      *
-     * @return string
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    protected function renderBackendView($start, GridIterator $iterator = null): string
+    protected function renderBackendView($start, ?GridIterator $iterator = null): string
     {
         return $this->render(
             new ToolkitTemplateReference(
@@ -121,7 +91,9 @@ abstract class AbstractGridElement extends AbstractContentElement
             [
                 'color'   => $start ? $this->rotateColor('ce:' . $start->id) : null,
                 'name'    => $start ? $start->bs_grid_name : null,
-                'error'   => !$start ? $this->translator->trans('ERR.bsGridParentMissing', [], 'contao_default') : null,
+                'error'   => ! $start
+                    ? $this->translator->trans('ERR.bsGridParentMissing', [], 'contao_default')
+                    : null,
                 'classes' => $iterator ? $iterator->current() : null,
             ]
         );
@@ -129,8 +101,6 @@ abstract class AbstractGridElement extends AbstractContentElement
 
     /**
      * Check if we are in backend mode.
-     *
-     * @return bool
      */
     protected function isBackendRequest(): bool
     {
@@ -141,8 +111,6 @@ abstract class AbstractGridElement extends AbstractContentElement
      * Rotate the color for an identifier.
      *
      * @param string $identifier The color identifier.
-     *
-     * @return string
      */
     protected function rotateColor(string $identifier): string
     {
@@ -151,8 +119,6 @@ abstract class AbstractGridElement extends AbstractContentElement
 
     /**
      * Get the grid provider.
-     *
-     * @return GridProvider
      */
     protected function getGridProvider(): GridProvider
     {

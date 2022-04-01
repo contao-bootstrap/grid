@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
@@ -19,11 +8,9 @@ use Contao\Database\Result;
 use Contao\DataContainer;
 use Contao\Model;
 
-/**
- * Class AbstractWrapperDcaHelper.
- *
- * @package ContaoBootstrap\Grid\Dca
- */
+use function array_unshift;
+use function assert;
+
 abstract class AbstractWrapperDcaListener extends AbstractDcaListener
 {
     /**
@@ -36,13 +23,13 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      */
     public function generateColumns($value, $dataContainer)
     {
-        if (!$dataContainer->activeRecord) {
+        if (! $dataContainer->activeRecord) {
             return null;
         }
 
-        /** @var Model|Result $current */
         $current = $dataContainer->activeRecord;
-        if (!$dataContainer->activeRecord) {
+        assert($current instanceof Model || $current instanceof Result);
+        if (! $dataContainer->activeRecord) {
             return null;
         }
 
@@ -68,13 +55,11 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      * @param int   $value   Number of separators being created.
      * @param Model $current Current model.
      * @param int   $sorting Current sorting value.
-     *
-     * @return int
      */
     protected function createSeparators(int $value, $current, int $sorting): int
     {
         for ($count = 1; $count <= $value; $count++) {
-            $sorting = ($sorting + 8);
+            $sorting += 8;
             $this->createGridElement($current, 'bs_gridSeparator', $sorting);
         }
 
@@ -86,14 +71,12 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      *
      * @param Model[] $elements    Model collection.
      * @param int     $lastSorting Last sorting value.
-     *
-     * @return int
      */
     protected function updateSortings(array $elements, int $lastSorting): int
     {
         foreach ($elements as $element) {
             if ($lastSorting > $element->sorting) {
-                $element->sorting = ($lastSorting + 8);
+                $element->sorting = $lastSorting + 8;
                 $element->save();
             }
 
@@ -108,12 +91,10 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      *
      * @param Model $current Model.
      * @param int   $sorting Last sorting value.
-     *
-     * @return Model
      */
     protected function createStopElement($current, int $sorting): Model
     {
-        $sorting = ($sorting + 8);
+        $sorting += 8;
 
         return $this->createGridElement($current, 'bs_gridStop', $sorting);
     }
@@ -124,8 +105,6 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      * @param Model  $current Current content model.
      * @param string $type    Type of the content model.
      * @param int    $sorting The sorting value.
-     *
-     * @return Model
      */
     abstract protected function createGridElement($current, string $type, int &$sorting): Model;
 
@@ -142,8 +121,6 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      * Get related stop element.
      *
      * @param Model $current Current element.
-     *
-     * @return Model
      */
     abstract protected function getStopElement($current): Model;
 }

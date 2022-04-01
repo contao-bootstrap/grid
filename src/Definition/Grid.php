@@ -1,25 +1,17 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Definition;
 
-/**
- * Class Grid.
- *
- * @package ContaoBootstrap\Grid\Definition
- */
+use function array_key_exists;
+use function array_unique;
+use function array_values;
+use function count;
+use function explode;
+use function implode;
+use function in_array;
+
 class Grid
 {
     /**
@@ -31,29 +23,23 @@ class Grid
 
     /**
      * Grid alignment.
-     *
-     * @var string
      */
-    private $align;
+    private string $align;
 
     /**
      * Grid justify settings.
-     *
-     * @var string
      */
-    private $justify;
+    private string $justify;
 
     /**
      * Row classes.
      *
-     * @var array
+     * @var list<string>
      */
     private array $rowClasses = ['row'];
 
     /**
      * Show gutters.
-     *
-     * @var bool
      */
     private bool $noGutters = false;
 
@@ -62,12 +48,10 @@ class Grid
      *
      * @param Column|null $column New column.
      * @param string      $size   Column size.
-     *
-     * @return Column
      */
-    public function addColumn(Column $column = null, string $size = ''): Column
+    public function addColumn(?Column $column = null, string $size = ''): Column
     {
-        if (!$column) {
+        if (! $column) {
             $column = new Column();
         }
 
@@ -116,9 +100,11 @@ class Grid
         $classes = explode(' ', $class);
 
         foreach ($classes as $class) {
-            if (!in_array($class, $this->rowClasses)) {
-                $this->rowClasses[] = $class;
+            if (in_array($class, $this->rowClasses)) {
+                continue;
             }
+
+            $this->rowClasses[] = $class;
         }
 
         return $this;
@@ -129,7 +115,7 @@ class Grid
      *
      * @param bool $flat If true a string is returned.
      *
-     * @return array|string
+     * @return list<string>|string
      */
     public function buildRow(bool $flat = false)
     {
@@ -160,7 +146,7 @@ class Grid
      * @param int  $index Current index.
      * @param bool $flat  If true a string is returned.
      *
-     * @return array|string
+     * @return list<string>|string
      */
     public function buildColumn(int $index, bool $flat = false)
     {
@@ -168,12 +154,14 @@ class Grid
         foreach ($this->columns as $size => $columns) {
             $column = $this->getColumnByIndex($columns, $index);
 
-            if ($column) {
-                $classes = $column->build($classes, $size);
+            if (! $column) {
+                continue;
             }
+
+            $classes = $column->build($classes, $size);
         }
 
-        $classes = array_unique($classes);
+        $classes = array_values(array_unique($classes));
 
         if ($flat) {
             return implode(' ', $classes);
@@ -187,7 +175,7 @@ class Grid
      *
      * @param int $index Column index.
      *
-     * @return array
+     * @return list<string>
      */
     public function buildResets(int $index): array
     {
@@ -196,9 +184,11 @@ class Grid
         foreach ($this->columns as $size => $columns) {
             $column = $this->getColumnByIndex($columns, $index);
 
-            if ($column) {
-                $resets = $column->buildReset($resets, $size);
+            if (! $column) {
+                continue;
             }
+
+            $resets = $column->buildReset($resets, $size);
         }
 
         return $resets;
@@ -209,15 +199,13 @@ class Grid
      *
      * @param Column[] $columns Column.
      * @param int      $index   Column index.
-     *
-     * @return null|Column
      */
-    private function getColumnByIndex(array $columns, int $index):? Column
+    private function getColumnByIndex(array $columns, int $index): ?Column
     {
         $currentIndex = $index;
 
-        if (!array_key_exists($currentIndex, $columns) && $currentIndex > 0) {
-            $currentIndex = ($currentIndex % count($columns));
+        if (! array_key_exists($currentIndex, $columns) && $currentIndex > 0) {
+            $currentIndex %= count($columns);
         }
 
         if (array_key_exists($currentIndex, $columns)) {

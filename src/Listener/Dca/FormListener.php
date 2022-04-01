@@ -1,15 +1,6 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
+declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
@@ -19,10 +10,13 @@ use Contao\FormFieldModel;
 use Contao\FormModel;
 use Contao\Model;
 
+use function array_unshift;
+use function assert;
+use function sprintf;
+use function time;
+
 /**
  * Data container helper class for form.
- *
- * @package ContaoBootstrap\Grid\Dca
  */
 class FormListener extends AbstractWrapperDcaListener
 {
@@ -38,12 +32,12 @@ class FormListener extends AbstractWrapperDcaListener
      */
     public function generateColumns($value, $dataContainer)
     {
-        if (!$dataContainer->activeRecord) {
+        if (! $dataContainer->activeRecord) {
             return null;
         }
 
-        /** @var FormModel|Result $current */
         $current = $dataContainer->activeRecord;
+        assert($current instanceof FormModel || $current instanceof Result);
 
         if ($value && $dataContainer->activeRecord) {
             $stopElement  = $this->getStopElement($current);
@@ -59,7 +53,6 @@ class FormListener extends AbstractWrapperDcaListener
         return null;
     }
 
-
     /**
      * Get the next content elements.
      *
@@ -73,7 +66,7 @@ class FormListener extends AbstractWrapperDcaListener
             [
                 'tl_form_field.pid=?',
                 '(tl_form_field.type != ? AND tl_form_field.bs_grid_parent = ?)',
-                'tl_form_field.sorting > ?'
+                'tl_form_field.sorting > ?',
             ],
             [$current->pid, 'bs_gridStop', $current->id, $current->sorting],
             ['order' => 'tl_form_field.sorting ASC']
@@ -99,7 +92,6 @@ class FormListener extends AbstractWrapperDcaListener
             ['tl_form_field.type=?', 'tl_form_field.bs_grid_parent=?'],
             ['bs_gridStop', $current->id]
         );
-
 
         if ($stopElement) {
             return $stopElement;
@@ -137,7 +129,7 @@ class FormListener extends AbstractWrapperDcaListener
     /**
      * Get all grid parent options.
      *
-     * @return array
+     * @return array<int|string,string>
      */
     public function getGridParentOptions(): array
     {

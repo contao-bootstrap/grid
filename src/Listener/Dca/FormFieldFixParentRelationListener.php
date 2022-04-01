@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
@@ -19,6 +8,7 @@ use Contao\Database\Result;
 use Contao\DataContainer;
 use Contao\FormFieldModel;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
+
 use function in_array;
 use function time;
 
@@ -29,14 +19,10 @@ final class FormFieldFixParentRelationListener
 {
     /**
      * Repository manager.
-     *
-     * @var RepositoryManager
      */
     private RepositoryManager $repositoryManager;
 
     /**
-     * FormFieldFixParentRelationListener constructor.
-     *
      * @param RepositoryManager $repositoryManager Repository manager.
      */
     public function __construct(RepositoryManager $repositoryManager)
@@ -48,8 +34,6 @@ final class FormFieldFixParentRelationListener
      * Handle the onsubmit callback to automatically select closest parent id.
      *
      * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return void
      */
     public function onSubmit(DataContainer $dataContainer): void
     {
@@ -68,8 +52,6 @@ final class FormFieldFixParentRelationListener
      * Handle the oncopy callback.
      *
      * @param int|string $formFieldId Element id of copied element.
-     *
-     * @return void
      */
     public function onCopy($formFieldId): void
     {
@@ -88,12 +70,10 @@ final class FormFieldFixParentRelationListener
      * Fix a relation of a form field.
      *
      * @param FormFieldModel|Result $formFieldModel The form field.
-     *
-     * @return void
      */
     private function fixFormField($formFieldModel): void
     {
-        if (!in_array($formFieldModel->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
+        if (! in_array($formFieldModel->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
             return;
         }
 
@@ -106,10 +86,10 @@ final class FormFieldFixParentRelationListener
             FormFieldModel::getTable(),
             [
                 'bs_grid_parent' => $parentModel->id,
-                'tstamp'         => time()
+                'tstamp'         => time(),
             ],
             [
-                'id' => $formFieldModel->id
+                'id' => $formFieldModel->id,
             ]
         );
     }
@@ -118,10 +98,8 @@ final class FormFieldFixParentRelationListener
      * Load the closest grid start form field.
      *
      * @param FormFieldModel|Result $formFieldModel The form field model.
-     *
-     * @return FormFieldModel|null
      */
-    private function loadGridStartFormField($formFieldModel) : ?FormFieldModel
+    private function loadGridStartFormField($formFieldModel): ?FormFieldModel
     {
         $constraints = ['.pid=?', '.type=?', '.sorting < ?'];
         $values      = [$formFieldModel->pid, 'bs_gridStart', $formFieldModel->sorting];

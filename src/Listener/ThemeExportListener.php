@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener;
@@ -21,21 +10,16 @@ use Contao\ZipWriter;
 use ContaoBootstrap\Grid\Model\GridModel;
 use DOMDocument;
 
-/**
- * Class ThemeExportListener.
- */
+use function assert;
+
 class ThemeExportListener extends Theme
 {
     /**
      * Contao Framework.
-     *
-     * @var ContaoFramework
      */
     private ContaoFramework $framework;
 
     /**
-     * ThemeExportListener constructor.
-     *
      * @param ContaoFramework $framework Contao framework.
      */
     public function __construct(ContaoFramework $framework)
@@ -52,8 +36,6 @@ class ThemeExportListener extends Theme
      * @param ZipWriter   $archive Zip archive.
      * @param int|string  $themeId Theme id.
      *
-     * @return void
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function onExportTheme(DOMDocument $xml, ZipWriter $archive, $themeId): void
@@ -65,14 +47,16 @@ class ThemeExportListener extends Theme
         $tables = $xml->getElementsByTagName('tables')->item(0);
         $table  = $tables->appendChild($table);
 
-        /** @var GridModel $adapter */
-        $adapter    = $this->framework->getAdapter(GridModel::class);
+        $adapter = $this->framework->getAdapter(GridModel::class);
+        assert($adapter instanceof GridModel);
         $collection = $adapter->findBy('pid', $themeId);
 
-        if ($collection) {
-            foreach ($collection as $model) {
-                $this->addDataRow($xml, $table, $model->row());
-            }
+        if (! $collection) {
+            return;
+        }
+
+        foreach ($collection as $model) {
+            $this->addDataRow($xml, $table, $model->row());
         }
     }
 }

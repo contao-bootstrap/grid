@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\FormField;
@@ -18,24 +7,14 @@ namespace ContaoBootstrap\Grid\Component\FormField;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 
-/**
- * Class GridFormField.
- *
- * @package ContaoBootstrap\Grid\Component
- */
 class GridStartFormField extends AbstractFormField
 {
     /**
      * Template name.
-     *
-     * @var string
      */
-    protected $strTemplate = 'form_bs_gridStart';
+    protected string $strTemplate = 'form_bs_gridStart';
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function getIterator():? GridIterator
+    protected function getIterator(): ?GridIterator
     {
         try {
             $provider = $this->getGridProvider();

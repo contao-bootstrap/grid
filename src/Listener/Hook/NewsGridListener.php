@@ -1,41 +1,24 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Hook;
 
-use Contao\Template;
 use Contao\ModuleNews;
+use Contao\Template;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridProvider;
+
 use function strpos;
 
-/**
- * Class NewsGridListener
- */
 final class NewsGridListener
 {
     /**
      * Grid provider.
-     *
-     * @var GridProvider
      */
     private GridProvider $gridProvider;
 
     /**
-     * NewsGridListener constructor.
-     *
      * @param GridProvider $gridProvider Grid provider.
      */
     public function __construct(GridProvider $gridProvider)
@@ -46,11 +29,9 @@ final class NewsGridListener
     /**
      * Parse the news article.
      *
-     * @param Template   $template    The template.
-     * @param array      $newsArticle The news article.
-     * @param ModuleNews $module      The news module.
-     *
-     * @return void
+     * @param Template            $template    The template.
+     * @param array<string,mixed> $newsArticle The news article.
+     * @param ModuleNews          $module      The news module.
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

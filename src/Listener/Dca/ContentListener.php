@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
@@ -28,24 +17,22 @@ use Contao\Model;
 use ContaoBootstrap\Core\Environment;
 use Doctrine\DBAL\Connection;
 
+use function assert;
+use function sprintf;
+use function time;
+
 /**
  * ContentDataContainer helper class.
- *
- * @package ContaoBootstrap\Grid\Dca
  */
 final class ContentListener extends AbstractWrapperDcaListener
 {
     /**
      * Database connection.
-     *
-     * @var Connection
      */
     private Connection $connection;
 
     /**
      * Contao framework.
-     *
-     * @var ContaoFramework
      */
     private ContaoFramework $framework;
 
@@ -58,8 +45,6 @@ final class ContentListener extends AbstractWrapperDcaListener
 
     /**
      * Image sizes.
-     *
-     * @var ImageSizes
      */
     private ImageSizes $imageSizes;
 
@@ -71,8 +56,6 @@ final class ContentListener extends AbstractWrapperDcaListener
     private $user;
 
     /**
-     * ContentDataContainer constructor.
-     *
      * @param Environment         $environment Bootstrap environment.
      * @param Connection          $connection  Database connection.
      * @param ContaoFramework     $framework   Contao framework.
@@ -98,21 +81,19 @@ final class ContentListener extends AbstractWrapperDcaListener
     /**
      * Initialize the dca.
      *
-     * @return void
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function initializeDca(): void
     {
-        /** @var Input $input */
         $input = $this->framework->getAdapter(Input::class);
+        assert($input instanceof Input);
 
         if ($input->get('act') !== 'edit') {
             return;
         }
 
         $model = $this->repository->findByPk(Input::get('id'));
-        if (!$model || $model->type !== 'bs_grid_gallery') {
+        if (! $model || $model->type !== 'bs_grid_gallery') {
             return;
         }
 
@@ -127,7 +108,7 @@ final class ContentListener extends AbstractWrapperDcaListener
     /**
      * Get all grid parent options.
      *
-     * @return array
+     * @return array<int|string,string>
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -160,12 +141,12 @@ final class ContentListener extends AbstractWrapperDcaListener
     /**
      * Get all gallery templates.
      *
-     * @return array
+     * @return list<string>|array<string,list<string>>
      */
-    public function getGalleryTemplates()
+    public function getGalleryTemplates(): array
     {
-        /** @var Controller $adapter */
         $adapter = $this->framework->getAdapter(Controller::class);
+        assert($adapter instanceof Controller);
 
         return $adapter->getTemplateGroup('bs_gallery_');
     }
@@ -195,7 +176,7 @@ final class ContentListener extends AbstractWrapperDcaListener
     /**
      * Get the image sizes.
      *
-     * @return array
+     * @return string[][]
      */
     public function getImageSizes(): array
     {
@@ -208,8 +189,6 @@ final class ContentListener extends AbstractWrapperDcaListener
      * @param ContentModel $current Current content model.
      * @param string       $type    Type of the content model.
      * @param int          $sorting The sorting value.
-     *
-     * @return Model
      */
     protected function createGridElement($current, string $type, int &$sorting): Model
     {

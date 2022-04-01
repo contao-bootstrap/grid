@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\ContentElement;
@@ -18,23 +7,13 @@ namespace ContaoBootstrap\Grid\Component\ContentElement;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 
-/**
- * Class GridStartElement.
- *
- * @package ContaoBootstrap\Grid\Component\ContentElement
- */
 final class GridStartElement extends AbstractGridElement
 {
     /**
      * Template name.
-     *
-     * @var string
      */
-    protected $templateName = 'ce_bs_gridStart';
+    protected string $templateName = 'ce_bs_gridStart';
 
-    /**
-     * {@inheritdoc}
-     */
     public function generate(): string
     {
         if ($this->isBackendRequest()) {
@@ -62,10 +41,7 @@ final class GridStartElement extends AbstractGridElement
         return $data;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function getIterator():? GridIterator
+    protected function getIterator(): ?GridIterator
     {
         try {
             $provider = $this->getGridProvider();

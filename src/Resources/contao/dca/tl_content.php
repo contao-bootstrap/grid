@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 use ContaoBootstrap\Grid\Listener\Dca\ContentFixParentRelationListener;
@@ -26,12 +15,12 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = [
 
 $GLOBALS['TL_DCA']['tl_content']['config']['oncopy_callback'][] = [
     ContentFixParentRelationListener::class,
-    'onCopy'
+    'onCopy',
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['config']['onsubmit_callback'][] = [
     ContentFixParentRelationListener::class,
-    'onSubmit'
+    'onSubmit',
 ];
 
 /*
@@ -186,7 +175,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
                     'chosen'             => true,
                     'class'           => 'tl_imageSize_1',
                 ],
-            ]
+            ],
         ],
     ],
     'sql'           => 'blob NULL',
@@ -194,5 +183,5 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['multiSRC']['load_callback'][] = [
     'contao_bootstrap.grid.listeners.dca.content',
-    'setMultiSrcFlags'
+    'setMultiSrcFlags',
 ];

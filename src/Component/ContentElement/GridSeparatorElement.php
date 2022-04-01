@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\ContentElement;
@@ -19,23 +8,13 @@ use Contao\ContentModel;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 
-/**
- * Class GridSeparatorElement.
- *
- * @package ContaoBootstrap\Grid\Component\ContentElement
- */
 final class GridSeparatorElement extends AbstractGridElement
 {
     /**
      * Template name.
-     *
-     * @var string
      */
-    protected $templateName = 'ce_bs_gridSeparator';
+    protected string $templateName = 'ce_bs_gridSeparator';
 
-    /**
-     * {@inheritdoc}
-     */
     public function generate(): string
     {
         if ($this->isBackendRequest()) {
@@ -71,10 +50,7 @@ final class GridSeparatorElement extends AbstractGridElement
         return $data;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function getIterator():? GridIterator
+    protected function getIterator(): ?GridIterator
     {
         $provider = $this->getGridProvider();
         $parent   = $this->getParent();
@@ -96,10 +72,8 @@ final class GridSeparatorElement extends AbstractGridElement
 
     /**
      * Get the parent model.
-     *
-     * @return ContentModel|null
      */
-    protected function getParent():? ContentModel
+    protected function getParent(): ?ContentModel
     {
         return ContentModel::findByPk($this->get('bs_grid_parent'));
     }

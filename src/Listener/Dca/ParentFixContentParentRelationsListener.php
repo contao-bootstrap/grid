@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
@@ -20,9 +9,11 @@ use Contao\CoreBundle\Framework\Adapter;
 use Contao\DataContainer;
 use Contao\Model\Collection;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DBALException;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Manager as DcaManager;
+
 use function array_unique;
 use function time;
 
@@ -33,36 +24,26 @@ final class ParentFixContentParentRelationsListener
 {
     /**
      * Database connection.
-     *
-     * @var Connection
      */
 
     private Connection $connection;
 
     /**
      * Data container manager.
-     *
-     * @var DcaManager
      */
     private DcaManager $dcaManager;
 
     /**
      * Repository manager.
-     *
-     * @var RepositoryManager
      */
     private RepositoryManager $repositoryManager;
 
     /**
      * Input adapter.
-     *
-     * @var Adapter
      */
     private Adapter $inputAdapter;
 
     /**
-     * FixContentParentRelationsListener constructor.
-     *
      * @param Connection        $connection        Database connection.
      * @param DcaManager        $dcaManager        Data container manager.
      * @param RepositoryManager $repositoryManager Repository manager.
@@ -85,8 +66,6 @@ final class ParentFixContentParentRelationsListener
      *
      * @param string|int    $insertId      Id of new created record.
      * @param DataContainer $dataContainer Data container.
-     *
-     * @return void
      */
     public function onCopy($insertId, DataContainer $dataContainer): void
     {
@@ -101,9 +80,7 @@ final class ParentFixContentParentRelationsListener
      * @param int    $recordId  The id of the prent record.
      * @param string $tableName The table name of the parent record.
      *
-     * @return void
-     *
-     * @throws \Doctrine\DBAL\DBALException When an database error occurs.
+     * @throws DBALException When an database error occurs.
      */
     private function fixChildRecords(int $recordId, string $tableName): void
     {
@@ -114,9 +91,11 @@ final class ParentFixContentParentRelationsListener
             ->getSchemaManager()
             ->listTableColumns($definition->getName());
 
-        if (!$definition->has(['config', 'ptable'])
+        if (
+            ! $definition->has(['config', 'ptable'])
             && $this->inputAdapter->get('childs')
-            && isset($columns['pid'], $columns['sorting'])) {
+            && isset($columns['pid'], $columns['sorting'])
+        ) {
             $childTables[] = $definition->getName();
         }
 
@@ -145,9 +124,7 @@ final class ParentFixContentParentRelationsListener
      * @param string $parentTable The parent table.
      * @param int    $parentId    The parent id.
      *
-     * @return void
-     *
-     * @throws \Doctrine\DBAL\DBALException When an database error occurs.
+     * @throws DBALException When an database error occurs.
      */
     private function fixParentRelations(string $parentTable, int $parentId): void
     {
@@ -213,9 +190,9 @@ final class ParentFixContentParentRelationsListener
      * @param Definition $definition The parent definition.
      * @param string     $childTable The child table.
      *
-     * @return array
+     * @return list<string|int>
      */
-    private function fetchChildRecordIds(int $recordId, Definition $definition, string $childTable) : array
+    private function fetchChildRecordIds(int $recordId, Definition $definition, string $childTable): array
     {
         $childDefinition = $this->dcaManager->getDefinition($childTable);
         $queryBuilder    = $this->connection->createQueryBuilder()

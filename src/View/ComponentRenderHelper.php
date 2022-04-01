@@ -3,11 +3,6 @@
 /**
  * Contao Bootstrap grid.
  *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
 
@@ -20,36 +15,26 @@ use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 
 /**
- * Class ComponentRenderHelper
- *
  * @deprecated
  */
 final class ComponentRenderHelper
 {
     /**
      * Grid provider.
-     *
-     * @var GridProvider
      */
     private GridProvider $gridProvider;
 
     /**
      * Request scope matcher.
-     *
-     * @var RequestScopeMatcher
      */
     private RequestScopeMatcher $scopeMatcher;
 
     /**
      * Color rotate helper.
-     *
-     * @var ColorRotate
      */
     private ColorRotate $colorRotate;
 
     /**
-     * ComponentRenderHelper constructor.
-     *
      * @param GridProvider        $gridProvider The grid provider.
      * @param RequestScopeMatcher $scopeMatcher The request scope matcher.
      * @param ColorRotate         $colorRotate  The color rotate.
@@ -63,8 +48,6 @@ final class ComponentRenderHelper
 
     /**
      * Get gridProvider.
-     *
-     * @return GridProvider
      */
     public function getGridProvider(): GridProvider
     {
@@ -73,8 +56,6 @@ final class ComponentRenderHelper
 
     /**
      * Check if current request is a backend request.
-     *
-     * @return bool
      */
     public function isBackendRequest(): bool
     {
@@ -85,8 +66,6 @@ final class ComponentRenderHelper
      * Rotate the color for an identifier.
      *
      * @param string $identifier The color identifier.
-     *
-     * @return string
      */
     public function rotateColor(string $identifier): string
     {

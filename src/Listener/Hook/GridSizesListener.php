@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Hook;
@@ -20,7 +9,11 @@ use Contao\ThemeModel;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Grid\Model\GridModel;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DriverManager;
+
+use function array_merge;
+use function array_unique;
+use function array_values;
+use function sprintf;
 
 /**
  * Class GridSizesListener initializes all dynamic grid size columns
@@ -32,21 +25,15 @@ final class GridSizesListener
 {
     /**
      * Database connection.
-     *
-     * @var Connection
      */
     private Connection $connection;
 
     /**
      * Contao bootstrap environment.
-     *
-     * @var Environment
      */
     private Environment $environment;
 
     /**
-     * GridSizesListener constructor.
-     *
      * @param Connection  $connection  Database connection.
      * @param Environment $environment Contao bootstrap environment.
      */
@@ -60,8 +47,6 @@ final class GridSizesListener
      * Initialize all grid sizes.
      *
      * @param string $dataContainer The data container name.
-     *
-     * @return void
      */
     public function initializeSizes(string $dataContainer): void
     {
@@ -70,7 +55,7 @@ final class GridSizesListener
         }
 
         $schemaManager = $this->connection->getSchemaManager();
-        if ($schemaManager === null || !$schemaManager->tablesExist([GridModel::getTable(), 'tl_theme'])) {
+        if ($schemaManager === null || ! $schemaManager->tablesExist([GridModel::getTable(), 'tl_theme'])) {
             return;
         }
 
@@ -84,8 +69,6 @@ final class GridSizesListener
      * Create the dca field definition.
      *
      * @param string $size The grid size.
-     *
-     * @return void
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -159,9 +142,7 @@ final class GridSizesListener
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'text',
-                        'eval'      => [
-                            'style' => 'width: 160px',
-                        ],
+                        'eval'      => ['style' => 'width: 160px'],
                     ],
                     'reset'  => [
                         'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
@@ -184,13 +165,11 @@ final class GridSizesListener
      * Create the database field for the grid size if not exists.
      *
      * @param string $size The grid size.
-     *
-     * @return void
      */
     public function createDatabaseField(string $size): void
     {
         $schemaManager = $this->connection->getSchemaManager();
-        if (!$schemaManager->tablesExist(GridModel::getTable())) {
+        if (! $schemaManager->tablesExist(GridModel::getTable())) {
             return;
         }
 
@@ -199,13 +178,15 @@ final class GridSizesListener
             return;
         }
 
-        $this->connection->executeStatement(sprintf('ALTER TABLE %s ADD %sSize BLOB DEFAULT NULL', GridModel::getTable(), $size));
+        $this->connection->executeStatement(
+            sprintf('ALTER TABLE %s ADD %sSize BLOB DEFAULT NULL', GridModel::getTable(), $size)
+        );
     }
 
     /**
      * Get all sizes.
      *
-     * @return array
+     * @return list<string>
      */
     public function getSizes(): array
     {
