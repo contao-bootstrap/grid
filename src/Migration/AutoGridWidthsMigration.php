@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Migration;
 
+use Contao\CoreBundle\Migration\AbstractMigration;
+use Contao\CoreBundle\Migration\MigrationResult;
 use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
 
@@ -14,7 +16,7 @@ use function time;
 /**
  * Migrate the auto grid widths to equal.
  */
-final class MigrateAutoGridWidths
+final class AutoGridWidthsMigration extends AbstractMigration
 {
     private const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'];
 
@@ -29,6 +31,39 @@ final class MigrateAutoGridWidths
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
+    }
+
+    public function shouldRun(): bool
+    {
+        $statement = $this->connection->executeQuery('SELECT * FROM tl_bs_grid');
+
+        while ($row = $statement->fetchAssociative()) {
+            foreach (self::SIZES as $size) {
+                $size .= 'Size';
+                if (! isset($row[$size])) {
+                    continue;
+                }
+
+                foreach (StringUtil::deserialize($row[$size], true) as $column) {
+                    if ($column['width'] === 'auto') {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public function run(): MigrationResult
+    {
+        $statement = $this->connection->executeQuery('SELECT * FROM tl_bs_grid');
+
+        while ($row = $statement->fetchAssociative()) {
+            $this->migrateRow($row);
+        }
+
+        return $this->createResult(true);
     }
 
     /**
