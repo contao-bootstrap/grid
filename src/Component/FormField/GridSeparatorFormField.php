@@ -9,7 +9,8 @@ class GridSeparatorFormField extends AbstractRelatedFormField
     /**
      * Template name.
      */
-    protected string $strTemplate = 'form_bs_gridSeparator';
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
+    protected $strTemplate = 'form_bs_gridSeparator';
 
     /**
      * {@inheritdoc}

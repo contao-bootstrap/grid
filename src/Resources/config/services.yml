@@ -9,19 +9,35 @@ services:
     arguments:
       - '@contao_bootstrap.grid.grid_builder'
 
-  ContaoBootstrap\Grid\Component\ContentElement\GridElementFactory:
+  ContaoBootstrap\Grid\Component\ContentElement\GridStartElementController:
     arguments:
-      - "@templating"
-      - "@translator"
-      - "@netzmacht.contao_toolkit.routing.scope_matcher"
-      - "@contao_bootstrap.grid.grid_provider"
-      - "@contao_bootstrap.core.helper.color_rotate"
+      - '@netzmacht.contao_toolkit.template_renderer'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
       - '@netzmacht.contao_toolkit.response_tagger'
-    tags:
-      - { name: 'netzmacht.contao_toolkit.component.content_element_factory' }
-      - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'bs_grid', alias: 'bs_gridStart' }
-      - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'bs_grid', alias: 'bs_gridSeparator' }
-      - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'bs_grid', alias: 'bs_gridStop' }
+      - '@contao.security.token_checker'
+      - '@contao_bootstrap.grid.grid_provider'
+      - '@contao_bootstrap.core.helper.color_rotate'
+      - '@translator'
+
+  ContaoBootstrap\Grid\Component\ContentElement\GridSeparatorElementController:
+    arguments:
+      - '@netzmacht.contao_toolkit.template_renderer'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '@netzmacht.contao_toolkit.response_tagger'
+      - '@contao.security.token_checker'
+      - '@contao_bootstrap.grid.grid_provider'
+      - '@contao_bootstrap.core.helper.color_rotate'
+      - '@translator'
+
+  ContaoBootstrap\Grid\Component\ContentElement\GridStopElementController:
+    arguments:
+      - '@netzmacht.contao_toolkit.template_renderer'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '@netzmacht.contao_toolkit.response_tagger'
+      - '@contao.security.token_checker'
+      - '@contao_bootstrap.grid.grid_provider'
+      - '@contao_bootstrap.core.helper.color_rotate'
+      - '@translator'
 
   ContaoBootstrap\Grid\Component\ContentElement\GalleryFactory:
     arguments:

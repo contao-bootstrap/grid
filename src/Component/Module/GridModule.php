@@ -27,6 +27,7 @@ final class GridModule extends AbstractModule
     /**
      * Grid provider.
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
     private GridProvider $gridProvider;
 
     /**
@@ -37,7 +38,7 @@ final class GridModule extends AbstractModule
     /**
      * Template name.
      */
-    protected string $templateName = 'mod_bs_grid';
+    protected $templateName = 'mod_bs_grid';
 
     /**
      * @param Model|Result   $model          Module configuration as model or result.
