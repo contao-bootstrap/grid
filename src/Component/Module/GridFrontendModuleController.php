@@ -5,74 +5,53 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Component\Module;
 
 use Contao\Controller;
-use Contao\Database\Result;
+use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\Model;
 use Contao\ModuleModel;
 use Contao\StringUtil;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
-use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
+use Netzmacht\Contao\Toolkit\Controller\FrontendModule\AbstractFrontendModuleController;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
-use Symfony\Component\Templating\EngineInterface as TemplateEngine;
-use Symfony\Contracts\Translation\TranslatorInterface as Translator;
+use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
+use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_filter;
 use function array_map;
+use function assert;
 use function is_numeric;
 use function sprintf;
 
-final class GridModule extends AbstractModule
+/** @FrontendModule("bs_grid", category="miscellaneous") */
+final class GridFrontendModuleController extends AbstractFrontendModuleController
 {
-    /**
-     * Grid provider.
-     */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
     private GridProvider $gridProvider;
 
-    /**
-     * Response Tagger.
-     */
-    private ResponseTagger $responseTagger;
-
-    /**
-     * Template name.
-     */
-    protected $templateName = 'mod_bs_grid';
-
-    /**
-     * @param Model|Result   $model          Module configuration as model or result.
-     * @param TemplateEngine $templateEngine The template engine.
-     * @param Translator     $translator     The translator.
-     * @param GridProvider   $gridProvider   The grid provider.
-     * @param ResponseTagger $responseTagger Response tagger.
-     * @param string         $column         Name of the column or section the module is rendered in.
-     */
     public function __construct(
-        $model,
-        TemplateEngine $templateEngine,
-        Translator $translator,
-        GridProvider $gridProvider,
+        TemplateRenderer $templateRenderer,
+        RequestScopeMatcher $scopeMatcher,
         ResponseTagger $responseTagger,
-        string $column = 'main'
+        RouterInterface $router,
+        TranslatorInterface $translator,
+        GridProvider $gridProvider
     ) {
-        parent::__construct($model, $templateEngine, $translator, $column);
+        parent::__construct($templateRenderer, $scopeMatcher, $responseTagger, $router, $translator);
 
-        $this->gridProvider   = $gridProvider;
-        $this->responseTagger = $responseTagger;
+        $this->gridProvider = $gridProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function prepareTemplateData(array $data): array
+    protected function prepareTemplateData(array $data, Request $request, Model $model): array
     {
-        $data = parent::prepareTemplateData($data);
+        assert($model instanceof ModuleModel);
 
-        $config    = StringUtil::deserialize($this->get('bs_gridModules'), true);
+        $config    = StringUtil::deserialize($model->bs_gridModules, true);
         $moduleIds = $this->getModuleIds($config);
-        $modules   = $this->preCompileModules($moduleIds);
-        $iterator  = $this->getGridIterator();
+        $modules   = $this->preCompileModules($model, $moduleIds);
+        $iterator  = $this->getGridIterator($model);
 
         if ($iterator) {
             $iterator->rewind();
@@ -89,11 +68,11 @@ final class GridModule extends AbstractModule
     /**
      * Get the grid iterator.
      */
-    protected function getGridIterator(): ?GridIterator
+    protected function getGridIterator(ModuleModel $model): ?GridIterator
     {
         try {
-            $iterator = $this->gridProvider->getIterator('mod:' . $this->get('id'), (int) $this->get('bs_grid'));
-            $this->responseTagger->addTags(['contao.db.tl_bs_grid.' . $this->get('bs_grid')]);
+            $iterator = $this->gridProvider->getIterator('mod:' . $model->id, (int) $model->bs_grid);
+            $this->tagResponse('contao.db.tl_bs_grid.' . $model->bs_grid);
 
             return $iterator;
         } catch (GridNotFound $e) {
@@ -179,14 +158,14 @@ final class GridModule extends AbstractModule
      *
      * @return array<string|int,string>
      */
-    protected function preCompileModules(array $moduleIds): array
+    protected function preCompileModules(ModuleModel $model, array $moduleIds): array
     {
         $collection = ModuleModel::findMultipleByIds($moduleIds);
         $modules    = [];
 
         if ($collection) {
             foreach ($collection as $model) {
-                $modules[$model->id] = Controller::getFrontendModule($model, $this->getColumn());
+                $modules[$model->id] = Controller::getFrontendModule($model, $model->inColumn);
             }
         }
 
