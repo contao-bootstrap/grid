@@ -21,7 +21,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
         'label'             => [
             'fields' => ['title'],
             'format' => '%s <span style="color:#ccc;">[%s '
-                . $GLOBALS['TL_LANG']['tl_bs_grid']['formatColumns']
+                . ($GLOBALS['TL_LANG']['tl_bs_grid']['formatColumns'] ?? '')
                 . ']</span>',
         ],
         'sorting'           => [
