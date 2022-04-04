@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 use ContaoBootstrap\Grid\Listener\Dca\ContentFixParentRelationListener;
 
-(static function (): void {
-    \Contao\System::loadLanguageFile('tl_bs_grid');
-})();
-
 /*
  * Config
  */
