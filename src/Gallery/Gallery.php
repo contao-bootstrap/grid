@@ -81,7 +81,7 @@ final class Gallery
                 $this->images[$index]['filesModel']
             );
 
-            if ($cell->picture['class']) {
+            if (isset($cell->picture['class']) && $cell->picture['class'] !== '') {
                 $cell->picture['class'] = trim($cell->picture['class']);
             }
 
