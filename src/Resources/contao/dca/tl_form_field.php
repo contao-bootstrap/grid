@@ -51,7 +51,6 @@ $GLOBALS['TL_DCA']['tl_form_field']['metapalettes']['bs_gridStop'] = [
  */
 
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.form', 'getGridOptions'],
@@ -69,7 +68,6 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_name'] = [
-    'label'         => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid_name'],
     'exclude'       => true,
     'inputType'     => 'text',
     'eval'          => [
@@ -85,7 +83,6 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_name'] = [
 
 
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_parent'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid_parent'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.form', 'getGridParentOptions'],
@@ -101,7 +98,6 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_parent'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_wizard'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid_wizard'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.form', 'getGridColumns'],

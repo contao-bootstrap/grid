@@ -16,7 +16,6 @@ $GLOBALS['TL_DCA']['tl_module']['metapalettes']['bs_grid'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['bs_grid'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_module']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.module', 'getGridOptions'],
@@ -36,7 +35,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['bs_grid'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['bs_gridModules'] = [
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['bs_gridModules'],
     'exclude'   => true,
     'inputType' => 'multiColumnWizard',
     'eval'      => [

@@ -37,7 +37,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
         ],
         'global_operations' => [
             'all' => [
-                'label'      => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'       => 'act=select',
                 'class'      => 'header_edit_all',
                 'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
@@ -45,25 +44,21 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
         ],
         'operations'        => [
             'edit'   => [
-                'label' => &$GLOBALS['TL_LANG']['tl_bs_grid']['edit'],
                 'href'  => 'act=edit',
                 'icon'  => 'edit.gif',
             ],
             'copy'   => [
-                'label'      => &$GLOBALS['TL_LANG']['tl_bs_grid']['copy'],
                 'href'       => 'act=copy',
                 'icon'       => 'copy.gif',
                 'attributes' => 'onclick="Backend.getScrollOffset()"',
             ],
             'delete' => [
-                'label'      => &$GLOBALS['TL_LANG']['tl_bs_grid']['delete'],
                 'href'       => 'act=delete',
                 'icon'       => 'delete.gif',
                 'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm']
                     . '\'))return false;Backend.getScrollOffset()"',
             ],
             'show'   => [
-                'label' => &$GLOBALS['TL_LANG']['tl_bs_grid']['show'],
                 'href'  => 'act=show',
                 'icon'  => 'show.gif',
             ],
@@ -86,7 +81,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
         ],
         'tstamp'      => ['sql' => 'int(10) unsigned NOT NULL default \'0\''],
         'title'       => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['title'],
             'exclude'   => true,
             'sorting'   => true,
             'flag'      => 1,
@@ -96,7 +90,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => 'varchar(255) NOT NULL default \'\'',
         ],
         'description' => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['description'],
             'exclude'   => true,
             'search'    => true,
             'inputType' => 'text',
@@ -104,7 +97,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => 'varchar(255) NOT NULL default \'\'',
         ],
         'sizes'       => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['sizes'],
             'exclude'   => true,
             'inputType' => 'checkbox',
             'options_callback' => [
@@ -121,7 +113,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => 'tinyBlob NULL',
         ],
         'align'       => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
             'inputType' => 'select',
             'options'   => ['start', 'center', 'end'],
             'eval'      => [
@@ -132,7 +123,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => 'varchar(64) NOT NULL default \'\'',
         ],
         'justify'     => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['justify'],
             'inputType' => 'select',
             'options'   => ['start', 'center', 'end', 'around', 'between'],
             'eval'      => [
@@ -143,7 +133,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => 'varchar(64) NOT NULL default \'\'',
         ],
         'rowClass'    => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['rowClass'],
             'exclude'   => true,
             'default'   => '',
             'inputType' => 'text',
@@ -151,7 +140,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => 'varchar(64) NOT NULL default \'\'',
         ],
         'noGutters'   => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['noGutters'],
             'exclude'   => true,
             'default'   => '',
             'inputType' => 'checkbox',

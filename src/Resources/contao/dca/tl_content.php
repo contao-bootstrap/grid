@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 use ContaoBootstrap\Grid\Listener\Dca\ContentFixParentRelationListener;
 
+(static function (): void {
+    \Contao\System::loadLanguageFile('tl_bs_grid');
+})();
+
 /*
  * Config
  */
@@ -71,7 +75,6 @@ $GLOBALS['TL_DCA']['tl_content']['metapalettes']['bs_grid_gallery'] = [
  */
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.content', 'getGridOptions'],
@@ -88,7 +91,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_name'] = [
-    'label'         => &$GLOBALS['TL_LANG']['tl_content']['bs_grid_name'],
     'exclude'       => true,
     'inputType'     => 'text',
     'reference'     => &$GLOBALS['TL_LANG']['tl_content'],
@@ -104,7 +106,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_name'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_parent'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid_parent'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.content', 'getGridParentOptions'],
@@ -120,7 +121,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_parent'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_wizard'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid_wizard'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.content', 'getGridColumns'],
@@ -136,14 +136,13 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_wizard'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
-    'label'         => &$GLOBALS['TL_LANG']['tl_content']['bs_image_sizes'],
     'exclude'       => true,
     'inputType'     => 'multiColumnWizard',
     'eval'          => [
         'tl_class'     => 'clr lng bs-image-sizes',
         'columnFields' => [
             'size' => [
-                'label'            => &$GLOBALS['TL_LANG']['tl_content']['size'],
+                'label'            => &$GLOBALS['TL_LANG']['MSC']['imgSize'],
                 'exclude'          => true,
                 'inputType'        => 'select',
                 'reference'        => &$GLOBALS['TL_LANG']['MSC'],
@@ -162,7 +161,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
                 'eval'          => [
                     'includeBlankOption' => true,
                     'chosen'             => true,
-                    'class'           => 'tl_imageSize_0',
+                    'class'              => 'tl_imageSize_0',
                 ],
             ],
             'height' => [
@@ -173,7 +172,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
                 'eval'          => [
                     'includeBlankOption' => true,
                     'chosen'             => true,
-                    'class'           => 'tl_imageSize_1',
+                    'class'              => 'tl_imageSize_1',
                 ],
             ],
         ],

@@ -78,7 +78,6 @@ final class GridSizesListener
         $sizeLabel = $size . 'Size';
 
         $GLOBALS['TL_DCA']['tl_bs_grid']['fields'][$sizeLabel] = [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid'][$sizeLabel],
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'sql'       => 'blob NULL',
@@ -87,7 +86,6 @@ final class GridSizesListener
                 'dragAndDrop'        => true,
                 'columnFields'       => [
                     'width'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.listeners.dca.grid',
@@ -101,7 +99,6 @@ final class GridSizesListener
                         ],
                     ],
                     'offset' => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.listeners.dca.grid',
@@ -116,7 +113,6 @@ final class GridSizesListener
                         ],
                     ],
                     'order'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.listeners.dca.grid',
@@ -129,7 +125,6 @@ final class GridSizesListener
                         ],
                     ],
                     'align'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
@@ -139,14 +134,12 @@ final class GridSizesListener
                         ],
                     ],
                     'class'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'text',
                         'eval'      => ['style' => 'width: 160px'],
                     ],
                     'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'select',
