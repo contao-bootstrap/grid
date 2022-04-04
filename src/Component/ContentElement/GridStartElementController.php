@@ -26,7 +26,7 @@ final class GridStartElementController extends AbstractGridElementController
 
         assert($model instanceof ContentModel);
 
-        return $this->renderContentBackendView(null, $this->getIterator($model));
+        return $this->renderContentBackendView($model, $this->getIterator($model));
     }
 
     /**
