@@ -35,6 +35,10 @@ final class AutoGridWidthsMigration extends AbstractMigration
 
     public function shouldRun(): bool
     {
+        if (! $this->connection->getSchemaManager()->tablesExist(['tl_bs_grid'])) {
+            return false;
+        }
+
         $statement = $this->connection->executeQuery('SELECT * FROM tl_bs_grid');
 
         while ($row = $statement->fetchAssociative()) {
