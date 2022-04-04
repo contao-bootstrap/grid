@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use function assert;
 
-/** @ContentElement("ce_bs_gridStop", category="bs_grid") */
+/** @ContentElement("bs_gridStop", category="bs_grid") */
 final class GridStopElementController extends AbstractGridElementController
 {
     /** {@inheritDoc} */

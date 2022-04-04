@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use function assert;
 
-/** @ContentElement("ce_bs_gridSeparator", category="bs_grid") */
+/** @ContentElement("bs_gridSeparator", category="bs_grid") */
 final class GridSeparatorElementController extends AbstractGridElementController
 {
     /** {@inheritDoc} */
