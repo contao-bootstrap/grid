@@ -14,6 +14,7 @@ use ContaoBootstrap\Core\Environment\ThemeContext;
 use ContaoBootstrap\Grid\Model\GridModel;
 
 use function array_combine;
+use function array_filter;
 use function array_map;
 use function array_merge;
 use function array_unique;
@@ -109,7 +110,7 @@ class GridListener
                 return [];
             }
 
-            $sizes = StringUtil::deserialize($theme->bs_grid_sizes, true);
+            $sizes = array_values(array_filter(StringUtil::deserialize($theme->bs_grid_sizes, true)));
             if (! $sizes) {
                 $sizes = $this->environment->getConfig()->get('grid.sizes', []);
             }

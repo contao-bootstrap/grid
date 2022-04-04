@@ -10,6 +10,8 @@ use ContaoBootstrap\Core\Config\ArrayConfig;
 use ContaoBootstrap\Core\Environment\ThemeContext;
 use ContaoBootstrap\Core\Message\Command\BuildContextConfig;
 
+use function array_filter;
+use function array_values;
 use function current;
 
 class BuildContextConfigListener
@@ -38,8 +40,9 @@ class BuildContextConfigListener
             $data['grid']['columns'] = (int) $theme->bs_grid_columns;
         }
 
-        if ($theme->bs_grid_sizes) {
-            $data['grid']['sizes'] = StringUtil::deserialize($theme->bs_grid_sizes, true);
+        $sizes = array_filter(StringUtil::deserialize($theme->bs_grid_sizes, true));
+        if ($sizes !== []) {
+            $data['grid']['sizes'] = array_values($sizes);
         }
 
         $data['grid']['default_size'] = $theme->bs_grid_default_size ?: current($data['grid']['sizes']);
