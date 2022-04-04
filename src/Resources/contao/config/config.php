@@ -8,21 +8,12 @@ use ContaoBootstrap\Grid\Component\FormField\GridStopFormField;
 use ContaoBootstrap\Grid\Listener\Hook\GridSizesListener;
 use ContaoBootstrap\Grid\Listener\Hook\NewsGridListener;
 use ContaoBootstrap\Grid\Model\GridModel;
-use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;
 
 // Models
 $GLOBALS['TL_MODELS']['tl_bs_grid'] = GridModel::class;
 
 // Backend modules
 $GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_bs_grid';
-
-array_insert(
-    $GLOBALS['TL_CTE']['media'],
-    (int) array_search('gallery', array_keys($GLOBALS['TL_CTE']['media'])) + 1,
-    [
-        'bs_grid_gallery' => ContentElementDecorator::class,
-    ]
-);
 
 // Form fields
 $GLOBALS['TL_FFL']['bs_gridStart']     = GridStartFormField::class;

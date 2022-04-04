@@ -39,15 +39,16 @@ services:
       - '@contao_bootstrap.core.helper.color_rotate'
       - '@translator'
 
-  ContaoBootstrap\Grid\Component\ContentElement\GalleryFactory:
+  ContaoBootstrap\Grid\Component\ContentElement\GalleryElementController:
     arguments:
-    - "@templating"
-    - "@contao_bootstrap.grid.grid_provider"
-    - "@netzmacht.contao_toolkit.contao.frontend_user"
-    - '@netzmacht.contao_toolkit.response_tagger'
-    tags:
-    - { name: 'netzmacht.contao_toolkit.component.content_element_factory' }
-    - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'media', alias: 'bs_grid_gallery' }
+      - '@netzmacht.contao_toolkit.template_renderer'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '@netzmacht.contao_toolkit.response_tagger'
+      - '@contao.security.token_checker'
+      - '@security.helper'
+      - "@contao_bootstrap.grid.grid_provider"
+      - "@contao.framework"
+      - '%kernel.project_dir%'
 
   ContaoBootstrap\Grid\Component\Module\GridFrontendModuleController:
     arguments:
