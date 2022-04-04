@@ -21,8 +21,8 @@ class ContaoBootstrapGridExtension extends Extension
             new FileLocator(__DIR__ . '/../Resources/config')
         );
 
-        $loader->load('config.yml');
-        $loader->load('services.yml');
-        $loader->load('listeners.yml');
+        $loader->load('config.yaml');
+        $loader->load('services.yaml');
+        $loader->load('listeners.yaml');
     }
 }
