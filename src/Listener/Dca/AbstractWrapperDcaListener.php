@@ -11,12 +11,15 @@ use Contao\Model;
 use function array_unshift;
 use function assert;
 
+/**
+ * @template TModel of Model
+ */
 abstract class AbstractWrapperDcaListener extends AbstractDcaListener
 {
     /**
      * Generate the columns.
      *
-     * @param int           $value         Number of columns which should be generated.
+     * @param int|string    $value         Number of columns which should be generated.
      * @param DataContainer $dataContainer Data container driver.
      *
      * @return null
@@ -29,9 +32,7 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
 
         $current = $dataContainer->activeRecord;
         assert($current instanceof Model || $current instanceof Result);
-        if (! $dataContainer->activeRecord) {
-            return null;
-        }
+        /** @psalm-var TModel|Result $current */
 
         if ($value) {
             $stopElement  = $this->getStopElement($current);
@@ -52,9 +53,10 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
     /**
      * Create separators.
      *
-     * @param int   $value   Number of separators being created.
-     * @param Model $current Current model.
-     * @param int   $sorting Current sorting value.
+     * @param int          $value   Number of separators being created.
+     * @param Model|Result $current Current model.
+     * @param int          $sorting Current sorting value.
+     * @psalm-param TModel|Result $current
      */
     protected function createSeparators(int $value, $current, int $sorting): int
     {
@@ -71,6 +73,7 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      *
      * @param Model[] $elements    Model collection.
      * @param int     $lastSorting Last sorting value.
+     * @psalm-param TModel[] $elements
      */
     protected function updateSortings(array $elements, int $lastSorting): int
     {
@@ -89,8 +92,11 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
     /**
      * Create the stop element.
      *
-     * @param Model $current Model.
-     * @param int   $sorting Last sorting value.
+     * @param Model|Result $current Model.
+     * @param int          $sorting Last sorting value.
+     * @psalm-param TModel|Result $current
+     *
+     * @psalm-return TModel
      */
     protected function createStopElement($current, int $sorting): Model
     {
@@ -102,25 +108,33 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
     /**
      * Create a grid element.
      *
-     * @param Model  $current Current content model.
-     * @param string $type    Type of the content model.
-     * @param int    $sorting The sorting value.
+     * @param Model|Result $current Current content model.
+     * @param string       $type    Type of the content model.
+     * @param int          $sorting The sorting value.
+     * @psalm-param TModel|Result $current
+     *
+     * @return TModel
      */
     abstract protected function createGridElement($current, string $type, int &$sorting): Model;
 
     /**
      * Get the next content elements.
      *
-     * @param Model $current Current content model.
-     *
+     * @param Model|Result $current Current content model.
+     * @psalm-param TModel|Result $current
+
      * @return Model[]
+     * @psalm-return array<TModel>
      */
     abstract protected function getNextElements($current): array;
 
     /**
      * Get related stop element.
      *
-     * @param Model $current Current element.
+     * @param Model|Result $current Current element.
+     * @psalm-param TModel|Result $current
+     *
+     * @psalm-return TModel
      */
     abstract protected function getStopElement($current): Model;
 }

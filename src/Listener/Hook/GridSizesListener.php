@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Hook;
 
+use Contao\Model;
 use Contao\StringUtil;
 use Contao\ThemeModel;
 use ContaoBootstrap\Core\Environment;
@@ -192,6 +193,11 @@ final class GridSizesListener
     {
         $sizes  = $this->environment->getConfig()->get('grid.sizes', []);
         $themes = ThemeModel::findAll() ?: [];
+
+        if ($themes instanceof Model) {
+            $themes = [$themes];
+        }
+
         foreach ($themes as $theme) {
             $sizes = array_merge($sizes, StringUtil::deserialize($theme->bs_grid_sizes, true));
         }

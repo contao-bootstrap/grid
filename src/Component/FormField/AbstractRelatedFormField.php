@@ -8,6 +8,9 @@ use Contao\FormFieldModel;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 
+/**
+ * @property int|string $bs_grid_parent
+ */
 abstract class AbstractRelatedFormField extends AbstractFormField
 {
     /**

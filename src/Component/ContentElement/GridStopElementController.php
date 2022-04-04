@@ -27,6 +27,7 @@ final class GridStopElementController extends AbstractGridElementController
             if ($iterator) {
                 $iterator->rewind();
             }
+
             return null;
         }
 

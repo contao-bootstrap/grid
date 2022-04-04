@@ -19,6 +19,7 @@ use ContaoBootstrap\Grid\Model\GridModel;
 use RuntimeException;
 
 use function array_search;
+use function assert;
 use function is_numeric;
 
 /**
@@ -29,12 +30,12 @@ final class GridBuilder
     /**
      * Grid model.
      */
-    private GridModel $model;
+    private ?GridModel $model = null;
 
     /**
      * Cache of grid being built.
      */
-    private Grid $grid;
+    private ?Grid $grid = null;
 
     /**
      * Core Environment.
@@ -73,8 +74,8 @@ final class GridBuilder
      */
     protected function loadModel(int $gridId): void
     {
-        $model = GridModel::findByPk($gridId);
-        if (! $model) {
+        $model = GridModel::findOneBy('id', $gridId);
+        if (! $model instanceof GridModel) {
             throw GridNotFound::withId($gridId);
         }
 
@@ -86,6 +87,8 @@ final class GridBuilder
      */
     private function createGrid(): void
     {
+        assert($this->model instanceof GridModel);
+
         $this->grid = new Grid();
         $sizes      = StringUtil::deserialize($this->model->sizes, true);
 
@@ -108,6 +111,9 @@ final class GridBuilder
      */
     private function buildRow(): void
     {
+        assert($this->model instanceof GridModel);
+        assert($this->grid instanceof Grid);
+
         if ($this->model->noGutters) {
             $this->grid->addClass('no-gutters');
         }
@@ -132,10 +138,12 @@ final class GridBuilder
      *
      * @param string                    $size       Grid size.
      * @param list<array<string,mixed>> $definition Definition.
-     * @param list<string>              $sizes      List of defined sizes.
+     * @param list<string|int>          $sizes      List of defined sizes.
      */
     private function buildSize(string $size, array $definition, array $sizes): void
     {
+        assert($this->grid instanceof Grid);
+
         foreach ($definition as $columnDefinition) {
             $column = $this->buildColumn($columnDefinition, $size, $sizes);
 
@@ -148,7 +156,7 @@ final class GridBuilder
      *
      * @param array<string,mixed> $definition Column definition.
      * @param string              $size       The column size.
-     * @param list<string>        $sizes      List of defined sizes.
+     * @param list<string|int>    $sizes      List of defined sizes.
      */
     private function buildColumn(array $definition, string $size, array $sizes): Column
     {
@@ -182,6 +190,8 @@ final class GridBuilder
      */
     private function finish(): Grid
     {
+        assert($this->grid instanceof Grid);
+
         $grid        = $this->grid;
         $this->grid  = null;
         $this->model = null;
@@ -240,14 +250,14 @@ final class GridBuilder
      * @param array<string,mixed> $definition The grid column definition.
      * @param Column              $column     The column.
      * @param string              $size       The column size.
-     * @param list<string>        $sizes      List of defined sizes.
+     * @param list<string|int>    $sizes      List of defined sizes.
      */
     private function buildColumnResets(array $definition, Column $column, string $size, array $sizes): void
     {
         switch ($definition['reset']) {
             case '2':
                 $key  = array_search($size, $sizes);
-                $next = ($sizes[$key + 1] ?? null);
+                $next = $key ? ($sizes[$key + 1] ?? null) : null;
 
                 if ($next) {
                     $column->limitedReset((string) $next);

@@ -38,6 +38,10 @@ final class ContentFixParentRelationListener
      */
     public function onSubmit(DataContainer $dataContainer): void
     {
+        if (! $dataContainer->activeRecord) {
+            return;
+        }
+
         if (! in_array($dataContainer->activeRecord->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
             return;
         }
@@ -45,6 +49,8 @@ final class ContentFixParentRelationListener
         if ($dataContainer->activeRecord->bs_grid_parent > 0) {
             return;
         }
+
+        /** @psalm-var Result|ContentModel $dataContainer->activeRecord */
 
         $this->fixContentElement($dataContainer->activeRecord);
     }

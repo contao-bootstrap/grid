@@ -7,12 +7,12 @@ namespace ContaoBootstrap\Grid\Model;
 use Contao\Model;
 
 /**
- * @property string|array sizes
- * @property int          pid
- * @property string       noGutters
- * @property string       rowClass
- * @property string       align
- * @property string       justify
+ * @property string|array $sizes
+ * @property int|string   $pid
+ * @property string       $noGutters
+ * @property string       $rowClass
+ * @property string       $align
+ * @property string       $justify
  */
 class GridModel extends Model
 {

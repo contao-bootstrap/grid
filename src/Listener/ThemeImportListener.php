@@ -25,11 +25,16 @@ class ThemeImportListener
         $tables = $xml->getElementsByTagName('table');
 
         for ($index = 0; $index < $tables->length; $index++) {
-            if ($tables->item($index)->getAttribute('name') !== 'tl_bs_grid') {
+            $node = $tables->item($index);
+            if (! $node instanceof DOMElement) {
                 continue;
             }
 
-            $this->importGrid($tables->item($index), (int) $themeId);
+            if ($node->getAttribute('name') !== 'tl_bs_grid') {
+                continue;
+            }
+
+            $this->importGrid($node, (int) $themeId);
         }
     }
 
@@ -44,7 +49,12 @@ class ThemeImportListener
         $rows = $item->childNodes;
 
         for ($index = 0; $index < $rows->length; $index++) {
-            $values = $this->getRowValues($rows->item($index), $themeId);
+            $node = $rows->item($index);
+            if (! $node instanceof DOMElement) {
+                continue;
+            }
+
+            $values = $this->getRowValues($node, $themeId);
             $model  = new GridModel();
 
             $model->setRow($values);
@@ -66,8 +76,13 @@ class ThemeImportListener
         $values = [];
 
         for ($index = 0; $index < $fields->length; $index++) {
-            $value = $fields->item($index)->nodeValue;
-            $name  = $fields->item($index)->getAttribute('name');
+            $node = $fields->item($index);
+            if (! $node instanceof DOMElement) {
+                continue;
+            }
+
+            $value = $node->nodeValue;
+            $name  = $node->getAttribute('name');
 
             switch ($name) {
                 case 'id':

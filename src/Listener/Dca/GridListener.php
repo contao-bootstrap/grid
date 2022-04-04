@@ -6,6 +6,7 @@ namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\Input;
+use Contao\Model\Collection;
 use Contao\StringUtil;
 use Contao\ThemeModel;
 use ContaoBootstrap\Core\Environment;
@@ -48,8 +49,9 @@ class GridListener
             return;
         }
 
-        $model = GridModel::findByPk(Input::get('id'));
-
+        $model = GridModel::findOneBy('id', Input::get('id'));
+        /** @psalm-var GridModel|null $model
+         */
         if (! $model) {
             return;
         }
@@ -68,7 +70,7 @@ class GridListener
 
         $model = GridModel::findByPk(Input::get('id'));
         $sizes = array_map(
-            static function ($value) {
+            static function (string $value): string {
                 return $value . 'Size';
             },
             StringUtil::deserialize($model->sizes, true)
@@ -103,8 +105,11 @@ class GridListener
         $sizes = [];
         if (defined('CURRENT_ID') && Input::get('act') === 'edit') {
             $theme = ThemeModel::findByPk(CURRENT_ID);
-            $sizes = StringUtil::deserialize($theme->bs_grid_sizes, true);
+            if ($theme === null) {
+                return [];
+            }
 
+            $sizes = StringUtil::deserialize($theme->bs_grid_sizes, true);
             if (! $sizes) {
                 $sizes = $this->environment->getConfig()->get('grid.sizes', []);
             }
@@ -112,7 +117,11 @@ class GridListener
             return $sizes;
         }
 
-        $themes = ThemeModel::findAll() ?: [];
+        $themes = ThemeModel::findAll();
+        if (! $themes instanceof Collection) {
+            return [];
+        }
+
         foreach ($themes as $theme) {
             $sizes = array_merge($sizes, StringUtil::deserialize($theme->bs_grid_sizes, true));
         }
@@ -123,7 +132,7 @@ class GridListener
     /**
      * Get all widths.
      *
-     * @return array<string,string>
+     * @return array<string|int,string|int>
      */
     public function getWidths(): array
     {
@@ -149,7 +158,7 @@ class GridListener
     /**
      * Get offset values.
      *
-     * @return array<string,list<string>>
+     * @return array<string,list<string|int>>
      */
     public function getOffsets(): array
     {

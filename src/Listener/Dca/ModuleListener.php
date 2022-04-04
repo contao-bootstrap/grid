@@ -6,6 +6,7 @@ namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\DataContainer;
+use Contao\Model\Collection;
 use Contao\ModuleModel;
 use MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard;
 
@@ -49,7 +50,7 @@ class ModuleListener extends AbstractDcaListener
      */
     public function setGridWidgetOptions($value, DataContainer $dataContainer)
     {
-        if ($dataContainer->activeRecord->type === 'bs_grid') {
+        if ($dataContainer->activeRecord && $dataContainer->activeRecord->type === 'bs_grid') {
             $GLOBALS['TL_DCA']['tl_module']['fields'][$dataContainer->field]['eval']['mandatory'] = true;
         }
 
@@ -59,19 +60,13 @@ class ModuleListener extends AbstractDcaListener
     /**
      * Get all modules for the grid module.
      *
-     * @param MultiColumnWizard $multiColumnWizard Multicolumnwizard.
-     *
      * @return array<string,array<int|string,string>>
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function getAllModules(?MultiColumnWizard $multiColumnWizard = null): array
     {
-        if (
-            $multiColumnWizard
-            && $multiColumnWizard->dataContainer
-            && $multiColumnWizard->dataContainer->activeRecord
-        ) {
+        if ($multiColumnWizard && $multiColumnWizard->dataContainer->activeRecord) {
             $collection = ModuleModel::findBy(
                 ['tl_module.pid = ?', 'tl_module.id != ?'],
                 [
@@ -89,7 +84,7 @@ class ModuleListener extends AbstractDcaListener
             ],
         ];
 
-        if ($collection) {
+        if ($collection instanceof Collection) {
             foreach ($collection as $model) {
                 $label = $GLOBALS['TL_LANG']['FMD'][$model->type][0] ?? $model->type;
 

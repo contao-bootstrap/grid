@@ -29,6 +29,11 @@ final class GridStartElementController extends AbstractGridElementController
         return $this->renderContentBackendView(null, $this->getIterator($model));
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     protected function prepareTemplateData(array $data, Request $request, Model $model): array
     {
         assert($model instanceof ContentModel);

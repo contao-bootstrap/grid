@@ -14,15 +14,19 @@ use Contao\CoreBundle\Image\ImageSizes;
 use Contao\DataContainer;
 use Contao\Input;
 use Contao\Model;
+use Contao\Model\Collection;
 use ContaoBootstrap\Core\Environment;
 use Doctrine\DBAL\Connection;
 
 use function assert;
+use function defined;
 use function sprintf;
 use function time;
 
 /**
  * ContentDataContainer helper class.
+ *
+ * @extends AbstractWrapperDcaListener<ContentModel>
  */
 final class ContentListener extends AbstractWrapperDcaListener
 {
@@ -50,24 +54,22 @@ final class ContentListener extends AbstractWrapperDcaListener
 
     /**
      * Contao backend user.
-     *
-     * @var BackendUser|Adapter
      */
-    private $user;
+    private BackendUser $user;
 
     /**
-     * @param Environment         $environment Bootstrap environment.
-     * @param Connection          $connection  Database connection.
-     * @param ContaoFramework     $framework   Contao framework.
-     * @param ImageSizes          $imageSizes  Image sizes.
-     * @param Adapter|BackendUser $user        Contao backend user.
+     * @param Environment     $environment Bootstrap environment.
+     * @param Connection      $connection  Database connection.
+     * @param ContaoFramework $framework   Contao framework.
+     * @param ImageSizes      $imageSizes  Image sizes.
+     * @param BackendUser     $user        Contao backend user.
      */
     public function __construct(
         Environment $environment,
         Connection $connection,
         ContaoFramework $framework,
         ImageSizes $imageSizes,
-        $user
+        BackendUser $user
     ) {
         parent::__construct($environment);
 
@@ -86,13 +88,11 @@ final class ContentListener extends AbstractWrapperDcaListener
     public function initializeDca(): void
     {
         $input = $this->framework->getAdapter(Input::class);
-        assert($input instanceof Input);
-
         if ($input->get('act') !== 'edit') {
             return;
         }
 
-        $model = $this->repository->findByPk(Input::get('id'));
+        $model = $this->repository->findByPk($input->get('id'));
         if (! $model || $model->type !== 'bs_grid_gallery') {
             return;
         }
@@ -114,18 +114,23 @@ final class ContentListener extends AbstractWrapperDcaListener
      */
     public function getGridParentOptions(): array
     {
-        $columns[] = 'tl_content.type = ?';
-        $columns[] = 'tl_content.pid = ?';
-        $columns[] = 'tl_content.ptable = ?';
+        $columns = [
+            'tl_content.type = ?',
+            'tl_content.pid = ?',
+            'tl_content.ptable = ?',
+        ];
 
-        $values[] = 'bs_gridStart';
-        $values[] = CURRENT_ID;
-        $values[] = $GLOBALS['TL_DCA']['tl_content']['config']['ptable'];
+        assert(defined('CURRENT_ID'));
+        $values = [
+            'bs_gridStart',
+            CURRENT_ID,
+            $GLOBALS['TL_DCA']['tl_content']['config']['ptable'],
+        ];
 
         $collection = $this->repository->findBy($columns, $values, ['tl_content.sorting']);
         $options    = [];
 
-        if ($collection) {
+        if ($collection instanceof Collection) {
             foreach ($collection as $model) {
                 $options[$model->id] = sprintf(
                     '%s [%s]',
@@ -146,7 +151,6 @@ final class ContentListener extends AbstractWrapperDcaListener
     public function getGalleryTemplates(): array
     {
         $adapter = $this->framework->getAdapter(Controller::class);
-        assert($adapter instanceof Controller);
 
         return $adapter->getTemplateGroup('bs_gallery_');
     }
@@ -184,11 +188,7 @@ final class ContentListener extends AbstractWrapperDcaListener
     }
 
     /**
-     * Create a grid element.
-     *
-     * @param ContentModel $current Current content model.
-     * @param string       $type    Type of the content model.
-     * @param int          $sorting The sorting value.
+     * {@inheritDoc}
      */
     protected function createGridElement($current, string $type, int &$sorting): Model
     {
@@ -205,11 +205,7 @@ final class ContentListener extends AbstractWrapperDcaListener
     }
 
     /**
-     * Get the next content elements.
-     *
-     * @param ContentModel $current Current content model.
-     *
-     * @return ContentModel[]
+     * {@inheritDoc}
      */
     protected function getNextElements($current): array
     {
@@ -224,7 +220,7 @@ final class ContentListener extends AbstractWrapperDcaListener
             ['order' => 'tl_content.sorting ASC']
         );
 
-        if ($collection) {
+        if ($collection instanceof Collection) {
             return $collection->getIterator()->getArrayCopy();
         }
 
@@ -232,11 +228,7 @@ final class ContentListener extends AbstractWrapperDcaListener
     }
 
     /**
-     * Get related stop element.
-     *
-     * @param ContentModel $current Current element.
-     *
-     * @return ContentModel|Model
+     * {@inheritDoc}
      */
     protected function getStopElement($current): Model
     {

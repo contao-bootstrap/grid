@@ -7,6 +7,7 @@ namespace ContaoBootstrap\Grid\Component\Module;
 use Contao\Controller;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\Model;
+use Contao\Model\Collection;
 use Contao\ModuleModel;
 use Contao\StringUtil;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
@@ -22,6 +23,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_filter;
 use function array_map;
+use function array_values;
 use function assert;
 use function is_numeric;
 use function sprintf;
@@ -44,6 +46,11 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
         $this->gridProvider = $gridProvider;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     protected function prepareTemplateData(array $data, Request $request, Model $model): array
     {
         assert($model instanceof ModuleModel);
@@ -131,23 +138,31 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
      *
      * @param array<string,mixed> $config Config.
      *
-     * @return array<string,mixed>
+     * @return list<int|string>
      */
     protected function getModuleIds(array $config): array
     {
-        return array_filter(
-            array_map(
-                static function ($item) {
-                    return $item['module'];
-                },
-                array_filter(
-                    $config,
-                    static function ($item) {
-                        return $item['inactive'] === '';
-                    }
-                )
-            ),
-            'is_numeric'
+        return array_values(
+            array_filter(
+                array_map(
+                    /**
+                     * @param array<string,mixed> $item
+                     *
+                     * @return int|string
+                     */
+                    static function (array $item) {
+                        return $item['module'];
+                    },
+                    array_filter(
+                        $config,
+                        /** @param array<string,mixed> $item */
+                        static function (array $item): bool {
+                            return $item['inactive'] === '';
+                        }
+                    )
+                ),
+                'is_numeric'
+            )
         );
     }
 
@@ -163,7 +178,7 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
         $collection = ModuleModel::findMultipleByIds($moduleIds);
         $modules    = [];
 
-        if ($collection) {
+        if ($collection instanceof Collection) {
             foreach ($collection as $model) {
                 $modules[$model->id] = Controller::getFrontendModule($model, $model->inColumn);
             }

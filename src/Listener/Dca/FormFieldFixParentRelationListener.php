@@ -37,6 +37,13 @@ final class FormFieldFixParentRelationListener
      */
     public function onSubmit(DataContainer $dataContainer): void
     {
+        if (
+            ! $dataContainer->activeRecord instanceof FormFieldModel
+            && ! $dataContainer->activeRecord instanceof Result
+        ) {
+            return;
+        }
+
         if (! in_array($dataContainer->activeRecord->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
             return;
         }

@@ -15,6 +15,9 @@ use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Manager as DcaManager;
 
 use function array_unique;
+use function assert;
+use function is_int;
+use function is_string;
 use function time;
 
 /**
@@ -165,6 +168,7 @@ final class ParentFixContentParentRelationsListener
      * @param int    $parentId    The parent id.
      *
      * @return Collection|ContentModel[]|null
+     * @psalm-return Collection|null
      */
     private function loadContentModels(string $parentTable, int $parentId): ?Collection
     {
@@ -207,6 +211,9 @@ final class ParentFixContentParentRelationsListener
                 ->setParameter('ptable', $definition->getName());
         }
 
-        return $queryBuilder->execute()->fetchFirstColumn();
+        $result = $queryBuilder->execute();
+        assert(! is_string($result) && ! is_int($result));
+
+        return $result->fetchFirstColumn();
     }
 }

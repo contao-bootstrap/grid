@@ -24,12 +24,12 @@ class Grid
     /**
      * Grid alignment.
      */
-    private string $align;
+    private ?string $align = null;
 
     /**
      * Grid justify settings.
      */
-    private string $justify;
+    private ?string $justify = null;
 
     /**
      * Row classes.

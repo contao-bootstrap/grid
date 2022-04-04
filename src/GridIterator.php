@@ -13,6 +13,9 @@ namespace ContaoBootstrap\Grid;
 use ContaoBootstrap\Grid\Definition\Grid;
 use Iterator;
 
+use function assert;
+use function is_string;
+
 /**
  * GridIterator to iterate over the grid columns.
  */
@@ -41,7 +44,10 @@ final class GridIterator implements Iterator
      */
     public function row(): string
     {
-        return $this->grid->buildRow(true);
+        $row = $this->grid->buildRow(true);
+        assert(is_string($row));
+
+        return $row;
     }
 
     /**
@@ -56,7 +62,10 @@ final class GridIterator implements Iterator
 
     public function current(): string
     {
-        return $this->grid->buildColumn($this->index, true);
+        $column = $this->grid->buildColumn($this->index, true);
+        assert(is_string($column));
+
+        return $column;
     }
 
     public function next(): void

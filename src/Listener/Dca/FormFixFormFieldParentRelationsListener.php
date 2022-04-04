@@ -74,6 +74,7 @@ final class FormFixFormFieldParentRelationsListener
      * @param int    $parentId    The parent id.
      *
      * @return Collection|FormFieldModel[]|null
+     * @psalm-return Collection|null
      */
     private function loadFormFieldModels(string $parentTable, int $parentId): ?Collection
     {

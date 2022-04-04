@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid;
 
 use ContaoBootstrap\Grid\Definition\Grid;
+use InvalidArgumentException;
 use RuntimeException;
 
 /**
@@ -72,6 +73,10 @@ final class GridProvider
     public function getIterator(string $uniqueId, ?int $gridId = null): GridIterator
     {
         if (! isset($this->iterators[$uniqueId])) {
+            if ($gridId === null) {
+                throw new InvalidArgumentException('GridId required if iterator does not yet exist');
+            }
+
             $grid     = $this->getGrid($gridId);
             $iterator = new GridIterator($grid);
 

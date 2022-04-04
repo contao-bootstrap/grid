@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\FormField;
 
+/** @psalm-suppress PropertyNotSetInConstructor - Issue in the codebase of Contao */
 class GridStopFormField extends AbstractRelatedFormField
 {
     /**
@@ -15,7 +16,7 @@ class GridStopFormField extends AbstractRelatedFormField
     /**
      * {@inheritdoc}
      */
-    public function parse($attributes = null): string
+    public function parse($arrAttributes = null): string
     {
         $iterator = $this->getIterator();
         if ($iterator) {
@@ -26,6 +27,6 @@ class GridStopFormField extends AbstractRelatedFormField
             return $this->renderBackendView($this->getParent());
         }
 
-        return parent::parse($attributes);
+        return parent::parse($arrAttributes);
     }
 }

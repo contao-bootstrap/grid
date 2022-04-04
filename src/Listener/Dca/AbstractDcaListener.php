@@ -86,7 +86,7 @@ abstract class AbstractDcaListener
     public function generateGridName($value, $dataContainer): string
     {
         if (! $value) {
-            $value = 'grid_' . $dataContainer->activeRecord->id;
+            $value = 'grid_' . $dataContainer->id;
         }
 
         return $value;

@@ -5,6 +5,14 @@ Changelog
 [Unreleased]
 ------------
 
+### Changed
+
+ - Bump minimum PHP version to 7.4
+ - Bump Symfony requirements to ^4.4 or ^5.4
+ - Bump Contao requirements to ^4.9 or ^4.13
+ - Changed coding standard
+ - Rewrite modules and elements to fragment controller
+
 [2.3.1] (2020-11-16)
 --------------------
 
@@ -20,7 +28,7 @@ Changelog
 
  - Add ability to support custom grid sizes [#44](https://github.com/contao-bootstrap/grid/pull/44) (@scuben)
  - Use custom template for grid element [#41](https://github.com/contao-bootstrap/grid/pull/41) (@RoflCopter24)
- 
+
 ### Fixed
 
  - Prevent ambiguous field names in parent relation fixer [#43](https://github.com/contao-bootstrap/grid/pull/43)
@@ -90,7 +98,7 @@ Changelog
  - Support auto grid size ([#28](https://github.com/contao-bootstrap/grid/pull/28))
  - Support size suffixes for alignments ([#26](https://github.com/contao-bootstrap/grid/pull/26))
  - Tag response with grid id when grid element or module is used ([#18](https://github.com/contao-bootstrap/grid/issues/18))
- 
+
 ### Fixed
 
  - Translation of grid parent is missing ([#23](https://github.com/contao-bootstrap/grid/issues/23))
@@ -171,7 +179,7 @@ Changelog
 [Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.0-beta3...2.0.0)
 
  - Support MetaPalettes v2.0.
- 
+
 2.0.0-beta3 (2017-12-01)
 ------------------------
 

@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\FormField;
 
+/**
+ * @property int|string        $bs_grid
+ * @property string            $rowClasses
+ * @property string            $columnClasses
+ * @property list<string>|null $resets
+ * @psalm-suppress PropertyNotSetInConstructor - Issue in the codebase of Contao
+ */
 class GridSeparatorFormField extends AbstractRelatedFormField
 {
     /**
@@ -15,7 +22,7 @@ class GridSeparatorFormField extends AbstractRelatedFormField
     /**
      * {@inheritdoc}
      */
-    public function parse($attributes = null): string
+    public function parse($arrAttributes = null): string
     {
         $iterator = $this->getIterator();
         if ($iterator) {
@@ -34,6 +41,6 @@ class GridSeparatorFormField extends AbstractRelatedFormField
             $this->resets = [];
         }
 
-        return parent::parse($attributes);
+        return parent::parse($arrAttributes);
     }
 }

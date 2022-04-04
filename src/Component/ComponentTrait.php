@@ -18,6 +18,12 @@ trait ComponentTrait
 {
     /**
      * Get hte component render helper.
+     *
+     * @psalm-suppress DeprecatedClass
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress InvalidNullableReturnType
+     * @psalm-suppress LessSpecificReturnStatement
+     * @psalm-suppress NullableReturnStatement
      */
     private function getHelper(): ComponentRenderHelper
     {
@@ -35,8 +41,8 @@ trait ComponentTrait
     /**
      * Render the backend view.
      *
-     * @param Model|null   $start    Start element.
-     * @param GridIterator $iterator Iterator.
+     * @param Model|object|null $start    Start element.
+     * @param GridIterator      $iterator Iterator.
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */

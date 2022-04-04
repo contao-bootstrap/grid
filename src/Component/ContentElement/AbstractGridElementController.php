@@ -42,7 +42,8 @@ abstract class AbstractGridElementController extends AbstractContentElementContr
 
     protected function renderContentBackendView(?ContentModel $start, ?GridIterator $iterator = null): Response
     {
-        return $this->renderResponse('fe:be_bs_grid',
+        return $this->renderResponse(
+            'fe:be_bs_grid',
             [
                 'color'   => $start ? $this->rotateColor('ce:' . $start->id) : null,
                 'name'    => $start ? $start->bs_grid_name : null,

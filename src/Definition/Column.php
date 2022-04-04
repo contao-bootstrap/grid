@@ -18,25 +18,27 @@ class Column
 {
     /**
      * Column width.
+     *
+     * @var int|string|null
      */
-    private int $width;
+    private $width = null;
 
     /**
      * Order setting.
      */
-    private int $order;
+    private ?int $order = null;
 
     /**
      * Offset setting.
      *
-     * @var string|int
+     * @var string|int|null
      */
-    private $offset;
+    private $offset = null;
 
     /**
      * Align.
      */
-    private string $align;
+    private ?string $align = null;
 
     /**
      * Add reset before the column.
@@ -48,7 +50,7 @@ class Column
     /**
      * Justify setting.
      */
-    private string $justify;
+    private ?string $justify = null;
 
     /**
      * Css classes.
@@ -123,6 +125,13 @@ class Column
     public function align(string $align): self
     {
         $this->align = $align;
+
+        return $this;
+    }
+
+    public function justify(string $justify): self
+    {
+        $this->justify = $justify;
 
         return $this;
     }

@@ -7,6 +7,12 @@ namespace ContaoBootstrap\Grid\Component\FormField;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 
+/**
+ * @property int|string $bs_grid
+ * @property string     $rowClasses
+ * @property string     $columnClasses
+ * @psalm-suppress PropertyNotSetInConstructor - Issue in the codebase of Contao
+ */
 class GridStartFormField extends AbstractFormField
 {
     /**
@@ -28,17 +34,15 @@ class GridStartFormField extends AbstractFormField
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function generate()
+    public function generate(): string
     {
+        return '';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function parse($attributes = null): string
+    public function parse($arrAttributes = null): string
     {
         $iterator = $this->getIterator();
 
@@ -51,6 +55,6 @@ class GridStartFormField extends AbstractFormField
             $this->columnClasses = $iterator->current();
         }
 
-        return parent::parse($attributes);
+        return parent::parse($arrAttributes);
     }
 }

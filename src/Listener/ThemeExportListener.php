@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Listener;
 
 use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\Model\Collection;
 use Contao\Theme;
 use Contao\ZipWriter;
 use ContaoBootstrap\Grid\Model\GridModel;
 use DOMDocument;
-
-use function assert;
 
 class ThemeExportListener extends Theme
 {
@@ -47,11 +46,10 @@ class ThemeExportListener extends Theme
         $tables = $xml->getElementsByTagName('tables')->item(0);
         $table  = $tables->appendChild($table);
 
-        $adapter = $this->framework->getAdapter(GridModel::class);
-        assert($adapter instanceof GridModel);
+        $adapter    = $this->framework->getAdapter(GridModel::class);
         $collection = $adapter->findBy('pid', $themeId);
 
-        if (! $collection) {
+        if (! $collection instanceof Collection) {
             return;
         }
 
