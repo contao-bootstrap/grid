@@ -90,7 +90,7 @@ final class GalleryBuilder
         $images     = $this->applySorting($this->images);
         $images     = $this->applyLimit($images);
         $offset     = 0;
-        $limit      = $this->limit;
+        $limit      = $this->limit === 0 ? count($images) : $this->limit;
         $pagination = $this->preparePagination($offset, $limit);
 
         return new Gallery($images, $offset, $limit, $pagination);
