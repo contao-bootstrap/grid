@@ -53,6 +53,12 @@ final class MigrateAutoGridWidths
      */
     public function __invoke(): void
     {
+        $schemaManager = $this->connection->getSchemaManager();
+
+        if (!$schemaManager->tablesExist(['tl_bs_grid'])) {
+            return;
+        }
+
         $statement = $this->connection->executeQuery('SELECT * FROM tl_bs_grid');
 
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
