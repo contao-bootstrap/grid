@@ -1,19 +1,10 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
+declare(strict_types=1);
 
 $GLOBALS['TL_DCA']['tl_module']['config']['onload_callback'][] = [
     'contao_bootstrap.grid.listeners.dca.module',
-    'initialize'
+    'initialize',
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['metapalettes']['bs_grid'] = [
@@ -25,7 +16,6 @@ $GLOBALS['TL_DCA']['tl_module']['metapalettes']['bs_grid'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['bs_grid'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_module']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.module', 'getGridOptions'],
@@ -37,7 +27,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['bs_grid'] = [
         'tl_class'           => 'w50',
     ],
     'load_callback'  => [
-        ['contao_bootstrap.grid.listeners.dca.module', 'setGridWidgetOptions']
+        ['contao_bootstrap.grid.listeners.dca.module', 'setGridWidgetOptions'],
     ],
     'sql'              => "int(10) unsigned NOT NULL default '0'",
     'relation'         => ['type' => 'hasOne', 'load' => 'lazy'],
@@ -45,7 +35,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['bs_grid'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['bs_gridModules'] = [
-    'label'     => &$GLOBALS['TL_LANG']['tl_module']['bs_gridModules'],
     'exclude'   => true,
     'inputType' => 'multiColumnWizard',
     'eval'      => [

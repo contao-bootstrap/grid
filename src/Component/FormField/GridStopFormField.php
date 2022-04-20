@@ -1,38 +1,22 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\FormField;
 
-/**
- * Class GridStopFormField.
- *
- * @package ContaoBootstrap\Grid\Component\FormField
- */
+/** @psalm-suppress PropertyNotSetInConstructor - Issue in the codebase of Contao */
 class GridStopFormField extends AbstractRelatedFormField
 {
     /**
      * Template name.
-     *
-     * @var string
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
     protected $strTemplate = 'form_bs_gridStop';
 
     /**
      * {@inheritdoc}
      */
-    public function parse($attributes = null): string
+    public function parse($arrAttributes = null): string
     {
         $iterator = $this->getIterator();
         if ($iterator) {
@@ -43,6 +27,6 @@ class GridStopFormField extends AbstractRelatedFormField
             return $this->renderBackendView($this->getParent());
         }
 
-        return parent::parse($attributes);
+        return parent::parse($arrAttributes);
     }
 }

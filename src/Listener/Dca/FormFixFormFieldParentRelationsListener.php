@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
@@ -19,6 +8,7 @@ use Contao\DataContainer;
 use Contao\FormFieldModel;
 use Contao\Model\Collection;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
+
 use function time;
 
 /**
@@ -28,14 +18,10 @@ final class FormFixFormFieldParentRelationsListener
 {
     /**
      * Repository manager.
-     *
-     * @var RepositoryManager
      */
-    private $repositoryManager;
+    private RepositoryManager $repositoryManager;
 
     /**
-     * Constructor.
-     *
      * @param RepositoryManager $repositoryManager Repository manager.
      */
     public function __construct(RepositoryManager $repositoryManager)
@@ -48,8 +34,6 @@ final class FormFixFormFieldParentRelationsListener
      *
      * @param string|int    $insertId      Id of new created record.
      * @param DataContainer $dataContainer Data container.
-     *
-     * @return void
      */
     public function onCopy($insertId, DataContainer $dataContainer): void
     {
@@ -90,6 +74,7 @@ final class FormFixFormFieldParentRelationsListener
      * @param int    $parentId    The parent id.
      *
      * @return Collection|FormFieldModel[]|null
+     * @psalm-return Collection|null
      */
     private function loadFormFieldModels(string $parentTable, int $parentId): ?Collection
     {

@@ -1,0 +1,80 @@
+services:
+  contao_bootstrap.grid.grid_builder:
+    class: ContaoBootstrap\Grid\GridBuilder
+    arguments:
+      - '@contao_bootstrap.environment'
+
+  contao_bootstrap.grid.grid_provider:
+    class: ContaoBootstrap\Grid\GridProvider
+    arguments:
+      - '@contao_bootstrap.grid.grid_builder'
+
+  ContaoBootstrap\Grid\Component\ContentElement\GridStartElementController:
+    arguments:
+      - '@netzmacht.contao_toolkit.template_renderer'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '@netzmacht.contao_toolkit.response_tagger'
+      - '@contao.security.token_checker'
+      - '@contao_bootstrap.grid.grid_provider'
+      - '@contao_bootstrap.core.helper.color_rotate'
+      - '@translator'
+
+  ContaoBootstrap\Grid\Component\ContentElement\GridSeparatorElementController:
+    arguments:
+      - '@netzmacht.contao_toolkit.template_renderer'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '@netzmacht.contao_toolkit.response_tagger'
+      - '@contao.security.token_checker'
+      - '@contao_bootstrap.grid.grid_provider'
+      - '@contao_bootstrap.core.helper.color_rotate'
+      - '@translator'
+
+  ContaoBootstrap\Grid\Component\ContentElement\GridStopElementController:
+    arguments:
+      - '@netzmacht.contao_toolkit.template_renderer'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '@netzmacht.contao_toolkit.response_tagger'
+      - '@contao.security.token_checker'
+      - '@contao_bootstrap.grid.grid_provider'
+      - '@contao_bootstrap.core.helper.color_rotate'
+      - '@translator'
+
+  ContaoBootstrap\Grid\Component\ContentElement\GalleryElementController:
+    arguments:
+      - '@netzmacht.contao_toolkit.template_renderer'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '@netzmacht.contao_toolkit.response_tagger'
+      - '@contao.security.token_checker'
+      - '@security.helper'
+      - "@contao_bootstrap.grid.grid_provider"
+      - "@contao.framework"
+      - '%kernel.project_dir%'
+
+  ContaoBootstrap\Grid\Component\Module\GridFrontendModuleController:
+    arguments:
+      - '@netzmacht.contao_toolkit.template_renderer'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '@netzmacht.contao_toolkit.response_tagger'
+      - '@router'
+      - '@translator'
+      - '@contao_bootstrap.grid.grid_provider'
+
+  contao_bootstrap.grid.view.renderer_helper:
+    class: ContaoBootstrap\Grid\View\ComponentRenderHelper
+    public: true
+    deprecated: "Service '%service_id%' will be removed in one of the next minor releases! Only for internal code transition."
+    arguments:
+      - "@contao_bootstrap.grid.grid_provider"
+      - "@netzmacht.contao_toolkit.routing.scope_matcher"
+      - "@contao_bootstrap.core.helper.color_rotate"
+
+  contao_bootstrap.grid.response_tagger:
+    alias: netzmacht.contao_toolkit.response_tagger
+    public: true
+
+  ContaoBootstrap\Grid\Migration\AutoGridWidthsMigration:
+    public: true
+    arguments:
+      - '@database_connection'
+    tags:
+      - { name: 'contao.migration' }

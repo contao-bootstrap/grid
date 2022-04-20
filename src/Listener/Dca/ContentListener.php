@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
@@ -20,34 +9,36 @@ use Contao\Config;
 use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Framework\Adapter;
-use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Image\ImageSizes;
 use Contao\DataContainer;
 use Contao\Input;
 use Contao\Model;
+use Contao\Model\Collection;
 use ContaoBootstrap\Core\Environment;
 use Doctrine\DBAL\Connection;
+
+use function assert;
+use function defined;
+use function sprintf;
+use function time;
 
 /**
  * ContentDataContainer helper class.
  *
- * @package ContaoBootstrap\Grid\Dca
+ * @extends AbstractWrapperDcaListener<ContentModel>
  */
 final class ContentListener extends AbstractWrapperDcaListener
 {
     /**
      * Database connection.
-     *
-     * @var Connection
      */
-    private $connection;
+    private Connection $connection;
 
     /**
      * Contao framework.
-     *
-     * @var ContaoFramework
      */
-    private $framework;
+    private ContaoFramework $framework;
 
     /**
      * Content Model repository.
@@ -58,33 +49,27 @@ final class ContentListener extends AbstractWrapperDcaListener
 
     /**
      * Image sizes.
-     *
-     * @var ImageSizes
      */
-    private $imageSizes;
+    private ImageSizes $imageSizes;
 
     /**
      * Contao backend user.
-     *
-     * @var BackendUser|Adapter
      */
-    private $user;
+    private BackendUser $user;
 
     /**
-     * ContentDataContainer constructor.
-     *
-     * @param Environment         $environment Bootstrap environment.
-     * @param Connection          $connection  Database connection.
-     * @param ContaoFramework     $framework   Contao framework.
-     * @param ImageSizes          $imageSizes  Image sizes.
-     * @param Adapter|BackendUser $user        Contao backend user.
+     * @param Environment     $environment Bootstrap environment.
+     * @param Connection      $connection  Database connection.
+     * @param ContaoFramework $framework   Contao framework.
+     * @param ImageSizes      $imageSizes  Image sizes.
+     * @param BackendUser     $user        Contao backend user.
      */
     public function __construct(
         Environment $environment,
         Connection $connection,
         ContaoFramework $framework,
         ImageSizes $imageSizes,
-        $user
+        BackendUser $user
     ) {
         parent::__construct($environment);
 
@@ -98,21 +83,17 @@ final class ContentListener extends AbstractWrapperDcaListener
     /**
      * Initialize the dca.
      *
-     * @return void
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function initializeDca(): void
     {
-        /** @var Input $input */
         $input = $this->framework->getAdapter(Input::class);
-
         if ($input->get('act') !== 'edit') {
             return;
         }
 
-        $model = $this->repository->findByPk(Input::get('id'));
-        if (!$model || $model->type !== 'bs_grid_gallery') {
+        $model = $this->repository->findByPk($input->get('id'));
+        if (! $model || $model->type !== 'bs_grid_gallery') {
             return;
         }
 
@@ -127,24 +108,29 @@ final class ContentListener extends AbstractWrapperDcaListener
     /**
      * Get all grid parent options.
      *
-     * @return array
+     * @return array<int|string,string>
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function getGridParentOptions(): array
     {
-        $columns[] = 'tl_content.type = ?';
-        $columns[] = 'tl_content.pid = ?';
-        $columns[] = 'tl_content.ptable = ?';
+        $columns = [
+            'tl_content.type = ?',
+            'tl_content.pid = ?',
+            'tl_content.ptable = ?',
+        ];
 
-        $values[] = 'bs_gridStart';
-        $values[] = CURRENT_ID;
-        $values[] = $GLOBALS['TL_DCA']['tl_content']['config']['ptable'];
+        assert(defined('CURRENT_ID'));
+        $values = [
+            'bs_gridStart',
+            CURRENT_ID,
+            $GLOBALS['TL_DCA']['tl_content']['config']['ptable'],
+        ];
 
         $collection = $this->repository->findBy($columns, $values, ['tl_content.sorting']);
         $options    = [];
 
-        if ($collection) {
+        if ($collection instanceof Collection) {
             foreach ($collection as $model) {
                 $options[$model->id] = sprintf(
                     '%s [%s]',
@@ -160,11 +146,10 @@ final class ContentListener extends AbstractWrapperDcaListener
     /**
      * Get all gallery templates.
      *
-     * @return array
+     * @return list<string>|array<string,list<string>>
      */
-    public function getGalleryTemplates()
+    public function getGalleryTemplates(): array
     {
-        /** @var Controller $adapter */
         $adapter = $this->framework->getAdapter(Controller::class);
 
         return $adapter->getTemplateGroup('bs_gallery_');
@@ -195,7 +180,7 @@ final class ContentListener extends AbstractWrapperDcaListener
     /**
      * Get the image sizes.
      *
-     * @return array
+     * @return string[][]
      */
     public function getImageSizes(): array
     {
@@ -203,13 +188,7 @@ final class ContentListener extends AbstractWrapperDcaListener
     }
 
     /**
-     * Create a grid element.
-     *
-     * @param ContentModel $current Current content model.
-     * @param string       $type    Type of the content model.
-     * @param int          $sorting The sorting value.
-     *
-     * @return Model
+     * {@inheritDoc}
      */
     protected function createGridElement($current, string $type, int &$sorting): Model
     {
@@ -226,11 +205,7 @@ final class ContentListener extends AbstractWrapperDcaListener
     }
 
     /**
-     * Get the next content elements.
-     *
-     * @param ContentModel $current Current content model.
-     *
-     * @return ContentModel[]
+     * {@inheritDoc}
      */
     protected function getNextElements($current): array
     {
@@ -245,7 +220,7 @@ final class ContentListener extends AbstractWrapperDcaListener
             ['order' => 'tl_content.sorting ASC']
         );
 
-        if ($collection) {
+        if ($collection instanceof Collection) {
             return $collection->getIterator()->getArrayCopy();
         }
 
@@ -253,11 +228,7 @@ final class ContentListener extends AbstractWrapperDcaListener
     }
 
     /**
-     * Get related stop element.
-     *
-     * @param ContentModel $current Current element.
-     *
-     * @return ContentModel|Model
+     * {@inheritDoc}
      */
     protected function getStopElement($current): Model
     {

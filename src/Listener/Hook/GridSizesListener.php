@@ -1,25 +1,20 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Hook;
 
+use Contao\Model;
 use Contao\StringUtil;
 use Contao\ThemeModel;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Grid\Model\GridModel;
 use Doctrine\DBAL\Connection;
+
+use function array_merge;
+use function array_unique;
+use function array_values;
+use function sprintf;
 
 /**
  * Class GridSizesListener initializes all dynamic grid size columns
@@ -31,21 +26,15 @@ final class GridSizesListener
 {
     /**
      * Database connection.
-     *
-     * @var Connection
      */
-    private $connection;
+    private Connection $connection;
 
     /**
      * Contao bootstrap environment.
-     *
-     * @var Environment
      */
-    private $environment;
+    private Environment $environment;
 
     /**
-     * GridSizesListener constructor.
-     *
      * @param Connection  $connection  Database connection.
      * @param Environment $environment Contao bootstrap environment.
      */
@@ -59,8 +48,6 @@ final class GridSizesListener
      * Initialize all grid sizes.
      *
      * @param string $dataContainer The data container name.
-     *
-     * @return void
      */
     public function initializeSizes(string $dataContainer): void
     {
@@ -69,7 +56,7 @@ final class GridSizesListener
         }
 
         $schemaManager = $this->connection->getSchemaManager();
-        if ($schemaManager === null || !$schemaManager->tablesExist([GridModel::getTable(), 'tl_theme'])) {
+        if (! $schemaManager->tablesExist([GridModel::getTable(), 'tl_theme'])) {
             return;
         }
 
@@ -84,8 +71,6 @@ final class GridSizesListener
      *
      * @param string $size The grid size.
      *
-     * @return void
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function createDcaField(string $size): void
@@ -93,7 +78,6 @@ final class GridSizesListener
         $sizeLabel = $size . 'Size';
 
         $GLOBALS['TL_DCA']['tl_bs_grid']['fields'][$sizeLabel] = [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid'][$sizeLabel],
             'exclude'   => true,
             'inputType' => 'multiColumnWizard',
             'sql'       => 'blob NULL',
@@ -102,7 +86,6 @@ final class GridSizesListener
                 'dragAndDrop'        => true,
                 'columnFields'       => [
                     'width'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.listeners.dca.grid',
@@ -116,7 +99,6 @@ final class GridSizesListener
                         ],
                     ],
                     'offset' => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.listeners.dca.grid',
@@ -131,7 +113,6 @@ final class GridSizesListener
                         ],
                     ],
                     'order'  => [
-                        'label'            => $GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.listeners.dca.grid',
@@ -144,7 +125,6 @@ final class GridSizesListener
                         ],
                     ],
                     'align'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
@@ -154,16 +134,12 @@ final class GridSizesListener
                         ],
                     ],
                     'class'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'text',
-                        'eval'      => [
-                            'style' => 'width: 160px',
-                        ],
+                        'eval'      => ['style' => 'width: 160px'],
                     ],
                     'reset'  => [
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'select',
@@ -183,13 +159,11 @@ final class GridSizesListener
      * Create the database field for the grid size if not exists.
      *
      * @param string $size The grid size.
-     *
-     * @return void
      */
     public function createDatabaseField(string $size): void
     {
         $schemaManager = $this->connection->getSchemaManager();
-        if (!$schemaManager->tablesExist(GridModel::getTable())) {
+        if (! $schemaManager->tablesExist(GridModel::getTable())) {
             return;
         }
 
@@ -198,18 +172,25 @@ final class GridSizesListener
             return;
         }
 
-        $this->connection->exec(sprintf('ALTER TABLE %s ADD %sSize BLOB DEFAULT NULL', GridModel::getTable(), $size));
+        $this->connection->executeStatement(
+            sprintf('ALTER TABLE %s ADD %sSize BLOB DEFAULT NULL', GridModel::getTable(), $size)
+        );
     }
 
     /**
      * Get all sizes.
      *
-     * @return array
+     * @return list<string>
      */
     public function getSizes(): array
     {
         $sizes  = $this->environment->getConfig()->get('grid.sizes', []);
         $themes = ThemeModel::findAll() ?: [];
+
+        if ($themes instanceof Model) {
+            $themes = [$themes];
+        }
+
         foreach ($themes as $theme) {
             $sizes = array_merge($sizes, StringUtil::deserialize($theme->bs_grid_sizes, true));
         }

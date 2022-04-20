@@ -1,28 +1,17 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @author     Florian Vick <florian@florian-vick.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Definition;
 
+use function array_merge;
+use function array_unique;
+use function array_values;
+use function is_int;
 use function sprintf;
+use function strlen;
 
 /**
- * Class Column.
- *
- * @package ContaoBootstrap\Grid\Definition
- *
  * @SuppressWarnings(TooManyPublicMethods)
  */
 class Column
@@ -30,30 +19,26 @@ class Column
     /**
      * Column width.
      *
-     * @var string
+     * @var int|string|null
      */
-    private $width;
+    private $width = null;
 
     /**
      * Order setting.
-     *
-     * @var int
      */
-    private $order;
+    private ?int $order = null;
 
     /**
      * Offset setting.
      *
-     * @var string|int
+     * @var string|int|null
      */
-    private $offset;
+    private $offset = null;
 
     /**
      * Align.
-     *
-     * @var string
      */
-    private $align;
+    private ?string $align = null;
 
     /**
      * Add reset before the column.
@@ -64,17 +49,15 @@ class Column
 
     /**
      * Justify setting.
-     *
-     * @var string
      */
-    private $justify;
+    private ?string $justify = null;
 
     /**
      * Css classes.
      *
-     * @var array
+     * @var list<string>
      */
-    private $cssClasses;
+    private array $cssClasses = [];
 
     /**
      * Set the column width.
@@ -93,9 +76,9 @@ class Column
     /**
      * Force variable width of column.
      *
-     * @return Column
-     *
      * @see https://getbootstrap.com/docs/4.3/layout/grid/#variable-width-content
+     *
+     * @return Column
      */
     public function variableWidth(): self
     {
@@ -146,6 +129,13 @@ class Column
         return $this;
     }
 
+    public function justify(string $justify): self
+    {
+        $this->justify = $justify;
+
+        return $this;
+    }
+
     /**
      * Set the reset flag.
      *
@@ -189,10 +179,10 @@ class Column
     /**
      * Build the column definition.
      *
-     * @param array  $classes List of classes.
-     * @param string $size    Column size.
+     * @param list<string> $classes List of classes.
+     * @param string       $size    Column size.
      *
-     * @return array
+     * @return list<string>
      */
     public function build(array $classes, string $size = ''): array
     {
@@ -201,7 +191,7 @@ class Column
         if ($this->width === 'auto') {
             $classes[] = 'col' . $sizeSuffix . '-auto';
         } elseif ($this->width === null || $this->width > 0) {
-            $widthSuffix = ($this->width > 0) ? '-' . $this->width : '';
+            $widthSuffix = $this->width > 0 ? '-' . $this->width : '';
             $classes[]   = 'col' . $sizeSuffix . $widthSuffix;
         } elseif ($size) {
             $classes[] = 'd-' . $size . '-none';
@@ -218,16 +208,16 @@ class Column
             $classes = array_merge($classes, $this->cssClasses);
         }
 
-        return array_unique($classes);
+        return array_values(array_unique($classes));
     }
 
     /**
      * Build the reset for the column.
      *
-     * @param array  $resets Reset definitions.
-     * @param string $size   Column size.
+     * @param list<string> $resets Reset definitions.
+     * @param string       $size   Column size.
      *
-     * @return array
+     * @return list<string>
      */
     public function buildReset(array $resets, string $size = ''): array
     {
@@ -242,8 +232,6 @@ class Column
 
     /**
      * Check if reset is required.
-     *
-     * @return bool
      */
     public function hasReset(): bool
     {
@@ -251,57 +239,55 @@ class Column
     }
 
     /**
-     * Build the align setting.
+     * Build the alignment setting.
      *
-     * @param array  $classes    Column classes.
-     * @param string $sizeSuffix Bootstrap Size suffix like 'md' or 'lg'.
-     *
-     * @return void
+     * @param list<string> $classes    Column classes.
+     * @param string       $sizeSuffix Bootstrap Size suffix like 'md' or 'lg'.
      */
     private function buildAlign(array &$classes, string $sizeSuffix = ''): void
     {
-        if ($this->align) {
-            $classes[] = 'align-self'. $sizeSuffix . '-' . $this->align;
+        if (! $this->align) {
+            return;
         }
+
+        $classes[] = 'align-self' . $sizeSuffix . '-' . $this->align;
     }
 
     /**
      * Build the justify setting.
      *
-     * @param array  $classes    Column classes.
-     * @param string $sizeSuffix Bootstrap Size suffix like 'md' or 'lg'.
-     *
-     * @return void
+     * @param list<string> $classes    Column classes.
+     * @param string       $sizeSuffix Bootstrap Size suffix like 'md' or 'lg'.
      */
     private function buildJustify(array &$classes, string $sizeSuffix = ''): void
     {
-        if ($this->justify) {
-            $classes[] = 'justify-content' . $sizeSuffix . '-' . $this->justify;
+        if (! $this->justify) {
+            return;
         }
+
+        $classes[] = 'justify-content' . $sizeSuffix . '-' . $this->justify;
     }
 
     /**
      * Build the order setting.
      *
-     * @param array  $classes    Column classes.
-     * @param string $sizeSuffix Size suffix.
-     *
-     * @return void
+     * @param list<string> $classes    Column classes.
+     * @param string       $sizeSuffix Size suffix.
      */
     private function buildOrder(array &$classes, string $sizeSuffix): void
     {
-        if ($this->order) {
-            $classes[] = 'order' . $sizeSuffix . '-' . $this->order;
+        if (! $this->order) {
+            return;
         }
+
+        $classes[] = 'order' . $sizeSuffix . '-' . $this->order;
     }
 
     /**
      * Build offset setting.
      *
-     * @param array  $classes    Column classes.
-     * @param string $sizeSuffix Size suffix.
-     *
-     * @return void
+     * @param list<string> $classes    Column classes.
+     * @param string       $sizeSuffix Size suffix.
      */
     private function buildOffset(array &$classes, string $sizeSuffix): void
     {

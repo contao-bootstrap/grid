@@ -1,17 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @author     Patrick Landolt <patrick.landolt@artack.ch>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
@@ -20,23 +8,20 @@ use Contao\DataContainer;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Grid\Model\GridModel;
 
+use function range;
+use function sprintf;
+
 /**
  * GridOptionsProvider provides grid related options callbacks.
- *
- * @package ContaoBootstrap\Grid\Dca
  */
 abstract class AbstractDcaListener
 {
     /**
      * Bootstrap environment.
-     *
-     * @var Environment
      */
-    private $environment;
+    private Environment $environment;
 
     /**
-     * Form constructor.
-     *
      * @param Environment $environment Bootstrap environment.
      */
     public function __construct(Environment $environment)
@@ -47,7 +32,7 @@ abstract class AbstractDcaListener
     /**
      * Get range of grid columns.
      *
-     * @return array
+     * @return list<int>
      */
     public function getGridColumns(): array
     {
@@ -60,7 +45,7 @@ abstract class AbstractDcaListener
     /**
      * Get grid breakpoints.
      *
-     * @return array
+     * @return list<string>
      */
     public function getGridSizes(): array
     {
@@ -70,7 +55,7 @@ abstract class AbstractDcaListener
     /**
      * Get all available grids.
      *
-     * @return array
+     * @return array<string,array<int|string,string>>
      */
     public function getGridOptions(): array
     {
@@ -97,13 +82,11 @@ abstract class AbstractDcaListener
      *
      * @param string        $value         Grid name.
      * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return string
      */
     public function generateGridName($value, $dataContainer): string
     {
-        if (!$value) {
-            $value = 'grid_' . $dataContainer->activeRecord->id;
+        if (! $value) {
+            $value = 'grid_' . $dataContainer->id;
         }
 
         return $value;

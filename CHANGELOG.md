@@ -5,6 +5,24 @@ Changelog
 [Unreleased]
 ------------
 
+
+[2.4.0] (2022-04-20)
+--------------------
+
+### Changed
+
+ - Bump minimum PHP version to 7.4
+ - Bump Symfony requirements to ^4.4 or ^5.4
+ - Bump Contao requirements to ^4.9 or ^4.13
+ - Changed coding standard
+ - Rewrite modules and elements to fragment controller
+
+### Fixed
+
+ - Prevent migration if table does not exist ([#49](https://github.com/contao-bootstrap/grid/pull/49))
+ - Prevent issues with grid size settings ([#48](https://github.com/contao-bootstrap/grid/issues/48))
+
+
 [2.3.1] (2020-11-16)
 --------------------
 
@@ -13,6 +31,7 @@ Changelog
  - Prevent sql error if tables `tl_theme` or `tl_bs_grid` does not exist
  - Prevent security issue occurred in `symfony/http-kernel`
 
+
 [2.3.0] (2020-08-28)
 --------------------
 
@@ -20,10 +39,11 @@ Changelog
 
  - Add ability to support custom grid sizes [#44](https://github.com/contao-bootstrap/grid/pull/44) (@scuben)
  - Use custom template for grid element [#41](https://github.com/contao-bootstrap/grid/pull/41) (@RoflCopter24)
- 
+
 ### Fixed
 
  - Prevent ambiguous field names in parent relation fixer [#43](https://github.com/contao-bootstrap/grid/pull/43)
+
 
 [2.2.3] (2020-02-04)
 --------------------
@@ -31,6 +51,7 @@ Changelog
 ### Fixed
 
  - Do not register grid parent fixer for unsupported data container drivers [#40](https://github.com/contao-bootstrap/grid/issues/40)
+
 
 [2.2.2] (2020-01-22)
 --------------------
@@ -42,6 +63,7 @@ Changelog
 ### Fixed
 
  - Fix issue when duplicating form field [#39](https://github.com/contao-bootstrap/grid/issues/39)
+
 
 [2.2.1] (2020-01-21)
 -------------------
@@ -55,6 +77,7 @@ Changelog
  - Repair parent relation of grid elements now also works if children of a page are also copied
  - Only check nested data structures if the data container is a table
 
+
 [2.2.0] (2020-01-18)
 --------------------
 
@@ -63,6 +86,7 @@ Changelog
  - Add option to define a grid in newslist and newsarchive modules to wrap each news article in a grid column
  - Add parent relation fixer which fix relations after an element or its parent got copied
  - Auto select closes grid start element/form field if type is changed
+
 
 [2.1.2] (2019-11-11)
 --------------------
@@ -74,12 +98,14 @@ Changelog
  - Do not add row class twiche [#33](https://github.com/contao-bootstrap/grid/issues/33)
  - Fix grid identifier for modules [#31](https://github.com/contao-bootstrap/grid/issues/31)
 
+
 [2.1.1] (2019-06-11)
 --------------------
 
 ### Fixed
 
  - Add missing closing div ([#30](https://github.com/contao-bootstrap/grid/issues/30))
+
 
 [2.1.0] (2019-04-18)
 --------------------
@@ -90,10 +116,11 @@ Changelog
  - Support auto grid size ([#28](https://github.com/contao-bootstrap/grid/pull/28))
  - Support size suffixes for alignments ([#26](https://github.com/contao-bootstrap/grid/pull/26))
  - Tag response with grid id when grid element or module is used ([#18](https://github.com/contao-bootstrap/grid/issues/18))
- 
+
 ### Fixed
 
  - Translation of grid parent is missing ([#23](https://github.com/contao-bootstrap/grid/issues/23))
+
 
 2.0.8 (2019-01-29)
 ------------------
@@ -104,6 +131,7 @@ Changelog
 
  - Fix deprecated warning using PHP 7.3 ([#24](https://github.com/contao-bootstrap/grid/issues/24))
  - Updated translations from transifex
+
 
 2.0.7 (2018-08-31)
 ------------------
@@ -171,7 +199,7 @@ Changelog
 [Full Changelog](https://github.com/contao-bootstrap/grid/compare/2.0.0-beta3...2.0.0)
 
  - Support MetaPalettes v2.0.
- 
+
 2.0.0-beta3 (2017-12-01)
 ------------------------
 
@@ -211,6 +239,8 @@ Fixed bugs:
 
 
 [Unreleased]: https://github.com/contao-bootstrap/grid/compare/master...develop
+[2.4.0]: https://github.com/contao-bootstrap/grid/compare/2.3.1...2.4.0
+[2.3.1]: https://github.com/contao-bootstrap/grid/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/contao-bootstrap/grid/compare/2.2.3...2.3.0
 [2.2.2]: https://github.com/contao-bootstrap/grid/compare/2.2.2...2.2.3
 [2.2.2]: https://github.com/contao-bootstrap/grid/compare/2.2.1...2.2.2

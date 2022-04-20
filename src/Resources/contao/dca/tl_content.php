@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 use ContaoBootstrap\Grid\Listener\Dca\ContentFixParentRelationListener;
@@ -26,12 +15,12 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = [
 
 $GLOBALS['TL_DCA']['tl_content']['config']['oncopy_callback'][] = [
     ContentFixParentRelationListener::class,
-    'onCopy'
+    'onCopy',
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['config']['onsubmit_callback'][] = [
     ContentFixParentRelationListener::class,
-    'onSubmit'
+    'onSubmit',
 ];
 
 /*
@@ -82,7 +71,6 @@ $GLOBALS['TL_DCA']['tl_content']['metapalettes']['bs_grid_gallery'] = [
  */
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.content', 'getGridOptions'],
@@ -99,7 +87,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_name'] = [
-    'label'         => &$GLOBALS['TL_LANG']['tl_content']['bs_grid_name'],
     'exclude'       => true,
     'inputType'     => 'text',
     'reference'     => &$GLOBALS['TL_LANG']['tl_content'],
@@ -115,7 +102,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_name'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_parent'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid_parent'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.content', 'getGridParentOptions'],
@@ -131,7 +117,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_parent'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_wizard'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_content']['bs_grid_wizard'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.content', 'getGridColumns'],
@@ -147,14 +132,13 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_wizard'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
-    'label'         => &$GLOBALS['TL_LANG']['tl_content']['bs_image_sizes'],
     'exclude'       => true,
     'inputType'     => 'multiColumnWizard',
     'eval'          => [
         'tl_class'     => 'clr lng bs-image-sizes',
         'columnFields' => [
             'size' => [
-                'label'            => &$GLOBALS['TL_LANG']['tl_content']['size'],
+                'label'            => &$GLOBALS['TL_LANG']['MSC']['imgSize'],
                 'exclude'          => true,
                 'inputType'        => 'select',
                 'reference'        => &$GLOBALS['TL_LANG']['MSC'],
@@ -173,7 +157,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
                 'eval'          => [
                     'includeBlankOption' => true,
                     'chosen'             => true,
-                    'class'           => 'tl_imageSize_0',
+                    'class'              => 'tl_imageSize_0',
                 ],
             ],
             'height' => [
@@ -184,9 +168,9 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
                 'eval'          => [
                     'includeBlankOption' => true,
                     'chosen'             => true,
-                    'class'           => 'tl_imageSize_1',
+                    'class'              => 'tl_imageSize_1',
                 ],
-            ]
+            ],
         ],
     ],
     'sql'           => 'blob NULL',
@@ -194,5 +178,5 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['multiSRC']['load_callback'][] = [
     'contao_bootstrap.grid.listeners.dca.content',
-    'setMultiSrcFlags'
+    'setMultiSrcFlags',
 ];

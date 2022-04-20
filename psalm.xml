@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<psalm
+        errorLevel="8"
+        hideExternalErrors="true"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config https://getpsalm.org/schema/config"
+>
+    <projectFiles>
+        <directory name="src"/>
+    </projectFiles>
+
+    <issueHandlers>
+        <UndefinedFunction>
+            <errorLevel type="suppress">
+                <referencedFunction name="array_insert"/>
+            </errorLevel>
+        </UndefinedFunction>
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="Contao\CoreBundle\Framework\Adapter::__call"/>
+                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::initialize"/>
+                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::getAdapter"/>
+            </errorLevel>
+        </InternalMethod>
+        <DeprecatedMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="Contao\Controller::addImageToTemplate"/>
+            </errorLevel>
+        </DeprecatedMethod>
+    </issueHandlers>
+
+    <universalObjectCrates>
+        <class name="Contao\BackendTemplate"/>
+        <class name="Contao\ContentModel"/>
+        <class name="Contao\Database\Result"/>
+        <class name="Contao\FormFieldModel"/>
+        <class name="Contao\Model"/>
+        <class name="Contao\ModuleModel"/>
+        <class name="Contao\ModuleNews"/>
+        <class name="Contao\Template"/>
+        <class name="Contao\ThemeModel"/>
+    </universalObjectCrates>
+</psalm>

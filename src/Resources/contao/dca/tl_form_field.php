@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 use ContaoBootstrap\Grid\Listener\Dca\FormFieldFixParentRelationListener;
@@ -21,12 +10,12 @@ use ContaoBootstrap\Grid\Listener\Dca\FormFieldFixParentRelationListener;
 
 $GLOBALS['TL_DCA']['tl_form_field']['config']['oncopy_callback'][] = [
     FormFieldFixParentRelationListener::class,
-    'onCopy'
+    'onCopy',
 ];
 
 $GLOBALS['TL_DCA']['tl_form_field']['config']['onsubmit_callback'][] = [
     FormFieldFixParentRelationListener::class,
-    'onSubmit'
+    'onSubmit',
 ];
 
 /*
@@ -39,7 +28,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['metapalettes']['bs_gridStart'] = [
         'bs_grid',
         'bs_grid_name',
     ],
-    'bs_grid_wizard' => ['bs_grid_wizard',],
+    'bs_grid_wizard' => ['bs_grid_wizard'],
     'template'       => [':hide', 'customTpl'],
     'protected'      => [':hide', 'protected'],
 ];
@@ -62,7 +51,6 @@ $GLOBALS['TL_DCA']['tl_form_field']['metapalettes']['bs_gridStop'] = [
  */
 
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.form', 'getGridOptions'],
@@ -72,31 +60,29 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid'] = [
         'submitOnChange'     => true,
         'includeBlankOption' => true,
         'chosen'             => true,
-        'tl_class'           => 'w50'
+        'tl_class'           => 'w50',
     ],
     'sql'              => "int(10) unsigned NOT NULL default '0'",
     'relation'         => ['type' => 'hasOne', 'load' => 'lazy'],
-    'foreignKey'       => 'tl_bs_grid.title'
+    'foreignKey'       => 'tl_bs_grid.title',
 ];
 
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_name'] = [
-    'label'         => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid_name'],
     'exclude'       => true,
     'inputType'     => 'text',
     'eval'          => [
         'includeBlankOption' => true,
         'chosen'             => true,
-        'tl_class'           => 'w50'
+        'tl_class'           => 'w50',
     ],
     'save_callback' => [
-        ['contao_bootstrap.grid.listeners.dca.form', 'generateGridName']
+        ['contao_bootstrap.grid.listeners.dca.form', 'generateGridName'],
     ],
     'sql'           => "varchar(64) NOT NULL default ''",
 ];
 
 
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_parent'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid_parent'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.form', 'getGridParentOptions'],
@@ -106,13 +92,12 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_parent'] = [
         'includeBlankOption' => true,
         'chosen'             => true,
         'doNotCopy'          => true,
-        'tl_class'           => 'w50'
+        'tl_class'           => 'w50',
     ],
-    'sql'              => "int(10) unsigned NOT NULL default '0'"
+    'sql'              => "int(10) unsigned NOT NULL default '0'",
 ];
 
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['bs_grid_wizard'] = [
-    'label'            => &$GLOBALS['TL_LANG']['tl_form_field']['bs_grid_wizard'],
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => ['contao_bootstrap.grid.listeners.dca.form', 'getGridColumns'],

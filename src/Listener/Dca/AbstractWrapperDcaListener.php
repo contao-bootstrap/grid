@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
@@ -19,32 +8,31 @@ use Contao\Database\Result;
 use Contao\DataContainer;
 use Contao\Model;
 
+use function array_unshift;
+use function assert;
+
 /**
- * Class AbstractWrapperDcaHelper.
- *
- * @package ContaoBootstrap\Grid\Dca
+ * @template TModel of Model
  */
 abstract class AbstractWrapperDcaListener extends AbstractDcaListener
 {
     /**
      * Generate the columns.
      *
-     * @param int           $value         Number of columns which should be generated.
+     * @param int|string    $value         Number of columns which should be generated.
      * @param DataContainer $dataContainer Data container driver.
      *
      * @return null
      */
     public function generateColumns($value, $dataContainer)
     {
-        if (!$dataContainer->activeRecord) {
+        if (! $dataContainer->activeRecord) {
             return null;
         }
 
-        /** @var Model|Result $current */
         $current = $dataContainer->activeRecord;
-        if (!$dataContainer->activeRecord) {
-            return null;
-        }
+        assert($current instanceof Model || $current instanceof Result);
+        /** @psalm-var TModel|Result $current */
 
         if ($value) {
             $stopElement  = $this->getStopElement($current);
@@ -65,16 +53,15 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
     /**
      * Create separators.
      *
-     * @param int   $value   Number of separators being created.
-     * @param Model $current Current model.
-     * @param int   $sorting Current sorting value.
-     *
-     * @return int
+     * @param int          $value   Number of separators being created.
+     * @param Model|Result $current Current model.
+     * @param int          $sorting Current sorting value.
+     * @psalm-param TModel|Result $current
      */
     protected function createSeparators(int $value, $current, int $sorting): int
     {
         for ($count = 1; $count <= $value; $count++) {
-            $sorting = ($sorting + 8);
+            $sorting += 8;
             $this->createGridElement($current, 'bs_gridSeparator', $sorting);
         }
 
@@ -86,14 +73,13 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      *
      * @param Model[] $elements    Model collection.
      * @param int     $lastSorting Last sorting value.
-     *
-     * @return int
+     * @psalm-param TModel[] $elements
      */
     protected function updateSortings(array $elements, int $lastSorting): int
     {
         foreach ($elements as $element) {
             if ($lastSorting > $element->sorting) {
-                $element->sorting = ($lastSorting + 8);
+                $element->sorting = $lastSorting + 8;
                 $element->save();
             }
 
@@ -106,14 +92,15 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
     /**
      * Create the stop element.
      *
-     * @param Model $current Model.
-     * @param int   $sorting Last sorting value.
+     * @param Model|Result $current Model.
+     * @param int          $sorting Last sorting value.
+     * @psalm-param TModel|Result $current
      *
-     * @return Model
+     * @psalm-return TModel
      */
     protected function createStopElement($current, int $sorting): Model
     {
-        $sorting = ($sorting + 8);
+        $sorting += 8;
 
         return $this->createGridElement($current, 'bs_gridStop', $sorting);
     }
@@ -121,29 +108,33 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
     /**
      * Create a grid element.
      *
-     * @param Model  $current Current content model.
-     * @param string $type    Type of the content model.
-     * @param int    $sorting The sorting value.
+     * @param Model|Result $current Current content model.
+     * @param string       $type    Type of the content model.
+     * @param int          $sorting The sorting value.
+     * @psalm-param TModel|Result $current
      *
-     * @return Model
+     * @return TModel
      */
     abstract protected function createGridElement($current, string $type, int &$sorting): Model;
 
     /**
      * Get the next content elements.
      *
-     * @param Model $current Current content model.
-     *
+     * @param Model|Result $current Current content model.
+     * @psalm-param TModel|Result $current
+
      * @return Model[]
+     * @psalm-return array<TModel>
      */
     abstract protected function getNextElements($current): array;
 
     /**
      * Get related stop element.
      *
-     * @param Model $current Current element.
+     * @param Model|Result $current Current element.
+     * @psalm-param TModel|Result $current
      *
-     * @return Model
+     * @psalm-return TModel
      */
     abstract protected function getStopElement($current): Model;
 }

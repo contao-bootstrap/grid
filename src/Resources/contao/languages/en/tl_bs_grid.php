@@ -77,3 +77,8 @@ $GLOBALS['TL_LANG']['tl_bs_grid']['resets']['1'][0]       = 'all';
 $GLOBALS['TL_LANG']['tl_bs_grid']['resets']['1'][1]       = 'Reset all upcoming sizes.';
 $GLOBALS['TL_LANG']['tl_bs_grid']['resets']['2'][0]       = 'size';
 $GLOBALS['TL_LANG']['tl_bs_grid']['resets']['2'][1]       = 'Reset only this size.';
+
+$GLOBALS['TL_LANG']['tl_content']['bs_image_size_width'][0]  = 'Width';
+$GLOBALS['TL_LANG']['tl_content']['bs_image_size_width'][1]  = 'Width of the image';
+$GLOBALS['TL_LANG']['tl_content']['bs_image_size_height'][0] = 'Height';
+$GLOBALS['TL_LANG']['tl_content']['bs_image_size_height'][1] = 'Height of the image';

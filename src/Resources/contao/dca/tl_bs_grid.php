@@ -1,18 +1,6 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @author     Patrick Landolt <patrick.landolt@artack.ch>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
-use ContaoBootstrap\Grid\Model\GridModel;
+declare(strict_types=1);
 
 $GLOBALS['TL_DCA']['tl_bs_grid'] = [
     // Config
@@ -25,9 +13,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             ['contao_bootstrap.grid.listeners.dca.grid', 'initializePalette'],
         ],
         'sql'              => [
-            'keys' => [
-                'id' => 'primary',
-            ],
+            'keys' => ['id' => 'primary'],
         ],
     ],
     // List configuration
@@ -35,7 +21,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
         'label'             => [
             'fields' => ['title'],
             'format' => '%s <span style="color:#ccc;">[%s '
-                . $GLOBALS['TL_LANG']['tl_bs_grid']['formatColumns']
+                . ($GLOBALS['TL_LANG']['tl_bs_grid']['formatColumns'] ?? '')
                 . ']</span>',
         ],
         'sorting'           => [
@@ -51,7 +37,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
         ],
         'global_operations' => [
             'all' => [
-                'label'      => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'       => 'act=select',
                 'class'      => 'header_edit_all',
                 'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
@@ -59,25 +44,21 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
         ],
         'operations'        => [
             'edit'   => [
-                'label' => &$GLOBALS['TL_LANG']['tl_bs_grid']['edit'],
                 'href'  => 'act=edit',
                 'icon'  => 'edit.gif',
             ],
             'copy'   => [
-                'label'      => &$GLOBALS['TL_LANG']['tl_bs_grid']['copy'],
                 'href'       => 'act=copy',
                 'icon'       => 'copy.gif',
                 'attributes' => 'onclick="Backend.getScrollOffset()"',
             ],
             'delete' => [
-                'label'      => &$GLOBALS['TL_LANG']['tl_bs_grid']['delete'],
                 'href'       => 'act=delete',
                 'icon'       => 'delete.gif',
                 'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm']
                     . '\'))return false;Backend.getScrollOffset()"',
             ],
             'show'   => [
-                'label' => &$GLOBALS['TL_LANG']['tl_bs_grid']['show'],
                 'href'  => 'act=show',
                 'icon'  => 'show.gif',
             ],
@@ -92,19 +73,14 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
         ],
     ],
     'fields'       => [
-        'id'          => [
-            'sql' => 'int(10) unsigned NOT NULL auto_increment',
-        ],
+        'id'          => ['sql' => 'int(10) unsigned NOT NULL auto_increment'],
         'pid'         => [
             'foreignKey' => 'tl_theme.name',
             'relation'   => ['type' => 'hasOne', 'load' => 'lazy'],
             'sql'        => 'int(10) unsigned NOT NULL default \'0\'',
         ],
-        'tstamp'      => [
-            'sql' => 'int(10) unsigned NOT NULL default \'0\'',
-        ],
+        'tstamp'      => ['sql' => 'int(10) unsigned NOT NULL default \'0\''],
         'title'       => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['title'],
             'exclude'   => true,
             'sorting'   => true,
             'flag'      => 1,
@@ -114,7 +90,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => 'varchar(255) NOT NULL default \'\'',
         ],
         'description' => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['description'],
             'exclude'   => true,
             'search'    => true,
             'inputType' => 'text',
@@ -122,7 +97,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => 'varchar(255) NOT NULL default \'\'',
         ],
         'sizes'       => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['sizes'],
             'exclude'   => true,
             'inputType' => 'checkbox',
             'options_callback' => [
@@ -139,7 +113,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => 'tinyBlob NULL',
         ],
         'align'       => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
             'inputType' => 'select',
             'options'   => ['start', 'center', 'end'],
             'eval'      => [
@@ -150,7 +123,6 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => 'varchar(64) NOT NULL default \'\'',
         ],
         'justify'     => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['justify'],
             'inputType' => 'select',
             'options'   => ['start', 'center', 'end', 'around', 'between'],
             'eval'      => [
@@ -161,24 +133,18 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'sql'       => 'varchar(64) NOT NULL default \'\'',
         ],
         'rowClass'    => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['rowClass'],
             'exclude'   => true,
             'default'   => '',
             'inputType' => 'text',
-            'eval'      => [
-                'tl_class' => 'clr w50',
-            ],
+            'eval'      => ['tl_class' => 'clr w50'],
             'sql'       => 'varchar(64) NOT NULL default \'\'',
         ],
         'noGutters'   => [
-            'label'     => &$GLOBALS['TL_LANG']['tl_bs_grid']['noGutters'],
             'exclude'   => true,
             'default'   => '',
             'inputType' => 'checkbox',
             'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid'],
-            'eval'      => [
-                'tl_class' => 'w50 m12',
-            ],
+            'eval'      => ['tl_class' => 'w50 m12'],
             'sql'       => 'char(1) NULL',
         ],
     ],

@@ -1,23 +1,14 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Migration;
 
+use Contao\CoreBundle\Migration\AbstractMigration;
+use Contao\CoreBundle\Migration\MigrationResult;
 use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
-use PDO;
+
 use function array_map;
 use function serialize;
 use function time;
@@ -25,20 +16,16 @@ use function time;
 /**
  * Migrate the auto grid widths to equal.
  */
-final class MigrateAutoGridWidths
+final class AutoGridWidthsMigration extends AbstractMigration
 {
     private const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'];
 
     /**
      * Database connection.
-     *
-     * @var Connection
      */
-    private $connection;
+    private Connection $connection;
 
     /**
-     * MigrateAutoGridWidths constructor.
-     *
      * @param Connection $connection Database connection.
      */
     public function __construct(Connection $connection)
@@ -46,16 +33,51 @@ final class MigrateAutoGridWidths
         $this->connection = $connection;
     }
 
+    public function shouldRun(): bool
+    {
+        if (! $this->connection->getSchemaManager()->tablesExist(['tl_bs_grid'])) {
+            return false;
+        }
+
+        $statement = $this->connection->executeQuery('SELECT * FROM tl_bs_grid');
+
+        while ($row = $statement->fetchAssociative()) {
+            foreach (self::SIZES as $size) {
+                $size .= 'Size';
+                if (! isset($row[$size])) {
+                    continue;
+                }
+
+                foreach (StringUtil::deserialize($row[$size], true) as $column) {
+                    if ($column['width'] === 'auto') {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public function run(): MigrationResult
+    {
+        $statement = $this->connection->executeQuery('SELECT * FROM tl_bs_grid');
+
+        while ($row = $statement->fetchAssociative()) {
+            $this->migrateRow($row);
+        }
+
+        return $this->createResult(true);
+    }
+
     /**
      * Invoke the migration script.
-     *
-     * @return void
      */
     public function __invoke(): void
     {
         $statement = $this->connection->executeQuery('SELECT * FROM tl_bs_grid');
 
-        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $statement->fetchAssociative()) {
             $this->migrateRow($row);
         }
     }
@@ -63,9 +85,7 @@ final class MigrateAutoGridWidths
     /**
      * Migrate a grid definition row.
      *
-     * @param array $row The grid definition row.
-     *
-     * @return void
+     * @param array<string,mixed> $row The grid definition row.
      */
     private function migrateRow(array $row): void
     {
@@ -83,8 +103,6 @@ final class MigrateAutoGridWidths
      * Migrate a grid size.
      *
      * @param string|null $size The grid size definition.
-     *
-     * @return string|null
      */
     private function migrateSize(?string $size): ?string
     {
@@ -92,9 +110,8 @@ final class MigrateAutoGridWidths
             return null;
         }
 
-
         $columns = array_map(
-            function (array $column) {
+            static function (array $column) {
                 if ($column['width'] === 'auto') {
                     $column['width'] = 'equal';
                 }

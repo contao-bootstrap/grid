@@ -1,24 +1,16 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\DataContainer;
+use Contao\Model\Collection;
 use Contao\ModuleModel;
 use MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard;
+
+use function sprintf;
 
 /**
  * Data container helper class for module.
@@ -27,8 +19,6 @@ class ModuleListener extends AbstractDcaListener
 {
     /**
      * Initialize the data container.
-     *
-     * @return void
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -41,9 +31,11 @@ class ModuleListener extends AbstractDcaListener
             $paletteManipulator->applyToPalette('newslist', 'tl_module');
         }
 
-        if (isset($GLOBALS['TL_DCA']['tl_module']['palettes']['newsarchive'])) {
-            $paletteManipulator->applyToPalette('newsarchive', 'tl_module');
+        if (! isset($GLOBALS['TL_DCA']['tl_module']['palettes']['newsarchive'])) {
+            return;
         }
+
+        $paletteManipulator->applyToPalette('newsarchive', 'tl_module');
     }
 
     /**
@@ -58,7 +50,7 @@ class ModuleListener extends AbstractDcaListener
      */
     public function setGridWidgetOptions($value, DataContainer $dataContainer)
     {
-        if ($dataContainer->activeRecord->type === 'bs_grid') {
+        if ($dataContainer->activeRecord && $dataContainer->activeRecord->type === 'bs_grid') {
             $GLOBALS['TL_DCA']['tl_module']['fields'][$dataContainer->field]['eval']['mandatory'] = true;
         }
 
@@ -68,22 +60,18 @@ class ModuleListener extends AbstractDcaListener
     /**
      * Get all modules for the grid module.
      *
-     * @param MultiColumnWizard $multiColumnWizard Multicolumnwizard.
-     *
-     * @return array
+     * @return array<string,array<int|string,string>>
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getAllModules(MultiColumnWizard $multiColumnWizard = null): array
+    public function getAllModules(?MultiColumnWizard $multiColumnWizard = null): array
     {
-        if ($multiColumnWizard
-            && $multiColumnWizard->dataContainer
-            && $multiColumnWizard->dataContainer->activeRecord) {
+        if ($multiColumnWizard && $multiColumnWizard->dataContainer->activeRecord) {
             $collection = ModuleModel::findBy(
                 ['tl_module.pid = ?', 'tl_module.id != ?'],
                 [
                     $multiColumnWizard->dataContainer->activeRecord->pid,
-                    $multiColumnWizard->dataContainer->activeRecord->id
+                    $multiColumnWizard->dataContainer->activeRecord->id,
                 ]
             );
         } else {
@@ -92,15 +80,13 @@ class ModuleListener extends AbstractDcaListener
 
         $modules = [
             'grid' => [
-                'separator' => $GLOBALS['TL_LANG']['tl_module']['bs_separatorTitle']
-            ]
+                'separator' => $GLOBALS['TL_LANG']['tl_module']['bs_separatorTitle'],
+            ],
         ];
 
-        if ($collection) {
+        if ($collection instanceof Collection) {
             foreach ($collection as $model) {
-                $label = isset($GLOBALS['TL_LANG']['FMD'][$model->type][0])
-                    ? $GLOBALS['TL_LANG']['FMD'][$model->type][0]
-                    : $model->type;
+                $label = $GLOBALS['TL_LANG']['FMD'][$model->type][0] ?? $model->type;
 
                 $modules['module'][$model->id] = sprintf('%s [%s]', $model->name, $label);
             }

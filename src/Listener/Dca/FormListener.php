@@ -1,35 +1,32 @@
 <?php
 
-/**
- * Contao Bootstrap grid.
- *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
- * @filesource
- */
+declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\Database\Result;
 use Contao\DataContainer;
 use Contao\FormFieldModel;
-use Contao\FormModel;
 use Contao\Model;
+use Contao\Model\Collection;
+
+use function array_unshift;
+use function assert;
+use function defined;
+use function sprintf;
+use function time;
 
 /**
  * Data container helper class for form.
  *
- * @package ContaoBootstrap\Grid\Dca
+ * @extends AbstractWrapperDcaListener<FormFieldModel>
  */
 class FormListener extends AbstractWrapperDcaListener
 {
     /**
      * Generate the columns.
      *
-     * @param int           $value         Number of columns which should be generated.
+     * @param int|string    $value         Number of columns which should be generated.
      * @param DataContainer $dataContainer Data container driver.
      *
      * @return null
@@ -38,19 +35,19 @@ class FormListener extends AbstractWrapperDcaListener
      */
     public function generateColumns($value, $dataContainer)
     {
-        if (!$dataContainer->activeRecord) {
+        if (! $dataContainer->activeRecord) {
             return null;
         }
 
-        /** @var FormModel|Result $current */
         $current = $dataContainer->activeRecord;
+        assert($current instanceof FormFieldModel || $current instanceof Result);
 
-        if ($value && $dataContainer->activeRecord) {
+        if ($value) {
             $stopElement  = $this->getStopElement($current);
             $nextElements = $this->getNextElements($stopElement);
             $sorting      = $stopElement->sorting;
 
-            $sorting = $this->createSeparators($value, $current, $sorting);
+            $sorting = $this->createSeparators((int) $value, $current, $sorting);
 
             array_unshift($nextElements, $stopElement);
             $this->updateSortings($nextElements, $sorting);
@@ -59,40 +56,27 @@ class FormListener extends AbstractWrapperDcaListener
         return null;
     }
 
-
-    /**
-     * Get the next content elements.
-     *
-     * @param FormFieldModel $current Current content model.
-     *
-     * @return FormFieldModel[]
-     */
+    /** {@inheritDoc} */
     protected function getNextElements($current): array
     {
         $collection = FormFieldModel::findBy(
             [
                 'tl_form_field.pid=?',
                 '(tl_form_field.type != ? AND tl_form_field.bs_grid_parent = ?)',
-                'tl_form_field.sorting > ?'
+                'tl_form_field.sorting > ?',
             ],
             [$current->pid, 'bs_gridStop', $current->id, $current->sorting],
             ['order' => 'tl_form_field.sorting ASC']
         );
 
-        if ($collection) {
+        if ($collection instanceof Collection) {
             return $collection->getIterator()->getArrayCopy();
         }
 
         return [];
     }
 
-    /**
-     * Get related stop element.
-     *
-     * @param FormFieldModel|Result $current Current element.
-     *
-     * @return FormFieldModel|Model
-     */
+    /** {@inheritDoc} */
     protected function getStopElement($current): Model
     {
         $stopElement = FormFieldModel::findOneBy(
@@ -100,8 +84,7 @@ class FormListener extends AbstractWrapperDcaListener
             ['bs_gridStop', $current->id]
         );
 
-
-        if ($stopElement) {
+        if ($stopElement instanceof FormFieldModel) {
             return $stopElement;
         }
 
@@ -113,13 +96,7 @@ class FormListener extends AbstractWrapperDcaListener
     }
 
     /**
-     * Create a grid element.
-     *
-     * @param FormFieldModel $current Current content model.
-     * @param string         $type    Type of the content model.
-     * @param int            $sorting The sorting value.
-     *
-     * @return FormFieldModel|Model
+     * {@inheritDoc}
      */
     protected function createGridElement($current, string $type, int &$sorting): Model
     {
@@ -137,25 +114,28 @@ class FormListener extends AbstractWrapperDcaListener
     /**
      * Get all grid parent options.
      *
-     * @return array
+     * @return array<int|string,string>
      */
     public function getGridParentOptions(): array
     {
-        $columns[] = 'tl_form_field.type = ?';
-        $columns[] = 'tl_form_field.pid = ?';
+        $columns = [
+            'tl_form_field.type = ?',
+            'tl_form_field.pid = ?',
+        ];
 
-        $values[] = 'bs_gridStart';
-        $values[] = CURRENT_ID;
+        assert(defined('CURRENT_ID'));
+        $values = ['bs_gridStart', CURRENT_ID];
 
         $collection = FormFieldModel::findBy($columns, $values);
         $options    = [];
 
-        if ($collection) {
+        if ($collection instanceof Collection) {
             foreach ($collection as $model) {
+                $related             = $model->getRelated('bs_grid');
                 $options[$model->id] = sprintf(
                     '%s [%s]',
                     $model->bs_grid_name,
-                    $model->getRelated('bs_grid')->title
+                    $related ? $related->title : $related->bs_grid
                 );
             }
         }

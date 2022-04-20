@@ -3,12 +3,6 @@
 /**
  * Contao Bootstrap grid.
  *
- * @package    contao-bootstrap
- * @subpackage Grid
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @author     Patrick Landolt <patrick.landolt@artack.ch>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    https://github.com/contao-bootstrap/grid/blob/master/LICENSE LGPL 3.0-or-later
  * @filesource
  */
 
@@ -23,39 +17,32 @@ use ContaoBootstrap\Grid\Definition\Grid;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\Model\GridModel;
 use RuntimeException;
+
 use function array_search;
+use function assert;
+use function is_numeric;
 
 /**
  * GridBuilder builds the grid class from the database definition.
- *
- * @package ContaoBootstrap\Grid
  */
 final class GridBuilder
 {
     /**
      * Grid model.
-     *
-     * @var GridModel
      */
-    private $model;
+    private ?GridModel $model = null;
 
     /**
      * Cache of grid being built.
-     *
-     * @var Grid
      */
-    private $grid;
+    private ?Grid $grid = null;
 
     /**
      * Core Environment.
-     *
-     * @var Environment
      */
-    private $environment;
+    private Environment $environment;
 
     /**
-     * GridBuilder constructor.
-     *
      * @param Environment $environment The Core Environment.
      */
     public function __construct(Environment $environment)
@@ -67,8 +54,6 @@ final class GridBuilder
      * Build a grid.
      *
      * @param int $gridId THe grid id.
-     *
-     * @return Grid
      *
      * @throws RuntimeException When Grid does not exist.
      */
@@ -85,14 +70,12 @@ final class GridBuilder
      *
      * @param int $gridId THe grid id.
      *
-     * @return void
-     *
      * @throws GridNotFound When Grid does not exist.
      */
     protected function loadModel(int $gridId): void
     {
-        $model = GridModel::findByPk($gridId);
-        if (!$model) {
+        $model = GridModel::findOneBy('id', $gridId);
+        if (! $model instanceof GridModel) {
             throw GridNotFound::withId($gridId);
         }
 
@@ -101,11 +84,11 @@ final class GridBuilder
 
     /**
      * Create the grid from the model.
-     *
-     * @return void
      */
     private function createGrid(): void
     {
+        assert($this->model instanceof GridModel);
+
         $this->grid = new Grid();
         $sizes      = StringUtil::deserialize($this->model->sizes, true);
 
@@ -125,11 +108,12 @@ final class GridBuilder
 
     /**
      * Build the row.
-     *
-     * @return void
      */
     private function buildRow(): void
     {
+        assert($this->model instanceof GridModel);
+        assert($this->grid instanceof Grid);
+
         if ($this->model->noGutters) {
             $this->grid->addClass('no-gutters');
         }
@@ -142,22 +126,24 @@ final class GridBuilder
             $this->grid->align($this->model->align);
         }
 
-        if ($this->model->justify) {
-            $this->grid->justify($this->model->justify);
+        if (! $this->model->justify) {
+            return;
         }
+
+        $this->grid->justify($this->model->justify);
     }
 
     /**
      * Build a grid size.
      *
-     * @param string $size       Grid size.
-     * @param array  $definition Definition.
-     * @param array  $sizes      List of defined sizes.
-     *
-     * @return void
+     * @param string                    $size       Grid size.
+     * @param list<array<string,mixed>> $definition Definition.
+     * @param list<string|int>          $sizes      List of defined sizes.
      */
     private function buildSize(string $size, array $definition, array $sizes): void
     {
+        assert($this->grid instanceof Grid);
+
         foreach ($definition as $columnDefinition) {
             $column = $this->buildColumn($columnDefinition, $size, $sizes);
 
@@ -168,11 +154,9 @@ final class GridBuilder
     /**
      * Build a column.
      *
-     * @param array  $definition Column definition.
-     * @param string $size       The column size.
-     * @param array  $sizes      List of defined sizes.
-     *
-     * @return Column
+     * @param array<string,mixed> $definition Column definition.
+     * @param string              $size       The column size.
+     * @param list<string|int>    $sizes      List of defined sizes.
      */
     private function buildColumn(array $definition, string $size, array $sizes): Column
     {
@@ -203,11 +187,11 @@ final class GridBuilder
 
     /**
      * Finish the grid building.
-     *
-     * @return Grid
      */
     private function finish(): Grid
     {
+        assert($this->grid instanceof Grid);
+
         $grid        = $this->grid;
         $this->grid  = null;
         $this->model = null;
@@ -236,46 +220,44 @@ final class GridBuilder
     /**
      * Build the column width.
      *
-     * @param array  $definition The grid column definition.
-     * @param Column $column     The column.
-     *
-     * @return void
+     * @param array<string,mixed> $definition The grid column definition.
+     * @param Column              $column     The column.
      */
     private function buildColumnWidth(array $definition, Column $column): void
     {
-        if ($definition['width']) {
-            switch ($definition['width']) {
-                case 'variable':
-                    $column->variableWidth();
-                    break;
-                case 'auto':
-                case 'equal':
-                    break;
-                case 'null':
-                    $column->width(0);
-                    break;
-                default:
-                    $column->width((int) $definition['width']);
-            }
+        if (! $definition['width']) {
+            return;
+        }
+
+        switch ($definition['width']) {
+            case 'variable':
+                $column->variableWidth();
+                break;
+            case 'auto':
+            case 'equal':
+                break;
+            case 'null':
+                $column->width(0);
+                break;
+            default:
+                $column->width((int) $definition['width']);
         }
     }
 
     /**
      * Build the column resets.
      *
-     * @param array  $definition The grid column definition.
-     * @param Column $column     The column.
-     * @param string $size       The column size.
-     * @param array  $sizes      List of defined sizes.
-     *
-     * @return void
+     * @param array<string,mixed> $definition The grid column definition.
+     * @param Column              $column     The column.
+     * @param string              $size       The column size.
+     * @param list<string|int>    $sizes      List of defined sizes.
      */
     private function buildColumnResets(array $definition, Column $column, string $size, array $sizes): void
     {
         switch ($definition['reset']) {
             case '2':
                 $key  = array_search($size, $sizes);
-                $next = ($sizes[($key + 1)] ?? null);
+                $next = $key ? ($sizes[$key + 1] ?? null) : null;
 
                 if ($next) {
                     $column->limitedReset((string) $next);

@@ -1,0 +1,6 @@
+parameters:
+  contao_bootstrap.grid.content_parent_drivers:
+    - 'Table'
+    - 'Multilingual'
+    - 'Contao\DC_Table'
+    - 'Terminal42\DcMultilingualBundle\Driver'
