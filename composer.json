@@ -40,7 +40,7 @@
     "menatwork/contao-multicolumnwizard-bundle": "^3.4",
     "netzmacht/contao-toolkit": "^3.7",
     "symfony/config": "^4.4 || ^5.4",
-    "symfony/dependency-injection": "4.4 || ^5.4",
+    "symfony/dependency-injection": "^4.4 || ^5.4",
     "symfony/http-foundation": "^4.4 || ^5.4",
     "symfony/http-kernel": "^4.4 || ^5.4",
     "symfony/routing": "^4.4 || ^5.4",
