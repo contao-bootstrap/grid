@@ -7,7 +7,6 @@ namespace ContaoBootstrap\Grid\Listener\Dca;
 use Contao\ContentModel;
 use Contao\Database\Result;
 use Contao\DataContainer;
-use Doctrine\DBAL\DBALException;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 
 use function in_array;
@@ -74,8 +73,6 @@ final class ContentFixParentRelationListener
      * Fix grid start relation of content element.
      *
      * @param ContentModel|Result $contentModel Content element.
-     *
-     * @throws DBALException When a database error occurs.
      */
     private function fixContentElement($contentModel): void
     {

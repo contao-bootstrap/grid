@@ -9,7 +9,6 @@ use Contao\CoreBundle\Framework\Adapter;
 use Contao\DataContainer;
 use Contao\Model\Collection;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Manager as DcaManager;
@@ -82,8 +81,6 @@ final class ParentFixContentParentRelationsListener
      *
      * @param int    $recordId  The id of the prent record.
      * @param string $tableName The table name of the parent record.
-     *
-     * @throws DBALException When an database error occurs.
      */
     private function fixChildRecords(int $recordId, string $tableName): void
     {
@@ -126,8 +123,6 @@ final class ParentFixContentParentRelationsListener
      *
      * @param string $parentTable The parent table.
      * @param int    $parentId    The parent id.
-     *
-     * @throws DBALException When an database error occurs.
      */
     private function fixParentRelations(string $parentTable, int $parentId): void
     {
