@@ -5,6 +5,13 @@ Changelog
 [Unreleased]
 ------------
 
+[2.4.1] (2022-06-01)
+--------------------
+
+### Fixed
+
+ - Fix dependency of symfony/dependency-container ([#49](https://github.com/contao-bootstrap/grid/pull/51), [#49](https://github.com/contao-bootstrap/grid/issues/50))
+
 
 [2.4.0] (2022-04-20)
 --------------------
