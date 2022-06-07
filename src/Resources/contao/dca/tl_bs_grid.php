@@ -55,7 +55,7 @@ $GLOBALS['TL_DCA']['tl_bs_grid'] = [
             'delete' => [
                 'href'       => 'act=delete',
                 'icon'       => 'delete.gif',
-                'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm']
+                'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm']?? null
                     . '\'))return false;Backend.getScrollOffset()"',
             ],
             'show'   => [
