@@ -5,6 +5,12 @@ Changelog
 [Unreleased]
 ------------
 
+[2.4.2] (2022-08-18)
+
+### Fixed
+
+ - Fixed type error when auto generating grid elements for forms
+
 [2.4.1] (2022-06-01)
 --------------------
 
