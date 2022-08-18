@@ -5,7 +5,7 @@ Contao-Bootstrap Grid Component
 [![Version](http://img.shields.io/packagist/v/contao-bootstrap/grid.svg?style=for-the-badge&label=Latest)](http://packagist.org/packages/contao-bootstrap/grid)
 [![GitHub issues](https://img.shields.io/github/issues/contao-bootstrap/grid.svg?style=for-the-badge&logo=github)](https://github.com/contao-bootstrap/grid/issues)
 [![License](http://img.shields.io/packagist/l/contao-bootstrap/grid.svg?style=for-the-badge&label=License)](http://packagist.org/packages/contao-bootstrap/grid)
-[![Build Status](http://img.shields.io/travis/contao-bootstrap/grid/master.svg?style=for-the-badge&logo=travis)](https://travis-ci.org/contao-bootstrap/grid)
+[![Build Status](http://img.shields.io/github/workflow/status/contao-bootstrap/grid/diagnistics/master.svg?style=for-the-badge&logo=githubactions)](https://github.com/contao-bootstrap/grid/actions)
 [![Downloads](http://img.shields.io/packagist/dt/contao-bootstrap/grid.svg?style=for-the-badge&label=Downloads)](http://packagist.org/packages/contao-bootstrap/grid)
 
 This extension provides Bootstrap 4 grid tools for Contao CMS.
@@ -16,28 +16,28 @@ Features
  - Manage grid definition in your theme settings
  - Content elements
  - Form elements
- - Grid module 
+ - Grid module
  - Import/Export with your theme settings
- 
+
 Changelog
 ---------
 
 See [changelog](CHANGELOG.md)
- 
+
 Requirements
 ------------
 
  - PHP 7.1
  - Contao ~4.4
- 
- 
+
+
 Install
 -------
 
 ### Managed edition
 
 When using the managed edition it's pretty simple to install the package. Just search for the package in the
-Contao Manager and install it. Alternatively you can use the CLI.  
+Contao Manager and install it. Alternatively you can use the CLI.
 
 ```bash
 # Using the contao manager
@@ -49,7 +49,7 @@ $ php composer.phar require contao-bootstrap/grid~2.0
 
 ### Symfony application
 
-If you use Contao in a symfony application without contao/manager-bundle, you have to register following bundles 
+If you use Contao in a symfony application without contao/manager-bundle, you have to register following bundles
 manually:
 
 ```php
