@@ -5,6 +5,13 @@ Changelog
 [Unreleased]
 ------------
 
+[2.4.3] (2022-08-18)
+
+### Fixed
+
+ - Fix undefined array index ([#52](https://github.com/contao-bootstrap/grid/pull/52))
+ - Remove superfluous space in separator template ([#53](https://github.com/contao-bootstrap/grid/pull/53))
+
 [2.4.2] (2022-08-18)
 
 ### Fixed
