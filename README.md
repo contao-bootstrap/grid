@@ -5,7 +5,7 @@ Contao-Bootstrap Grid Component
 [![Version](http://img.shields.io/packagist/v/contao-bootstrap/grid.svg?style=for-the-badge&label=Latest)](http://packagist.org/packages/contao-bootstrap/grid)
 [![GitHub issues](https://img.shields.io/github/issues/contao-bootstrap/grid.svg?style=for-the-badge&logo=github)](https://github.com/contao-bootstrap/grid/issues)
 [![License](http://img.shields.io/packagist/l/contao-bootstrap/grid.svg?style=for-the-badge&label=License)](http://packagist.org/packages/contao-bootstrap/grid)
-[![Build Status](http://img.shields.io/github/workflow/status/contao-bootstrap/grid/diagnistics/master.svg?style=for-the-badge&logo=githubactions)](https://github.com/contao-bootstrap/grid/actions)
+[![Build Status](http://img.shields.io/github/workflow/status/contao-bootstrap/grid/diagnostics/master.svg?style=for-the-badge&logo=githubactions)](https://github.com/contao-bootstrap/grid/actions)
 [![Downloads](http://img.shields.io/packagist/dt/contao-bootstrap/grid.svg?style=for-the-badge&label=Downloads)](http://packagist.org/packages/contao-bootstrap/grid)
 
 This extension provides Bootstrap 4 grid tools for Contao CMS.
