@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
-use Contao\Database\Result;
-use Contao\DataContainer;
 use Contao\FormFieldModel;
 use Contao\Model;
 use Contao\Model\Collection;
 
-use function array_unshift;
 use function assert;
 use function defined;
 use function sprintf;
@@ -23,39 +20,6 @@ use function time;
  */
 class FormListener extends AbstractWrapperDcaListener
 {
-    /**
-     * Generate the columns.
-     *
-     * @param int|string    $value         Number of columns which should be generated.
-     * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return null
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameters)
-     */
-    public function generateColumns($value, $dataContainer)
-    {
-        if (! $dataContainer->activeRecord) {
-            return null;
-        }
-
-        $current = $dataContainer->activeRecord;
-        assert($current instanceof FormFieldModel || $current instanceof Result);
-
-        if ($value) {
-            $stopElement  = $this->getStopElement($current);
-            $nextElements = $this->getNextElements($stopElement);
-            $sorting      = $stopElement->sorting;
-
-            $sorting = $this->createSeparators((int) $value, $current, $sorting);
-
-            array_unshift($nextElements, $stopElement);
-            $this->updateSortings($nextElements, $sorting);
-        }
-
-        return null;
-    }
-
     /** {@inheritDoc} */
     protected function getNextElements($current): array
     {
@@ -89,8 +53,8 @@ class FormListener extends AbstractWrapperDcaListener
         }
 
         $nextElements = $this->getNextElements($current);
-        $stopElement  = $this->createStopElement($current, $current->sorting);
-        $this->updateSortings($nextElements, $stopElement->sorting);
+        $stopElement  = $this->createStopElement($current, (int) $current->sorting);
+        $this->updateSortings($nextElements, (int) $stopElement->sorting);
 
         return $stopElement;
     }
