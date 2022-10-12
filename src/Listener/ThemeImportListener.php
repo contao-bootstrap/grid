@@ -9,7 +9,7 @@ use ContaoBootstrap\Grid\Model\GridModel;
 use DOMDocument;
 use DOMElement;
 
-class ThemeImportListener
+final class ThemeImportListener
 {
     /**
      * Handle the extract theme files hook.
@@ -20,7 +20,7 @@ class ThemeImportListener
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function onExtractThemeFiles(DOMDocument $xml, ZipReader $archive, $themeId): void
+    public function onExtractThemeFiles(DOMDocument $xml, ZipReader $archive, int|string $themeId): void
     {
         $tables = $xml->getElementsByTagName('table');
 

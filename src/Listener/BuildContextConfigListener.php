@@ -14,7 +14,7 @@ use function array_filter;
 use function array_values;
 use function current;
 
-class BuildContextConfigListener
+final class BuildContextConfigListener
 {
     /**
      * Build theme config.
@@ -23,18 +23,18 @@ class BuildContextConfigListener
      */
     public function buildThemeConfig(BuildContextConfig $command): void
     {
-        $context = $command->getContext();
+        $context = $command->context;
 
         if (! $context instanceof ThemeContext) {
             return;
         }
 
-        $theme = ThemeModel::findByPk($context->getThemeId());
+        $theme = ThemeModel::findByPk($context->themeId);
         if (! $theme instanceof ThemeModel) {
             return;
         }
 
-        $config = $command->getConfig();
+        $config = $command->config;
         $data   = $config->get([]);
         if ($theme->bs_grid_columns) {
             $data['grid']['columns'] = (int) $theme->bs_grid_columns;
@@ -47,6 +47,6 @@ class BuildContextConfigListener
 
         $data['grid']['default_size'] = $theme->bs_grid_default_size ?: current($data['grid']['sizes']);
 
-        $command->setConfig(new ArrayConfig($data));
+        $command->config = new ArrayConfig($data);
     }
 }

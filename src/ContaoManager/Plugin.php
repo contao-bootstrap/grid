@@ -17,9 +17,7 @@ use ContaoBootstrap\Grid\ContaoBootstrapGridBundle;
  */
 class Plugin implements BundlePluginInterface
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function getBundles(ParserInterface $parser): array
     {
         $bundleConfig = BundleConfig::create(ContaoBootstrapGridBundle::class)

@@ -25,23 +25,11 @@ use function sprintf;
 final class GridSizesListener
 {
     /**
-     * Database connection.
-     */
-    private Connection $connection;
-
-    /**
-     * Contao bootstrap environment.
-     */
-    private Environment $environment;
-
-    /**
      * @param Connection  $connection  Database connection.
      * @param Environment $environment Contao bootstrap environment.
      */
-    public function __construct(Connection $connection, Environment $environment)
+    public function __construct(private readonly Connection $connection, private readonly Environment $environment)
     {
-        $this->environment = $environment;
-        $this->connection  = $connection;
     }
 
     /**
@@ -55,7 +43,7 @@ final class GridSizesListener
             return;
         }
 
-        $schemaManager = $this->connection->getSchemaManager();
+        $schemaManager = $this->connection->createSchemaManager();
         if (! $schemaManager->tablesExist([GridModel::getTable(), 'tl_theme'])) {
             return;
         }
@@ -162,7 +150,7 @@ final class GridSizesListener
      */
     public function createDatabaseField(string $size): void
     {
-        $schemaManager = $this->connection->getSchemaManager();
+        $schemaManager = $this->connection->createSchemaManager();
         if (! $schemaManager->tablesExist(GridModel::getTable())) {
             return;
         }
@@ -173,7 +161,7 @@ final class GridSizesListener
         }
 
         $this->connection->executeStatement(
-            sprintf('ALTER TABLE %s ADD %sSize BLOB DEFAULT NULL', GridModel::getTable(), $size)
+            sprintf('ALTER TABLE %s ADD %sSize BLOB DEFAULT NULL', GridModel::getTable(), $size),
         );
     }
 
@@ -184,7 +172,7 @@ final class GridSizesListener
      */
     public function getSizes(): array
     {
-        $sizes  = $this->environment->getConfig()->get('grid.sizes', []);
+        $sizes  = $this->environment->getConfig()->get(['grid', 'sizes'], []);
         $themes = ThemeModel::findAll() ?: [];
 
         if ($themes instanceof Model) {

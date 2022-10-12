@@ -22,9 +22,7 @@ final class ContentFixParentRelationListener
      */
     private RepositoryManager $repositoryManager;
 
-    /**
-     * @param RepositoryManager $repositoryManager Repository manager.
-     */
+    /** @param RepositoryManager $repositoryManager Repository manager. */
     public function __construct(RepositoryManager $repositoryManager)
     {
         $this->repositoryManager = $repositoryManager;
@@ -59,10 +57,10 @@ final class ContentFixParentRelationListener
      *
      * @param int|string $elementId Element id of copied element.
      */
-    public function onCopy($elementId): void
+    public function onCopy(int|string $elementId): void
     {
         $contentModel = $this->repositoryManager->getRepository(ContentModel::class)->find((int) $elementId);
-        if ($contentModel === null) {
+        if (! $contentModel instanceof ContentModel) {
             return;
         }
 
@@ -74,7 +72,7 @@ final class ContentFixParentRelationListener
      *
      * @param ContentModel|Result $contentModel Content element.
      */
-    private function fixContentElement($contentModel): void
+    private function fixContentElement(ContentModel|Result $contentModel): void
     {
         if (! in_array($contentModel->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
             return;
@@ -93,7 +91,7 @@ final class ContentFixParentRelationListener
             ],
             [
                 'id' => $contentModel->id,
-            ]
+            ],
         );
     }
 
@@ -101,8 +99,11 @@ final class ContentFixParentRelationListener
      * Load closest grid start model.
      *
      * @param ContentModel|Result $contentModel Content model.
+     *
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress LessSpecificReturnStatement
      */
-    private function loadClosestGridStartModel($contentModel): ?ContentModel
+    private function loadClosestGridStartModel(ContentModel|Result $contentModel): ContentModel|null
     {
         $constraints = ['.pid=?', '.type=?', '.sorting < ?'];
         $values      = [$contentModel->pid, 'bs_gridStart', $contentModel->sorting];

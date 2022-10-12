@@ -11,9 +11,7 @@ use Contao\Model;
 use function array_unshift;
 use function assert;
 
-/**
- * @template TModel of Model
- */
+/** @template TModel of Model */
 abstract class AbstractWrapperDcaListener extends AbstractDcaListener
 {
     /**
@@ -24,7 +22,7 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      *
      * @return null
      */
-    public function generateColumns($value, $dataContainer)
+    public function generateColumns(int|string $value, DataContainer $dataContainer)
     {
         if (! $dataContainer->activeRecord) {
             return null;
@@ -58,7 +56,7 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      * @param int          $sorting Current sorting value.
      * @psalm-param TModel|Result $current
      */
-    protected function createSeparators(int $value, $current, int $sorting): int
+    protected function createSeparators(int $value, Model|Result $current, int $sorting): int
     {
         for ($count = 1; $count <= $value; $count++) {
             $sorting += 8;
@@ -98,7 +96,7 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      *
      * @psalm-return TModel
      */
-    protected function createStopElement($current, int $sorting): Model
+    protected function createStopElement(Model|Result $current, int $sorting): Model
     {
         $sorting += 8;
 
@@ -115,7 +113,7 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      *
      * @return TModel
      */
-    abstract protected function createGridElement($current, string $type, int &$sorting): Model;
+    abstract protected function createGridElement(Model|Result $current, string $type, int &$sorting): Model;
 
     /**
      * Get the next content elements.
@@ -126,7 +124,7 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      * @return Model[]
      * @psalm-return array<TModel>
      */
-    abstract protected function getNextElements($current): array;
+    abstract protected function getNextElements(Model|Result $current): array;
 
     /**
      * Get related stop element.
@@ -136,5 +134,5 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      *
      * @psalm-return TModel
      */
-    abstract protected function getStopElement($current): Model;
+    abstract protected function getStopElement(Model|Result $current): Model;
 }

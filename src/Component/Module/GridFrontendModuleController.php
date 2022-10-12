@@ -24,26 +24,21 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use function array_filter;
 use function array_map;
 use function array_values;
-use function assert;
 use function is_numeric;
 use function sprintf;
 
 /** @FrontendModule("bs_grid", category="miscellaneous") */
 final class GridFrontendModuleController extends AbstractFrontendModuleController
 {
-    private GridProvider $gridProvider;
-
     public function __construct(
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
         ResponseTagger $responseTagger,
         RouterInterface $router,
         TranslatorInterface $translator,
-        GridProvider $gridProvider
+        private GridProvider $gridProvider,
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger, $router, $translator);
-
-        $this->gridProvider = $gridProvider;
     }
 
     /**
@@ -53,8 +48,6 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
      */
     protected function prepareTemplateData(array $data, Request $request, Model $model): array
     {
-        assert($model instanceof ModuleModel);
-
         $config    = StringUtil::deserialize($model->bs_gridModules, true);
         $moduleIds = $this->getModuleIds($config);
         $modules   = $this->preCompileModules($model, $moduleIds);
@@ -75,14 +68,14 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
     /**
      * Get the grid iterator.
      */
-    protected function getGridIterator(ModuleModel $model): ?GridIterator
+    protected function getGridIterator(ModuleModel $model): GridIterator|null
     {
         try {
             $iterator = $this->gridProvider->getIterator('mod:' . $model->id, (int) $model->bs_grid);
             $this->tagResponse('contao.db.tl_bs_grid.' . $model->bs_grid);
 
             return $iterator;
-        } catch (GridNotFound $e) {
+        } catch (GridNotFound) {
             // Do nothing.
             return null;
         }
@@ -97,7 +90,7 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
      *
      * @return array<int|string,string>
      */
-    protected function generateModules(array $config, array $modules, ?GridIterator $iterator = null): array
+    protected function generateModules(array $config, array $modules, GridIterator|null $iterator = null): array
     {
         $buffer = [];
 
@@ -126,7 +119,7 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
 
             $buffer[] = sprintf(
                 "\n" . '</div>' . "\n" . '<div class="%s">',
-                $iterator->current()
+                $iterator->current(),
             );
         }
 
@@ -158,11 +151,11 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
                         /** @param array<string,mixed> $item */
                         static function (array $item): bool {
                             return $item['inactive'] === '';
-                        }
-                    )
+                        },
+                    ),
                 ),
-                'is_numeric'
-            )
+                'is_numeric',
+            ),
         );
     }
 
@@ -173,14 +166,14 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
      *
      * @return array<string|int,string>
      */
-    protected function preCompileModules(ModuleModel $model, array $moduleIds): array
+    protected function preCompileModules(ModuleModel $moduleModel, array $moduleIds): array
     {
         $collection = ModuleModel::findMultipleByIds($moduleIds);
         $modules    = [];
 
         if ($collection instanceof Collection) {
             foreach ($collection as $model) {
-                $modules[$model->id] = Controller::getFrontendModule($model, $model->inColumn);
+                $modules[$model->id] = Controller::getFrontendModule($model, $moduleModel->inColumn);
             }
         }
 

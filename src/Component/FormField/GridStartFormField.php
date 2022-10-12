@@ -21,7 +21,7 @@ class GridStartFormField extends AbstractFormField
     // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
     protected $strTemplate = 'form_bs_gridStart';
 
-    protected function getIterator(): ?GridIterator
+    protected function getIterator(): GridIterator|null
     {
         try {
             $provider = $this->getGridProvider();
@@ -29,7 +29,7 @@ class GridStartFormField extends AbstractFormField
             $this->getResponseTagger()->addTags(['contao.db.tl_bs_grid.' . $this->bs_grid]);
 
             return $iterator;
-        } catch (GridNotFound $e) {
+        } catch (GridNotFound) {
             return null;
         }
     }

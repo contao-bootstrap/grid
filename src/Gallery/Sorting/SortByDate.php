@@ -8,11 +8,8 @@ use function uasort;
 
 final class SortByDate implements SortBy
 {
-    private string $direction;
-
-    private function __construct(string $direction)
+    private function __construct(private string $direction)
     {
-        $this->direction = $direction;
     }
 
     public static function asc(): self

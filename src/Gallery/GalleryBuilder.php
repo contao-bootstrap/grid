@@ -28,25 +28,19 @@ use function min;
 
 final class GalleryBuilder
 {
-    private ContaoFramework $framework;
-
-    private string $projectDir;
-
     /** @var array<string,array<string,mixed>> */
     private array $images = [];
 
-    private ?SortBy $sortBy = null;
+    private SortBy|null $sortBy = null;
 
     private int $limit = 0;
 
     private int $perPage = 0;
 
-    private ?string $pageParam = null;
+    private string|null $pageParam = null;
 
-    public function __construct(ContaoFramework $framework, string $projectDir)
+    public function __construct(private readonly ContaoFramework $framework, private readonly string $projectDir)
     {
-        $this->framework  = $framework;
-        $this->projectDir = $projectDir;
     }
 
     public function sortBy(SortBy $sortBy): self
@@ -173,7 +167,7 @@ final class GalleryBuilder
      *
      * @throws PageNotFoundException When page parameter is out of bounds.
      */
-    protected function preparePagination(int &$offset, int &$limit): ?Pagination
+    protected function preparePagination(int &$offset, int &$limit): Pagination|null
     {
         $total   = count($this->images);
         $perPage = $this->perPage;
@@ -199,7 +193,7 @@ final class GalleryBuilder
                 $total,
                 $perPage,
                 Config::get('maxPaginationLinks'),
-                $parameter
+                $parameter,
             );
         }
 

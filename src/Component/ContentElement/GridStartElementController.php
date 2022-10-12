@@ -12,19 +12,19 @@ use ContaoBootstrap\Grid\GridIterator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use function assert;
-
 /** @ContentElement("bs_gridStart", category="bs_grid") */
 final class GridStartElementController extends AbstractGridElementController
 {
     /** {@inheritDoc} */
-    protected function preGenerate(Request $request, Model $model, string $section, ?array $classes = null): ?Response
-    {
+    protected function preGenerate(
+        Request $request,
+        Model $model,
+        string $section,
+        array|null $classes = null,
+    ): Response|null {
         if (! $this->isBackendRequest($request)) {
             return null;
         }
-
-        assert($model instanceof ContentModel);
 
         return $this->renderContentBackendView($model, $this->getIterator($model));
     }
@@ -36,8 +36,6 @@ final class GridStartElementController extends AbstractGridElementController
      */
     protected function prepareTemplateData(array $data, Request $request, Model $model): array
     {
-        assert($model instanceof ContentModel);
-
         $iterator = $this->getIterator($model);
         if ($iterator) {
             $data['rowClasses']    = $iterator->row();
@@ -47,7 +45,7 @@ final class GridStartElementController extends AbstractGridElementController
         return $data;
     }
 
-    protected function getIterator(ContentModel $model): ?GridIterator
+    protected function getIterator(ContentModel $model): GridIterator|null
     {
         try {
             $provider = $this->getGridProvider();
@@ -55,7 +53,7 @@ final class GridStartElementController extends AbstractGridElementController
             $this->tagResponse('contao.db.tl_bs_grid.' . $model->bs_grid);
 
             return $iterator;
-        } catch (GridNotFound $e) {
+        } catch (GridNotFound) {
             // Do nothing. In backend view an error is shown anyway.
             return null;
         }

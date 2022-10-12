@@ -18,9 +18,7 @@ final class NewsGridListener
      */
     private GridProvider $gridProvider;
 
-    /**
-     * @param GridProvider $gridProvider Grid provider.
-     */
+    /** @param GridProvider $gridProvider Grid provider. */
     public function __construct(GridProvider $gridProvider)
     {
         $this->gridProvider = $gridProvider;
@@ -47,7 +45,7 @@ final class NewsGridListener
 
         try {
             $gridIterator = $this->gridProvider->getIterator('mod:' . $module->id, (int) $module->bs_grid);
-        } catch (GridNotFound $e) {
+        } catch (GridNotFound) {
             return;
         }
 

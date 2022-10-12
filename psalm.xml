@@ -8,6 +8,9 @@
 >
     <projectFiles>
         <directory name="src"/>
+        <ignoreFiles>
+            <file name="src/ContaoBootstrapGridComponent.php"/>
+        </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
@@ -26,11 +29,13 @@
         <DeprecatedMethod>
             <errorLevel type="suppress">
                 <referencedMethod name="Contao\Controller::addImageToTemplate"/>
-                <!-- Deprecated in doctrine/dbal 3, we also support ^2.11 -->
-                <referencedMethod name="Doctrine\DBAL\Connection::getSchemaManager"/>
-                <referencedMethod name="Doctrine\DBAL\Query\QueryBuilder::execute"/>
             </errorLevel>
         </DeprecatedMethod>
+        <UndefinedMagicPropertyFetch>
+            <errorLevel type="suppress">
+                <referencedProperty name="Contao\DataContainer::$currentPid"/>
+            </errorLevel>
+        </UndefinedMagicPropertyFetch>
     </issueHandlers>
 
     <universalObjectCrates>

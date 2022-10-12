@@ -31,9 +31,7 @@ final class GridIterator implements Iterator
      */
     private int $index = 0;
 
-    /**
-     * @param Grid $grid The grid.
-     */
+    /** @param Grid $grid The grid. */
     public function __construct(Grid $grid)
     {
         $this->grid = $grid;

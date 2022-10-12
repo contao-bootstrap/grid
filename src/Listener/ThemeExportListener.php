@@ -11,16 +11,14 @@ use Contao\ZipWriter;
 use ContaoBootstrap\Grid\Model\GridModel;
 use DOMDocument;
 
-class ThemeExportListener extends Theme
+final class ThemeExportListener extends Theme
 {
     /**
      * Contao Framework.
      */
     private ContaoFramework $framework;
 
-    /**
-     * @param ContaoFramework $framework Contao framework.
-     */
+    /** @param ContaoFramework $framework Contao framework. */
     public function __construct(ContaoFramework $framework)
     {
         parent::__construct();
@@ -37,7 +35,7 @@ class ThemeExportListener extends Theme
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function onExportTheme(DOMDocument $xml, ZipWriter $archive, $themeId): void
+    public function onExportTheme(DOMDocument $xml, ZipWriter $archive, int|string $themeId): void
     {
         // Add the tables
         $table = $xml->createElement('table');

@@ -18,7 +18,7 @@ use function time;
  *
  * @extends AbstractWrapperDcaListener<FormFieldModel>
  */
-class FormListener extends AbstractWrapperDcaListener
+final class FormListener extends AbstractWrapperDcaListener
 {
     /** {@inheritDoc} */
     protected function getNextElements($current): array
@@ -30,7 +30,7 @@ class FormListener extends AbstractWrapperDcaListener
                 'tl_form_field.sorting > ?',
             ],
             [$current->pid, 'bs_gridStop', $current->id, $current->sorting],
-            ['order' => 'tl_form_field.sorting ASC']
+            ['order' => 'tl_form_field.sorting ASC'],
         );
 
         if ($collection instanceof Collection) {
@@ -45,7 +45,7 @@ class FormListener extends AbstractWrapperDcaListener
     {
         $stopElement = FormFieldModel::findOneBy(
             ['tl_form_field.type=?', 'tl_form_field.bs_grid_parent=?'],
-            ['bs_gridStop', $current->id]
+            ['bs_gridStop', $current->id],
         );
 
         if ($stopElement instanceof FormFieldModel) {
@@ -99,7 +99,7 @@ class FormListener extends AbstractWrapperDcaListener
                 $options[$model->id] = sprintf(
                     '%s [%s]',
                     $model->bs_grid_name,
-                    $related ? $related->title : $related->bs_grid
+                    $related ? $related->title : $related->bs_grid,
                 );
             }
         }

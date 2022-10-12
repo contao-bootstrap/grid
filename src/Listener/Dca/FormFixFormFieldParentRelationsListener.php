@@ -16,17 +16,9 @@ use function time;
  */
 final class FormFixFormFieldParentRelationsListener
 {
-    /**
-     * Repository manager.
-     */
-    private RepositoryManager $repositoryManager;
-
-    /**
-     * @param RepositoryManager $repositoryManager Repository manager.
-     */
-    public function __construct(RepositoryManager $repositoryManager)
+    /** @param RepositoryManager $repositoryManager Repository manager. */
+    public function __construct(private readonly RepositoryManager $repositoryManager)
     {
-        $this->repositoryManager = $repositoryManager;
     }
 
     /**
@@ -35,7 +27,7 @@ final class FormFixFormFieldParentRelationsListener
      * @param string|int    $insertId      Id of new created record.
      * @param DataContainer $dataContainer Data container.
      */
-    public function onCopy($insertId, DataContainer $dataContainer): void
+    public function onCopy(string|int $insertId, DataContainer $dataContainer): void
     {
         $collection = $this->loadFormFieldModels($dataContainer->table, (int) $insertId);
         if ($collection === null) {
@@ -62,7 +54,7 @@ final class FormFixFormFieldParentRelationsListener
                 ],
                 [
                     'id' => $model->id,
-                ]
+                ],
             );
         }
     }
@@ -76,7 +68,7 @@ final class FormFixFormFieldParentRelationsListener
      * @return Collection|FormFieldModel[]|null
      * @psalm-return Collection|null
      */
-    private function loadFormFieldModels(string $parentTable, int $parentId): ?Collection
+    private function loadFormFieldModels(string $parentTable, int $parentId): Collection|null
     {
         $constraints = ['.pid=?', 'FIND_IN_SET( .type, \'bs_gridStart,bs_gridSeparator,bs_gridStop\')'];
         $values      = [$parentId, $parentTable];

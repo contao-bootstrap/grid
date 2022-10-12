@@ -15,7 +15,7 @@ use function sprintf;
 /**
  * Data container helper class for module.
  */
-class ModuleListener extends AbstractDcaListener
+final class ModuleListener extends AbstractDcaListener
 {
     /**
      * Initialize the data container.
@@ -44,11 +44,9 @@ class ModuleListener extends AbstractDcaListener
      * @param mixed         $value         Given value.
      * @param DataContainer $dataContainer The data container.
      *
-     * @return mixed
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function setGridWidgetOptions($value, DataContainer $dataContainer)
+    public function setGridWidgetOptions(mixed $value, DataContainer $dataContainer): mixed
     {
         if ($dataContainer->activeRecord && $dataContainer->activeRecord->type === 'bs_grid') {
             $GLOBALS['TL_DCA']['tl_module']['fields'][$dataContainer->field]['eval']['mandatory'] = true;
@@ -64,7 +62,7 @@ class ModuleListener extends AbstractDcaListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getAllModules(?MultiColumnWizard $multiColumnWizard = null): array
+    public function getAllModules(MultiColumnWizard|null $multiColumnWizard = null): array
     {
         if ($multiColumnWizard && $multiColumnWizard->dataContainer->activeRecord) {
             $collection = ModuleModel::findBy(
@@ -72,7 +70,7 @@ class ModuleListener extends AbstractDcaListener
                 [
                     $multiColumnWizard->dataContainer->activeRecord->pid,
                     $multiColumnWizard->dataContainer->activeRecord->id,
-                ]
+                ],
             );
         } else {
             $collection = ModuleModel::findAll();

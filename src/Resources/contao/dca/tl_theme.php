@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // Palette
+use Contao\ArrayUtil;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\DataContainer;
 use Contao\StringUtil;
@@ -15,7 +16,7 @@ PaletteManipulator::create()
     ->applyToPalette('default', 'tl_theme');
 
 // Operations
-array_insert(
+ArrayUtil::arrayInsert(
     $GLOBALS['TL_DCA']['tl_theme']['list']['operations'],
     -1,
     [
@@ -23,7 +24,7 @@ array_insert(
             'href'  => 'table=tl_bs_grid',
             'icon'  => 'bundles/contaobootstrapgrid/img/icon.png',
         ],
-    ]
+    ],
 );
 
 // Fields
@@ -51,8 +52,8 @@ $GLOBALS['TL_DCA']['tl_theme']['fields']['bs_grid_sizes'] = [
         static function ($value): array {
             return array_values(
                 array_unique(
-                    array_filter(StringUtil::deserialize($value, true))
-                )
+                    array_filter(StringUtil::deserialize($value, true)),
+                ),
             );
         },
     ],

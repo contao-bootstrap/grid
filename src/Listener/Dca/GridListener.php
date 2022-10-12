@@ -26,19 +26,10 @@ use function sprintf;
 /**
  * Data container helper for grid.
  */
-class GridListener
+final class GridListener
 {
-    /**
-     * Bootstrap environment.
-     */
-    private Environment $environment;
-
-    /**
-     * @param Environment $environment Bootstrap environment.
-     */
-    public function __construct(Environment $environment)
+    public function __construct(private readonly Environment $environment)
     {
-        $this->environment = $environment;
     }
 
     /**
@@ -51,8 +42,7 @@ class GridListener
         }
 
         $model = GridModel::findOneBy('id', Input::get('id'));
-        /** @psalm-var GridModel|null $model
-         */
+        /** @psalm-var GridModel|null $model */
         if (! $model) {
             return;
         }
@@ -74,7 +64,7 @@ class GridListener
             static function (string $value): string {
                 return $value . 'Size';
             },
-            StringUtil::deserialize($model->sizes, true)
+            StringUtil::deserialize($model->sizes, true),
         );
 
         PaletteManipulator::create()
@@ -92,7 +82,7 @@ class GridListener
         return sprintf(
             '%s <div class="tl_gray">%s</div>',
             $row['title'],
-            $row['description']
+            $row['description'],
         );
     }
 
@@ -112,7 +102,7 @@ class GridListener
 
             $sizes = array_values(array_filter(StringUtil::deserialize($theme->bs_grid_sizes, true)));
             if (! $sizes) {
-                $sizes = $this->environment->getConfig()->get('grid.sizes', []);
+                $sizes = $this->environment->getConfig()->get(['grid', 'sizes'], []);
             }
 
             return $sizes;
@@ -166,7 +156,7 @@ class GridListener
         $columns = $this->getColumns();
         $values  = array_merge(
             ['null'],
-            range(1, $columns)
+            range(1, $columns),
         );
 
         return [
@@ -183,6 +173,6 @@ class GridListener
      */
     private function getColumns(): int
     {
-        return (int) $this->environment->getConfig()->get('grid.columns', 12);
+        return (int) $this->environment->getConfig()->get(['grid', 'columns'], 12);
     }
 }

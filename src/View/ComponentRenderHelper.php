@@ -14,9 +14,7 @@ use ContaoBootstrap\Core\Helper\ColorRotate;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 
-/**
- * @deprecated
- */
+/** @deprecated */
 final class ComponentRenderHelper
 {
     /**

@@ -30,21 +30,19 @@ final class GridBuilder
     /**
      * Grid model.
      */
-    private ?GridModel $model = null;
+    private GridModel|null $model = null;
 
     /**
      * Cache of grid being built.
      */
-    private ?Grid $grid = null;
+    private Grid|null $grid = null;
 
     /**
      * Core Environment.
      */
     private Environment $environment;
 
-    /**
-     * @param Environment $environment The Core Environment.
-     */
+    /** @param Environment $environment The Core Environment. */
     public function __construct(Environment $environment)
     {
         $this->environment = $environment;
@@ -98,7 +96,7 @@ final class GridBuilder
             $field      = $size . 'Size';
             $definition = StringUtil::deserialize($this->model->{$field}, true);
 
-            if ($size === $this->environment->getConfig()->get('grid.default_size', 'xs')) {
+            if ($size === $this->environment->getConfig()->get(['grid', 'default_size'], 'xs')) {
                 $size = '';
             }
 
@@ -203,10 +201,8 @@ final class GridBuilder
      * Parse the offset definition value.
      *
      * @param mixed $offset Raw offset value.
-     *
-     * @return mixed
      */
-    private function parseOffset($offset)
+    private function parseOffset(mixed $offset): mixed
     {
         if ($offset === 'null') {
             $offset = 0;

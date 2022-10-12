@@ -20,24 +20,14 @@ use function trim;
 
 final class Gallery
 {
-    /** @var list<array<string,mixed>> */
-    private array $images;
-
-    private int $offset;
-
-    private int $limit;
-
-    public ?Pagination $pagination;
-
-    /**
-     * @param array<array-key,array<string,mixed>> $images
-     */
-    public function __construct(array $images, int $offset, int $limit, ?Pagination $pagination)
-    {
-        $this->images     = array_values($images);
-        $this->offset     = $offset;
-        $this->limit      = $limit;
-        $this->pagination = $pagination;
+    /** @param array<array-key,array<string,mixed>> $images */
+    public function __construct(
+        private array $images,
+        private readonly int $offset,
+        private readonly int $limit,
+        public Pagination|null $pagination,
+    ) {
+        $this->images = array_values($images);
     }
 
     /** @return list<stdClass> */
@@ -78,7 +68,7 @@ final class Gallery
                 $this->images[$index],
                 null,
                 $lightBoxId,
-                $this->images[$index]['filesModel']
+                $this->images[$index]['filesModel'],
             );
 
             if (isset($cell->picture['class']) && $cell->picture['class'] !== '') {

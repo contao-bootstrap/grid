@@ -12,7 +12,7 @@ use function explode;
 use function implode;
 use function in_array;
 
-class Grid
+final class Grid
 {
     /**
      * Columns list for each size.
@@ -24,12 +24,12 @@ class Grid
     /**
      * Grid alignment.
      */
-    private ?string $align = null;
+    private string|null $align = null;
 
     /**
      * Grid justify settings.
      */
-    private ?string $justify = null;
+    private string|null $justify = null;
 
     /**
      * Row classes.
@@ -49,7 +49,7 @@ class Grid
      * @param Column|null $column New column.
      * @param string      $size   Column size.
      */
-    public function addColumn(?Column $column = null, string $size = ''): Column
+    public function addColumn(Column|null $column = null, string $size = ''): Column
     {
         if (! $column) {
             $column = new Column();
@@ -130,7 +130,7 @@ class Grid
         }
 
         if ($this->noGutters) {
-            $classes[] = 'no-gutters';
+            $classes[] = 'g-0';
         }
 
         if ($flat) {
@@ -200,7 +200,7 @@ class Grid
      * @param Column[] $columns Column.
      * @param int      $index   Column index.
      */
-    private function getColumnByIndex(array $columns, int $index): ?Column
+    private function getColumnByIndex(array $columns, int $index): Column|null
     {
         $currentIndex = $index;
 

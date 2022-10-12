@@ -38,30 +38,17 @@ use const E_USER_DEPRECATED;
 /** @ContentElement("bs_grid_gallery", category="media") */
 final class GalleryElementController extends AbstractContentElementController
 {
-    private Security $security;
-
-    private GridProvider $gridProvider;
-
-    private ContaoFramework $framework;
-
-    private string $projectDir;
-
     public function __construct(
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
         ResponseTagger $responseTagger,
         TokenChecker $tokenChecker,
-        Security $security,
-        GridProvider $gridProvider,
-        ContaoFramework $framework,
-        string $projectDir
+        private Security $security,
+        private GridProvider $gridProvider,
+        private ContaoFramework $framework,
+        private string $projectDir,
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger, $tokenChecker);
-
-        $this->security     = $security;
-        $this->gridProvider = $gridProvider;
-        $this->framework    = $framework;
-        $this->projectDir   = $projectDir;
     }
 
     /**
@@ -69,10 +56,12 @@ final class GalleryElementController extends AbstractContentElementController
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function preGenerate(Request $request, Model $model, string $section, ?array $classes = null): ?Response
-    {
-        assert($model instanceof ContentModel);
-
+    protected function preGenerate(
+        Request $request,
+        Model $model,
+        string $section,
+        array|null $classes = null,
+    ): Response|null {
         $sources = $this->determineSources($model);
         if ($sources === []) {
             return new Response();
@@ -96,7 +85,6 @@ final class GalleryElementController extends AbstractContentElementController
         $gallery = $request->attributes->get(Gallery::class);
 
         assert($gallery instanceof Gallery);
-        assert($model instanceof ContentModel);
 
         $data['pagination'] = $gallery->pagination ? $gallery->pagination->generate("\n") : null;
         $data['images']     = $this->render(
@@ -107,8 +95,8 @@ final class GalleryElementController extends AbstractContentElementController
                     'body'     => $gallery->compileImages($model),
                     'grid'     => $this->getGridIterator($model),
                     'headline' => $model->headline,
-                ]
-            )
+                ],
+            ),
         );
 
         return $data;
@@ -147,7 +135,7 @@ final class GalleryElementController extends AbstractContentElementController
     /**
      * Get the grid iterator.
      */
-    private function getGridIterator(ContentModel $model): ?GridIterator
+    private function getGridIterator(ContentModel $model): GridIterator|null
     {
         try {
             if ($model->bs_grid) {
@@ -156,7 +144,7 @@ final class GalleryElementController extends AbstractContentElementController
 
                 return $iterator;
             }
-        } catch (GridNotFound $e) {
+        } catch (GridNotFound) {
             // No Grid found, return null.
             return null;
         }
@@ -183,10 +171,10 @@ final class GalleryElementController extends AbstractContentElementController
 
             // Deprecated since Contao 4.0, to be removed in Contao 5.0
             case 'meta':
-                // @codingStandardsIgnoreStart
                 @trigger_error(
-                    'The "meta" key in ContentGallery::compile() has been deprecated and will no longer work in Contao 5.0.',
-                    E_USER_DEPRECATED
+                    'The "meta" key in ContentGallery::compile() has been deprecated and will no longer work in '
+                    . 'Contao 5.0.',
+                    E_USER_DEPRECATED,
                 );
                 // @codingStandardsIgnoreEnd
 

@@ -17,10 +17,10 @@ services:
     class: ContaoBootstrap\Grid\Listener\Dca\ContentListener
     arguments:
       - '@contao_bootstrap.environment'
-      - '@database_connection'
       - '@contao.framework'
       - '@contao.image.image_sizes'
       - '@netzmacht.contao_toolkit.contao.backend_user'
+      - '@netzmacht.contao_toolkit.assets_manager'
 
   contao_bootstrap.grid.listeners.dca.form:
     class: ContaoBootstrap\Grid\Listener\Dca\FormListener

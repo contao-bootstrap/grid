@@ -25,9 +25,7 @@ final class AutoGridWidthsMigration extends AbstractMigration
      */
     private Connection $connection;
 
-    /**
-     * @param Connection $connection Database connection.
-     */
+    /** @param Connection $connection Database connection. */
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
@@ -35,7 +33,7 @@ final class AutoGridWidthsMigration extends AbstractMigration
 
     public function shouldRun(): bool
     {
-        if (! $this->connection->getSchemaManager()->tablesExist(['tl_bs_grid'])) {
+        if (! $this->connection->createSchemaManager()->tablesExist(['tl_bs_grid'])) {
             return false;
         }
 
@@ -104,7 +102,7 @@ final class AutoGridWidthsMigration extends AbstractMigration
      *
      * @param string|null $size The grid size definition.
      */
-    private function migrateSize(?string $size): ?string
+    private function migrateSize(string|null $size): string|null
     {
         if ($size === null) {
             return null;
@@ -118,7 +116,7 @@ final class AutoGridWidthsMigration extends AbstractMigration
 
                 return $column;
             },
-            StringUtil::deserialize($size, true)
+            StringUtil::deserialize($size, true),
         );
 
         return serialize($columns);

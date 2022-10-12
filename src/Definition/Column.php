@@ -9,48 +9,39 @@ use function array_unique;
 use function array_values;
 use function is_int;
 use function sprintf;
-use function strlen;
 
-/**
- * @SuppressWarnings(TooManyPublicMethods)
- */
-class Column
+/** @SuppressWarnings(TooManyPublicMethods) */
+final class Column
 {
     /**
      * Column width.
-     *
-     * @var int|string|null
      */
-    private $width = null;
+    private string|int|null $width = null;
 
     /**
      * Order setting.
      */
-    private ?int $order = null;
+    private int|null $order = null;
 
     /**
      * Offset setting.
-     *
-     * @var string|int|null
      */
-    private $offset = null;
+    private string|int|null $offset = null;
 
     /**
      * Align.
      */
-    private ?string $align = null;
+    private string|null $align = null;
 
     /**
      * Add reset before the column.
-     *
-     * @var bool|string
      */
-    private $reset = false;
+    private string|bool $reset = false;
 
     /**
      * Justify setting.
      */
-    private ?string $justify = null;
+    private string|null $justify = null;
 
     /**
      * Css classes.
@@ -108,7 +99,7 @@ class Column
      *
      * @return $this
      */
-    public function offset($offset): self
+    public function offset(int|string $offset): self
     {
         $this->offset = $offset;
 
@@ -116,7 +107,7 @@ class Column
     }
 
     /**
-     * Set the align setting.
+     * Set align setting.
      *
      * @param string $align Align setting.
      *
@@ -297,7 +288,7 @@ class Column
 
         if (is_int($this->offset)) {
             $classes[] = 'offset' . $sizeSuffix . '-' . $this->offset;
-        } elseif (strlen($this->offset)) {
+        } elseif ($this->offset !== '') {
             $classes[] = $this->offset;
         }
     }

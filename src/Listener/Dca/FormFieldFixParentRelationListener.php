@@ -22,9 +22,7 @@ final class FormFieldFixParentRelationListener
      */
     private RepositoryManager $repositoryManager;
 
-    /**
-     * @param RepositoryManager $repositoryManager Repository manager.
-     */
+    /** @param RepositoryManager $repositoryManager Repository manager. */
     public function __construct(RepositoryManager $repositoryManager)
     {
         $this->repositoryManager = $repositoryManager;
@@ -60,13 +58,13 @@ final class FormFieldFixParentRelationListener
      *
      * @param int|string $formFieldId Element id of copied element.
      */
-    public function onCopy($formFieldId): void
+    public function onCopy(int|string $formFieldId): void
     {
         $formFieldModel = $this->repositoryManager
             ->getRepository(FormFieldModel::class)
             ->find((int) $formFieldId);
 
-        if ($formFieldModel === null) {
+        if (! $formFieldModel instanceof FormFieldModel) {
             return;
         }
 
@@ -78,7 +76,7 @@ final class FormFieldFixParentRelationListener
      *
      * @param FormFieldModel|Result $formFieldModel The form field.
      */
-    private function fixFormField($formFieldModel): void
+    private function fixFormField(FormFieldModel|Result $formFieldModel): void
     {
         if (! in_array($formFieldModel->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
             return;
@@ -97,7 +95,7 @@ final class FormFieldFixParentRelationListener
             ],
             [
                 'id' => $formFieldModel->id,
-            ]
+            ],
         );
     }
 
@@ -105,8 +103,11 @@ final class FormFieldFixParentRelationListener
      * Load the closest grid start form field.
      *
      * @param FormFieldModel|Result $formFieldModel The form field model.
+     *
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress LessSpecificReturnStatement
      */
-    private function loadGridStartFormField($formFieldModel): ?FormFieldModel
+    private function loadGridStartFormField(FormFieldModel|Result $formFieldModel): FormFieldModel|null
     {
         $constraints = ['.pid=?', '.type=?', '.sorting < ?'];
         $values      = [$formFieldModel->pid, 'bs_gridStart', $formFieldModel->sorting];

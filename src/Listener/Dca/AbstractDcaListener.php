@@ -21,9 +21,7 @@ abstract class AbstractDcaListener
      */
     private Environment $environment;
 
-    /**
-     * @param Environment $environment Bootstrap environment.
-     */
+    /** @param Environment $environment Bootstrap environment. */
     public function __construct(Environment $environment)
     {
         $this->environment = $environment;
@@ -38,7 +36,7 @@ abstract class AbstractDcaListener
     {
         return range(
             1,
-            (int) $this->environment->getConfig()->get('grid.columns', 12)
+            (int) $this->environment->getConfig()->get(['grid', 'columns'], 12),
         );
     }
 
@@ -49,7 +47,7 @@ abstract class AbstractDcaListener
      */
     public function getGridSizes(): array
     {
-        return $this->environment->getConfig()->get('grid.sizes', []);
+        return $this->environment->getConfig()->get(['grid', 'sizes'], []);
     }
 
     /**
@@ -67,7 +65,7 @@ abstract class AbstractDcaListener
                 $parent = sprintf(
                     '%s [ID %s]',
                     $model->getRelated('pid')->name,
-                    $model->pid
+                    $model->pid,
                 );
 
                 $options[$parent][$model->id] = sprintf('%s [ID %s]', $model->title, $model->id);
@@ -83,7 +81,7 @@ abstract class AbstractDcaListener
      * @param string        $value         Grid name.
      * @param DataContainer $dataContainer Data container driver.
      */
-    public function generateGridName($value, $dataContainer): string
+    public function generateGridName(string $value, DataContainer $dataContainer): string
     {
         if (! $value) {
             $value = 'grid_' . $dataContainer->id;

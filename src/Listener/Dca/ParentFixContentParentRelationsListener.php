@@ -14,9 +14,6 @@ use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Manager as DcaManager;
 
 use function array_unique;
-use function assert;
-use function is_int;
-use function is_string;
 use function time;
 
 /**
@@ -55,7 +52,7 @@ final class ParentFixContentParentRelationsListener
         Connection $connection,
         DcaManager $dcaManager,
         RepositoryManager $repositoryManager,
-        Adapter $inputAdapter
+        Adapter $inputAdapter,
     ) {
         $this->connection        = $connection;
         $this->dcaManager        = $dcaManager;
@@ -69,7 +66,7 @@ final class ParentFixContentParentRelationsListener
      * @param string|int    $insertId      Id of new created record.
      * @param DataContainer $dataContainer Data container.
      */
-    public function onCopy($insertId, DataContainer $dataContainer): void
+    public function onCopy(string|int $insertId, DataContainer $dataContainer): void
     {
         $this->fixChildRecords((int) $insertId, $dataContainer->table);
     }
@@ -88,7 +85,7 @@ final class ParentFixContentParentRelationsListener
         $childTables = (array) $definition->get(['config', 'ctable'], []);
         $columns     = $this->repositoryManager
             ->getConnection()
-            ->getSchemaManager()
+            ->createSchemaManager()
             ->listTableColumns($definition->getName());
 
         if (
@@ -99,7 +96,7 @@ final class ParentFixContentParentRelationsListener
             $childTables[] = $definition->getName();
         }
 
-        $schemaManager = $this->repositoryManager->getConnection()->getSchemaManager();
+        $schemaManager = $this->repositoryManager->getConnection()->createSchemaManager();
 
         foreach (array_unique($childTables) as $childTable) {
             if (! $schemaManager->tablesExist([$childTable])) {
@@ -151,7 +148,7 @@ final class ParentFixContentParentRelationsListener
                 ],
                 [
                     'id' => $model->id,
-                ]
+                ],
             );
         }
     }
@@ -165,7 +162,7 @@ final class ParentFixContentParentRelationsListener
      * @return Collection|ContentModel[]|null
      * @psalm-return Collection|null
      */
-    private function loadContentModels(string $parentTable, int $parentId): ?Collection
+    private function loadContentModels(string $parentTable, int $parentId): Collection|null
     {
         $constraints = ['.pid=?', 'FIND_IN_SET( .type, \'bs_gridStart,bs_gridSeparator,bs_gridStop\')'];
         $values      = [$parentId, $parentTable];
@@ -206,9 +203,6 @@ final class ParentFixContentParentRelationsListener
                 ->setParameter('ptable', $definition->getName());
         }
 
-        $result = $queryBuilder->execute();
-        assert(! is_string($result) && ! is_int($result));
-
-        return $result->fetchFirstColumn();
+        return $queryBuilder->executeQuery()->fetchFirstColumn();
     }
 }

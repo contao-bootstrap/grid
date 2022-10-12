@@ -12,16 +12,16 @@ use ContaoBootstrap\Grid\GridIterator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use function assert;
-
 /** @ContentElement("bs_gridStop", category="bs_grid") */
 final class GridStopElementController extends AbstractGridElementController
 {
     /** {@inheritDoc} */
-    protected function preGenerate(Request $request, Model $model, string $section, ?array $classes = null): ?Response
-    {
-        assert($model instanceof ContentModel);
-
+    protected function preGenerate(
+        Request $request,
+        Model $model,
+        string $section,
+        array|null $classes = null,
+    ): Response|null {
         if (! $this->isBackendRequest($request)) {
             $iterator = $this->getIterator($model);
             if ($iterator) {
@@ -37,12 +37,12 @@ final class GridStopElementController extends AbstractGridElementController
     /**
      * Get the parent model.
      */
-    protected function getParent(ContentModel $model): ?ContentModel
+    protected function getParent(ContentModel $model): ContentModel|null
     {
         return ContentModel::findByPk($model->bs_grid_parent);
     }
 
-    protected function getIterator(ContentModel $model): ?GridIterator
+    protected function getIterator(ContentModel $model): GridIterator|null
     {
         $provider = $this->getGridProvider();
         $parent   = $this->getParent($model);
@@ -53,7 +53,7 @@ final class GridStopElementController extends AbstractGridElementController
                 $this->tagResponse('contao.db.tl_bs_grid.' . $parent->bs_grid);
 
                 return $iterator;
-            } catch (GridNotFound $e) {
+            } catch (GridNotFound) {
                 // Do nothing. In backend view an error is shown anyway.
                 return null;
             }

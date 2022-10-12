@@ -5,6 +5,11 @@ Changelog
 [Unreleased]
 ------------
 
+### Changed
+
+ - Add xxl breakpoint for Bootstrap 5 compatibility
+ - Rename `no-gutter` to `g-0` for Bootstrap 5 compatibility
+
 [2.4.3] (2022-08-18)
 
 ### Fixed
