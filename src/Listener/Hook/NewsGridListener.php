@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Hook;
 
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\ModuleNews;
 use Contao\Template;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
@@ -31,6 +32,7 @@ final class NewsGridListener
      * @param array<string,mixed> $newsArticle The news article.
      * @param ModuleNews          $module      The news module.
      *
+     * @Hook("parseArticles")
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function onParseArticles(Template $template, array $newsArticle, ModuleNews $module): void

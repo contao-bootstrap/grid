@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Listener;
 
 use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\Model\Collection;
 use Contao\Theme;
 use Contao\ZipWriter;
@@ -33,6 +34,7 @@ final class ThemeExportListener extends Theme
      * @param ZipWriter   $archive Zip archive.
      * @param int|string  $themeId Theme id.
      *
+     * @Hook("exportTheme")
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function onExportTheme(DOMDocument $xml, ZipWriter $archive, int|string $themeId): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener;
 
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\ZipReader;
 use ContaoBootstrap\Grid\Model\GridModel;
 use DOMDocument;
@@ -18,6 +19,7 @@ final class ThemeImportListener
      * @param ZipReader   $archive Zip archive.
      * @param int|string  $themeId Theme id.
      *
+     * @Hook("extractThemeFiles")
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function onExtractThemeFiles(DOMDocument $xml, ZipReader $archive, int|string $themeId): void

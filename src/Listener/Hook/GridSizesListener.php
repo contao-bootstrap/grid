@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Hook;
 
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\Model;
 use Contao\StringUtil;
 use Contao\ThemeModel;
@@ -36,6 +37,8 @@ final class GridSizesListener
      * Initialize all grid sizes.
      *
      * @param string $dataContainer The data container name.
+     *
+     * @Hook("loadDataContainer", priority=100)
      */
     public function initializeSizes(string $dataContainer): void
     {
@@ -74,19 +77,21 @@ final class GridSizesListener
                 'dragAndDrop'        => true,
                 'columnFields'       => [
                     'width'  => [
+                        'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['width'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.listeners.dca.grid',
                             'getWidths',
                         ],
                         'eval'             => [
-                            'style'              => 'width: 100px;',
+                            'style'              => 'width: 100%;',
                             'isAssociative'      => true,
                             'chosen'             => true,
                             'includeBlankOption' => true,
                         ],
                     ],
                     'offset' => [
+                        'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.listeners.dca.grid',
@@ -94,40 +99,44 @@ final class GridSizesListener
                         ],
                         'reference'        => ['null' => '0 '],
                         'eval'             => [
-                            'style'              => 'width: 100px;',
+                            'style'              => 'width: 100%;',
                             'includeBlankOption' => true,
                             'chosen'             => true,
                             'isAssociative'      => false,
                         ],
                     ],
                     'order'  => [
+                        'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['order'],
                         'inputType'        => 'select',
                         'options_callback' => [
                             'contao_bootstrap.grid.listeners.dca.grid',
                             'getOrders',
                         ],
                         'eval'             => [
-                            'style'              => 'width: 120px;',
+                            'style'              => 'width: 100%',
                             'includeBlankOption' => true,
                             'chosen'             => true,
                         ],
                     ],
                     'align'  => [
+                        'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
                         'inputType' => 'select',
                         'options'   => ['start', 'center', 'end'],
                         'eval'      => [
-                            'style'              => 'width: 100px;',
+                            'style'              => 'width: 100%',
                             'includeBlankOption' => true,
                             'chosen'             => true,
                         ],
                     ],
                     'class'  => [
+                        'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'text',
-                        'eval'      => ['style' => 'width: 160px'],
+                        'eval'      => ['style' => 'width: 100%'],
                     ],
                     'reset'  => [
+                        'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
                         'exclude'   => true,
                         'default'   => '',
                         'inputType' => 'select',
@@ -135,7 +144,7 @@ final class GridSizesListener
                         'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
                         'eval'      => [
                             'includeBlankOption' => true,
-                            'style'              => 'width: 100px',
+                            'style'              => 'width: 100%',
                         ],
                     ],
                 ],

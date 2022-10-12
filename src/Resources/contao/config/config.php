@@ -5,8 +5,6 @@ declare(strict_types=1);
 use ContaoBootstrap\Grid\Component\FormField\GridSeparatorFormField;
 use ContaoBootstrap\Grid\Component\FormField\GridStartFormField;
 use ContaoBootstrap\Grid\Component\FormField\GridStopFormField;
-use ContaoBootstrap\Grid\Listener\Hook\GridSizesListener;
-use ContaoBootstrap\Grid\Listener\Hook\NewsGridListener;
 use ContaoBootstrap\Grid\Model\GridModel;
 
 // Models
@@ -24,21 +22,6 @@ $GLOBALS['TL_FFL']['bs_gridStop']      = GridStopFormField::class;
 $GLOBALS['TL_WRAPPERS']['start'][]     = 'bs_gridStart';
 $GLOBALS['TL_WRAPPERS']['separator'][] = 'bs_gridSeparator';
 $GLOBALS['TL_WRAPPERS']['stop'][]      = 'bs_gridStop';
-
-// Hooks
-$GLOBALS['TL_HOOKS']['loadDataContainer'][] = [GridSizesListener::class, 'initializeSizes'];
-
-$GLOBALS['TL_HOOKS']['exportTheme'][] = [
-    'contao_bootstrap.grid.listeners.theme_export',
-    'onExportTheme',
-];
-
-$GLOBALS['TL_HOOKS']['extractThemeFiles'][] = [
-    'contao_bootstrap.grid.listeners.theme_import',
-    'onExtractThemeFiles',
-];
-
-$GLOBALS['TL_HOOKS']['parseArticles'][] = [NewsGridListener::class, 'onParseArticles'];
 
 // Easy Themes
 $GLOBALS['TL_EASY_THEMES_MODULES']['bs_grid'] = ['href_fragment' => 'table=tl_bs_grid'];
