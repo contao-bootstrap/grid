@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
+use Contao\DataContainer;
 use Contao\FormFieldModel;
 use Contao\Model;
 use Contao\Model\Collection;
 
-use function assert;
-use function defined;
 use function sprintf;
 use function time;
 
@@ -80,15 +79,14 @@ final class FormListener extends AbstractWrapperDcaListener
      *
      * @return array<int|string,string>
      */
-    public function getGridParentOptions(): array
+    public function getGridParentOptions(DataContainer $dataContainer): array
     {
         $columns = [
             'tl_form_field.type = ?',
             'tl_form_field.pid = ?',
         ];
 
-        assert(defined('CURRENT_ID'));
-        $values = ['bs_gridStart', CURRENT_ID];
+        $values = ['bs_gridStart', $dataContainer->currentPid];
 
         $collection = FormFieldModel::findBy($columns, $values);
         $options    = [];

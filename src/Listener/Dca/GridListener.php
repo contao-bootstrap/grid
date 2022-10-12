@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Contao\DataContainer;
 use Contao\Input;
 use Contao\Model\Collection;
 use Contao\StringUtil;
@@ -19,7 +20,6 @@ use function array_map;
 use function array_merge;
 use function array_unique;
 use function array_values;
-use function defined;
 use function range;
 use function sprintf;
 
@@ -91,11 +91,11 @@ final class GridListener
      *
      * @return list<string>
      */
-    public function getSizes(): array
+    public function getSizes(DataContainer $dataContainer): array
     {
         $sizes = [];
-        if (defined('CURRENT_ID') && Input::get('act') === 'edit') {
-            $theme = ThemeModel::findByPk(CURRENT_ID);
+        if (Input::get('act') === 'edit') {
+            $theme = ThemeModel::findByPk($dataContainer->currentPid);
             if ($theme === null) {
                 return [];
             }
