@@ -10,7 +10,7 @@ use function uksort;
 
 final class SortByName implements SortBy
 {
-    private function __construct(private string $direction)
+    private function __construct(private readonly string $direction)
     {
     }
 

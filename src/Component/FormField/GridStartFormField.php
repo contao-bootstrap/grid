@@ -13,7 +13,7 @@ use ContaoBootstrap\Grid\GridIterator;
  * @property string     $columnClasses
  * @psalm-suppress PropertyNotSetInConstructor - Issue in the codebase of Contao
  */
-class GridStartFormField extends AbstractFormField
+final class GridStartFormField extends AbstractFormField
 {
     /**
      * Template name.

@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 use function assert;
 
-class ContaoBootstrapGridBundle extends Bundle
+final class ContaoBootstrapGridBundle extends Bundle
 {
     public function build(ContainerBuilder $container): void
     {

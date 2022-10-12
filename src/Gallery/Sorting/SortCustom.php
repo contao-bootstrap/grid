@@ -11,10 +11,10 @@ use function array_map;
 use function array_merge;
 use function array_values;
 
-class SortCustom implements SortBy
+final class SortCustom implements SortBy
 {
     /** @param list<string> $orderSrc */
-    public function __construct(private array $orderSrc)
+    public function __construct(private readonly array $orderSrc)
     {
     }
 

@@ -36,7 +36,7 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
         ResponseTagger $responseTagger,
         RouterInterface $router,
         TranslatorInterface $translator,
-        private GridProvider $gridProvider,
+        private readonly GridProvider $gridProvider,
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger, $router, $translator);
     }

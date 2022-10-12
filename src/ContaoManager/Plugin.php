@@ -15,7 +15,7 @@ use ContaoBootstrap\Grid\ContaoBootstrapGridBundle;
 /**
  * Contao manager plugin.
  */
-class Plugin implements BundlePluginInterface
+final class Plugin implements BundlePluginInterface
 {
     /** {@inheritdoc} */
     public function getBundles(ParserInterface $parser): array

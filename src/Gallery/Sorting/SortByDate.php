@@ -8,7 +8,7 @@ use function uasort;
 
 final class SortByDate implements SortBy
 {
-    private function __construct(private string $direction)
+    private function __construct(private readonly string $direction)
     {
     }
 
