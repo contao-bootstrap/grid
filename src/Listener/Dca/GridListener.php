@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\DataContainer;
 use Contao\Input;
 use Contao\Model\Collection;
@@ -13,6 +14,7 @@ use Contao\ThemeModel;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Environment\ThemeContext;
 use ContaoBootstrap\Grid\Model\GridModel;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 
 use function array_combine;
 use function array_filter;
@@ -28,8 +30,12 @@ use function sprintf;
  */
 final class GridListener
 {
-    public function __construct(private readonly Environment $environment)
-    {
+    /** @param Adapter<Input> $inputAdapter */
+    public function __construct(
+        private readonly Environment $environment,
+        private readonly RepositoryManager $repositories,
+        private readonly Adapter $inputAdapter,
+    ) {
     }
 
     /**
@@ -37,11 +43,11 @@ final class GridListener
      */
     public function enterContext(): void
     {
-        if (Input::get('act') !== 'edit') {
+        if ($this->inputAdapter->get('act') !== 'edit') {
             return;
         }
 
-        $model = GridModel::findOneBy('id', Input::get('id'));
+        $model = $this->repositories->getRepository(GridModel::class)->find((int) $this->inputAdapter->get('id'));
         /** @psalm-var GridModel|null $model */
         if (! $model) {
             return;
@@ -55,11 +61,15 @@ final class GridListener
      */
     public function initializePalette(): void
     {
-        if (Input::get('act') !== 'edit') {
+        if ($this->inputAdapter->get('act') !== 'edit') {
             return;
         }
 
-        $model = GridModel::findByPk(Input::get('id'));
+        $model = $this->repositories->getRepository(GridModel::class)->find((int) $this->inputAdapter->get('id'));
+        if (! $model instanceof GridModel) {
+            return;
+        }
+
         $sizes = array_map(
             static function (string $value): string {
                 return $value . 'Size';
@@ -94,8 +104,8 @@ final class GridListener
     public function getSizes(DataContainer $dataContainer): array
     {
         $sizes = [];
-        if (Input::get('act') === 'edit') {
-            $theme = ThemeModel::findByPk($dataContainer->currentPid);
+        if ($this->inputAdapter->get('act')  === 'edit') {
+            $theme = $this->repositories->getRepository(ThemeModel::class)->find((int) $dataContainer->currentPid);
             if ($theme === null) {
                 return [];
             }
@@ -108,7 +118,7 @@ final class GridListener
             return $sizes;
         }
 
-        $themes = ThemeModel::findAll();
+        $themes = $this->repositories->getRepository(ThemeModel::class)->findAll();
         if (! $themes instanceof Collection) {
             return [];
         }

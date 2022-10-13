@@ -5,16 +5,45 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Component\ContentElement;
 
 use Contao\ContentModel;
+use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\Model;
+use ContaoBootstrap\Core\Helper\ColorRotate;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
+use ContaoBootstrap\Grid\GridProvider;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
+use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
+use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
+use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /** @ContentElement("bs_gridStop", category="bs_grid") */
 final class GridStopElementController extends AbstractGridElementController
 {
+    public function __construct(
+        TemplateRenderer $templateRenderer,
+        RequestScopeMatcher $scopeMatcher,
+        ResponseTagger $responseTagger,
+        TokenChecker $tokenChecker,
+        GridProvider $gridProvider,
+        ColorRotate $colorRotate,
+        TranslatorInterface $translator,
+        private readonly RepositoryManager $repositories,
+    ) {
+        parent::__construct(
+            $templateRenderer,
+            $scopeMatcher,
+            $responseTagger,
+            $tokenChecker,
+            $gridProvider,
+            $colorRotate,
+            $translator,
+        );
+    }
+
     /** {@inheritDoc} */
     protected function preGenerate(
         Request $request,
@@ -36,10 +65,13 @@ final class GridStopElementController extends AbstractGridElementController
 
     /**
      * Get the parent model.
+     *
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress LessSpecificReturnStatement
      */
     protected function getParent(ContentModel $model): ContentModel|null
     {
-        return ContentModel::findByPk($model->bs_grid_parent);
+        return $this->repositories->getRepository(ContentModel::class)->find((int) $model->bs_grid_parent);
     }
 
     protected function getIterator(ContentModel $model): GridIterator|null

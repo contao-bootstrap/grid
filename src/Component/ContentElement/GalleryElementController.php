@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Component\ContentElement;
 
 use Contao\ContentModel;
-use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\FrontendUser;
+use Contao\Input;
 use Contao\Model;
 use Contao\StringUtil;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
@@ -22,6 +23,7 @@ use ContaoBootstrap\Grid\Gallery\Sorting\SortRandom;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Controller\ContentElement\AbstractContentElementController;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
@@ -38,15 +40,17 @@ use const E_USER_DEPRECATED;
 /** @ContentElement("bs_grid_gallery", category="media") */
 final class GalleryElementController extends AbstractContentElementController
 {
+    /** @param Adapter<Input> $inputAdapter */
     public function __construct(
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
         ResponseTagger $responseTagger,
         TokenChecker $tokenChecker,
-        private Security $security,
-        private GridProvider $gridProvider,
-        private ContaoFramework $framework,
-        private string $projectDir,
+        private readonly Security $security,
+        private readonly GridProvider $gridProvider,
+        private readonly RepositoryManager $repositories,
+        private readonly Adapter $inputAdapter,
+        private readonly string $projectDir,
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger, $tokenChecker);
     }
@@ -67,7 +71,7 @@ final class GalleryElementController extends AbstractContentElementController
             return new Response();
         }
 
-        $galleryBuilder = new GalleryBuilder($this->framework, $this->projectDir);
+        $galleryBuilder = new GalleryBuilder($this->repositories, $this->inputAdapter, $this->projectDir);
         $galleryBuilder
             ->addSources($sources)
             ->perPage('page_g' . $model->id, (int) $model->perPage)

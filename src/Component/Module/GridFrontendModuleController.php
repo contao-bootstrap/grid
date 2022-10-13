@@ -14,6 +14,8 @@ use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Controller\FrontendModule\AbstractFrontendModuleController;
+use Netzmacht\Contao\Toolkit\Data\Model\ContaoRepository;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
@@ -24,6 +26,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use function array_filter;
 use function array_map;
 use function array_values;
+use function assert;
 use function is_numeric;
 use function sprintf;
 
@@ -37,6 +40,7 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
         RouterInterface $router,
         TranslatorInterface $translator,
         private readonly GridProvider $gridProvider,
+        private readonly RepositoryManager $repositories,
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger, $router, $translator);
     }
@@ -168,7 +172,9 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
      */
     protected function preCompileModules(ModuleModel $moduleModel, array $moduleIds): array
     {
-        $collection = ModuleModel::findMultipleByIds($moduleIds);
+        $repository = $this->repositories->getRepository(ModuleModel::class);
+        assert($repository instanceof ContaoRepository);
+        $collection = $repository->findMultipleByIds($moduleIds);
         $modules    = [];
 
         if ($collection instanceof Collection) {

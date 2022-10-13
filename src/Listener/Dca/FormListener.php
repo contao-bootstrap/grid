@@ -22,14 +22,14 @@ final class FormListener extends AbstractWrapperDcaListener
     /** {@inheritDoc} */
     protected function getNextElements($current): array
     {
-        $collection = FormFieldModel::findBy(
+        $collection = $this->repositories->getRepository(FormFieldModel::class)->findBy(
             [
-                'tl_form_field.pid=?',
-                '(tl_form_field.type != ? AND tl_form_field.bs_grid_parent = ?)',
-                'tl_form_field.sorting > ?',
+                '.pid=?',
+                '( .type != ? AND .bs_grid_parent = ?)',
+                '.sorting > ?',
             ],
             [$current->pid, 'bs_gridStop', $current->id, $current->sorting],
-            ['order' => 'tl_form_field.sorting ASC'],
+            ['order' => '.sorting ASC'],
         );
 
         if ($collection instanceof Collection) {
@@ -42,8 +42,8 @@ final class FormListener extends AbstractWrapperDcaListener
     /** {@inheritDoc} */
     protected function getStopElement($current): Model
     {
-        $stopElement = FormFieldModel::findOneBy(
-            ['tl_form_field.type=?', 'tl_form_field.bs_grid_parent=?'],
+        $stopElement = $this->repositories->getRepository(FormFieldModel::class)->findOneBy(
+            ['.type=?', '.bs_grid_parent=?'],
             ['bs_gridStop', $current->id],
         );
 
@@ -82,13 +82,13 @@ final class FormListener extends AbstractWrapperDcaListener
     public function getGridParentOptions(DataContainer $dataContainer): array
     {
         $columns = [
-            'tl_form_field.type = ?',
-            'tl_form_field.pid = ?',
+            '.type = ?',
+            '.pid = ?',
         ];
 
         $values = ['bs_gridStart', $dataContainer->currentPid];
 
-        $collection = FormFieldModel::findBy($columns, $values);
+        $collection = $this->repositories->getRepository(FormFieldModel::class)->findBy($columns, $values);
         $options    = [];
 
         if ($collection instanceof Collection) {

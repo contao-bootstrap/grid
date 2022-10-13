@@ -4,14 +4,17 @@ services:
 
   contao_bootstrap.grid.listeners.build_context_config:
     class: ContaoBootstrap\Grid\Listener\BuildContextConfigListener
+    arguments:
+      - '@netzmacht.contao_toolkit.repository_manager'
     tags:
       - { name: kernel.event_listener, event: contao_bootstrap.core.build_context_config, method: buildThemeConfig }
 
   contao_bootstrap.grid.listeners.dca.grid:
     class: ContaoBootstrap\Grid\Listener\Dca\GridListener
-
     arguments:
       - '@contao_bootstrap.environment'
+      - '@netzmacht.contao_toolkit.repository_manager'
+      - '@netzmacht.contao_toolkit.contao.input_adapter'
 
   contao_bootstrap.grid.listeners.dca.content:
     class: ContaoBootstrap\Grid\Listener\Dca\ContentListener
@@ -21,21 +24,24 @@ services:
       - '@contao.image.image_sizes'
       - '@netzmacht.contao_toolkit.contao.backend_user'
       - '@netzmacht.contao_toolkit.assets_manager'
+      - '@netzmacht.contao_toolkit.repository_manager'
 
   contao_bootstrap.grid.listeners.dca.form:
     class: ContaoBootstrap\Grid\Listener\Dca\FormListener
     arguments:
       - '@contao_bootstrap.environment'
+      - '@netzmacht.contao_toolkit.repository_manager'
 
   contao_bootstrap.grid.listeners.dca.module:
     class: ContaoBootstrap\Grid\Listener\Dca\ModuleListener
     arguments:
       - '@contao_bootstrap.environment'
+      - '@netzmacht.contao_toolkit.repository_manager'
 
   contao_bootstrap.grid.listeners.theme_export:
     class: ContaoBootstrap\Grid\Listener\ThemeExportListener
     arguments:
-     - '@contao.framework'
+     - '@netzmacht.contao_toolkit.repository_manager'
 
   contao_bootstrap.grid.listeners.theme_import:
     class: ContaoBootstrap\Grid\Listener\ThemeImportListener
@@ -44,6 +50,7 @@ services:
     arguments:
       - '@database_connection'
       - '@contao_bootstrap.environment'
+      - '@netzmacht.contao_toolkit.repository_manager'
 
   ContaoBootstrap\Grid\Listener\Hook\NewsGridListener:
     arguments:

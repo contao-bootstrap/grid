@@ -16,6 +16,7 @@ use ContaoBootstrap\Grid\Definition\Column;
 use ContaoBootstrap\Grid\Definition\Grid;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\Model\GridModel;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use RuntimeException;
 
 use function array_search;
@@ -37,15 +38,10 @@ final class GridBuilder
      */
     private Grid|null $grid = null;
 
-    /**
-     * Core Environment.
-     */
-    private Environment $environment;
-
-    /** @param Environment $environment The Core Environment. */
-    public function __construct(Environment $environment)
-    {
-        $this->environment = $environment;
+    public function __construct(
+        private readonly Environment $environment,
+        private readonly RepositoryManager $repositories,
+    ) {
     }
 
     /**
@@ -72,7 +68,7 @@ final class GridBuilder
      */
     protected function loadModel(int $gridId): void
     {
-        $model = GridModel::findOneBy('id', $gridId);
+        $model = $this->repositories->getRepository(GridModel::class)->find($gridId);
         if (! $model instanceof GridModel) {
             throw GridNotFound::withId($gridId);
         }

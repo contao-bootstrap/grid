@@ -40,9 +40,9 @@ final class ContentListener extends AbstractWrapperDcaListener
         private readonly ImageSizes $imageSizes,
         private readonly BackendUser $user,
         private readonly AssetsManager $assets,
-        private readonly RepositoryManager $repositories,
+        RepositoryManager $repositories,
     ) {
-        parent::__construct($environment);
+        parent::__construct($environment, $repositories);
     }
 
     /**

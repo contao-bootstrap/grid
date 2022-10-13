@@ -65,15 +65,15 @@ final class ModuleListener extends AbstractDcaListener
     public function getAllModules(MultiColumnWizard|null $multiColumnWizard = null): array
     {
         if ($multiColumnWizard && $multiColumnWizard->dataContainer->activeRecord) {
-            $collection = ModuleModel::findBy(
-                ['tl_module.pid = ?', 'tl_module.id != ?'],
+            $collection = $this->repositories->getRepository(ModuleModel::class)->findBy(
+                ['.pid = ?', '.id != ?'],
                 [
                     $multiColumnWizard->dataContainer->activeRecord->pid,
                     $multiColumnWizard->dataContainer->activeRecord->id,
                 ],
             );
         } else {
-            $collection = ModuleModel::findAll();
+            $collection = $this->repositories->getRepository(ModuleModel::class)->findAll();
         }
 
         $modules = [

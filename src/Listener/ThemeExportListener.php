@@ -4,27 +4,19 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener;
 
-use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\Model\Collection;
 use Contao\Theme;
 use Contao\ZipWriter;
 use ContaoBootstrap\Grid\Model\GridModel;
 use DOMDocument;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 
 final class ThemeExportListener extends Theme
 {
-    /**
-     * Contao Framework.
-     */
-    private ContaoFramework $framework;
-
-    /** @param ContaoFramework $framework Contao framework. */
-    public function __construct(ContaoFramework $framework)
+    public function __construct(private readonly RepositoryManager $repositories)
     {
         parent::__construct();
-
-        $this->framework = $framework;
     }
 
     /**
@@ -46,8 +38,8 @@ final class ThemeExportListener extends Theme
         $tables = $xml->getElementsByTagName('tables')->item(0);
         $table  = $tables->appendChild($table);
 
-        $adapter    = $this->framework->getAdapter(GridModel::class);
-        $collection = $adapter->findBy('pid', $themeId);
+        $adapter    = $this->repositories->getRepository(GridModel::class);
+        $collection = $adapter->findBy(['.pid=?'], [$themeId]);
 
         if (! $collection instanceof Collection) {
             return;

@@ -3,6 +3,7 @@ services:
     class: ContaoBootstrap\Grid\GridBuilder
     arguments:
       - '@contao_bootstrap.environment'
+      - '@netzmacht.contao_toolkit.repository_manager'
 
   contao_bootstrap.grid.grid_provider:
     class: ContaoBootstrap\Grid\GridProvider
@@ -28,6 +29,7 @@ services:
       - '@contao_bootstrap.grid.grid_provider'
       - '@contao_bootstrap.core.helper.color_rotate'
       - '@translator'
+      - '@netzmacht.contao_toolkit.repository_manager'
 
   ContaoBootstrap\Grid\Component\ContentElement\GridStopElementController:
     arguments:
@@ -38,6 +40,7 @@ services:
       - '@contao_bootstrap.grid.grid_provider'
       - '@contao_bootstrap.core.helper.color_rotate'
       - '@translator'
+      - '@netzmacht.contao_toolkit.repository_manager'
 
   ContaoBootstrap\Grid\Component\ContentElement\GalleryElementController:
     arguments:
@@ -47,7 +50,7 @@ services:
       - '@contao.security.token_checker'
       - '@security.helper'
       - "@contao_bootstrap.grid.grid_provider"
-      - "@contao.framework"
+      - '@netzmacht.contao_toolkit.repository_manager'
       - '%kernel.project_dir%'
 
   ContaoBootstrap\Grid\Component\Module\GridFrontendModuleController:
@@ -58,6 +61,7 @@ services:
       - '@router'
       - '@translator'
       - '@contao_bootstrap.grid.grid_provider'
+      - '@netzmacht.contao_toolkit.repository_manager'
 
   contao_bootstrap.grid.view.renderer_helper:
     class: ContaoBootstrap\Grid\View\ComponentRenderHelper

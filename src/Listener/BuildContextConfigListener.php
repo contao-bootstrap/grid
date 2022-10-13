@@ -9,6 +9,7 @@ use Contao\ThemeModel;
 use ContaoBootstrap\Core\Config\ArrayConfig;
 use ContaoBootstrap\Core\Environment\ThemeContext;
 use ContaoBootstrap\Core\Message\Command\BuildContextConfig;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 
 use function array_filter;
 use function array_values;
@@ -16,6 +17,10 @@ use function current;
 
 final class BuildContextConfigListener
 {
+    public function __construct(private readonly RepositoryManager $repositories)
+    {
+    }
+
     /**
      * Build theme config.
      *
@@ -29,7 +34,7 @@ final class BuildContextConfigListener
             return;
         }
 
-        $theme = ThemeModel::findByPk($context->themeId);
+        $theme = $this->repositories->getRepository(ThemeModel::class)->find($context->themeId);
         if (! $theme instanceof ThemeModel) {
             return;
         }

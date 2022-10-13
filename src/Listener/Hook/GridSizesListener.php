@@ -11,6 +11,7 @@ use Contao\ThemeModel;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Grid\Model\GridModel;
 use Doctrine\DBAL\Connection;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 
 use function array_merge;
 use function array_unique;
@@ -25,12 +26,11 @@ use function sprintf;
  */
 final class GridSizesListener
 {
-    /**
-     * @param Connection  $connection  Database connection.
-     * @param Environment $environment Contao bootstrap environment.
-     */
-    public function __construct(private readonly Connection $connection, private readonly Environment $environment)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly Environment $environment,
+        private readonly RepositoryManager $repositories,
+    ) {
     }
 
     /**
@@ -182,7 +182,7 @@ final class GridSizesListener
     public function getSizes(): array
     {
         $sizes  = $this->environment->getConfig()->get(['grid', 'sizes'], []);
-        $themes = ThemeModel::findAll() ?: [];
+        $themes = $this->repositories->getRepository(ThemeModel::class)->findAll() ?: [];
 
         if ($themes instanceof Model) {
             $themes = [$themes];
