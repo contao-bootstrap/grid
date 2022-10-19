@@ -41,12 +41,12 @@ abstract class AbstractFormField extends Widget
     /**
      * Render the backend view.
      *
-     * @param Model|object|null $start    Start element.
+     * @param Model|Widget|null $start    Start element.
      * @param GridIterator      $iterator Iterator.
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    protected function renderBackendView(Model|object|null $start, GridIterator|null $iterator = null): string
+    protected function renderBackendView(Model|Widget|null $start, GridIterator|null $iterator = null): string
     {
         $template = new BackendTemplate('be_bs_grid');
 
