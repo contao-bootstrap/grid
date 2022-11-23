@@ -51,6 +51,7 @@ services:
       - '@security.helper'
       - "@contao_bootstrap.grid.grid_provider"
       - '@netzmacht.contao_toolkit.repository_manager'
+      - '@contao.image.studio'
       - '@netzmacht.contao_toolkit.contao.input_adapter'
       - '%kernel.project_dir%'
 

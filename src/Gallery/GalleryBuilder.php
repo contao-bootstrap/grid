@@ -7,6 +7,7 @@ namespace ContaoBootstrap\Grid\Gallery;
 use Contao\Config;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\Framework\Adapter;
+use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\Environment;
 use Contao\File;
 use Contao\FilesModel;
@@ -44,6 +45,7 @@ final class GalleryBuilder
     /** @param Adapter<Input> $inputAdapter */
     public function __construct(
         private readonly RepositoryManager $repositories,
+        private readonly Studio $imageStudio,
         private readonly Adapter $inputAdapter,
         private readonly string $projectDir,
     ) {
@@ -93,7 +95,7 @@ final class GalleryBuilder
         $limit      = $this->limit === 0 ? count($images) : $this->limit;
         $pagination = $this->preparePagination($offset, $limit);
 
-        return new Gallery($images, $offset, $limit, $pagination);
+        return new Gallery($this->imageStudio, $images, $offset, $limit, $pagination);
     }
 
     private function loadImages(Collection $collection, bool $deep = true): void

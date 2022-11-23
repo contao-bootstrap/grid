@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Gallery;
 
 use Contao\ContentModel;
-use Contao\Controller;
+use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\Pagination;
 use Contao\StringUtil;
 use stdClass;
@@ -22,6 +22,7 @@ final class Gallery
 {
     /** @param array<array-key,array<string,mixed>> $images */
     public function __construct(
+        private readonly Studio $imageStudio,
         private array $images,
         private readonly int $offset,
         private readonly int $limit,
@@ -63,13 +64,12 @@ final class Gallery
             /** @psalm-suppress PropertyTypeCoercion - Psalm does not detect that $index is a list key */
             $this->images[$index]['fullsize'] = $model->fullsize;
 
-            Controller::addImageToTemplate(
-                $cell,
-                $this->images[$index],
-                null,
-                $lightBoxId,
-                $this->images[$index]['filesModel'],
-            );
+            $this->imageStudio->createFigureBuilder()
+                ->fromFilesModel($this->images[$index]['filesModel'])
+                ->setLightboxGroupIdentifier($lightBoxId)
+                ->setOptions($this->images[$index])
+                ->build()
+                ->applyLegacyTemplateData($cell);
 
             if (isset($cell->picture['class']) && $cell->picture['class'] !== '') {
                 $cell->picture['class'] = trim($cell->picture['class']);

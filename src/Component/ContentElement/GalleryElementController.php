@@ -6,6 +6,7 @@ namespace ContaoBootstrap\Grid\Component\ContentElement;
 
 use Contao\ContentModel;
 use Contao\CoreBundle\Framework\Adapter;
+use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\FrontendUser;
@@ -40,7 +41,11 @@ use const E_USER_DEPRECATED;
 /** @ContentElement("bs_grid_gallery", category="media", template="ce_bs_grid_gallery") */
 final class GalleryElementController extends AbstractContentElementController
 {
-    /** @param Adapter<Input> $inputAdapter */
+    /**
+     * @param Adapter<Input> $inputAdapter
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     */
     public function __construct(
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
@@ -49,6 +54,7 @@ final class GalleryElementController extends AbstractContentElementController
         private readonly Security $security,
         private readonly GridProvider $gridProvider,
         private readonly RepositoryManager $repositories,
+        private readonly Studio $imageStudio,
         private readonly Adapter $inputAdapter,
         private readonly string $projectDir,
     ) {
@@ -71,7 +77,13 @@ final class GalleryElementController extends AbstractContentElementController
             return new Response();
         }
 
-        $galleryBuilder = new GalleryBuilder($this->repositories, $this->inputAdapter, $this->projectDir);
+        $galleryBuilder = new GalleryBuilder(
+            $this->repositories,
+            $this->imageStudio,
+            $this->inputAdapter,
+            $this->projectDir,
+        );
+
         $galleryBuilder
             ->addSources($sources)
             ->perPage('page_g' . $model->id, (int) $model->perPage)
