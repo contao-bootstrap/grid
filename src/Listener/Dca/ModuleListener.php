@@ -8,7 +8,6 @@ use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\DataContainer;
 use Contao\Model\Collection;
 use Contao\ModuleModel;
-use MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard;
 
 use function sprintf;
 
@@ -62,14 +61,14 @@ final class ModuleListener extends AbstractDcaListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getAllModules(MultiColumnWizard|null $multiColumnWizard = null): array
+    public function getAllModules(DataContainer|null $dataContainer = null): array
     {
-        if ($multiColumnWizard && $multiColumnWizard->dataContainer->activeRecord) {
+        if ($dataContainer && $dataContainer->activeRecord) {
             $collection = $this->repositories->getRepository(ModuleModel::class)->findBy(
                 ['.pid = ?', '.id != ?'],
                 [
-                    $multiColumnWizard->dataContainer->activeRecord->pid,
-                    $multiColumnWizard->dataContainer->activeRecord->id,
+                    $dataContainer->activeRecord->pid,
+                    $dataContainer->activeRecord->id,
                 ],
             );
         } else {

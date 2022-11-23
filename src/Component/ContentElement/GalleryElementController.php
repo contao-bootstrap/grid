@@ -37,7 +37,7 @@ use function trigger_error;
 
 use const E_USER_DEPRECATED;
 
-/** @ContentElement("bs_grid_gallery", category="media") */
+/** @ContentElement("bs_grid_gallery", category="media", template="ce_bs_grid_gallery") */
 final class GalleryElementController extends AbstractContentElementController
 {
     /** @param Adapter<Input> $inputAdapter */

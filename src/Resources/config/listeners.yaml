@@ -21,9 +21,8 @@ services:
     arguments:
       - '@contao_bootstrap.environment'
       - '@contao.framework'
-      - '@contao.image.image_sizes'
+      - '@contao.image.sizes'
       - '@netzmacht.contao_toolkit.contao.backend_user'
-      - '@netzmacht.contao_toolkit.assets_manager'
       - '@netzmacht.contao_toolkit.repository_manager'
 
   contao_bootstrap.grid.listeners.dca.form:

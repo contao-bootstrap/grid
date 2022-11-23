@@ -83,3 +83,16 @@ services:
       - '@database_connection'
     tags:
       - { name: 'contao.migration' }
+
+  ContaoBootstrap\Grid\Migration\GroupModulesIndexMigration:
+    arguments:
+      - '@database_connection'
+    tags:
+      - { name: 'contao.migration' }
+
+  ContaoBootstrap\Grid\Migration\SizeIndexMigration:
+    arguments:
+      - '@contao_bootstrap.environment'
+      - '@database_connection'
+    tags:
+      - { name: 'contao.migration' }

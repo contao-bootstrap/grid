@@ -30,7 +30,7 @@ use function assert;
 use function is_numeric;
 use function sprintf;
 
-/** @FrontendModule("bs_grid", category="miscellaneous") */
+/** @FrontendModule("bs_grid", category="miscellaneous", template="mod_bs_grid") */
 final class GridFrontendModuleController extends AbstractFrontendModuleController
 {
     public function __construct(
@@ -104,11 +104,11 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
             }
 
             if (is_numeric($entry['module'])) {
-                if (! empty($modules[$entry['module']])) {
-                    $buffer[] = $modules[$entry['module']];
+                if (empty($modules[$entry['module']])) {
+                    continue;
                 }
 
-                continue;
+                $buffer[] = $modules[$entry['module']];
             }
 
             if (! $iterator) {

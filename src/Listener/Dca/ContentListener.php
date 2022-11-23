@@ -16,7 +16,6 @@ use Contao\Model;
 use Contao\Model\Collection;
 use ContaoBootstrap\Core\Environment;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
-use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 
 use function sprintf;
 use function time;
@@ -39,7 +38,6 @@ final class ContentListener extends AbstractWrapperDcaListener
         private readonly ContaoFramework $framework,
         private readonly ImageSizes $imageSizes,
         private readonly BackendUser $user,
-        private readonly AssetsManager $assets,
         RepositoryManager $repositories,
     ) {
         parent::__construct($environment, $repositories);
@@ -61,8 +59,6 @@ final class ContentListener extends AbstractWrapperDcaListener
         if (! $model || $model->type !== 'bs_grid_gallery') {
             return;
         }
-
-        $this->assets->addStylesheet('contao_bootstrap_grid::css/backend.css');
 
         $GLOBALS['TL_DCA']['tl_content']['fields']['galleryTpl']['options_callback'] = [
             'contao_bootstrap.grid.listeners.dca.content',

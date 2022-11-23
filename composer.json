@@ -37,7 +37,7 @@
     "contao-community-alliance/meta-palettes": "^2.0",
     "contao/core-bundle": "^4.13 || ^5.0",
     "doctrine/dbal": "^3.4",
-    "menatwork/contao-multicolumnwizard-bundle": "^3.4",
+    "mvo/contao-group-widget": "^1.4",
     "netzmacht/contao-toolkit": "^3.7 || ^4.0",
     "symfony/config": "^4.4 || ^5.4",
     "symfony/dependency-injection": "^4.4 || ^5.4",

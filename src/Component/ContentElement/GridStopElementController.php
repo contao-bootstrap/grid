@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/** @ContentElement("bs_gridStop", category="bs_grid") */
+/** @ContentElement("bs_gridStop", category="bs_grid", template="ce_bs_gridStop") */
 final class GridStopElementController extends AbstractGridElementController
 {
     public function __construct(

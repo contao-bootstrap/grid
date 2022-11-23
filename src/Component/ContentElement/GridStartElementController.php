@@ -12,7 +12,7 @@ use ContaoBootstrap\Grid\GridIterator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/** @ContentElement("bs_gridStart", category="bs_grid") */
+/** @ContentElement("bs_gridStart", category="bs_grid", template="ce_bs_gridStart") */
 final class GridStartElementController extends AbstractGridElementController
 {
     /** {@inheritDoc} */

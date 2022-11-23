@@ -7,6 +7,7 @@ namespace ContaoBootstrap\Grid\Listener\Dca;
 use Contao\Database\Result;
 use Contao\DataContainer;
 use Contao\Model;
+use stdClass;
 
 use function array_unshift;
 use function assert;
@@ -29,7 +30,7 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
         }
 
         $current = $dataContainer->activeRecord;
-        assert($current instanceof Model || $current instanceof Result);
+        assert($current instanceof Model || $current instanceof Result || $current instanceof stdClass);
         /** @psalm-var TModel|Result $current */
 
         if ($value) {

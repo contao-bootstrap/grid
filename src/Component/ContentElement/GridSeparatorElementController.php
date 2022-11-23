@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/** @ContentElement("bs_gridSeparator", category="bs_grid") */
+/** @ContentElement("bs_gridSeparator", category="bs_grid", template="ce_bs_gridSeparator") */
 final class GridSeparatorElementController extends AbstractGridElementController
 {
     public function __construct(

@@ -43,5 +43,6 @@
         <class name="Contao\ModuleNews"/>
         <class name="Contao\Template"/>
         <class name="Contao\ThemeModel"/>
+        <class name="Contao\Widget"/>
     </universalObjectCrates>
 </psalm>

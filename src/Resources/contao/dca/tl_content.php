@@ -132,48 +132,47 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bs_grid_wizard'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bs_image_sizes'] = [
-    'exclude'       => true,
-    'inputType'     => 'multiColumnWizard',
-    'eval'          => [
-        'tl_class'     => 'clr lng bs-image-sizes',
-        'columnFields' => [
-            'size' => [
-                'label'            => &$GLOBALS['TL_LANG']['MSC']['imgSize'],
-                'exclude'          => true,
-                'inputType'        => 'select',
-                'reference'        => &$GLOBALS['TL_LANG']['MSC'],
-                'eval'             => [
-                    'includeBlankOption' => true,
-                    'nospace'            => true,
-                    'helpwizard'         => true,
-                ],
-                'options_callback' => ['contao_bootstrap.grid.listeners.dca.content', 'getImageSizes'],
+    'exclude'   => true,
+    'inputType' => 'group',
+    'palette'   => ['size', 'width', 'height'],
+    'fields'    => [
+        'size'   => [
+            'label'            => &$GLOBALS['TL_LANG']['MSC']['imgSize'],
+            'exclude'          => true,
+            'inputType'        => 'select',
+            'reference'        => &$GLOBALS['TL_LANG']['MSC'],
+            'eval'             => [
+                'includeBlankOption' => true,
+                'nospace'            => true,
+                'helpwizard'         => true,
             ],
-            'width' => [
-                'label'         => &$GLOBALS['TL_LANG']['tl_content']['bs_image_size_width'],
-                'exclude'       => true,
-                'inputType'     => 'text',
-                'reference'     => &$GLOBALS['TL_LANG']['tl_content'],
-                'eval'          => [
-                    'includeBlankOption' => true,
-                    'chosen'             => true,
-                    'class'              => 'tl_imageSize_0',
-                ],
+            'options_callback' => ['contao_bootstrap.grid.listeners.dca.content', 'getImageSizes'],
+        ],
+        'width'  => [
+            'label'     => &$GLOBALS['TL_LANG']['tl_content']['bs_image_size_width'],
+            'exclude'   => true,
+            'inputType' => 'text',
+            'reference' => &$GLOBALS['TL_LANG']['tl_content'],
+            'eval'      => [
+                'includeBlankOption' => true,
+                'chosen'             => true,
+                'class'              => 'tl_imageSize_0',
             ],
-            'height' => [
-                'label'         => &$GLOBALS['TL_LANG']['tl_content']['bs_image_size_height'],
-                'exclude'       => true,
-                'inputType'     => 'text',
-                'reference'     => &$GLOBALS['TL_LANG']['tl_content'],
-                'eval'          => [
-                    'includeBlankOption' => true,
-                    'chosen'             => true,
-                    'class'              => 'tl_imageSize_1',
-                ],
+        ],
+        'height' => [
+            'label'     => &$GLOBALS['TL_LANG']['tl_content']['bs_image_size_height'],
+            'exclude'   => true,
+            'inputType' => 'text',
+            'reference' => &$GLOBALS['TL_LANG']['tl_content'],
+            'eval'      => [
+                'includeBlankOption' => true,
+                'chosen'             => true,
+                'class'              => 'tl_imageSize_1',
             ],
         ],
     ],
-    'sql'           => 'blob NULL',
+    'eval'      => ['tl_class' => 'clr lng bs-image-sizes'],
+    'sql'       => 'blob NULL',
 ];
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['multiSRC']['load_callback'][] = [
