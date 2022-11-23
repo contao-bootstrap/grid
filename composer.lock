@@ -344,12 +344,12 @@
             "source": {
                 "type": "git",
                 "url": "https://git.netzmacht.de/contao-bootstrap/core.git",
-                "reference": "c5663d2f757342a6ad4602fa9bd9ecacf635f812"
+                "reference": "1327b8b54b512f9987046a09f1c7c0d918760c27"
             },
             "require": {
                 "contao-community-alliance/meta-palettes": "^2.0",
                 "contao/core-bundle": "^4.13 || ^5.0",
-                "doctrine/dbal": "^3.3",
+                "doctrine/dbal": "^3.4",
                 "netzmacht/contao-toolkit": "^3.8 || ^4.0",
                 "php": "^8.1",
                 "symfony/config": "^5.4 || ^6.0",
@@ -380,9 +380,9 @@
             "type": "contao-bundle",
             "extra": {
                 "branch-alias": {
+                    "dev-bootstrap5": "3.0.x-dev",
                     "dev-develop": "2.2.x-dev",
-                    "dev-master": "2.1.x-dev",
-                    "dev-bootstrap5": "3.0.x-dev"
+                    "dev-master": "2.1.x-dev"
                 },
                 "contao": {
                     "transifex": {
@@ -433,29 +433,29 @@
                 "wiki": "http://contao-bootstrap.netzmacht.de",
                 "source": "https://github.com/contao-bootstrap/core"
             },
-            "time": "2022-10-10T12:47:29+00:00"
+            "time": "2022-11-23T09:47:52+00:00"
         },
         {
             "name": "contao-community-alliance/meta-palettes",
-            "version": "2.0.10",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-community-alliance/meta-palettes.git",
-                "reference": "4a5899fe7a67e7f35855bc546a1014d391ee5133"
+                "reference": "96f5f8456bdfae4b4747f6c74236bf1aeb2aae1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-community-alliance/meta-palettes/zipball/4a5899fe7a67e7f35855bc546a1014d391ee5133",
-                "reference": "4a5899fe7a67e7f35855bc546a1014d391ee5133",
+                "url": "https://api.github.com/repos/contao-community-alliance/meta-palettes/zipball/96f5f8456bdfae4b4747f6c74236bf1aeb2aae1a",
+                "reference": "96f5f8456bdfae4b4747f6c74236bf1aeb2aae1a",
                 "shasum": ""
             },
             "require": {
-                "contao/core-bundle": "^4.9",
+                "contao/core-bundle": "^4.9 || ^5.0",
                 "doctrine/dbal": "^2.11 || ^3.1",
                 "php": "^7.1 || ^8.0",
-                "symfony/config": "^4.4 || ^5.1",
-                "symfony/dependency-injection": "^4.4 || ^5.1",
-                "symfony/http-kernel": "^4.4 || ^5.1"
+                "symfony/config": "^4.4 || ^5.1 || ^6.0",
+                "symfony/dependency-injection": "^4.4 || ^5.1 || ^6.0",
+                "symfony/http-kernel": "^4.4 || ^5.1 || ^6.0"
             },
             "conflict": {
                 "contao/manager-plugin": "<2.2 || >=3.0",
@@ -470,8 +470,8 @@
             "type": "contao-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "2.1.x-dev",
-                    "dev-master": "2.0.x-dev",
+                    "dev-develop": "2.2.x-dev",
+                    "dev-master": "2.1.x-dev",
                     "dev-support/1.x": "1.11.x-dev"
                 },
                 "contao-manager-plugin": "ContaoCommunityAlliance\\MetaPalettes\\ContaoManager\\Plugin"
@@ -512,7 +512,7 @@
                 "source": "https://github.com/contao-community-alliance/meta-palettes",
                 "wiki": "https://github.com/contao-community-alliance/meta-palettes/wiki"
             },
-            "time": "2022-10-19T22:11:05+00:00"
+            "time": "2022-11-23T07:45:06+00:00"
         },
         {
             "name": "contao-components/ace",

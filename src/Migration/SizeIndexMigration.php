@@ -37,7 +37,7 @@ final class SizeIndexMigration extends AbstractMigration
             }
 
             $affected = (int) $this->connection->fetchOne(
-                'SELECT COUNT(*) FROM tl_bs_grid WHERE ' . $size . 'size LIKE \'a:1:{i:0;%\'',
+                'SELECT COUNT(*) FROM tl_bs_grid WHERE ' . $size . 'size LIKE \'a:%:{i:0;%\'',
             );
 
             if ($affected > 0) {
@@ -52,7 +52,7 @@ final class SizeIndexMigration extends AbstractMigration
     {
         foreach ($this->getSizes() as $size) {
             $result = $this->connection->fetchAllAssociative(
-                'SELECT * FROM tl_bs_grid WHERE ' . $size . 'size LIKE \'a:1:{i:0;%\'',
+                'SELECT * FROM tl_bs_grid WHERE ' . $size . 'size LIKE \'a:%:{i:0;%\'',
             );
 
             foreach ($result as $row) {
