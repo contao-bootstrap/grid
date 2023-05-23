@@ -58,15 +58,11 @@ final class Gallery
                 $size = [$size['width'], $size['height'], $size['size']];
             }
 
-            // Add size and margin
-            /** @psalm-suppress PropertyTypeCoercion - Psalm does not detect that $index is a list key */
-            $this->images[$index]['size'] = $size;
-            /** @psalm-suppress PropertyTypeCoercion - Psalm does not detect that $index is a list key */
-            $this->images[$index]['fullsize'] = $model->fullsize;
-
             $this->imageStudio->createFigureBuilder()
                 ->fromFilesModel($this->images[$index]['filesModel'])
+                ->setSize($size)
                 ->setLightboxGroupIdentifier($lightBoxId)
+                ->enableLightbox($model->fullsize)
                 ->setOptions($this->images[$index])
                 ->build()
                 ->applyLegacyTemplateData($cell);
