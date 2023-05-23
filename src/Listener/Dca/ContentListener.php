@@ -10,12 +10,14 @@ use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Image\ImageSizes;
+use Contao\Database\Result;
 use Contao\DataContainer;
 use Contao\Input;
 use Contao\Model;
 use Contao\Model\Collection;
 use ContaoBootstrap\Core\Environment;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
+use stdClass;
 
 use function sprintf;
 use function time;
@@ -165,7 +167,7 @@ final class ContentListener extends AbstractWrapperDcaListener
     /**
      * {@inheritDoc}
      */
-    protected function getNextElements($current): array
+    protected function getNextElements(Model|Result|stdClass $current): array
     {
         $collection = $this->repositories->getRepository(ContentModel::class)->findBy(
             [
@@ -191,7 +193,7 @@ final class ContentListener extends AbstractWrapperDcaListener
      * @psalm-suppress MoreSpecificReturnType
      * @psalm-suppress LessSpecificReturnStatement
      */
-    protected function getStopElement($current): Model
+    protected function getStopElement(Model|Result|stdClass $current): Model
     {
         $stopElement = $this->repositories->getRepository(ContentModel::class)->findOneBy(
             ['tl_content.type=?', 'tl_content.bs_grid_parent=?'],

@@ -31,6 +31,11 @@
                 <referencedProperty name="Contao\DataContainer::$currentPid"/>
             </errorLevel>
         </UndefinedMagicPropertyFetch>
+        <UnsupportedPropertyReferenceUsage>
+            <errorLevel type="suppress">
+                <file name="src/Listener/Dca/ContentListener.php"/>
+            </errorLevel>
+        </UnsupportedPropertyReferenceUsage>
     </issueHandlers>
 
     <universalObjectCrates>

@@ -18,6 +18,8 @@ use function is_string;
 
 /**
  * GridIterator to iterate over the grid columns.
+ *
+ * @implements Iterator<int,string>
  */
 final class GridIterator implements Iterator
 {
@@ -71,10 +73,7 @@ final class GridIterator implements Iterator
         $this->index++;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function key()
+    public function key(): int
     {
         return $this->index;
     }

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
+use Contao\Database\Result;
 use Contao\DataContainer;
 use Contao\FormFieldModel;
 use Contao\Model;
 use Contao\Model\Collection;
+use stdClass;
 
 use function sprintf;
 use function time;
@@ -20,7 +22,7 @@ use function time;
 final class FormListener extends AbstractWrapperDcaListener
 {
     /** {@inheritDoc} */
-    protected function getNextElements($current): array
+    protected function getNextElements(Model|Result|stdClass $current): array
     {
         $collection = $this->repositories->getRepository(FormFieldModel::class)->findBy(
             [
@@ -40,7 +42,7 @@ final class FormListener extends AbstractWrapperDcaListener
     }
 
     /** {@inheritDoc} */
-    protected function getStopElement($current): Model
+    protected function getStopElement(Model|Result|stdClass $current): Model
     {
         $stopElement = $this->repositories->getRepository(FormFieldModel::class)->findOneBy(
             ['.type=?', '.bs_grid_parent=?'],

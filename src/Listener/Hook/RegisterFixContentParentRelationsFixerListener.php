@@ -78,6 +78,9 @@ final class RegisterFixContentParentRelationsFixerListener
              * @param mixed $value
              *
              * @return list<array<int,string>|callable>
+             *
+             * @psalm-suppress MoreSpecificReturnType
+             * @psalm-suppress LessSpecificReturnStatement
              */
             static function ($value): array {
                 if (! is_array($value)) {

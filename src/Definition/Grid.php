@@ -117,7 +117,7 @@ final class Grid
      *
      * @return list<string>|string
      */
-    public function buildRow(bool $flat = false)
+    public function buildRow(bool $flat = false): array|string
     {
         $classes = $this->rowClasses;
 
@@ -148,7 +148,7 @@ final class Grid
      *
      * @return list<string>|string
      */
-    public function buildColumn(int $index, bool $flat = false)
+    public function buildColumn(int $index, bool $flat = false): array|string
     {
         $classes = [];
         foreach ($this->columns as $size => $columns) {

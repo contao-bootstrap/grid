@@ -20,13 +20,11 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      *
      * @param int|string    $value         Number of columns which should be generated.
      * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return null
      */
-    public function generateColumns(int|string $value, DataContainer $dataContainer)
+    public function generateColumns(int|string $value, DataContainer $dataContainer): void
     {
         if (! $dataContainer->activeRecord) {
-            return null;
+            return;
         }
 
         $current = $dataContainer->activeRecord;
@@ -45,16 +43,14 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
         } else {
             $this->getStopElement($current);
         }
-
-        return null;
     }
 
     /**
      * Create separators.
      *
-     * @param int                          $value   Number of separators being created.
-     * @param Model|Result|stdClass        $current Current model.
-     * @param int                          $sorting Current sorting value.
+     * @param int                   $value   Number of separators being created.
+     * @param Model|Result|stdClass $current Current model.
+     * @param int                   $sorting Current sorting value.
      * @psalm-param TModel|Result|stdClass $current
      */
     protected function createSeparators(int $value, Model|Result|stdClass $current, int $sorting): int
@@ -91,8 +87,8 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
     /**
      * Create the stop element.
      *
-     * @param Model|Result|stdClass        $current Model.
-     * @param int                          $sorting Last sorting value.
+     * @param Model|Result|stdClass $current Model.
+     * @param int                   $sorting Last sorting value.
      * @psalm-param TModel|Result|stdClass $current
      *
      * @psalm-return TModel
@@ -107,9 +103,9 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
     /**
      * Create a grid element.
      *
-     * @param Model|Result|stdClass        $current Current content model.
-     * @param string                       $type    Type of the content model.
-     * @param int                          $sorting The sorting value.
+     * @param Model|Result|stdClass $current Current content model.
+     * @param string                $type    Type of the content model.
+     * @param int                   $sorting The sorting value.
      * @psalm-param TModel|Result|stdClass $current
      *
      * @return TModel
@@ -119,21 +115,21 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
     /**
      * Get the next content elements.
      *
-     * @param Model|Result $current Current content model.
-     * @psalm-param TModel|Result $current
+     * @param Model|Result|stdClass $current Current content model.
+     * @psalm-param TModel|Result|stdClass $current
 
      * @return Model[]
      * @psalm-return array<TModel>
      */
-    abstract protected function getNextElements(Model|Result $current): array;
+    abstract protected function getNextElements(Model|Result|stdClass $current): array;
 
     /**
      * Get related stop element.
      *
-     * @param Model|Result $current Current element.
-     * @psalm-param TModel|Result $current
+     * @param Model|Result|stdClass $current Current element.
+     * @psalm-param TModel|Result|stdClass $current
      *
      * @psalm-return TModel
      */
-    abstract protected function getStopElement(Model|Result $current): Model;
+    abstract protected function getStopElement(Model|Result|stdClass $current): Model;
 }
