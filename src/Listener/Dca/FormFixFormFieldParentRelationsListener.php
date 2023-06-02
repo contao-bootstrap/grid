@@ -71,7 +71,7 @@ final class FormFixFormFieldParentRelationsListener
     private function loadFormFieldModels(string $parentTable, int $parentId): Collection|null
     {
         $constraints = ['.pid=?', 'FIND_IN_SET( .type, \'bs_gridStart,bs_gridSeparator,bs_gridStop\')'];
-        $values      = [$parentId, $parentTable];
+        $values      = [$parentId];
 
         return $this->repositoryManager
             ->getRepository(FormFieldModel::class)
