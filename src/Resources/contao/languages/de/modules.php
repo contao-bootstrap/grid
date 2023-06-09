@@ -1,16 +1,11 @@
 <?php
+
 /**
- * Translations are managed using Transifex. To create a new translation
+ * Translations are managed automatically using Transifex. To create a new translation
  * or to help to maintain an existing one, please register at transifex.com.
  *
- * @link https://www.transifex.com/signup/
- * @link https://www.transifex.com/projects/p/contao-bootstrap/language/de/
- *
- * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
- *
- * last-updated: 2018-07-27T14:50:16+00:00
+ * Last-updated: 2023-06-09T13:57:10+00:00
  */
-
 
 $GLOBALS['TL_LANG']['CTE']['bs_grid']               = 'Grid';
 $GLOBALS['TL_LANG']['CTE']['bs_gridSeparator']['0'] = 'Grid-Trennung';
@@ -24,4 +19,3 @@ $GLOBALS['TL_LANG']['CTE']['bs_grid_gallery']['1']  = 'Galerie mit Bootstrap-Gri
 $GLOBALS['TL_LANG']['FMD']['bs_grid']['0']          = 'Grid';
 $GLOBALS['TL_LANG']['FMD']['bs_grid']['1']          = 'Bootstrap Grid-Modul.';
 $GLOBALS['TL_LANG']['MOD']['tl_bs_grid']            = 'Grid-Definitionen';
-
