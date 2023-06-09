@@ -14,6 +14,7 @@ final class ContaoBootstrapGridComponent implements ContaoBootstrapComponent
         $builder
             ->children()
                 ->arrayNode('grid')
+                    ->addDefaultsIfNotSet()
                     ->info('Grid component configuration')
                     ->children()
                         ->integerNode('columns')
