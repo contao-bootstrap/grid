@@ -19,16 +19,18 @@ Features
  - Grid module
  - Import/Export with your theme settings
 
+
 Changelog
 ---------
 
 See [changelog](CHANGELOG.md)
 
+
 Requirements
 ------------
 
- - PHP 7.1
- - Contao ~4.4
+- PHP ^8.1
+- Contao ^4.13 || ^5.0
 
 
 Install
