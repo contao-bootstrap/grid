@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
-use Contao\DataContainer;
 use Contao\FormFieldModel;
 use Contao\Model\Collection;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
@@ -24,12 +23,11 @@ final class FormFixFormFieldParentRelationsListener
     /**
      * Handle the oncopy_callback.
      *
-     * @param string|int    $insertId      Id of new created record.
-     * @param DataContainer $dataContainer Data container.
+     * @param string|int $insertId Id of new created record.
      */
-    public function onCopy(string|int $insertId, DataContainer $dataContainer): void
+    public function onCopy(string|int $insertId): void
     {
-        $collection = $this->loadFormFieldModels($dataContainer->table, (int) $insertId);
+        $collection = $this->loadFormFieldModels((int) $insertId);
         if ($collection === null) {
             return;
         }
@@ -62,13 +60,12 @@ final class FormFixFormFieldParentRelationsListener
     /**
      * Load grid form fields which have to be adjusted.
      *
-     * @param string $parentTable The parent table.
-     * @param int    $parentId    The parent id.
+     * @param int $parentId The parent id.
      *
      * @return Collection|FormFieldModel[]|null
      * @psalm-return Collection|null
      */
-    private function loadFormFieldModels(string $parentTable, int $parentId): Collection|null
+    private function loadFormFieldModels(int $parentId): Collection|null
     {
         $constraints = ['.pid=?', 'FIND_IN_SET( .type, \'bs_gridStart,bs_gridSeparator,bs_gridStop\')'];
         $values      = [$parentId];
