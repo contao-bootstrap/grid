@@ -5,6 +5,8 @@ Changelog
 [Unreleased]
 ------------
 
+[2.4.3] (2023-06-09)
+
 ### Changed
 
  - Add xxl breakpoint for Bootstrap 5 compatibility
