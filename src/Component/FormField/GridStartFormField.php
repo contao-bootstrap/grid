@@ -40,7 +40,7 @@ final class GridStartFormField extends AbstractFormField
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function parse($arrAttributes = null): string
     {

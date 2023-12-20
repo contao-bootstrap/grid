@@ -20,7 +20,7 @@ final class GridSeparatorFormField extends AbstractRelatedFormField
     protected $strTemplate = 'form_bs_gridSeparator';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function parse($arrAttributes = null): string
     {

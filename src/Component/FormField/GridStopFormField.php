@@ -14,7 +14,7 @@ final class GridStopFormField extends AbstractRelatedFormField
     protected $strTemplate = 'form_bs_gridStop';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function parse($arrAttributes = null): string
     {
