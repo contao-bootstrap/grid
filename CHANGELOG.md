@@ -5,6 +5,13 @@ Changelog
 [Unreleased]
 ------------
 
+3.0.1 (2024-01-26)
+------------------
+
+### Added
+
+- Add compatibility with Contao 5.3
+
 [3.0.0] (2023-06-09)
 
 ### Changed
