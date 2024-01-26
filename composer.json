@@ -45,11 +45,11 @@
     "symfony/http-kernel": "^5.4 || ^6.0",
     "symfony/routing": "^5.4 || ^6.0",
     "symfony/security-core": "^5.4 || ^6.0",
-    "symfony/translation-contracts": "^1.1 || ^2.0"
+    "symfony/translation-contracts": "^1.1 || ^2.0 || ^3.0"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.0",
-    "contao/news-bundle": "^4.4",
+    "contao/news-bundle": "^4.13 || ^5.0",
     "doctrine/coding-standard": "^12.0",
     "phpcq/coding-standard": "^2.1.2",
     "phpcq/runner-bootstrap": "1.x-dev"
