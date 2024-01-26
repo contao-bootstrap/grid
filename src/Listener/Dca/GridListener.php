@@ -47,9 +47,9 @@ final class GridListener
             return;
         }
 
+        /** @psalm-suppress RiskyCast */
         $model = $this->repositories->getRepository(GridModel::class)->find((int) $this->inputAdapter->get('id'));
-        /** @psalm-var GridModel|null $model */
-        if (! $model) {
+        if ($model === null) {
             return;
         }
 
@@ -65,6 +65,7 @@ final class GridListener
             return;
         }
 
+        /** @psalm-suppress RiskyCast */
         $model = $this->repositories->getRepository(GridModel::class)->find((int) $this->inputAdapter->get('id'));
         if (! $model instanceof GridModel) {
             return;
@@ -105,6 +106,7 @@ final class GridListener
     {
         $sizes = [];
         if ($this->inputAdapter->get('act')  === 'edit') {
+            /** @psalm-suppress RedundantCastGivenDocblockType */
             $theme = $this->repositories->getRepository(ThemeModel::class)->find((int) $dataContainer->currentPid);
             if ($theme === null) {
                 return [];

@@ -237,7 +237,7 @@ final class Column
      */
     private function buildAlign(array &$classes, string $sizeSuffix = ''): void
     {
-        if (! $this->align) {
+        if ($this->align === null) {
             return;
         }
 
@@ -252,7 +252,7 @@ final class Column
      */
     private function buildJustify(array &$classes, string $sizeSuffix = ''): void
     {
-        if (! $this->justify) {
+        if ($this->justify === null) {
             return;
         }
 
@@ -267,7 +267,7 @@ final class Column
      */
     private function buildOrder(array &$classes, string $sizeSuffix): void
     {
-        if (! $this->order) {
+        if ($this->order === null) {
             return;
         }
 

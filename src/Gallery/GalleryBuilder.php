@@ -187,7 +187,8 @@ final class GalleryBuilder
 
             // Get the current page
             $parameter = $this->pageParam;
-            $page      = $this->inputAdapter->get($parameter) ?? 1;
+            /** @psalm-suppress RiskyCast */
+            $page = (int) ($this->inputAdapter->get($parameter) ?? 1);
 
             // Do not index or cache the page if the page number is outside the range
             if ($page < 1 || $page > max(ceil($total / $perPage), 1)) {

@@ -21,6 +21,12 @@
                 <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::getAdapter"/>
             </errorLevel>
         </InternalMethod>
+        <DeprecatedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Contao\Template"/>
+                <referencedClass name="Symfony\Component\Security\Core\Security"/>
+            </errorLevel>
+        </DeprecatedClass>
         <DeprecatedMethod>
             <errorLevel type="suppress">
                 <referencedMethod name="Contao\Controller::addImageToTemplate"/>
@@ -28,6 +34,7 @@
         </DeprecatedMethod>
         <UndefinedMagicPropertyFetch>
             <errorLevel type="suppress">
+                <referencedProperty name="Contao\DataContainer::$activeRecord"/>
                 <referencedProperty name="Contao\DataContainer::$currentPid"/>
             </errorLevel>
         </UndefinedMagicPropertyFetch>

@@ -57,6 +57,7 @@ final class ContentListener extends AbstractWrapperDcaListener
             return;
         }
 
+        /** @psalm-suppress RiskyCast */
         $model = $this->repositories->getRepository(ContentModel::class)->find((int) $input->get('id'));
         if (! $model || $model->type !== 'bs_grid_gallery') {
             return;

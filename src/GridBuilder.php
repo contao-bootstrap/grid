@@ -249,9 +249,9 @@ final class GridBuilder
         switch ($definition['reset']) {
             case '2':
                 $key  = array_search($size, $sizes);
-                $next = $key ? ($sizes[$key + 1] ?? null) : null;
+                $next = $key !== false ? ($sizes[$key + 1] ?? null) : null;
 
-                if ($next) {
+                if ($next !== null) {
                     $column->limitedReset((string) $next);
 
                     break;

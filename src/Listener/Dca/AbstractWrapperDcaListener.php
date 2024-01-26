@@ -31,7 +31,7 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
         assert($current instanceof Model || $current instanceof Result || $current instanceof stdClass);
         /** @psalm-var TModel|Result $current */
 
-        if ($value) {
+        if ((bool) $value) {
             $stopElement  = $this->getStopElement($current);
             $nextElements = $this->getNextElements($stopElement);
             $sorting      = (int) $stopElement->sorting;

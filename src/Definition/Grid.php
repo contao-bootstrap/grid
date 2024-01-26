@@ -121,11 +121,11 @@ final class Grid
     {
         $classes = $this->rowClasses;
 
-        if ($this->align) {
+        if ($this->align !== null) {
             $classes[] = 'align-items-' . $this->align;
         }
 
-        if ($this->justify) {
+        if ($this->justify !== null) {
             $classes[] = 'justify-content-' . $this->justify;
         }
 
