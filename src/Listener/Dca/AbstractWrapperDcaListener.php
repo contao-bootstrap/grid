@@ -29,7 +29,7 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
 
         $current = $dataContainer->activeRecord;
         assert($current instanceof Model || $current instanceof Result || $current instanceof stdClass);
-        /** @psalm-var TModel|Result $current */
+        /** @psalm-var TModel|Result|stdClass $current */
 
         if ((bool) $value) {
             $stopElement  = $this->getStopElement($current);

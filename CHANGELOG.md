@@ -5,12 +5,19 @@ Changelog
 [Unreleased]
 ------------
 
+3.0.1 (2024-02-13)
+------------------
+
+### Fixed
+
+ - Fix wrong parameter type in dca callbacks. Contao 5 uses stdClass for database results
+
 3.0.1 (2024-01-26)
 ------------------
 
 ### Added
 
-- Add compatibility with Contao 5.3
+ - Add compatibility with Contao 5.3
 
 [3.0.0] (2023-06-09)
 

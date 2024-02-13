@@ -8,6 +8,7 @@ use Contao\ContentModel;
 use Contao\Database\Result;
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
+use stdClass;
 
 use function in_array;
 use function time;
@@ -70,9 +71,9 @@ final class ContentFixParentRelationListener
     /**
      * Fix grid start relation of content element.
      *
-     * @param ContentModel|Result $contentModel Content element.
+     * @param ContentModel|Result|stdClass $contentModel Content element.
      */
-    private function fixContentElement(ContentModel|Result $contentModel): void
+    private function fixContentElement(ContentModel|Result|stdClass $contentModel): void
     {
         if (! in_array($contentModel->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
             return;
@@ -98,12 +99,12 @@ final class ContentFixParentRelationListener
     /**
      * Load closest grid start model.
      *
-     * @param ContentModel|Result $contentModel Content model.
+     * @param ContentModel|Result|stdClass $contentModel Content model.
      *
      * @psalm-suppress MoreSpecificReturnType
      * @psalm-suppress LessSpecificReturnStatement
      */
-    private function loadClosestGridStartModel(ContentModel|Result $contentModel): ContentModel|null
+    private function loadClosestGridStartModel(ContentModel|Result|stdClass $contentModel): ContentModel|null
     {
         $constraints = ['.pid=?', '.type=?', '.sorting < ?'];
         $values      = [$contentModel->pid, 'bs_gridStart', $contentModel->sorting];

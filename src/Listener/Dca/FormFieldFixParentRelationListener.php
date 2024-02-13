@@ -7,9 +7,13 @@ namespace ContaoBootstrap\Grid\Listener\Dca;
 use Contao\Database\Result;
 use Contao\DataContainer;
 use Contao\FormFieldModel;
+use Contao\Model;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
+use stdClass;
 
+use function assert;
 use function in_array;
+use function is_object;
 use function time;
 
 /**
@@ -35,12 +39,15 @@ final class FormFieldFixParentRelationListener
      */
     public function onSubmit(DataContainer $dataContainer): void
     {
-        if (
-            ! $dataContainer->activeRecord instanceof FormFieldModel
-            && ! $dataContainer->activeRecord instanceof Result
-        ) {
+        if (! is_object($dataContainer->activeRecord)) {
             return;
         }
+
+        assert(
+            $dataContainer->activeRecord instanceof Model
+            || $dataContainer->activeRecord instanceof Result
+            || $dataContainer->activeRecord instanceof stdClass,
+        );
 
         if (! in_array($dataContainer->activeRecord->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
             return;
@@ -74,9 +81,9 @@ final class FormFieldFixParentRelationListener
     /**
      * Fix a relation of a form field.
      *
-     * @param FormFieldModel|Result $formFieldModel The form field.
+     * @param Model|Result|stdClass $formFieldModel The form field.
      */
-    private function fixFormField(FormFieldModel|Result $formFieldModel): void
+    private function fixFormField(Model|Result|stdClass $formFieldModel): void
     {
         if (! in_array($formFieldModel->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
             return;
@@ -102,12 +109,12 @@ final class FormFieldFixParentRelationListener
     /**
      * Load the closest grid start form field.
      *
-     * @param FormFieldModel|Result $formFieldModel The form field model.
+     * @param Model|Result|stdClass $formFieldModel The form field model.
      *
      * @psalm-suppress MoreSpecificReturnType
      * @psalm-suppress LessSpecificReturnStatement
      */
-    private function loadGridStartFormField(FormFieldModel|Result $formFieldModel): FormFieldModel|null
+    private function loadGridStartFormField(Model|Result|stdClass $formFieldModel): FormFieldModel|null
     {
         $constraints = ['.pid=?', '.type=?', '.sorting < ?'];
         $values      = [$formFieldModel->pid, 'bs_gridStart', $formFieldModel->sorting];
