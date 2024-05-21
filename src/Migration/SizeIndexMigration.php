@@ -84,6 +84,13 @@ final class SizeIndexMigration extends AbstractMigration
      */
     private function getSizes(): array
     {
+        $schemaManager = $this->connection->createSchemaManager();
+        $columns       = $schemaManager->listTableColumns('tl_theme');
+
+        if (! isset($columns['bs_grid_sizes'])) {
+            return [];
+        }
+
         $sizes      = $this->environment->getConfig()->get(['grid', 'sizes'], []);
         $themeSizes = $this->connection->executeQuery('SELECT bs_grid_sizes FROM tl_theme')->fetchFirstColumn();
 
