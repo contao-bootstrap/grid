@@ -24,6 +24,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_filter;
+use function array_key_exists;
 use function array_map;
 use function array_values;
 use function assert;
@@ -52,6 +53,7 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
      */
     protected function prepareTemplateData(array $data, Request $request, Model $model): array
     {
+        /** @psalm-var list<array{inactive: string, module: string|null}> $config */
         $config    = StringUtil::deserialize($model->bs_gridModules, true);
         $moduleIds = $this->getModuleIds($config);
         $modules   = $this->preCompileModules($model, $moduleIds);
@@ -88,9 +90,9 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
     /**
      * Generate all modules.
      *
-     * @param array<string,mixed>      $config   Module config.
-     * @param array<int|string,string> $modules  Generated modules.
-     * @param GridIterator|null        $iterator Grid iterator.
+     * @param list<array{inactive: string, module: string|null}> $config   Module config.
+     * @param array<int|string,string>                           $modules  Generated modules.
+     * @param GridIterator|null                                  $iterator Grid iterator.
      *
      * @return array<int|string,string>
      */
@@ -99,12 +101,12 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
         $buffer = [];
 
         foreach ($config as $entry) {
-            if ($entry['inactive'] || ! $entry['module']) {
+            if ($entry['inactive'] || $entry['module'] === '' || $entry['module'] === null) {
                 continue;
             }
 
             if (is_numeric($entry['module'])) {
-                if (empty($modules[$entry['module']])) {
+                if (! array_key_exists($entry['module'], $modules)) {
                     continue;
                 }
 
@@ -133,7 +135,7 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
     /**
      * Get the module ids.
      *
-     * @param array<string,mixed> $config Config.
+     * @param list<array{inactive: string, module: string|null}> $config Config.
      *
      * @return list<int|string>
      */

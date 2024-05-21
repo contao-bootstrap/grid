@@ -28,7 +28,7 @@ final class SortByDate implements SortBy
         $direction = $this->direction === 'asc' ? 1 : -1;
         uasort(
             $images,
-            static fn (array $imageA, array $imageB): int => $direction * $imageA['aux'] <=> $imageB['aux']
+            static fn (array $imageA, array $imageB): int => $direction * $imageA['aux'] <=> $imageB['aux'],
         );
 
         return $images;
