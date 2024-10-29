@@ -48,7 +48,7 @@ final class Gallery
             $cell->class = 'image_' . $index;
 
             // Loop through images sizes.
-            $size = current($imageSizes);
+            $size = current($imageSizes) ?: null;
             if (next($imageSizes) === false) {
                 reset($imageSizes);
             }

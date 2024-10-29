@@ -5,6 +5,13 @@ Changelog
 [Unreleased]
 ------------
 
+3.0.4 (2024-10-29)
+------------------
+
+### Fixed
+
+ - Fix error of gallery without any image sizes
+
 3.0.1 (2024-02-13)
 ------------------
 
