@@ -5,6 +5,13 @@ Changelog
 [Unreleased]
 ------------
 
+3.0.5 (2025-03-02)
+------------------
+
+### Fixed
+
+ - Fix missing end tag of grid row in the news grid integration
+
 3.0.4 (2024-10-29)
 ------------------
 
