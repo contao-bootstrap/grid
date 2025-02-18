@@ -62,7 +62,7 @@ final class Gallery
                 ->fromFilesModel($this->images[$index]['filesModel'])
                 ->setSize($size)
                 ->setLightboxGroupIdentifier($lightBoxId)
-                ->enableLightbox($model->fullsize)
+                ->enableLightbox((bool) $model->fullsize)
                 ->setOptions($this->images[$index])
                 ->build()
                 ->applyLegacyTemplateData($cell);
