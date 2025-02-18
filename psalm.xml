@@ -43,6 +43,11 @@
                 <file name="src/Listener/Dca/ContentListener.php"/>
             </errorLevel>
         </UnsupportedPropertyReferenceUsage>
+        <MissingClassConstType>
+            <errorLevel type="suppress">
+                <directory name="src"/>
+            </errorLevel>
+        </MissingClassConstType>
     </issueHandlers>
 
     <universalObjectCrates>
