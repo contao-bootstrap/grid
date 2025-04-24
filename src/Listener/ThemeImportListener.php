@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener;
 
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\ZipReader;
 use ContaoBootstrap\Grid\Model\GridModel;
 use DOMDocument;
 use DOMElement;
 
-class ThemeImportListener
+final class ThemeImportListener
 {
     /**
      * Handle the extract theme files hook.
@@ -18,9 +19,10 @@ class ThemeImportListener
      * @param ZipReader   $archive Zip archive.
      * @param int|string  $themeId Theme id.
      *
+     * @Hook("extractThemeFiles")
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function onExtractThemeFiles(DOMDocument $xml, ZipReader $archive, $themeId): void
+    public function onExtractThemeFiles(DOMDocument $xml, ZipReader $archive, int|string $themeId): void
     {
         $tables = $xml->getElementsByTagName('table');
 

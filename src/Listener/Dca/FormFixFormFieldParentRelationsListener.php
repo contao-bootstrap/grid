@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Dca;
 
-use Contao\DataContainer;
 use Contao\FormFieldModel;
 use Contao\Model\Collection;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
@@ -16,28 +15,19 @@ use function time;
  */
 final class FormFixFormFieldParentRelationsListener
 {
-    /**
-     * Repository manager.
-     */
-    private RepositoryManager $repositoryManager;
-
-    /**
-     * @param RepositoryManager $repositoryManager Repository manager.
-     */
-    public function __construct(RepositoryManager $repositoryManager)
+    /** @param RepositoryManager $repositoryManager Repository manager. */
+    public function __construct(private readonly RepositoryManager $repositoryManager)
     {
-        $this->repositoryManager = $repositoryManager;
     }
 
     /**
      * Handle the oncopy_callback.
      *
-     * @param string|int    $insertId      Id of new created record.
-     * @param DataContainer $dataContainer Data container.
+     * @param string|int $insertId Id of new created record.
      */
-    public function onCopy($insertId, DataContainer $dataContainer): void
+    public function onCopy(string|int $insertId): void
     {
-        $collection = $this->loadFormFieldModels($dataContainer->table, (int) $insertId);
+        $collection = $this->loadFormFieldModels((int) $insertId);
         if ($collection === null) {
             return;
         }
@@ -62,7 +52,7 @@ final class FormFixFormFieldParentRelationsListener
                 ],
                 [
                     'id' => $model->id,
-                ]
+                ],
             );
         }
     }
@@ -70,16 +60,15 @@ final class FormFixFormFieldParentRelationsListener
     /**
      * Load grid form fields which have to be adjusted.
      *
-     * @param string $parentTable The parent table.
-     * @param int    $parentId    The parent id.
+     * @param int $parentId The parent id.
      *
      * @return Collection|FormFieldModel[]|null
      * @psalm-return Collection|null
      */
-    private function loadFormFieldModels(string $parentTable, int $parentId): ?Collection
+    private function loadFormFieldModels(int $parentId): Collection|null
     {
         $constraints = ['.pid=?', 'FIND_IN_SET( .type, \'bs_gridStart,bs_gridSeparator,bs_gridStop\')'];
-        $values      = [$parentId, $parentTable];
+        $values      = [$parentId];
 
         return $this->repositoryManager
             ->getRepository(FormFieldModel::class)

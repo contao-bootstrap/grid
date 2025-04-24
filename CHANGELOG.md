@@ -5,6 +5,41 @@ Changelog
 [Unreleased]
 ------------
 
+3.0.5 (2025-03-02)
+------------------
+
+### Fixed
+
+ - Fix missing end tag of grid row in the news grid integration
+
+3.0.4 (2024-10-29)
+------------------
+
+### Fixed
+
+ - Fix error of gallery without any image sizes
+
+3.0.1 (2024-02-13)
+------------------
+
+### Fixed
+
+ - Fix wrong parameter type in dca callbacks. Contao 5 uses stdClass for database results
+
+3.0.1 (2024-01-26)
+------------------
+
+### Added
+
+ - Add compatibility with Contao 5.3
+
+[3.0.0] (2023-06-09)
+
+### Changed
+
+ - Add xxl breakpoint for Bootstrap 5 compatibility
+ - Rename `no-gutter` to `g-0` for Bootstrap 5 compatibility
+
 [2.4.3] (2022-08-18)
 
 ### Fixed

@@ -8,14 +8,13 @@ use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\DataContainer;
 use Contao\Model\Collection;
 use Contao\ModuleModel;
-use MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard;
 
 use function sprintf;
 
 /**
  * Data container helper class for module.
  */
-class ModuleListener extends AbstractDcaListener
+final class ModuleListener extends AbstractDcaListener
 {
     /**
      * Initialize the data container.
@@ -44,11 +43,9 @@ class ModuleListener extends AbstractDcaListener
      * @param mixed         $value         Given value.
      * @param DataContainer $dataContainer The data container.
      *
-     * @return mixed
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function setGridWidgetOptions($value, DataContainer $dataContainer)
+    public function setGridWidgetOptions(mixed $value, DataContainer $dataContainer): mixed
     {
         if ($dataContainer->activeRecord && $dataContainer->activeRecord->type === 'bs_grid') {
             $GLOBALS['TL_DCA']['tl_module']['fields'][$dataContainer->field]['eval']['mandatory'] = true;
@@ -64,18 +61,18 @@ class ModuleListener extends AbstractDcaListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getAllModules(?MultiColumnWizard $multiColumnWizard = null): array
+    public function getAllModules(DataContainer|null $dataContainer = null): array
     {
-        if ($multiColumnWizard && $multiColumnWizard->dataContainer->activeRecord) {
-            $collection = ModuleModel::findBy(
-                ['tl_module.pid = ?', 'tl_module.id != ?'],
+        if ($dataContainer && $dataContainer->activeRecord) {
+            $collection = $this->repositories->getRepository(ModuleModel::class)->findBy(
+                ['.pid = ?', '.id != ?'],
                 [
-                    $multiColumnWizard->dataContainer->activeRecord->pid,
-                    $multiColumnWizard->dataContainer->activeRecord->id,
-                ]
+                    $dataContainer->activeRecord->pid,
+                    $dataContainer->activeRecord->id,
+                ],
             );
         } else {
-            $collection = ModuleModel::findAll();
+            $collection = $this->repositories->getRepository(ModuleModel::class)->findAll();
         }
 
         $modules = [

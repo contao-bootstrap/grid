@@ -14,7 +14,7 @@ use Contao\Model;
  * @property string       $align
  * @property string       $justify
  */
-class GridModel extends Model
+final class GridModel extends Model
 {
     /**
      * Table name.

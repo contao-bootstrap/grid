@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Hook;
 
-use Contao\Model;
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\StringUtil;
 use Contao\ThemeModel;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Grid\Model\GridModel;
 use Doctrine\DBAL\Connection;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 
 use function array_merge;
 use function array_unique;
@@ -24,30 +25,19 @@ use function sprintf;
  */
 final class GridSizesListener
 {
-    /**
-     * Database connection.
-     */
-    private Connection $connection;
-
-    /**
-     * Contao bootstrap environment.
-     */
-    private Environment $environment;
-
-    /**
-     * @param Connection  $connection  Database connection.
-     * @param Environment $environment Contao bootstrap environment.
-     */
-    public function __construct(Connection $connection, Environment $environment)
-    {
-        $this->environment = $environment;
-        $this->connection  = $connection;
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly Environment $environment,
+        private readonly RepositoryManager $repositories,
+    ) {
     }
 
     /**
      * Initialize all grid sizes.
      *
      * @param string $dataContainer The data container name.
+     *
+     * @Hook("loadDataContainer", priority=100)
      */
     public function initializeSizes(string $dataContainer): void
     {
@@ -55,7 +45,7 @@ final class GridSizesListener
             return;
         }
 
-        $schemaManager = $this->connection->getSchemaManager();
+        $schemaManager = $this->connection->createSchemaManager();
         if (! $schemaManager->tablesExist([GridModel::getTable(), 'tl_theme'])) {
             return;
         }
@@ -79,79 +69,83 @@ final class GridSizesListener
 
         $GLOBALS['TL_DCA']['tl_bs_grid']['fields'][$sizeLabel] = [
             'exclude'   => true,
-            'inputType' => 'multiColumnWizard',
+            'inputType' => 'group',
             'sql'       => 'blob NULL',
-            'eval'      => [
-                'includeBlankOption' => true,
-                'dragAndDrop'        => true,
-                'columnFields'       => [
-                    'width'  => [
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getWidths',
-                        ],
-                        'eval'             => [
-                            'style'              => 'width: 100px;',
-                            'isAssociative'      => true,
-                            'chosen'             => true,
-                            'includeBlankOption' => true,
-                        ],
+            'palette'   => ['width', 'offset', 'order', 'align', 'class', 'reset'],
+            'fields'    => [
+                'width'  => [
+                    'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['width'],
+                    'inputType'        => 'select',
+                    'options_callback' => [
+                        'contao_bootstrap.grid.listeners.dca.grid',
+                        'getWidths',
                     ],
-                    'offset' => [
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getOffsets',
-                        ],
-                        'reference'        => ['null' => '0 '],
-                        'eval'             => [
-                            'style'              => 'width: 100px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                            'isAssociative'      => false,
-                        ],
+                    'eval'             => [
+                        'isAssociative'      => true,
+                        'chosen'             => true,
+                        'includeBlankOption' => true,
+                        'tl_class' => 'w50',
                     ],
-                    'order'  => [
-                        'inputType'        => 'select',
-                        'options_callback' => [
-                            'contao_bootstrap.grid.listeners.dca.grid',
-                            'getOrders',
-                        ],
-                        'eval'             => [
-                            'style'              => 'width: 120px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                        ],
+                ],
+                'offset' => [
+                    'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['offset'],
+                    'inputType'        => 'select',
+                    'options_callback' => [
+                        'contao_bootstrap.grid.listeners.dca.grid',
+                        'getOffsets',
                     ],
-                    'align'  => [
-                        'inputType' => 'select',
-                        'options'   => ['start', 'center', 'end'],
-                        'eval'      => [
-                            'style'              => 'width: 100px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true,
-                        ],
+                    'reference'        => ['null' => '0 '],
+                    'eval'             => [
+                        'includeBlankOption' => true,
+                        'chosen'             => true,
+                        'isAssociative'      => false,
+                        'tl_class' => 'w50',
                     ],
-                    'class'  => [
-                        'exclude'   => true,
-                        'default'   => '',
-                        'inputType' => 'text',
-                        'eval'      => ['style' => 'width: 160px'],
+                ],
+                'order'  => [
+                    'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['order'],
+                    'inputType'        => 'select',
+                    'options_callback' => [
+                        'contao_bootstrap.grid.listeners.dca.grid',
+                        'getOrders',
                     ],
-                    'reset'  => [
-                        'exclude'   => true,
-                        'default'   => '',
-                        'inputType' => 'select',
-                        'options'   => ['1', '2'],
-                        'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
-                        'eval'      => [
-                            'includeBlankOption' => true,
-                            'style'              => 'width: 100px',
-                        ],
+                    'eval'             => [
+                        'includeBlankOption' => true,
+                        'chosen'             => true,
+                        'tl_class' => 'w50',
+                    ],
+                ],
+                'align'  => [
+                    'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['align'],
+                    'inputType' => 'select',
+                    'options'   => ['start', 'center', 'end'],
+                    'eval'      => [
+                        'includeBlankOption' => true,
+                        'chosen'             => true,
+                        'tl_class' => 'w50',
+                    ],
+                ],
+                'class'  => [
+                    'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['class'],
+                    'exclude'   => true,
+                    'default'   => '',
+                    'inputType' => 'text',
+                    'eval'      => ['tl_class' => 'w50'],
+                ],
+                'reset'  => [
+                    'label'            => &$GLOBALS['TL_LANG']['tl_bs_grid']['reset'],
+                    'exclude'   => true,
+                    'default'   => '',
+                    'inputType' => 'select',
+                    'options'   => ['1', '2'],
+                    'reference' => &$GLOBALS['TL_LANG']['tl_bs_grid']['resets'],
+                    'eval'      => [
+                        'includeBlankOption' => true,
+                        'tl_class' => 'w50',
                     ],
                 ],
             ],
+            'eval'      => ['includeBlankOption' => true],
         ];
     }
 
@@ -162,7 +156,7 @@ final class GridSizesListener
      */
     public function createDatabaseField(string $size): void
     {
-        $schemaManager = $this->connection->getSchemaManager();
+        $schemaManager = $this->connection->createSchemaManager();
         if (! $schemaManager->tablesExist(GridModel::getTable())) {
             return;
         }
@@ -173,7 +167,7 @@ final class GridSizesListener
         }
 
         $this->connection->executeStatement(
-            sprintf('ALTER TABLE %s ADD %sSize BLOB DEFAULT NULL', GridModel::getTable(), $size)
+            sprintf('ALTER TABLE %s ADD %sSize BLOB DEFAULT NULL', GridModel::getTable(), $size),
         );
     }
 
@@ -184,12 +178,8 @@ final class GridSizesListener
      */
     public function getSizes(): array
     {
-        $sizes  = $this->environment->getConfig()->get('grid.sizes', []);
-        $themes = ThemeModel::findAll() ?: [];
-
-        if ($themes instanceof Model) {
-            $themes = [$themes];
-        }
+        $sizes  = $this->environment->getConfig()->get(['grid', 'sizes'], []);
+        $themes = $this->repositories->getRepository(ThemeModel::class)->findAll() ?: [];
 
         foreach ($themes as $theme) {
             $sizes = array_merge($sizes, StringUtil::deserialize($theme->bs_grid_sizes, true));

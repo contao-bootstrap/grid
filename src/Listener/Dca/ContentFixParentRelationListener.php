@@ -8,6 +8,7 @@ use Contao\ContentModel;
 use Contao\Database\Result;
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
+use stdClass;
 
 use function in_array;
 use function time;
@@ -22,9 +23,7 @@ final class ContentFixParentRelationListener
      */
     private RepositoryManager $repositoryManager;
 
-    /**
-     * @param RepositoryManager $repositoryManager Repository manager.
-     */
+    /** @param RepositoryManager $repositoryManager Repository manager. */
     public function __construct(RepositoryManager $repositoryManager)
     {
         $this->repositoryManager = $repositoryManager;
@@ -59,10 +58,10 @@ final class ContentFixParentRelationListener
      *
      * @param int|string $elementId Element id of copied element.
      */
-    public function onCopy($elementId): void
+    public function onCopy(int|string $elementId): void
     {
         $contentModel = $this->repositoryManager->getRepository(ContentModel::class)->find((int) $elementId);
-        if ($contentModel === null) {
+        if (! $contentModel instanceof ContentModel) {
             return;
         }
 
@@ -72,9 +71,9 @@ final class ContentFixParentRelationListener
     /**
      * Fix grid start relation of content element.
      *
-     * @param ContentModel|Result $contentModel Content element.
+     * @param ContentModel|Result|stdClass $contentModel Content element.
      */
-    private function fixContentElement($contentModel): void
+    private function fixContentElement(ContentModel|Result|stdClass $contentModel): void
     {
         if (! in_array($contentModel->type, ['bs_gridSeparator', 'bs_gridStop'], true)) {
             return;
@@ -93,16 +92,19 @@ final class ContentFixParentRelationListener
             ],
             [
                 'id' => $contentModel->id,
-            ]
+            ],
         );
     }
 
     /**
      * Load closest grid start model.
      *
-     * @param ContentModel|Result $contentModel Content model.
+     * @param ContentModel|Result|stdClass $contentModel Content model.
+     *
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress LessSpecificReturnStatement
      */
-    private function loadClosestGridStartModel($contentModel): ?ContentModel
+    private function loadClosestGridStartModel(ContentModel|Result|stdClass $contentModel): ContentModel|null
     {
         $constraints = ['.pid=?', '.type=?', '.sorting < ?'];
         $values      = [$contentModel->pid, 'bs_gridStart', $contentModel->sorting];

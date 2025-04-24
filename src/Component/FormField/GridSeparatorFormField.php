@@ -11,7 +11,7 @@ namespace ContaoBootstrap\Grid\Component\FormField;
  * @property list<string>|null $resets
  * @psalm-suppress PropertyNotSetInConstructor - Issue in the codebase of Contao
  */
-class GridSeparatorFormField extends AbstractRelatedFormField
+final class GridSeparatorFormField extends AbstractRelatedFormField
 {
     /**
      * Template name.
@@ -20,14 +20,12 @@ class GridSeparatorFormField extends AbstractRelatedFormField
     protected $strTemplate = 'form_bs_gridSeparator';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function parse($arrAttributes = null): string
     {
         $iterator = $this->getIterator();
-        if ($iterator) {
-            $iterator->next();
-        }
+        $iterator?->next();
 
         if ($this->isBackendRequest()) {
             return $this->renderBackendView($this->getParent(), $iterator);

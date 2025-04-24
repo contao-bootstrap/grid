@@ -18,29 +18,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractGridElementController extends AbstractContentElementController
 {
-    protected GridProvider $gridProvider;
-
-    protected ColorRotate $colorRotate;
-
-    protected TranslatorInterface $translator;
-
     public function __construct(
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
         ResponseTagger $responseTagger,
         TokenChecker $tokenChecker,
-        GridProvider $gridProvider,
-        ColorRotate $colorRotate,
-        TranslatorInterface $translator
+        protected GridProvider $gridProvider,
+        protected ColorRotate $colorRotate,
+        protected TranslatorInterface $translator,
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger, $tokenChecker);
-
-        $this->gridProvider = $gridProvider;
-        $this->colorRotate  = $colorRotate;
-        $this->translator   = $translator;
     }
 
-    protected function renderContentBackendView(?ContentModel $start, ?GridIterator $iterator = null): Response
+    protected function renderContentBackendView(ContentModel|null $start, GridIterator|null $iterator = null): Response
     {
         return $this->renderResponse(
             'fe:be_bs_grid',
@@ -51,7 +41,7 @@ abstract class AbstractGridElementController extends AbstractContentElementContr
                     ? $this->translator->trans('ERR.bsGridParentMissing', [], 'contao_default')
                     : null,
                 'classes' => $iterator ? $iterator->current() : null,
-            ]
+            ],
         );
     }
 

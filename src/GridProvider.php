@@ -38,9 +38,7 @@ final class GridProvider
      */
     private array $iterators = [];
 
-    /**
-     * @param GridBuilder $builder The grid builder.
-     */
+    /** @param GridBuilder $builder The grid builder. */
     public function __construct(GridBuilder $builder)
     {
         $this->builder = $builder;
@@ -70,7 +68,7 @@ final class GridProvider
      *
      * @throws RuntimeException When grid could not be build.
      */
-    public function getIterator(string $uniqueId, ?int $gridId = null): GridIterator
+    public function getIterator(string $uniqueId, int|null $gridId = null): GridIterator
     {
         if (! isset($this->iterators[$uniqueId])) {
             if ($gridId === null) {

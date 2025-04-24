@@ -6,7 +6,8 @@ namespace ContaoBootstrap\Grid\Gallery;
 
 use Contao\Config;
 use Contao\CoreBundle\Exception\PageNotFoundException;
-use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\CoreBundle\Framework\Adapter;
+use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\Environment;
 use Contao\File;
 use Contao\FilesModel;
@@ -16,6 +17,8 @@ use Contao\Pagination;
 use Contao\StringUtil;
 use ContaoBootstrap\Grid\Gallery\Sorting\SortBy;
 use ContaoBootstrap\Grid\Gallery\Sorting\SortRandom;
+use Netzmacht\Contao\Toolkit\Data\Model\ContaoRepository;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 
 use function array_slice;
 use function assert;
@@ -28,25 +31,24 @@ use function min;
 
 final class GalleryBuilder
 {
-    private ContaoFramework $framework;
-
-    private string $projectDir;
-
     /** @var array<string,array<string,mixed>> */
     private array $images = [];
 
-    private ?SortBy $sortBy = null;
+    private SortBy|null $sortBy = null;
 
     private int $limit = 0;
 
     private int $perPage = 0;
 
-    private ?string $pageParam = null;
+    private string|null $pageParam = null;
 
-    public function __construct(ContaoFramework $framework, string $projectDir)
-    {
-        $this->framework  = $framework;
-        $this->projectDir = $projectDir;
+    /** @param Adapter<Input> $inputAdapter */
+    public function __construct(
+        private readonly RepositoryManager $repositories,
+        private readonly Studio $imageStudio,
+        private readonly Adapter $inputAdapter,
+        private readonly string $projectDir,
+    ) {
     }
 
     public function sortBy(SortBy $sortBy): self
@@ -74,9 +76,9 @@ final class GalleryBuilder
     /** @param list<string> $uuids */
     public function addSources(array $uuids): self
     {
-        $this->framework->initialize();
+        $repository = $this->repositories->getRepository(FilesModel::class);
+        assert($repository instanceof ContaoRepository);
 
-        $repository = $this->framework->getAdapter(FilesModel::class);
         $collection = $repository->findMultipleByUuids($uuids);
         if ($collection instanceof Collection) {
             $this->loadImages($collection);
@@ -93,7 +95,7 @@ final class GalleryBuilder
         $limit      = $this->limit === 0 ? count($images) : $this->limit;
         $pagination = $this->preparePagination($offset, $limit);
 
-        return new Gallery($images, $offset, $limit, $pagination);
+        return new Gallery($this->imageStudio, $images, $offset, $limit, $pagination);
     }
 
     private function loadImages(Collection $collection, bool $deep = true): void
@@ -127,8 +129,9 @@ final class GalleryBuilder
                 ];
             } elseif ($deep) {
                 // Folders
-                $repository = $this->framework->getAdapter(FilesModel::class);
-                $children   = $repository->findByPid($fileModel->uuid);
+                $repository = $this->repositories->getRepository(FilesModel::class);
+                assert($repository instanceof ContaoRepository);
+                $children = $repository->findByPid($fileModel->uuid);
 
                 if ($children instanceof Collection) {
                     $this->loadImages($children, false);
@@ -173,7 +176,7 @@ final class GalleryBuilder
      *
      * @throws PageNotFoundException When page parameter is out of bounds.
      */
-    protected function preparePagination(int &$offset, int &$limit): ?Pagination
+    protected function preparePagination(int &$offset, int &$limit): Pagination|null
     {
         $total   = count($this->images);
         $perPage = $this->perPage;
@@ -184,7 +187,8 @@ final class GalleryBuilder
 
             // Get the current page
             $parameter = $this->pageParam;
-            $page      = Input::get($parameter) ?? 1;
+            /** @psalm-suppress RiskyCast */
+            $page = (int) ($this->inputAdapter->get($parameter) ?? 1);
 
             // Do not index or cache the page if the page number is outside the range
             if ($page < 1 || $page > max(ceil($total / $perPage), 1)) {
@@ -199,7 +203,7 @@ final class GalleryBuilder
                 $total,
                 $perPage,
                 Config::get('maxPaginationLinks'),
-                $parameter
+                $parameter,
             );
         }
 

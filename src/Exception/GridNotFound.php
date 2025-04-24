@@ -8,7 +8,7 @@ use RuntimeException;
 
 use function sprintf;
 
-class GridNotFound extends RuntimeException
+final class GridNotFound extends RuntimeException
 {
     /**
      * Create the exception with a predefined message.

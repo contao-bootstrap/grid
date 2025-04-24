@@ -7,13 +7,12 @@ namespace ContaoBootstrap\Grid\Listener\Dca;
 use Contao\Database\Result;
 use Contao\DataContainer;
 use Contao\Model;
+use stdClass;
 
 use function array_unshift;
 use function assert;
 
-/**
- * @template TModel of Model
- */
+/** @template TModel of Model */
 abstract class AbstractWrapperDcaListener extends AbstractDcaListener
 {
     /**
@@ -21,20 +20,18 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
      *
      * @param int|string    $value         Number of columns which should be generated.
      * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return null
      */
-    public function generateColumns($value, $dataContainer)
+    public function generateColumns(int|string $value, DataContainer $dataContainer): void
     {
         if (! $dataContainer->activeRecord) {
-            return null;
+            return;
         }
 
         $current = $dataContainer->activeRecord;
-        assert($current instanceof Model || $current instanceof Result);
-        /** @psalm-var TModel|Result $current */
+        assert($current instanceof Model || $current instanceof Result || $current instanceof stdClass);
+        /** @psalm-var TModel|Result|stdClass $current */
 
-        if ($value) {
+        if ((bool) $value) {
             $stopElement  = $this->getStopElement($current);
             $nextElements = $this->getNextElements($stopElement);
             $sorting      = (int) $stopElement->sorting;
@@ -46,19 +43,17 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
         } else {
             $this->getStopElement($current);
         }
-
-        return null;
     }
 
     /**
      * Create separators.
      *
-     * @param int          $value   Number of separators being created.
-     * @param Model|Result $current Current model.
-     * @param int          $sorting Current sorting value.
-     * @psalm-param TModel|Result $current
+     * @param int                   $value   Number of separators being created.
+     * @param Model|Result|stdClass $current Current model.
+     * @param int                   $sorting Current sorting value.
+     * @psalm-param TModel|Result|stdClass $current
      */
-    protected function createSeparators(int $value, $current, int $sorting): int
+    protected function createSeparators(int $value, Model|Result|stdClass $current, int $sorting): int
     {
         for ($count = 1; $count <= $value; $count++) {
             $sorting += 8;
@@ -92,13 +87,13 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
     /**
      * Create the stop element.
      *
-     * @param Model|Result $current Model.
-     * @param int          $sorting Last sorting value.
-     * @psalm-param TModel|Result $current
+     * @param Model|Result|stdClass $current Model.
+     * @param int                   $sorting Last sorting value.
+     * @psalm-param TModel|Result|stdClass $current
      *
      * @psalm-return TModel
      */
-    protected function createStopElement($current, int $sorting): Model
+    protected function createStopElement(Model|Result|stdClass $current, int $sorting): Model
     {
         $sorting += 8;
 
@@ -108,33 +103,33 @@ abstract class AbstractWrapperDcaListener extends AbstractDcaListener
     /**
      * Create a grid element.
      *
-     * @param Model|Result $current Current content model.
-     * @param string       $type    Type of the content model.
-     * @param int          $sorting The sorting value.
-     * @psalm-param TModel|Result $current
+     * @param Model|Result|stdClass $current Current content model.
+     * @param string                $type    Type of the content model.
+     * @param int                   $sorting The sorting value.
+     * @psalm-param TModel|Result|stdClass $current
      *
      * @return TModel
      */
-    abstract protected function createGridElement($current, string $type, int &$sorting): Model;
+    abstract protected function createGridElement(Model|Result|stdClass $current, string $type, int &$sorting): Model;
 
     /**
      * Get the next content elements.
      *
-     * @param Model|Result $current Current content model.
-     * @psalm-param TModel|Result $current
+     * @param Model|Result|stdClass $current Current content model.
+     * @psalm-param TModel|Result|stdClass $current
 
      * @return Model[]
      * @psalm-return array<TModel>
      */
-    abstract protected function getNextElements($current): array;
+    abstract protected function getNextElements(Model|Result|stdClass $current): array;
 
     /**
      * Get related stop element.
      *
-     * @param Model|Result $current Current element.
-     * @psalm-param TModel|Result $current
+     * @param Model|Result|stdClass $current Current element.
+     * @psalm-param TModel|Result|stdClass $current
      *
      * @psalm-return TModel
      */
-    abstract protected function getStopElement($current): Model;
+    abstract protected function getStopElement(Model|Result|stdClass $current): Model;
 }

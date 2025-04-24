@@ -8,14 +8,12 @@
 >
     <projectFiles>
         <directory name="src"/>
+        <ignoreFiles>
+            <file name="src/ContaoBootstrapGridComponent.php"/>
+        </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
-        <UndefinedFunction>
-            <errorLevel type="suppress">
-                <referencedFunction name="array_insert"/>
-            </errorLevel>
-        </UndefinedFunction>
         <InternalMethod>
             <errorLevel type="suppress">
                 <referencedMethod name="Contao\CoreBundle\Framework\Adapter::__call"/>
@@ -23,14 +21,33 @@
                 <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::getAdapter"/>
             </errorLevel>
         </InternalMethod>
+        <DeprecatedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Contao\Template"/>
+                <referencedClass name="Symfony\Component\Security\Core\Security"/>
+            </errorLevel>
+        </DeprecatedClass>
         <DeprecatedMethod>
             <errorLevel type="suppress">
                 <referencedMethod name="Contao\Controller::addImageToTemplate"/>
-                <!-- Deprecated in doctrine/dbal 3, we also support ^2.11 -->
-                <referencedMethod name="Doctrine\DBAL\Connection::getSchemaManager"/>
-                <referencedMethod name="Doctrine\DBAL\Query\QueryBuilder::execute"/>
             </errorLevel>
         </DeprecatedMethod>
+        <UndefinedMagicPropertyFetch>
+            <errorLevel type="suppress">
+                <referencedProperty name="Contao\DataContainer::$activeRecord"/>
+                <referencedProperty name="Contao\DataContainer::$currentPid"/>
+            </errorLevel>
+        </UndefinedMagicPropertyFetch>
+        <UnsupportedPropertyReferenceUsage>
+            <errorLevel type="suppress">
+                <file name="src/Listener/Dca/ContentListener.php"/>
+            </errorLevel>
+        </UnsupportedPropertyReferenceUsage>
+        <MissingClassConstType>
+            <errorLevel type="suppress">
+                <directory name="src"/>
+            </errorLevel>
+        </MissingClassConstType>
     </issueHandlers>
 
     <universalObjectCrates>
@@ -43,5 +60,6 @@
         <class name="Contao\ModuleNews"/>
         <class name="Contao\Template"/>
         <class name="Contao\ThemeModel"/>
+        <class name="Contao\Widget"/>
     </universalObjectCrates>
 </psalm>

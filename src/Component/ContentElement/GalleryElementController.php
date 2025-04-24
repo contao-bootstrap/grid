@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Component\ContentElement;
 
 use Contao\ContentModel;
-use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\CoreBundle\Framework\Adapter;
+use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\FrontendUser;
+use Contao\Input;
 use Contao\Model;
 use Contao\StringUtil;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
@@ -22,6 +24,7 @@ use ContaoBootstrap\Grid\Gallery\Sorting\SortRandom;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Controller\ContentElement\AbstractContentElementController;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
@@ -35,33 +38,27 @@ use function trigger_error;
 
 use const E_USER_DEPRECATED;
 
-/** @ContentElement("bs_grid_gallery", category="media") */
+/** @ContentElement("bs_grid_gallery", category="media", template="ce_bs_grid_gallery") */
 final class GalleryElementController extends AbstractContentElementController
 {
-    private Security $security;
-
-    private GridProvider $gridProvider;
-
-    private ContaoFramework $framework;
-
-    private string $projectDir;
-
+    /**
+     * @param Adapter<Input> $inputAdapter
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     */
     public function __construct(
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
         ResponseTagger $responseTagger,
         TokenChecker $tokenChecker,
-        Security $security,
-        GridProvider $gridProvider,
-        ContaoFramework $framework,
-        string $projectDir
+        private readonly Security $security,
+        private readonly GridProvider $gridProvider,
+        private readonly RepositoryManager $repositories,
+        private readonly Studio $imageStudio,
+        private readonly Adapter $inputAdapter,
+        private readonly string $projectDir,
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger, $tokenChecker);
-
-        $this->security     = $security;
-        $this->gridProvider = $gridProvider;
-        $this->framework    = $framework;
-        $this->projectDir   = $projectDir;
     }
 
     /**
@@ -69,16 +66,24 @@ final class GalleryElementController extends AbstractContentElementController
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function preGenerate(Request $request, Model $model, string $section, ?array $classes = null): ?Response
-    {
-        assert($model instanceof ContentModel);
-
+    protected function preGenerate(
+        Request $request,
+        Model $model,
+        string $section,
+        array|null $classes = null,
+    ): Response|null {
         $sources = $this->determineSources($model);
         if ($sources === []) {
             return new Response();
         }
 
-        $galleryBuilder = new GalleryBuilder($this->framework, $this->projectDir);
+        $galleryBuilder = new GalleryBuilder(
+            $this->repositories,
+            $this->imageStudio,
+            $this->inputAdapter,
+            $this->projectDir,
+        );
+
         $galleryBuilder
             ->addSources($sources)
             ->perPage('page_g' . $model->id, (int) $model->perPage)
@@ -96,7 +101,6 @@ final class GalleryElementController extends AbstractContentElementController
         $gallery = $request->attributes->get(Gallery::class);
 
         assert($gallery instanceof Gallery);
-        assert($model instanceof ContentModel);
 
         $data['pagination'] = $gallery->pagination ? $gallery->pagination->generate("\n") : null;
         $data['images']     = $this->render(
@@ -107,8 +111,8 @@ final class GalleryElementController extends AbstractContentElementController
                     'body'     => $gallery->compileImages($model),
                     'grid'     => $this->getGridIterator($model),
                     'headline' => $model->headline,
-                ]
-            )
+                ],
+            ),
         );
 
         return $data;
@@ -147,7 +151,7 @@ final class GalleryElementController extends AbstractContentElementController
     /**
      * Get the grid iterator.
      */
-    private function getGridIterator(ContentModel $model): ?GridIterator
+    private function getGridIterator(ContentModel $model): GridIterator|null
     {
         try {
             if ($model->bs_grid) {
@@ -156,7 +160,7 @@ final class GalleryElementController extends AbstractContentElementController
 
                 return $iterator;
             }
-        } catch (GridNotFound $e) {
+        } catch (GridNotFound) {
             // No Grid found, return null.
             return null;
         }
@@ -183,10 +187,10 @@ final class GalleryElementController extends AbstractContentElementController
 
             // Deprecated since Contao 4.0, to be removed in Contao 5.0
             case 'meta':
-                // @codingStandardsIgnoreStart
                 @trigger_error(
-                    'The "meta" key in ContentGallery::compile() has been deprecated and will no longer work in Contao 5.0.',
-                    E_USER_DEPRECATED
+                    'The "meta" key in ContentGallery::compile() has been deprecated and will no longer work in '
+                    . 'Contao 5.0.',
+                    E_USER_DEPRECATED,
                 );
                 // @codingStandardsIgnoreEnd
 

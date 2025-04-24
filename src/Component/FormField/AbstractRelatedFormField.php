@@ -8,9 +8,7 @@ use Contao\FormFieldModel;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 
-/**
- * @property int|string $bs_grid_parent
- */
+/** @property int|string $bs_grid_parent */
 abstract class AbstractRelatedFormField extends AbstractFormField
 {
     /**
@@ -21,7 +19,7 @@ abstract class AbstractRelatedFormField extends AbstractFormField
         return '';
     }
 
-    protected function getIterator(): ?GridIterator
+    protected function getIterator(): GridIterator|null
     {
         $provider = $this->getGridProvider();
         $parent   = $this->getParent();
@@ -32,7 +30,7 @@ abstract class AbstractRelatedFormField extends AbstractFormField
                 $this->getResponseTagger()->addTags(['contao.db.tl_bs_grid.' . $parent->bs_grid]);
 
                 return $iterator;
-            } catch (GridNotFound $e) {
+            } catch (GridNotFound) {
                 // Do nothing. Error is displayed in backend view.
                 return null;
             }
@@ -44,7 +42,7 @@ abstract class AbstractRelatedFormField extends AbstractFormField
     /**
      * Get the parent model.
      */
-    protected function getParent(): ?FormFieldModel
+    protected function getParent(): FormFieldModel|null
     {
         return FormFieldModel::findByPk($this->bs_grid_parent);
     }

@@ -16,6 +16,7 @@ use ContaoBootstrap\Grid\Definition\Column;
 use ContaoBootstrap\Grid\Definition\Grid;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\Model\GridModel;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use RuntimeException;
 
 use function array_search;
@@ -30,24 +31,17 @@ final class GridBuilder
     /**
      * Grid model.
      */
-    private ?GridModel $model = null;
+    private GridModel|null $model = null;
 
     /**
      * Cache of grid being built.
      */
-    private ?Grid $grid = null;
+    private Grid|null $grid = null;
 
-    /**
-     * Core Environment.
-     */
-    private Environment $environment;
-
-    /**
-     * @param Environment $environment The Core Environment.
-     */
-    public function __construct(Environment $environment)
-    {
-        $this->environment = $environment;
+    public function __construct(
+        private readonly Environment $environment,
+        private readonly RepositoryManager $repositories,
+    ) {
     }
 
     /**
@@ -74,7 +68,7 @@ final class GridBuilder
      */
     protected function loadModel(int $gridId): void
     {
-        $model = GridModel::findOneBy('id', $gridId);
+        $model = $this->repositories->getRepository(GridModel::class)->find($gridId);
         if (! $model instanceof GridModel) {
             throw GridNotFound::withId($gridId);
         }
@@ -98,7 +92,7 @@ final class GridBuilder
             $field      = $size . 'Size';
             $definition = StringUtil::deserialize($this->model->{$field}, true);
 
-            if ($size === $this->environment->getConfig()->get('grid.default_size', 'xs')) {
+            if ($size === $this->environment->getConfig()->get(['grid', 'default_size'], 'xs')) {
                 $size = '';
             }
 
@@ -203,10 +197,8 @@ final class GridBuilder
      * Parse the offset definition value.
      *
      * @param mixed $offset Raw offset value.
-     *
-     * @return mixed
      */
-    private function parseOffset($offset)
+    private function parseOffset(mixed $offset): mixed
     {
         if ($offset === 'null') {
             $offset = 0;
@@ -257,9 +249,9 @@ final class GridBuilder
         switch ($definition['reset']) {
             case '2':
                 $key  = array_search($size, $sizes);
-                $next = $key ? ($sizes[$key + 1] ?? null) : null;
+                $next = $key !== false ? ($sizes[$key + 1] ?? null) : null;
 
-                if ($next) {
+                if ($next !== null) {
                     $column->limitedReset((string) $next);
 
                     break;

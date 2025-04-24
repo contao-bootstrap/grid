@@ -14,6 +14,8 @@ use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
 use Netzmacht\Contao\Toolkit\Controller\FrontendModule\AbstractFrontendModuleController;
+use Netzmacht\Contao\Toolkit\Data\Model\ContaoRepository;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
@@ -22,28 +24,26 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_filter;
+use function array_key_exists;
 use function array_map;
 use function array_values;
 use function assert;
 use function is_numeric;
 use function sprintf;
 
-/** @FrontendModule("bs_grid", category="miscellaneous") */
+/** @FrontendModule("bs_grid", category="miscellaneous", template="mod_bs_grid") */
 final class GridFrontendModuleController extends AbstractFrontendModuleController
 {
-    private GridProvider $gridProvider;
-
     public function __construct(
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
         ResponseTagger $responseTagger,
         RouterInterface $router,
         TranslatorInterface $translator,
-        GridProvider $gridProvider
+        private readonly GridProvider $gridProvider,
+        private readonly RepositoryManager $repositories,
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger, $router, $translator);
-
-        $this->gridProvider = $gridProvider;
     }
 
     /**
@@ -53,8 +53,7 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
      */
     protected function prepareTemplateData(array $data, Request $request, Model $model): array
     {
-        assert($model instanceof ModuleModel);
-
+        /** @psalm-var list<array{inactive: string, module: string|null}> $config */
         $config    = StringUtil::deserialize($model->bs_gridModules, true);
         $moduleIds = $this->getModuleIds($config);
         $modules   = $this->preCompileModules($model, $moduleIds);
@@ -75,14 +74,14 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
     /**
      * Get the grid iterator.
      */
-    protected function getGridIterator(ModuleModel $model): ?GridIterator
+    protected function getGridIterator(ModuleModel $model): GridIterator|null
     {
         try {
             $iterator = $this->gridProvider->getIterator('mod:' . $model->id, (int) $model->bs_grid);
             $this->tagResponse('contao.db.tl_bs_grid.' . $model->bs_grid);
 
             return $iterator;
-        } catch (GridNotFound $e) {
+        } catch (GridNotFound) {
             // Do nothing.
             return null;
         }
@@ -91,27 +90,27 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
     /**
      * Generate all modules.
      *
-     * @param array<string,mixed>      $config   Module config.
-     * @param array<int|string,string> $modules  Generated modules.
-     * @param GridIterator|null        $iterator Grid iterator.
+     * @param list<array{inactive: string, module: string|null}> $config   Module config.
+     * @param array<int|string,string>                           $modules  Generated modules.
+     * @param GridIterator|null                                  $iterator Grid iterator.
      *
      * @return array<int|string,string>
      */
-    protected function generateModules(array $config, array $modules, ?GridIterator $iterator = null): array
+    protected function generateModules(array $config, array $modules, GridIterator|null $iterator = null): array
     {
         $buffer = [];
 
         foreach ($config as $entry) {
-            if ($entry['inactive'] || ! $entry['module']) {
+            if ($entry['inactive'] || $entry['module'] === '' || $entry['module'] === null) {
                 continue;
             }
 
             if (is_numeric($entry['module'])) {
-                if (! empty($modules[$entry['module']])) {
-                    $buffer[] = $modules[$entry['module']];
+                if (! array_key_exists($entry['module'], $modules)) {
+                    continue;
                 }
 
-                continue;
+                $buffer[] = $modules[$entry['module']];
             }
 
             if (! $iterator) {
@@ -126,7 +125,7 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
 
             $buffer[] = sprintf(
                 "\n" . '</div>' . "\n" . '<div class="%s">',
-                $iterator->current()
+                $iterator->current(),
             );
         }
 
@@ -136,7 +135,7 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
     /**
      * Get the module ids.
      *
-     * @param array<string,mixed> $config Config.
+     * @param list<array{inactive: string, module: string|null}> $config Config.
      *
      * @return list<int|string>
      */
@@ -158,11 +157,11 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
                         /** @param array<string,mixed> $item */
                         static function (array $item): bool {
                             return $item['inactive'] === '';
-                        }
-                    )
+                        },
+                    ),
                 ),
-                'is_numeric'
-            )
+                'is_numeric',
+            ),
         );
     }
 
@@ -173,14 +172,16 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
      *
      * @return array<string|int,string>
      */
-    protected function preCompileModules(ModuleModel $model, array $moduleIds): array
+    protected function preCompileModules(ModuleModel $moduleModel, array $moduleIds): array
     {
-        $collection = ModuleModel::findMultipleByIds($moduleIds);
+        $repository = $this->repositories->getRepository(ModuleModel::class);
+        assert($repository instanceof ContaoRepository);
+        $collection = $repository->findMultipleByIds($moduleIds);
         $modules    = [];
 
         if ($collection instanceof Collection) {
             foreach ($collection as $model) {
-                $modules[$model->id] = Controller::getFrontendModule($model, $model->inColumn);
+                $modules[$model->id] = Controller::getFrontendModule($model, $moduleModel->inColumn);
             }
         }
 

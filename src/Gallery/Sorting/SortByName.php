@@ -10,11 +10,8 @@ use function uksort;
 
 final class SortByName implements SortBy
 {
-    private string $direction;
-
-    private function __construct(string $direction)
+    private function __construct(private readonly string $direction)
     {
-        $this->direction = $direction;
     }
 
     public static function asc(): self
@@ -35,7 +32,7 @@ final class SortByName implements SortBy
             $images,
             static function (string $imageA, string $imageB) use ($direction): int {
                 return $direction * strnatcasecmp(basename($imageA), basename($imageB));
-            }
+            },
         );
 
         return $images;

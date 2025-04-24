@@ -30,29 +30,28 @@
     "source": "https://github.com/contao-bootstrap/grid"
   },
   "require": {
-    "php": "^7.4 || ^8.0",
+    "php": "^8.1",
     "ext-dom": "*",
     "ext-pdo": "*",
-    "contao-bootstrap/core": "^2.0",
+    "contao-bootstrap/core": "^3.0",
     "contao-community-alliance/meta-palettes": "^2.0",
-    "contao/core-bundle": "^4.9",
-    "doctrine/dbal": "^2.11 || ^3.3",
-    "menatwork/contao-multicolumnwizard-bundle": "^3.4",
-    "netzmacht/contao-toolkit": "^3.7",
-    "symfony/config": "^4.4 || ^5.4",
-    "symfony/dependency-injection": "^4.4 || ^5.4",
-    "symfony/http-foundation": "^4.4 || ^5.4",
-    "symfony/http-kernel": "^4.4 || ^5.4",
-    "symfony/routing": "^4.4 || ^5.4",
-    "symfony/security-core": "^4.4 || ^5.4",
-    "symfony/translation-contracts": "^1.1 || ^2.0"
+    "contao/core-bundle": "^4.13 || ^5.0",
+    "doctrine/dbal": "^3.4",
+    "mvo/contao-group-widget": "^1.4",
+    "netzmacht/contao-toolkit": "^3.8 || ^4.0",
+    "symfony/config": "^5.4 || ^6.0",
+    "symfony/dependency-injection": "^5.4 || ^6.0",
+    "symfony/http-foundation": "^5.4 || ^6.0",
+    "symfony/http-kernel": "^5.4 || ^6.0",
+    "symfony/routing": "^5.4 || ^6.0",
+    "symfony/security-core": "^5.4 || ^6.0",
+    "symfony/translation-contracts": "^1.1 || ^2.0 || ^3.0"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.0",
-    "contao/news-bundle": "^4.4",
-    "doctrine/coding-standard": "^9.0",
+    "contao/news-bundle": "^4.13 || ^5.0",
+    "doctrine/coding-standard": "^12.0",
     "phpcq/coding-standard": "^2.1.2",
-    "phpcq/plugin-api": "1.x-dev",
     "phpcq/runner-bootstrap": "1.x-dev"
   },
   "conflict": {
@@ -61,6 +60,14 @@
   "suggest": {
     "contao/news-bundle": "Use grid in news list and news archive modules"
   },
+  "repositories": {
+    "contao-bootstrap-core": {
+      "type": "vcs",
+      "url": "https://git.netzmacht.de/contao-bootstrap/core.git"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "ContaoBootstrap\\Grid\\": "src/"
@@ -69,23 +76,18 @@
   "config": {
     "allow-plugins": {
       "contao-components/installer": false,
-      "ocramius/package-versions": true,
       "contao/manager-plugin": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true
-    }
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "ocramius/package-versions": true,
+      "php-http/discovery": true
+    },
+    "sort-packages": true
   },
   "extra": {
     "branch-alias": {
+      "dev-bootstrap5": "3.0.x-dev",
       "dev-develop": "2.5.x-dev",
       "dev-master": "2.4.x-dev"
-    },
-    "contao": {
-      "transifex": {
-        "languages_cto": "src/Resources/contao/languages",
-        "languages_tx": ".tx",
-        "prefix": "grid-",
-        "project": "contao-bootstrap"
-      }
     },
     "contao-manager-plugin": "ContaoBootstrap\\Grid\\ContaoManager\\Plugin"
   }

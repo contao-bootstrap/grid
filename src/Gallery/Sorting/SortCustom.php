@@ -11,15 +11,11 @@ use function array_map;
 use function array_merge;
 use function array_values;
 
-class SortCustom implements SortBy
+final class SortCustom implements SortBy
 {
-    /** @var list<string> */
-    private array $orderSrc;
-
     /** @param list<string> $orderSrc */
-    public function __construct(array $orderSrc)
+    public function __construct(private readonly array $orderSrc)
     {
-        $this->orderSrc = $orderSrc;
     }
 
     /** {@inheritDoc} */
@@ -33,7 +29,7 @@ class SortCustom implements SortBy
         $order = array_map(
             static function (int $key): void {
             },
-            array_flip($this->orderSrc)
+            array_flip($this->orderSrc),
         );
 
         // Move the matching elements to their position in $arrOrder

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Grid\Gallery;
 
 use Contao\ContentModel;
-use Contao\Controller;
+use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\Pagination;
 use Contao\StringUtil;
 use stdClass;
@@ -20,24 +20,15 @@ use function trim;
 
 final class Gallery
 {
-    /** @var list<array<string,mixed>> */
-    private array $images;
-
-    private int $offset;
-
-    private int $limit;
-
-    public ?Pagination $pagination;
-
-    /**
-     * @param array<array-key,array<string,mixed>> $images
-     */
-    public function __construct(array $images, int $offset, int $limit, ?Pagination $pagination)
-    {
-        $this->images     = array_values($images);
-        $this->offset     = $offset;
-        $this->limit      = $limit;
-        $this->pagination = $pagination;
+    /** @param array<array-key,array<string,mixed>> $images */
+    public function __construct(
+        private readonly Studio $imageStudio,
+        private array $images,
+        private readonly int $offset,
+        private readonly int $limit,
+        public Pagination|null $pagination,
+    ) {
+        $this->images = array_values($images);
     }
 
     /** @return list<stdClass> */
@@ -57,7 +48,7 @@ final class Gallery
             $cell->class = 'image_' . $index;
 
             // Loop through images sizes.
-            $size = current($imageSizes);
+            $size = current($imageSizes) ?: null;
             if (next($imageSizes) === false) {
                 reset($imageSizes);
             }
@@ -67,19 +58,14 @@ final class Gallery
                 $size = [$size['width'], $size['height'], $size['size']];
             }
 
-            // Add size and margin
-            /** @psalm-suppress PropertyTypeCoercion - Psalm does not detect that $index is a list key */
-            $this->images[$index]['size'] = $size;
-            /** @psalm-suppress PropertyTypeCoercion - Psalm does not detect that $index is a list key */
-            $this->images[$index]['fullsize'] = $model->fullsize;
-
-            Controller::addImageToTemplate(
-                $cell,
-                $this->images[$index],
-                null,
-                $lightBoxId,
-                $this->images[$index]['filesModel']
-            );
+            $this->imageStudio->createFigureBuilder()
+                ->fromFilesModel($this->images[$index]['filesModel'])
+                ->setSize($size)
+                ->setLightboxGroupIdentifier($lightBoxId)
+                ->enableLightbox((bool) $model->fullsize)
+                ->setOptions($this->images[$index])
+                ->build()
+                ->applyLegacyTemplateData($cell);
 
             if (isset($cell->picture['class']) && $cell->picture['class'] !== '') {
                 $cell->picture['class'] = trim($cell->picture['class']);

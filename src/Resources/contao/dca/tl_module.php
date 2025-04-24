@@ -26,7 +26,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['bs_grid'] = [
         'chosen'             => true,
         'tl_class'           => 'w50',
     ],
-    'load_callback'  => [
+    'load_callback'    => [
         ['contao_bootstrap.grid.listeners.dca.module', 'setGridWidgetOptions'],
     ],
     'sql'              => "int(10) unsigned NOT NULL default '0'",
@@ -36,27 +36,26 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['bs_grid'] = [
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['bs_gridModules'] = [
     'exclude'   => true,
-    'inputType' => 'multiColumnWizard',
-    'eval'      => [
-        'tl_class'     => 'clr',
-        'columnFields' => [
-            'module'   => [
-                'label'            => &$GLOBALS['TL_LANG']['tl_module']['bs_gridModule'],
-                'inputType'        => 'select',
-                'options_callback' => ['contao_bootstrap.grid.listeners.dca.module', 'getAllModules'],
-                'reference'        => $GLOBALS['TL_LANG']['tl_module']['bs_gridModule'],
-                'eval'             => [
-                    'style'              => 'width: 500px',
-                    'includeBlankOption' => true,
-                    'chosen'             => true,
-                ],
-            ],
-            'inactive' => [
-                'label'     => &$GLOBALS['TL_LANG']['tl_module']['bs_gridModules_inactive'],
-                'inputType' => 'checkbox',
-                'eval'      => ['style' => 'width: 20px'],
+    'inputType' => 'group',
+    'palette'   => ['module', 'inactive'],
+    'fields'    => [
+        'module'   => [
+            'label'            => &$GLOBALS['TL_LANG']['tl_module']['bs_gridModule'],
+            'inputType'        => 'select',
+            'options_callback' => ['contao_bootstrap.grid.listeners.dca.module', 'getAllModules'],
+            'reference'        => $GLOBALS['TL_LANG']['tl_module']['bs_gridModule'],
+            'eval'             => [
+                'includeBlankOption' => true,
+                'chosen'             => true,
+                'tl_class'           => 'w50',
             ],
         ],
+        'inactive' => [
+            'label'     => &$GLOBALS['TL_LANG']['tl_module']['bs_gridModules_inactive'],
+            'inputType' => 'checkbox',
+            'eval'      => ['tl_class' => 'w50 m12'],
+        ],
     ],
+    'eval'      => ['tl_class' => 'clr'],
     'sql'       => 'blob NULL',
 ];

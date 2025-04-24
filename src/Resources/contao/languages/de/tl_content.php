@@ -1,14 +1,10 @@
 <?php
+
 /**
- * Translations are managed using Transifex. To create a new translation
+ * Translations are managed automatically using Transifex. To create a new translation
  * or to help to maintain an existing one, please register at transifex.com.
  *
- * @link https://www.transifex.com/signup/
- * @link https://www.transifex.com/projects/p/contao-bootstrap/language/de/
- *
- * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
- *
- * last-updated: 2019-04-08T07:12:34+00:00
+ * Last-updated: 2023-06-09T13:57:12+00:00
  */
 
 $GLOBALS['TL_LANG']['tl_content']['bs_grid']['0']          = 'Grid';
@@ -22,4 +18,3 @@ $GLOBALS['TL_LANG']['tl_content']['bs_grid_wizard']['1']   = 'Bitte wählen Sie,
 $GLOBALS['TL_LANG']['tl_content']['bs_grid_wizard_legend'] = 'Assistent';
 $GLOBALS['TL_LANG']['tl_content']['bs_image_sizes']['0']   = 'Bildgrößen';
 $GLOBALS['TL_LANG']['tl_content']['bs_image_sizes']['1']   = 'Sie können eine Reihe von Bildgrößen definieren, die iterativ verwendet werden.';
-

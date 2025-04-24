@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Listener\Hook;
 
-use Contao\ModuleNews;
+use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\FrontendTemplate;
 use Contao\Template;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridProvider;
 
-use function strpos;
+use function count;
+use function is_array;
+use function str_starts_with;
 
 final class NewsGridListener
 {
@@ -18,56 +21,52 @@ final class NewsGridListener
      */
     private GridProvider $gridProvider;
 
-    /**
-     * @param GridProvider $gridProvider Grid provider.
-     */
+    /** @param GridProvider $gridProvider Grid provider. */
     public function __construct(GridProvider $gridProvider)
     {
         $this->gridProvider = $gridProvider;
     }
 
-    /**
-     * Parse the news article.
-     *
-     * @param Template            $template    The template.
-     * @param array<string,mixed> $newsArticle The news article.
-     * @param ModuleNews          $module      The news module.
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function onParseArticles(Template $template, array $newsArticle, ModuleNews $module): void
+    /** @Hook("parseTemplate") */
+    public function onParseTemplate(Template $template): void
     {
-        if ($module->type !== 'newslist' && $module->type !== 'newsarchive') {
+        if (! str_starts_with($template->getName(), 'mod_news') || ! is_array($template->articles)) {
             return;
         }
 
-        if ($module->bs_grid < 1) {
+        if ($template->bs_grid < 1) {
             return;
         }
 
         try {
-            $gridIterator = $this->gridProvider->getIterator('mod:' . $module->id, (int) $module->bs_grid);
-        } catch (GridNotFound $e) {
+            $gridIterator = $this->gridProvider->getIterator('mod:' . $template->id, (int) $template->bs_grid);
+        } catch (GridNotFound) {
             return;
         }
 
-        $newsTemplate = clone $template;
+        $articles = [];
 
-        $template->setName('bs_grid_wrapper');
+        foreach ($template->articles as $index => $article) {
+            $wrapperTemplate = new FrontendTemplate('bs_grid_wrapper');
 
-        $template->bsGrid = [
-            'first'   => $gridIterator->key() === 0,
-            'last'    => strpos($template->class, 'last') !== false,
-            'row'     => $gridIterator->row(),
-            'grid'    => $gridIterator->current(),
-            'resets'  => $gridIterator->resets(),
-            'content' => static function () use ($newsTemplate, $template): string {
-                $newsTemplate->setData($template->getData());
+            /**
+             * @psalm-suppress UndefinedMagicPropertyAssignment
+             * @psalm-suppress InvalidOperand
+             */
+            $wrapperTemplate->bsGrid = [
+                'first'   => $index === 0,
+                'last'    => count($template->articles) - $index === 1,
+                'row'     => $gridIterator->row(),
+                'grid'    => $gridIterator->current(),
+                'resets'  => $gridIterator->resets(),
+                'content' => static fn (): string => $article,
+            ];
 
-                return $newsTemplate->parse();
-            },
-        ];
+            $articles[] = $wrapperTemplate->parse();
 
-        $gridIterator->next();
+            $gridIterator->next();
+        }
+
+        $template->articles = $articles;
     }
 }
