@@ -59,9 +59,10 @@ abstract class AbstractDcaListener
 
         if ($collection instanceof Collection) {
             foreach ($collection as $model) {
+                /** @psalm-suppress UndefinedMagicPropertyFetch */
                 $parent = sprintf(
                     '%s [ID %s]',
-                    $model->getRelated('pid')->name,
+                    $model->getRelated('pid')?->name ?? '',
                     $model->pid,
                 );
 

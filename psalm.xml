@@ -2,6 +2,7 @@
 <psalm
         errorLevel="3"
         hideExternalErrors="true"
+        findUnusedCode="false"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="https://getpsalm.org/schema/config"
         xsi:schemaLocation="https://getpsalm.org/schema/config https://getpsalm.org/schema/config"
@@ -27,11 +28,6 @@
                 <referencedClass name="Symfony\Component\Security\Core\Security"/>
             </errorLevel>
         </DeprecatedClass>
-        <DeprecatedMethod>
-            <errorLevel type="suppress">
-                <referencedMethod name="Contao\Controller::addImageToTemplate"/>
-            </errorLevel>
-        </DeprecatedMethod>
         <UndefinedMagicPropertyFetch>
             <errorLevel type="suppress">
                 <referencedProperty name="Contao\DataContainer::$activeRecord"/>
@@ -43,11 +39,6 @@
                 <file name="src/Listener/Dca/ContentListener.php"/>
             </errorLevel>
         </UnsupportedPropertyReferenceUsage>
-        <MissingClassConstType>
-            <errorLevel type="suppress">
-                <directory name="src"/>
-            </errorLevel>
-        </MissingClassConstType>
     </issueHandlers>
 
     <universalObjectCrates>

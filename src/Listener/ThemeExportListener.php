@@ -36,7 +36,8 @@ final class ThemeExportListener extends Theme
         $table->setAttribute('name', 'tl_bs_grid');
 
         $tables = $xml->getElementsByTagName('tables')->item(0);
-        $table  = $tables->appendChild($table);
+        /** @psalm-suppress PossiblyNullReference */
+        $table = $tables->appendChild($table);
 
         $adapter    = $this->repositories->getRepository(GridModel::class);
         $collection = $adapter->findBy(['.pid=?'], [$themeId]);

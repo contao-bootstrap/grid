@@ -8,6 +8,7 @@ use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
+use Override;
 
 use function array_map;
 use function serialize;
@@ -31,6 +32,7 @@ final class AutoGridWidthsMigration extends AbstractMigration
         $this->connection = $connection;
     }
 
+    #[Override]
     public function shouldRun(): bool
     {
         if (! $this->connection->createSchemaManager()->tablesExist(['tl_bs_grid'])) {
@@ -57,6 +59,7 @@ final class AutoGridWidthsMigration extends AbstractMigration
         return false;
     }
 
+    #[Override]
     public function run(): MigrationResult
     {
         $statement = $this->connection->executeQuery('SELECT * FROM tl_bs_grid');

@@ -1,4 +1,4 @@
-name: contao-bootrap/grid
+name: contao-bootrap-core
 
 on:
   push:
@@ -8,32 +8,31 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    name: PHP ${{ matrix.php }}
+    name: PHP ${{ matrix.name }}
 
     strategy:
       fail-fast: false
       matrix:
         include:
-          - php: '8.1'
-            phpcq_install: 'install'
-            phpcq_flags: ''
-            composer_install: 'update --prefer-lowest'
-          - php: '8.1'
-            phpcq_install: 'update'
-            phpcq_flags: ''
-            composer_install: 'update'
-          - php: '8.2'
-            phpcq_install: 'update'
-            phpcq_flags: ''
-            composer_install: 'update'
-          - php: '8.3'
+          - name: '8.2 prefer-lowest'
+            php: '8.2'
             phpcq_install: 'update'
             phpcq_flags: '--exit-0'
+            composer_install: 'update --prefer-lowest'
+          - name: '8.2'
+            php: '8.2'
+            phpcq_install: 'update'
+            phpcq_flags: ''
+            composer_install: 'update'
+          - name: '8.3'
+            php: '8.3'
+            phpcq_install: 'update'
+            phpcq_flags: ''
             composer_install: 'update'
 
     steps:
       - name: PHP ${{ matrix.php }} Pull source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -44,17 +43,17 @@ jobs:
           php-version: ${{ matrix.php }}
 
       - name: PHP ${{ matrix.php }} Cache composer cache directory
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         env:
-          cache-name: composer-cache-dir-${{ matrix.php }}
+          cache-name: phpcq-composer-cache-dir-${{ matrix.php }}
         with:
           path: ~/.cache/composer
           key: ${{ runner.os }}-build-${{ env.cache-name }}
 
       - name: PHP ${{ matrix.php }} Cache vendor directory
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         env:
-          cache-name: composer-vendor-${{ matrix.php }}
+          cache-name: phpcq-composer-vendor-${{ matrix.php }}
         with:
           path: vendor
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
@@ -65,7 +64,7 @@ jobs:
         run: composer ${{ matrix.composer_install }} --prefer-stable --no-interaction --no-progress
 
       - name: PHP ${{ matrix.php }} Update phpcq
-        run: ./vendor/bin/phpcq self-update --unsigned
+        run: ./vendor/bin/phpcq self-update
 
       - name: PHP ${{ matrix.php }} Install phpcq toolchain
         run: ./vendor/bin/phpcq ${{ matrix.phpcq_install }} -v
@@ -74,7 +73,7 @@ jobs:
         run: ./vendor/bin/phpcq run -v -o github-action -o default ${{ matrix.phpcq_flags }}
 
       - name: PHP ${{ matrix.php }} Upload build directory to artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         if: ${{ success() }} || ${{ failure() }}
         with:
           name: phpcq-builds-php-${{ matrix.php }}

@@ -12,6 +12,7 @@ namespace ContaoBootstrap\Grid;
 
 use ContaoBootstrap\Grid\Definition\Grid;
 use Iterator;
+use Override;
 
 use function assert;
 use function is_string;
@@ -60,6 +61,7 @@ final class GridIterator implements Iterator
         return $this->grid->buildResets($this->index);
     }
 
+    #[Override]
     public function current(): string
     {
         $column = $this->grid->buildColumn($this->index, true);
@@ -68,21 +70,25 @@ final class GridIterator implements Iterator
         return $column;
     }
 
+    #[Override]
     public function next(): void
     {
         $this->index++;
     }
 
+    #[Override]
     public function key(): int
     {
         return $this->index;
     }
 
+    #[Override]
     public function valid(): bool
     {
         return true;
     }
 
+    #[Override]
     public function rewind(): void
     {
         $this->index = 0;

@@ -9,6 +9,7 @@ use Contao\CoreBundle\Migration\MigrationResult;
 use Contao\StringUtil;
 use ContaoBootstrap\Core\Environment;
 use Doctrine\DBAL\Connection;
+use Override;
 
 use function array_merge;
 use function array_unique;
@@ -22,6 +23,7 @@ final class SizeIndexMigration extends AbstractMigration
     {
     }
 
+    #[Override]
     public function shouldRun(): bool
     {
         $schemaManager = $this->connection->createSchemaManager();
@@ -48,6 +50,7 @@ final class SizeIndexMigration extends AbstractMigration
         return false;
     }
 
+    #[Override]
     public function run(): MigrationResult
     {
         foreach ($this->getSizes() as $size) {
@@ -60,6 +63,7 @@ final class SizeIndexMigration extends AbstractMigration
 
                 foreach (StringUtil::deserialize($row[$size . 'Size'], true) as $key => $template) {
                     if (is_numeric($key)) {
+                        $key = (int) $key;
                         ++$key;
                     }
 

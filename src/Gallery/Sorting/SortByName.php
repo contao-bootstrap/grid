@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Gallery\Sorting;
 
+use Override;
+
 use function basename;
 use function strnatcasecmp;
 use function uksort;
@@ -25,6 +27,7 @@ final class SortByName implements SortBy
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function apply(array $images): array
     {
         $direction = $this->direction === 'asc' ? 1 : -1;

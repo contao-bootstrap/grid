@@ -7,6 +7,7 @@ namespace ContaoBootstrap\Grid\Listener\Dca;
 use Contao\ContentModel;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\DataContainer;
+use Contao\Input;
 use Contao\Model\Collection;
 use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
@@ -22,42 +23,17 @@ use function time;
 final class ParentFixContentParentRelationsListener
 {
     /**
-     * Database connection.
-     */
-
-    private Connection $connection;
-
-    /**
-     * Data container manager.
-     */
-    private DcaManager $dcaManager;
-
-    /**
-     * Repository manager.
-     */
-    private RepositoryManager $repositoryManager;
-
-    /**
-     * Input adapter.
-     */
-    private Adapter $inputAdapter;
-
-    /**
      * @param Connection        $connection        Database connection.
      * @param DcaManager        $dcaManager        Data container manager.
      * @param RepositoryManager $repositoryManager Repository manager.
-     * @param Adapter           $inputAdapter      Input adapter.
+     * @param Adapter<Input>    $inputAdapter      Input adapter.
      */
     public function __construct(
-        Connection $connection,
-        DcaManager $dcaManager,
-        RepositoryManager $repositoryManager,
-        Adapter $inputAdapter,
+        private readonly Connection $connection,
+        private readonly DcaManager $dcaManager,
+        private readonly RepositoryManager $repositoryManager,
+        private readonly Adapter $inputAdapter,
     ) {
-        $this->connection        = $connection;
-        $this->dcaManager        = $dcaManager;
-        $this->repositoryManager = $repositoryManager;
-        $this->inputAdapter      = $inputAdapter;
     }
 
     /**
@@ -88,6 +64,7 @@ final class ParentFixContentParentRelationsListener
             ->createSchemaManager()
             ->listTableColumns($definition->getName());
 
+        /** @psalm-suppress RiskyTruthyFalsyComparison */
         if (
             ! $definition->has(['config', 'ptable'])
             && $this->inputAdapter->get('childs')

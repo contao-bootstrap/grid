@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\FormField;
 
+use Override;
+
 /**
  * @property int|string        $bs_grid
  * @property string            $rowClasses
@@ -22,6 +24,7 @@ final class GridSeparatorFormField extends AbstractRelatedFormField
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function parse($arrAttributes = null): string
     {
         $iterator = $this->getIterator();

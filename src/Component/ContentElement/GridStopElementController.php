@@ -16,6 +16,7 @@ use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -45,6 +46,7 @@ final class GridStopElementController extends AbstractGridElementController
     }
 
     /** {@inheritDoc} */
+    #[Override]
     protected function preGenerate(
         Request $request,
         Model $model,

@@ -79,6 +79,7 @@ final class GalleryBuilder
         $repository = $this->repositories->getRepository(FilesModel::class);
         assert($repository instanceof ContaoRepository);
 
+        /** @psalm-suppress UndefinedMagicMethod */
         $collection = $repository->findMultipleByUuids($uuids);
         if ($collection instanceof Collection) {
             $this->loadImages($collection);
@@ -131,6 +132,8 @@ final class GalleryBuilder
                 // Folders
                 $repository = $this->repositories->getRepository(FilesModel::class);
                 assert($repository instanceof ContaoRepository);
+
+                /** @psalm-suppress UndefinedMagicMethod */
                 $children = $repository->findByPid($fileModel->uuid);
 
                 if ($children instanceof Collection) {

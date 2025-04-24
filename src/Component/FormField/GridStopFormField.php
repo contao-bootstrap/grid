@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Component\FormField;
 
+use Override;
+
 /** @psalm-suppress PropertyNotSetInConstructor - Issue in the codebase of Contao */
 final class GridStopFormField extends AbstractRelatedFormField
 {
@@ -16,6 +18,7 @@ final class GridStopFormField extends AbstractRelatedFormField
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function parse($arrAttributes = null): string
     {
         $iterator = $this->getIterator();

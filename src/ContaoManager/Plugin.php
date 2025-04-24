@@ -11,6 +11,7 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\NewsBundle\ContaoNewsBundle;
 use ContaoBootstrap\Core\ContaoBootstrapCoreBundle;
 use ContaoBootstrap\Grid\ContaoBootstrapGridBundle;
+use Override;
 
 /**
  * Contao manager plugin.
@@ -18,6 +19,7 @@ use ContaoBootstrap\Grid\ContaoBootstrapGridBundle;
 final class Plugin implements BundlePluginInterface
 {
     /** {@inheritDoc} */
+    #[Override]
     public function getBundles(ParserInterface $parser): array
     {
         $bundleConfig = BundleConfig::create(ContaoBootstrapGridBundle::class)

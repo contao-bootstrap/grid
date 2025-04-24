@@ -7,6 +7,7 @@ namespace ContaoBootstrap\Grid\Component\FormField;
 use Contao\FormFieldModel;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
+use Override;
 
 /** @property int|string $bs_grid_parent */
 abstract class AbstractRelatedFormField extends AbstractFormField
@@ -14,11 +15,13 @@ abstract class AbstractRelatedFormField extends AbstractFormField
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function generate()
     {
         return '';
     }
 
+    #[Override]
     protected function getIterator(): GridIterator|null
     {
         $provider = $this->getGridProvider();

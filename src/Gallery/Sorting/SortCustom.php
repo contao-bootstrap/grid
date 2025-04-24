@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Grid\Gallery\Sorting;
 
+use Override;
+
 use function array_filter;
 use function array_flip;
 use function array_key_exists;
@@ -19,6 +21,7 @@ final class SortCustom implements SortBy
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function apply(array $images): array
     {
         if ($this->orderSrc === []) {

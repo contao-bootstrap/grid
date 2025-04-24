@@ -6,6 +6,7 @@ namespace ContaoBootstrap\Grid\Component\FormField;
 
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
+use Override;
 
 /**
  * @property int|string $bs_grid
@@ -21,6 +22,7 @@ final class GridStartFormField extends AbstractFormField
     // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
     protected $strTemplate = 'form_bs_gridStart';
 
+    #[Override]
     protected function getIterator(): GridIterator|null
     {
         try {
@@ -34,6 +36,7 @@ final class GridStartFormField extends AbstractFormField
         }
     }
 
+    #[Override]
     public function generate(): string
     {
         return '';
@@ -42,6 +45,7 @@ final class GridStartFormField extends AbstractFormField
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function parse($arrAttributes = null): string
     {
         $iterator = $this->getIterator();

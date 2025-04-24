@@ -19,6 +19,7 @@ use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -51,6 +52,7 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[Override]
     protected function prepareTemplateData(array $data, Request $request, Model $model): array
     {
         /** @psalm-var list<array{inactive: string, module: string|null}> $config */
@@ -176,6 +178,8 @@ final class GridFrontendModuleController extends AbstractFrontendModuleControlle
     {
         $repository = $this->repositories->getRepository(ModuleModel::class);
         assert($repository instanceof ContaoRepository);
+
+        /** @psalm-suppress UndefinedMagicMethod */
         $collection = $repository->findMultipleByIds($moduleIds);
         $modules    = [];
 

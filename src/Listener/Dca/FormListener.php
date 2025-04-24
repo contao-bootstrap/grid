@@ -9,6 +9,7 @@ use Contao\DataContainer;
 use Contao\FormFieldModel;
 use Contao\Model;
 use Contao\Model\Collection;
+use Override;
 use stdClass;
 
 use function sprintf;
@@ -21,7 +22,13 @@ use function time;
  */
 final class FormListener extends AbstractWrapperDcaListener
 {
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress LessSpecificReturnStatement
+     */
+    #[Override]
     protected function getNextElements(Model|Result|stdClass $current): array
     {
         $collection = $this->repositories->getRepository(FormFieldModel::class)->findBy(
@@ -42,6 +49,7 @@ final class FormListener extends AbstractWrapperDcaListener
     }
 
     /** {@inheritDoc} */
+    #[Override]
     protected function getStopElement(Model|Result|stdClass $current): Model
     {
         $stopElement = $this->repositories->getRepository(FormFieldModel::class)->findOneBy(
@@ -63,6 +71,7 @@ final class FormListener extends AbstractWrapperDcaListener
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function createGridElement($current, string $type, int &$sorting): Model
     {
         $model                 = new FormFieldModel();
@@ -99,7 +108,7 @@ final class FormListener extends AbstractWrapperDcaListener
                 $options[$model->id] = sprintf(
                     '%s [%s]',
                     $model->bs_grid_name,
-                    $related ? $related->title : $related->bs_grid,
+                    $related?->title ?? $model->bs_grid,
                 );
             }
         }

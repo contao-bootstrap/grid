@@ -17,6 +17,7 @@ use Contao\Model;
 use Contao\Model\Collection;
 use ContaoBootstrap\Core\Environment;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
+use Override;
 use stdClass;
 
 use function sprintf;
@@ -97,10 +98,11 @@ final class ContentListener extends AbstractWrapperDcaListener
 
         if ($collection instanceof Collection) {
             foreach ($collection as $model) {
+                /** @psalm-suppress UndefinedMagicPropertyFetch */
                 $options[$model->id] = sprintf(
                     '%s [%s]',
                     $model->bs_grid_name,
-                    $model->getRelated('bs_grid')->title,
+                    (string) $model->getRelated('bs_grid')?->title,
                 );
             }
         }
@@ -151,6 +153,7 @@ final class ContentListener extends AbstractWrapperDcaListener
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function createGridElement($current, string $type, int &$sorting): Model
     {
         $model                 = new ContentModel();
@@ -167,7 +170,11 @@ final class ContentListener extends AbstractWrapperDcaListener
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress LessSpecificReturnStatement
      */
+    #[Override]
     protected function getNextElements(Model|Result|stdClass $current): array
     {
         $collection = $this->repositories->getRepository(ContentModel::class)->findBy(
@@ -194,6 +201,7 @@ final class ContentListener extends AbstractWrapperDcaListener
      * @psalm-suppress MoreSpecificReturnType
      * @psalm-suppress LessSpecificReturnStatement
      */
+    #[Override]
     protected function getStopElement(Model|Result|stdClass $current): Model
     {
         $stopElement = $this->repositories->getRepository(ContentModel::class)->findOneBy(

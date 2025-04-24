@@ -28,6 +28,7 @@ use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
@@ -66,6 +67,7 @@ final class GalleryElementController extends AbstractContentElementController
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[Override]
     protected function preGenerate(
         Request $request,
         Model $model,
@@ -96,6 +98,7 @@ final class GalleryElementController extends AbstractContentElementController
     }
 
     /** {@inheritDoc} */
+    #[Override]
     protected function prepareTemplateData(array $data, Request $request, Model $model): array
     {
         $gallery = $request->attributes->get(Gallery::class);

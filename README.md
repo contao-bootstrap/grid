@@ -8,7 +8,7 @@ Contao-Bootstrap Grid Component
 [![Build Status](https://img.shields.io/github/workflow/status/contao-bootstrap/grid/contao-bootstra-grid?logo=githubactions&logoColor=%23fff&style=for-the-badge)](https://github.com/contao-bootstrap/grid/actions)
 [![Downloads](http://img.shields.io/packagist/dt/contao-bootstrap/grid.svg?style=for-the-badge&label=Downloads)](http://packagist.org/packages/contao-bootstrap/grid)
 
-This extension provides Bootstrap 4 grid tools for Contao CMS.
+This extension provides Bootstrap 5 grid tools for Contao CMS.
 
 Features
 --------
@@ -30,7 +30,7 @@ Requirements
 ------------
 
 - PHP ^8.1
-- Contao ^4.13 || ^5.0
+- Contao ^4.13 || ^5.3
 
 
 Install

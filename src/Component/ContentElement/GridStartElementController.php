@@ -9,6 +9,7 @@ use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\Model;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class GridStartElementController extends AbstractGridElementController
 {
     /** {@inheritDoc} */
+    #[Override]
     protected function preGenerate(
         Request $request,
         Model $model,
@@ -34,6 +36,7 @@ final class GridStartElementController extends AbstractGridElementController
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[Override]
     protected function prepareTemplateData(array $data, Request $request, Model $model): array
     {
         $iterator = $this->getIterator($model);
