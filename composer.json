@@ -60,12 +60,6 @@
   "suggest": {
     "contao/news-bundle": "Use grid in news list and news archive modules"
   },
-  "repositories": {
-    "contao-bootstrap-core": {
-      "type": "vcs",
-      "url": "https://git.netzmacht.de/contao-bootstrap/core.git"
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "autoload": {
