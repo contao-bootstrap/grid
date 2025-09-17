@@ -53,8 +53,8 @@
     "phpcq/runner-bootstrap": "@dev"
   },
   "conflict": {
-    "netzmacht/contao-bootstrap": "*",
-    "contao/manager-plugin": "<2.1 || >= 3.0"
+    "contao/manager-plugin": "<2.1 || >= 3.0",
+    "netzmacht/contao-bootstrap": "*"
   },
   "suggest": {
     "contao/news-bundle": "Use grid in news list and news archive modules"

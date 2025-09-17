@@ -29,9 +29,6 @@ phpcq:
     psalm:
       version: ^1.0
       signed: false
-    rector:
-      version: ^1.0
-      signed: false
     phpcs:
       version: ^1.0
       signed: false
@@ -50,7 +47,6 @@ phpcq:
 tasks:
   fix:
     - composer-normalize-fix
-    - rector-fix
     - phpcbf
   verify:
     - composer-normalize
@@ -60,7 +56,6 @@ tasks:
     - phploc
     - phpmd
     - psalm
-    - rector
     - phpcs
   default:
     - verify
@@ -80,10 +75,6 @@ tasks:
   composer-require-checker:
     config:
       config_file: .composer-require-checker.json
-  rector-fix:
-    config:
-      dry-run: false
-    plugin: rector
   phpcs:
     config:
       standard: ~

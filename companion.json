@@ -11,7 +11,8 @@
     },
     "phpcq": {
       "plugins": {
-        "phpunit": false
+        "phpunit": false,
+        "rector": false
       },
       "presets": {
         "composer-require-checker": {

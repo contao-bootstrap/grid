@@ -8,13 +8,6 @@
     </projectFiles>
 
     <issueHandlers>
-        <InternalMethod>
-            <errorLevel type="suppress">
-                <referencedMethod name="Contao\CoreBundle\Framework\Adapter::__call"/>
-                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::initialize"/>
-                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::getAdapter"/>
-            </errorLevel>
-        </InternalMethod>
         <DeprecatedClass>
             <errorLevel type="suppress">
                 <referencedClass name="Contao\Template"/>
