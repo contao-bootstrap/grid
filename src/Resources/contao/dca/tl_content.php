@@ -27,6 +27,20 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onsubmit_callback'][] = [
  * Palettes
  */
 
+$GLOBALS['TL_DCA']['tl_content']['metapalettes']['bs_grid_wrapper'] = [
+    'type'           => [
+        'title',
+        'headline',
+        'type',
+        'bs_grid',
+        'bs_grid_name',
+    ],
+    'template'       => [':hide', 'customTpl'],
+    'protected'      => [':hide', 'protected'],
+    'expert'         => [':hide', 'guests', 'cssID'],
+    'invisible'      => ['invisible', 'start', 'stop'],
+];
+
 $GLOBALS['TL_DCA']['tl_content']['metapalettes']['bs_gridStart'] = [
     'type'           => [
         'type',

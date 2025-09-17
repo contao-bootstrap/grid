@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
   contao_bootstrap.grid.grid_builder:
     class: ContaoBootstrap\Grid\GridBuilder
     arguments:
@@ -9,6 +12,11 @@ services:
     class: ContaoBootstrap\Grid\GridProvider
     arguments:
       - '@contao_bootstrap.grid.grid_builder'
+
+  ContaoBootstrap\Grid\Component\ContentElement\GridWrapperElementController:
+    arguments:
+      - '@contao_bootstrap.grid.grid_provider'
+      - '@contao_bootstrap.core.helper.color_rotate'
 
   ContaoBootstrap\Grid\Component\ContentElement\GridStartElementController:
     arguments:

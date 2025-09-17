@@ -1,0 +1,34 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% block content %}
+  {% if isBackend %}
+    {% if iterator is not null %}
+        {% for fragment in nested_fragments %}
+            <div><span style="color: {{ color }}">{{ name }}</span> <span class="tl_gray">[{{ iterator.current }}]</span></div>
+            {{ content_element(fragment) }}
+        {% endfor %}
+    {% else %}
+        {% for fragment in nested_fragments %}
+            {{ content_element(fragment) }}
+        {% endfor %}
+    {% endif %}
+  {% else %}
+      {% if iterator is not null %}
+          <div class="{{ iterator.row }}">
+              {% for fragment in nested_fragments %}
+                  {% for reset in iterator.resets %}
+                      <div class="clearfix w-100 {{ reset }}"></div>
+                  {% endfor %}
+                  <div class="{{ iterator.current }}">
+                      {{ content_element(fragment) }}
+                  </div>
+              {% endfor %}
+          </div>
+      {% else %}
+          <span class="tl_gerror">{{ 'ERR.bsGridParentMissing'|trans({}, 'contao_default') }}</span>
+          {% for fragment in nested_fragments %}
+              {{ content_element(fragment) }}
+          {% endfor %}
+      {% endif %}
+  {% endif %}
+{% endblock %}
