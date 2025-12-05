@@ -29,7 +29,11 @@ jobs:
             phpcq_install: 'update'
             phpcq_flags: ''
             composer_install: 'update'
-
+          - name: '8.4'
+            php: '8.4'
+            phpcq_install: 'update'
+            phpcq_flags: ''
+            composer_install: 'update'
     steps:
       - name: PHP ${{ matrix.php }} Pull source
         uses: actions/checkout@v6
