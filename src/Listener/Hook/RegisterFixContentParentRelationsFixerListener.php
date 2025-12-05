@@ -7,7 +7,7 @@ namespace ContaoBootstrap\Grid\Listener\Hook;
 use ContaoBootstrap\Grid\Listener\Dca\ParentFixContentParentRelationsListener;
 use Netzmacht\Contao\Toolkit\Assertion\AssertionFailed;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
-use Netzmacht\Contao\Toolkit\Dca\Manager as DcaManager;
+use Netzmacht\Contao\Toolkit\Dca\RequestScopedManager as DcaManager;
 
 use function in_array;
 use function is_array;
