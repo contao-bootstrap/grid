@@ -20,6 +20,7 @@ use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use RuntimeException;
 
 use function array_search;
+use function array_values;
 use function assert;
 use function is_numeric;
 
@@ -84,13 +85,13 @@ final class GridBuilder
         assert($this->model instanceof GridModel);
 
         $this->grid = new Grid();
-        $sizes      = StringUtil::deserialize($this->model->sizes, true);
+        $sizes      = array_values(StringUtil::deserialize($this->model->sizes, true));
 
         $this->buildRow();
 
         foreach ($sizes as $size) {
             $field      = $size . 'Size';
-            $definition = StringUtil::deserialize($this->model->{$field}, true);
+            $definition = array_values(StringUtil::deserialize($this->model->{$field}, true));
 
             if ($size === $this->environment->getConfig()->get(['grid', 'default_size'], 'xs')) {
                 $size = '';

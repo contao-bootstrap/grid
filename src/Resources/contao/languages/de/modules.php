@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Translations are managed automatically using Transifex. To create a new translation
- * or to help to maintain an existing one, please register at transifex.com.
- *
- * Last-updated: 2023-06-09T13:57:10+00:00
- */
+declare(strict_types=1);
 
 $GLOBALS['TL_LANG']['CTE']['bs_grid']               = 'Grid';
 $GLOBALS['TL_LANG']['CTE']['bs_gridSeparator']['0'] = 'Grid-Trennung';

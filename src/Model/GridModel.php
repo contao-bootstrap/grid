@@ -7,6 +7,7 @@ namespace ContaoBootstrap\Grid\Model;
 use Contao\Model;
 
 /**
+ * @property string       $title
  * @property string|array $sizes
  * @property int|string   $pid
  * @property string       $noGutters

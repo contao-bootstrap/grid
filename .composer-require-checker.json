@@ -11,6 +11,7 @@
     "Contao\\ManagerPlugin\\Config\\ExtensionPluginInterface",
     "Contao\\ManagerPlugin\\Dependency\\DependentPluginInterface",
     "Contao\\NewsBundle\\ContaoNewsBundle",
-    "Contao\\ModuleNews"
+    "Contao\\ModuleNews",
+    "Symfony\\Component\\Security\\Core\\Security"
   ]
 }

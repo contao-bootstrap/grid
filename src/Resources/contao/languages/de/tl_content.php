@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Translations are managed automatically using Transifex. To create a new translation
- * or to help to maintain an existing one, please register at transifex.com.
- *
- * Last-updated: 2023-06-09T13:57:12+00:00
- */
+declare(strict_types=1);
 
 $GLOBALS['TL_LANG']['tl_content']['bs_grid']['0']          = 'Grid';
 $GLOBALS['TL_LANG']['tl_content']['bs_grid']['1']          = 'Bitte wählen Sie eine Grid-Definition.';

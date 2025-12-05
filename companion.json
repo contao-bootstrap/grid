@@ -1,0 +1,40 @@
+{
+  "receipts": [
+    "projects/contao-bundle/4.13-5.3"
+  ],
+  "config": {
+    "phpConstraint": "^8.1"
+  },
+  "tools": {
+    "composer": {
+      "namespace": "ContaoBootstrap\\Grid"
+    },
+    "phpcq": {
+      "plugins": {
+        "phpunit": false,
+        "rector": false
+      },
+      "defaults": {
+        "repositories": [
+          "vendor/netzmacht/phpspec-phpcq-plugin/repository.json"
+        ]
+      },
+      "presets": {
+        "composer-require-checker": {
+          "tasks": {
+            "composer-require-checker": {
+              "config":{
+                "config_file": ".composer-require-checker.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "psalm": {
+      "configuration": {
+        "errorLevel": "3"
+      }
+    }
+  }
+}

@@ -48,6 +48,7 @@ final class Gallery
             $cell->class = 'image_' . $index;
 
             // Loop through images sizes.
+            /** @psalm-suppress RiskyTruthyFalsyComparison */
             $size = current($imageSizes) ?: null;
             if (next($imageSizes) === false) {
                 reset($imageSizes);

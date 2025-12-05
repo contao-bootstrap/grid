@@ -29,17 +29,22 @@ use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Override;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Security as CoreSecurity;
 
 use function array_merge;
+use function array_values;
 use function assert;
 use function trigger_error;
 
 use const E_USER_DEPRECATED;
 
-/** @ContentElement("bs_grid_gallery", category="media", template="ce_bs_grid_gallery") */
+/**
+ * @ContentElement("bs_grid_gallery", category="media", template="ce_bs_grid_gallery")
+ * @psalm-suppress UndefinedClass
+ */
 final class GalleryElementController extends AbstractContentElementController
 {
     /**
@@ -52,7 +57,7 @@ final class GalleryElementController extends AbstractContentElementController
         RequestScopeMatcher $scopeMatcher,
         ResponseTagger $responseTagger,
         TokenChecker $tokenChecker,
-        private readonly Security $security,
+        private readonly Security|CoreSecurity $security,
         private readonly GridProvider $gridProvider,
         private readonly RepositoryManager $repositories,
         private readonly Studio $imageStudio,
@@ -133,7 +138,7 @@ final class GalleryElementController extends AbstractContentElementController
             return [];
         }
 
-        return StringUtil::deserialize($model->multiSRC, true);
+        return array_values(StringUtil::deserialize($model->multiSRC, true));
     }
 
     /**
@@ -199,7 +204,7 @@ final class GalleryElementController extends AbstractContentElementController
 
             // no break here. Handle meta the same as custom.
             case 'custom':
-                return new SortCustom(StringUtil::deserialize($model->orderSRC, true));
+                return new SortCustom(array_values(StringUtil::deserialize($model->orderSRC, true)));
 
             case 'random':
                 return new SortRandom();
