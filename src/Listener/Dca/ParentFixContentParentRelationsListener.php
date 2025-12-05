@@ -12,7 +12,7 @@ use Contao\Model\Collection;
 use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
-use Netzmacht\Contao\Toolkit\Dca\Manager as DcaManager;
+use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 
 use function array_unique;
 use function time;
