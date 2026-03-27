@@ -104,3 +104,10 @@ services:
       - '@database_connection'
     tags:
       - { name: 'contao.migration' }
+
+  ContaoBootstrap\Grid\Migration\GridWrapperMigration:
+    arguments:
+      - '@database_connection'
+      - '%contao_bootstrap.grid.enable_wrapper_migration%'
+    tags:
+      - { name: 'contao.migration' }
