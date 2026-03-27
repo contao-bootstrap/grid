@@ -5,6 +5,10 @@ Changelog
 [Unreleased]
 ------------
 
+### Added
+
+- Add support for nested fragments
+
 3.0.5 (2025-03-02)
 ------------------
 
