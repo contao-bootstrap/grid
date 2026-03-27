@@ -1,9 +1,9 @@
 {
   "receipts": [
-    "projects/contao-bundle/5.3"
+    "projects/contao-bundle/4.13-5.3"
   ],
   "config": {
-    "phpConstraint": "^8.2"
+    "phpConstraint": "^8.1"
   },
   "tools": {
     "composer": {
@@ -13,6 +13,11 @@
       "plugins": {
         "phpunit": false,
         "rector": false
+      },
+      "defaults": {
+        "repositories": [
+          "vendor/netzmacht/phpspec-phpcq-plugin/repository.json"
+        ]
       },
       "presets": {
         "composer-require-checker": {
