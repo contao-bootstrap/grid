@@ -12,9 +12,11 @@ use ContaoBootstrap\Core\Helper\ColorRotate;
 use ContaoBootstrap\Grid\Exception\GridNotFound;
 use ContaoBootstrap\Grid\GridIterator;
 use ContaoBootstrap\Grid\GridProvider;
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/** @psalm-suppress PropertyNotSetInConstructor */
 #[AsContentElement('bs_grid_wrapper', 'bs_grid', nestedFragments: true)]
 final class GridWrapperElementController extends AbstractContentElementController
 {
@@ -24,6 +26,7 @@ final class GridWrapperElementController extends AbstractContentElementControlle
     ) {
     }
 
+    #[Override]
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         $template->iterator  = $this->getIterator($model);
