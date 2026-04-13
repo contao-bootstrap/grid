@@ -26,10 +26,16 @@ final class GridWrapperElementController extends AbstractContentElementControlle
 
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
-        $template->iterator  = $this->getIterator($model);
-        $template->name      = $model->bs_grid_name;
-        $template->color     = $this->colorRotate->getColor('ce:' . $model->id);
-        $template->isBackend = $this->isBackendScope($request);
+        if ($this->isBackendScope($request)) {
+            $template->setName('backend/grid_wildcard');
+
+            $template->set('title', $model->bs_grid_name);
+            $template->set('color', $this->colorRotate->getColor('ce:' . $model->id));
+
+            return $template->getResponse();
+        }
+
+        $template->set('iterator', $this->getIterator($model));
 
         return $template->getResponse();
     }
@@ -37,7 +43,7 @@ final class GridWrapperElementController extends AbstractContentElementControlle
     protected function getIterator(ContentModel $model): GridIterator|null
     {
         try {
-            $iterator = $this->provider->getIterator('ce:' . $model->id, (int) $model->bs_grid);
+            $iterator = $this->provider->getIterator('ce:' . $model->id, (int)$model->bs_grid);
             $this->tagResponse('contao.db.tl_bs_grid.' . $model->bs_grid);
 
             return $iterator;

@@ -11,7 +11,7 @@ phpcq:
       signed: false
       requirements:
         composer:
-          doctrine/coding-standard: ^13.0
+          doctrine/coding-standard: ^14.0
     composer-normalize:
       version: ^1.0
       signed: false

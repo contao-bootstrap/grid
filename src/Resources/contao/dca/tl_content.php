@@ -13,6 +13,11 @@ $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = [
     'initializeDca',
 ];
 
+$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = [
+    'contao_bootstrap.grid.listeners.dca.content',
+    'updatePaletteOnNestedParent',
+];
+
 $GLOBALS['TL_DCA']['tl_content']['config']['oncopy_callback'][] = [
     ContentFixParentRelationListener::class,
     'onCopy',
