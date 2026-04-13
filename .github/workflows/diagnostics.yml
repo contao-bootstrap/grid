@@ -14,11 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: '8.2 prefer-lowest'
-            php: '8.2'
-            phpcq_install: 'update'
-            phpcq_flags: '--exit-0'
-            composer_install: 'update --prefer-lowest'
           - name: '8.2'
             php: '8.2'
             phpcq_install: 'update'
@@ -31,6 +26,11 @@ jobs:
             composer_install: 'update'
           - name: '8.4'
             php: '8.4'
+            phpcq_install: 'update'
+            phpcq_flags: ''
+            composer_install: 'update'
+          - name: '8.5'
+            php: '8.5'
             phpcq_install: 'update'
             phpcq_flags: ''
             composer_install: 'update'
