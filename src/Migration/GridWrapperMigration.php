@@ -106,23 +106,29 @@ SQL;
             ),
         );
 
-        foreach ($gridContainers as $gridContainer) {
-            $this->connection->update(
-                'tl_content',
-                ['type' => 'bs_grid_wrapper'],
-                ['id' => $gridContainer['start_id']],
-            );
-
-            foreach ($gridContainer['elements'] as $element) {
+        $this->connection->transactional(function () use ($gridContainers): void {
+            foreach ($gridContainers as $gridContainer) {
                 $this->connection->update(
                     'tl_content',
-                    ['pid' => $gridContainer['start_id'], 'ptable' => 'tl_content'],
-                    ['id' => $element['element_id']],
+                    ['type' => 'bs_grid_wrapper'],
+                    ['id' => $gridContainer['start_id']],
                 );
-            }
 
-            $this->connection->delete('tl_content', ['id' => $gridContainer['stop_id']]);
-        }
+                foreach ($gridContainer['elements'] as $element) {
+                    $this->connection->update(
+                        'tl_content',
+                        ['pid' => $gridContainer['start_id'], 'ptable' => 'tl_content'],
+                        ['id' => $element['element_id']],
+                    );
+                }
+
+                if ($gridContainer['stop_id'] === null) {
+                    continue;
+                }
+
+                $this->connection->delete('tl_content', ['id' => $gridContainer['stop_id']]);
+            }
+        });
 
         return $this->createResult(
             true,
