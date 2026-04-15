@@ -73,8 +73,19 @@ class AppKernel
 ```
 
 Migration
--------
+---------
 
-To automatically migrate your grid from Start- and Stop-Wrappers to nested fragments. You have to enbale the Migration
-by adding `BS_GRID_WRAPPER_MIGRATION=true` parameter to your .env.local. Afterwards you can run the migration in the
-contao manager over by cli.
+To automatically migrate your grid from Start- and Stop-Wrappers to nested fragments, you have to enable the migration
+via the bundle configuration. Create or extend the file `config/packages/contao_bootstrap_grid.yaml` in your Symfony
+application:
+
+```yaml
+contao_bootstrap_grid:
+    enable_wrapper_migration: true
+```
+
+Afterwards you can run the migration in the Contao Manager or via CLI:
+
+```bash
+$ php vendor/bin/contao-console contao:migrate
+```

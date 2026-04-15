@@ -4,6 +4,7 @@
         <directory name="src"/>
         <ignoreFiles>
             <file name="src/ContaoBootstrapGridComponent.php"/>
+            <file name="src/DependencyInjection/Configuration.php"/>
         </ignoreFiles>
     </projectFiles>
 

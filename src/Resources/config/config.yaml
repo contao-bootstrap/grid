@@ -4,5 +4,3 @@ parameters:
     - 'Multilingual'
     - 'Contao\DC_Table'
     - 'Terminal42\DcMultilingualBundle\Driver'
-
-  contao_bootstrap.grid.enable_wrapper_migration: '%env(bool:default::BS_GRID_WRAPPER_MIGRATION)%'
