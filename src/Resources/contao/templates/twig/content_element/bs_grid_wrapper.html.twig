@@ -3,11 +3,15 @@
 {% block content %}
     {% if iterator is not null %}
         <div class="{{ iterator.row }}">
-            <div class="{{ iterator.current }}">
-                {% for fragment in nested_fragments %}
-                    {{ content_element(fragment) }}
+            {% for fragment in nested_fragments %}
+                {% for reset in iterator.resets %}
+                    <div class="clearfix w-100 {{ reset }}"></div>
                 {% endfor %}
-            </div>
+                <div class="{{ iterator.current }}">
+                    {{ content_element(fragment) }}
+                </div>
+                {{ iterator.next() }}
+            {% endfor %}
         </div>
     {% else %}
         <span class="tl_gerror">{{ 'ERR.bsGridParentMissing'|trans({}, 'contao_default') }}</span>
