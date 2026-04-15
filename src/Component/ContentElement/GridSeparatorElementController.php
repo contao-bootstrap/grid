@@ -89,7 +89,7 @@ final class GridSeparatorElementController extends AbstractGridElementController
 
         if ($parent) {
             try {
-                $iterator = $provider->getIterator('ce:' . $parent->id, (int) $parent->bs_grid);
+                $iterator = $provider->getIterator('ce:' . $parent->id, (int)$parent->bs_grid);
                 $this->tagResponse('contao.db.tl_bs_grid.' . $parent->bs_grid);
 
                 return $iterator;
@@ -110,6 +110,10 @@ final class GridSeparatorElementController extends AbstractGridElementController
      */
     protected function getParent(ContentModel $model): ContentModel|null
     {
-        return $this->repositories->getRepository(ContentModel::class)->find((int) $model->bs_grid_parent);
+        if ($model->ptable === 'tl_content') {
+            return $this->repositories->getRepository(ContentModel::class)->find($model->pid);
+        }
+
+        return $this->repositories->getRepository(ContentModel::class)->find((int)$model->bs_grid_parent);
     }
 }
