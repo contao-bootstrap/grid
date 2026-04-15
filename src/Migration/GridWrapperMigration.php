@@ -7,8 +7,12 @@ namespace ContaoBootstrap\Grid\Migration;
 use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
-
 use Override;
+
+use function array_map;
+use function array_reduce;
+use function array_sum;
+use function count;
 
 final class GridWrapperMigration extends AbstractMigration
 {
@@ -42,44 +46,44 @@ final class GridWrapperMigration extends AbstractMigration
     #[Override]
     public function run(): MigrationResult
     {
-        $sql = <<<SQL
-    SELECT
-        grid_start.id        AS grid_start_id,
-        grid_start.pid       AS pid,
-        grid_start.ptable    AS ptable,
-        el.id                AS element_id,
-        el.type              AS element_type,
-        el.sorting           AS element_sorting,
-        (
-            SELECT grid_stop.id
-            FROM tl_content grid_stop
-            WHERE grid_stop.pid     = grid_start.pid
-              AND grid_stop.ptable  = grid_start.ptable
-              AND grid_stop.type    = 'bs_gridStop'
-              AND grid_stop.sorting > grid_start.sorting
-            ORDER BY grid_stop.sorting ASC
-            LIMIT 1
-        )                    AS grid_stop_id
-    FROM tl_content grid_start
-    LEFT JOIN tl_content el
-        ON  el.pid     = grid_start.pid
-        AND el.ptable  = grid_start.ptable
-        AND el.sorting > grid_start.sorting
-        AND el.sorting < (
-            SELECT MIN(grid_stop.sorting)
-            FROM tl_content grid_stop
-            WHERE grid_stop.pid     = grid_start.pid
-              AND grid_stop.ptable  = grid_start.ptable
-              AND grid_stop.type    = 'bs_gridStop'
-              AND grid_stop.sorting > grid_start.sorting
-        )
-    WHERE grid_start.type = 'bs_gridStart'
-    ORDER BY grid_start.pid, grid_start.ptable, grid_start.sorting, el.sorting
+        $sql = <<<'SQL'
+	SELECT
+		grid_start.id        AS grid_start_id,
+		grid_start.pid       AS pid,
+		grid_start.ptable    AS ptable,
+		el.id                AS element_id,
+		el.type              AS element_type,
+		el.sorting           AS element_sorting,
+		(
+			SELECT grid_stop.id
+			FROM tl_content grid_stop
+			WHERE grid_stop.pid     = grid_start.pid
+			  AND grid_stop.ptable  = grid_start.ptable
+			  AND grid_stop.type    = 'bs_gridStop'
+			  AND grid_stop.sorting > grid_start.sorting
+			ORDER BY grid_stop.sorting ASC
+			LIMIT 1
+		)                    AS grid_stop_id
+	FROM tl_content grid_start
+	LEFT JOIN tl_content el
+		ON  el.pid     = grid_start.pid
+		AND el.ptable  = grid_start.ptable
+		AND el.sorting > grid_start.sorting
+		AND el.sorting < (
+			SELECT MIN(grid_stop.sorting)
+			FROM tl_content grid_stop
+			WHERE grid_stop.pid     = grid_start.pid
+			  AND grid_stop.ptable  = grid_start.ptable
+			  AND grid_stop.type    = 'bs_gridStop'
+			  AND grid_stop.sorting > grid_start.sorting
+		)
+	WHERE grid_start.type = 'bs_gridStart'
+	ORDER BY grid_start.pid, grid_start.ptable, grid_start.sorting, el.sorting
 SQL;
 
         $contentElements = $this->connection->executeQuery($sql)->fetchAllAssociative();
 
-        $gridContainers = array_reduce($contentElements, function (array $carry, array $row) {
+        $gridContainers = array_reduce($contentElements, static function (array $carry, array $row) {
             $startId = $row['grid_start_id'];
 
             $carry[$startId] ??= [
@@ -98,22 +102,22 @@ SQL;
         $elementCount = array_sum(
             array_map(
                 static fn (array $gridContainer) => count($gridContainer['elements']),
-                $gridContainers
-            )
+                $gridContainers,
+            ),
         );
 
         foreach ($gridContainers as $gridContainer) {
             $this->connection->update(
                 'tl_content',
                 ['type' => 'bs_grid_wrapper'],
-                ['id' => $gridContainer['start_id']]
+                ['id' => $gridContainer['start_id']],
             );
 
             foreach ($gridContainer['elements'] as $element) {
                 $this->connection->update(
                     'tl_content',
                     ['pid' => $gridContainer['start_id'], 'ptable' => 'tl_content'],
-                    ['id' => $element['element_id']]
+                    ['id' => $element['element_id']],
                 );
             }
 
@@ -122,7 +126,7 @@ SQL;
 
         return $this->createResult(
             true,
-            'Migrated ' . count($gridContainers) . ' grid containers and ' . $elementCount . ' elements.'
+            'Migrated ' . count($gridContainers) . ' grid containers and ' . $elementCount . ' elements.',
         );
     }
 }

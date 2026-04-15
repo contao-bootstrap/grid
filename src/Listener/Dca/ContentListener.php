@@ -19,9 +19,9 @@ use Contao\Model\Collection;
 use ContaoBootstrap\Core\Environment;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Override;
-use function sprintf;
-
 use stdClass;
+
+use function sprintf;
 use function time;
 
 /**
@@ -32,10 +32,10 @@ use function time;
 final class ContentListener extends AbstractWrapperDcaListener
 {
     /**
-     * @param Environment $environment Bootstrap environment.
-     * @param ContaoFramework $framework Contao framework.
-     * @param ImageSizes $imageSizes Image sizes.
-     * @param BackendUser $user Contao backend user.
+     * @param Environment     $environment Bootstrap environment.
+     * @param ContaoFramework $framework   Contao framework.
+     * @param ImageSizes      $imageSizes  Image sizes.
+     * @param BackendUser     $user        Contao backend user.
      */
     public function __construct(
         Environment $environment,
@@ -140,7 +140,7 @@ final class ContentListener extends AbstractWrapperDcaListener
     /**
      * Dynamically add flags to the "multiSRC" field.
      *
-     * @param mixed $value Given value.
+     * @param mixed         $value         Given value.
      * @param DataContainer $dataContainer Data Container driver.
      *
      * @SuppressWarnings(PHPMD.Superglobals)

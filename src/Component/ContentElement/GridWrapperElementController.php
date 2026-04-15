@@ -46,7 +46,7 @@ final class GridWrapperElementController extends AbstractContentElementControlle
     protected function getIterator(ContentModel $model): GridIterator|null
     {
         try {
-            $iterator = $this->provider->getIterator('ce:' . $model->id, (int)$model->bs_grid);
+            $iterator = $this->provider->getIterator('ce:' . $model->id, (int) $model->bs_grid);
             $this->tagResponse('contao.db.tl_bs_grid.' . $model->bs_grid);
 
             return $iterator;
