@@ -34,5 +34,11 @@ final class ContaoBootstrapGridExtension extends Extension
         $loader->load('config.yaml');
         $loader->load('services.yaml');
         $loader->load('listeners.yaml');
+
+        if (! $config['enable_legacy_elements']) {
+            return;
+        }
+
+        $loader->load('legacy.yaml');
     }
 }

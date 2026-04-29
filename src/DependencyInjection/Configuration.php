@@ -20,6 +20,9 @@ final class Configuration implements ConfigurationInterface
                 ->booleanNode('enable_wrapper_migration')
                     ->defaultFalse()
                 ->end()
+                ->booleanNode('enable_legacy_elements')
+                    ->defaultTrue()
+                ->end()
             ->end();
 
         return $treeBuilder;
