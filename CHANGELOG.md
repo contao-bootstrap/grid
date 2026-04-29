@@ -5,6 +5,16 @@ Changelog
 [Unreleased]
 ------------
 
+### Deprecated
+
+ - Legacy content elements `bs_gridStart`, `bs_gridStop` and `bs_gridSeparator` are deprecated.
+   Use `bs_grid_wrapper` instead.
+
+### Added
+
+- Add support for nested fragments
+- Bundle configuration option `enable_legacy_elements` (default: `true`) to disable legacy content elements.
+
 3.0.5 (2025-03-02)
 ------------------
 

@@ -13,12 +13,11 @@ This extension provides Bootstrap 5 grid tools for Contao CMS.
 Features
 --------
 
- - Manage grid definition in your theme settings
- - Content elements
- - Form elements
- - Grid module
- - Import/Export with your theme settings
-
+- Manage grid definition in your theme settings
+- Content elements
+- Form elements
+- Grid module
+- Import/Export with your theme settings
 
 Changelog
 ---------
@@ -31,7 +30,6 @@ Requirements
 
 - PHP ^8.1
 - Contao ^4.13 || ^5.3
-
 
 Install
 -------
@@ -72,4 +70,35 @@ class AppKernel
     }
 }
 
+```
+
+Migration
+---------
+
+To automatically migrate your grid from Start- and Stop-Wrappers to nested fragments, you have to enable the migration
+via the bundle configuration. Create or extend the file `config/packages/contao_bootstrap_grid.yaml` in your Symfony
+application:
+
+```yaml
+contao_bootstrap_grid:
+    enable_wrapper_migration: true
+```
+
+Afterwards you can run the migration in the Contao Manager or via CLI:
+
+```bash
+$ php vendor/bin/contao-console contao:migrate
+```
+
+Deprecated
+----------
+
+The legacy content elements `bs_gridStart`, `bs_gridStop` and `bs_gridSeparator` are deprecated and will be removed in
+a future major version. Use `bs_grid_wrapper` instead.
+
+To disable the legacy elements now, set the following configuration:
+
+```yaml
+contao_bootstrap_grid:
+    enable_legacy_elements: false
 ```

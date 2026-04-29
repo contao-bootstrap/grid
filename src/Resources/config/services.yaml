@@ -18,38 +18,6 @@ services:
       - '@contao_bootstrap.grid.grid_provider'
       - '@contao_bootstrap.core.helper.color_rotate'
 
-  ContaoBootstrap\Grid\Component\ContentElement\GridStartElementController:
-    arguments:
-      - '@netzmacht.contao_toolkit.template_renderer'
-      - '@netzmacht.contao_toolkit.routing.scope_matcher'
-      - '@netzmacht.contao_toolkit.response_tagger'
-      - '@contao.security.token_checker'
-      - '@contao_bootstrap.grid.grid_provider'
-      - '@contao_bootstrap.core.helper.color_rotate'
-      - '@translator'
-
-  ContaoBootstrap\Grid\Component\ContentElement\GridSeparatorElementController:
-    arguments:
-      - '@netzmacht.contao_toolkit.template_renderer'
-      - '@netzmacht.contao_toolkit.routing.scope_matcher'
-      - '@netzmacht.contao_toolkit.response_tagger'
-      - '@contao.security.token_checker'
-      - '@contao_bootstrap.grid.grid_provider'
-      - '@contao_bootstrap.core.helper.color_rotate'
-      - '@translator'
-      - '@netzmacht.contao_toolkit.repository_manager'
-
-  ContaoBootstrap\Grid\Component\ContentElement\GridStopElementController:
-    arguments:
-      - '@netzmacht.contao_toolkit.template_renderer'
-      - '@netzmacht.contao_toolkit.routing.scope_matcher'
-      - '@netzmacht.contao_toolkit.response_tagger'
-      - '@contao.security.token_checker'
-      - '@contao_bootstrap.grid.grid_provider'
-      - '@contao_bootstrap.core.helper.color_rotate'
-      - '@translator'
-      - '@netzmacht.contao_toolkit.repository_manager'
-
   ContaoBootstrap\Grid\Component\ContentElement\GalleryElementController:
     arguments:
       - '@netzmacht.contao_toolkit.template_renderer'
@@ -102,5 +70,12 @@ services:
     arguments:
       - '@contao_bootstrap.environment'
       - '@database_connection'
+    tags:
+      - { name: 'contao.migration' }
+
+  ContaoBootstrap\Grid\Migration\GridWrapperMigration:
+    arguments:
+      - '@database_connection'
+      - '%contao_bootstrap.grid.enable_wrapper_migration%'
     tags:
       - { name: 'contao.migration' }

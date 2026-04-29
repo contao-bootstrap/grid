@@ -21,7 +21,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/** @ContentElement("bs_gridStop", category="bs_grid", template="ce_bs_gridStop") */
+use function sprintf;
+use function trigger_error;
+
+use const E_USER_DEPRECATED;
+
+/**
+ * @deprecated Use GridWrapperElementController with bs_grid_wrapper instead.
+ *             Will be removed in a future major version.
+ *
+ * @ContentElement("bs_gridStop", category="bs_grid", template="ce_bs_gridStop")
+ */
 final class GridStopElementController extends AbstractGridElementController
 {
     public function __construct(
@@ -34,6 +44,15 @@ final class GridStopElementController extends AbstractGridElementController
         TranslatorInterface $translator,
         private readonly RepositoryManager $repositories,
     ) {
+        trigger_error(
+            sprintf(
+                'Content element "%s" is deprecated. Use "%s" instead. Will be removed in a future major version.',
+                'bs_gridStop',
+                'bs_grid_wrapper',
+            ),
+            E_USER_DEPRECATED,
+        );
+
         parent::__construct(
             $templateRenderer,
             $scopeMatcher,

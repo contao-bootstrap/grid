@@ -21,7 +21,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/** @ContentElement("bs_gridSeparator", category="bs_grid", template="ce_bs_gridSeparator") */
+use function sprintf;
+use function trigger_error;
+
+use const E_USER_DEPRECATED;
+
+/**
+ * @deprecated Use GridWrapperElementController with bs_grid_wrapper instead.
+ *             Will be removed in a future major version.
+ *
+ * @ContentElement("bs_gridSeparator", category="bs_grid", template="ce_bs_gridSeparator")
+ */
 final class GridSeparatorElementController extends AbstractGridElementController
 {
     public function __construct(
@@ -34,6 +44,15 @@ final class GridSeparatorElementController extends AbstractGridElementController
         TranslatorInterface $translator,
         private readonly RepositoryManager $repositories,
     ) {
+        trigger_error(
+            sprintf(
+                'Content element "%s" is deprecated. Use "%s" instead. Will be removed in a future major version.',
+                'bs_gridSeparator',
+                'bs_grid_wrapper',
+            ),
+            E_USER_DEPRECATED,
+        );
+
         parent::__construct(
             $templateRenderer,
             $scopeMatcher,
@@ -110,6 +129,10 @@ final class GridSeparatorElementController extends AbstractGridElementController
      */
     protected function getParent(ContentModel $model): ContentModel|null
     {
+        if ($model->ptable === 'tl_content') {
+            return $this->repositories->getRepository(ContentModel::class)->find($model->pid);
+        }
+
         return $this->repositories->getRepository(ContentModel::class)->find((int) $model->bs_grid_parent);
     }
 }
