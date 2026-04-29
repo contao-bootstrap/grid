@@ -16,8 +16,6 @@ use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use function array_key_first;
-
 /** @psalm-suppress PropertyNotSetInConstructor */
 #[AsContentElement('bs_grid_wrapper', 'bs_grid', nestedFragments: true)]
 final class GridWrapperElementController extends AbstractContentElementController
