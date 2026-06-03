@@ -10,6 +10,10 @@ use Doctrine\DBAL\Connection;
 use Exception;
 use Override;
 
+use function count;
+
+use const PHP_INT_MAX;
+
 final class GridWrapperMigration extends AbstractMigration
 {
     public function __construct(private readonly Connection $connection, private readonly bool $enableMigration = false)
@@ -80,10 +84,12 @@ final class GridWrapperMigration extends AbstractMigration
             ['parent' => $startId],
         );
 
-        $separators = $this->connection->fetchAllAssociative(
-            "SELECT * FROM tl_content WHERE bs_grid_parent = :parent AND type = 'bs_gridSeparator' ORDER BY sorting ASC",
-            ['parent' => $startId],
-        );
+        $query      = <<<'SQL'
+    SELECT * FROM tl_content 
+     WHERE bs_grid_parent = :parent AND type = 'bs_gridSeparator' 
+  ORDER BY sorting ASC
+SQL;
+        $separators = $this->connection->fetchAllAssociative($query, ['parent' => $startId]);
 
         $this->connection->executeStatement(
             "UPDATE tl_content SET type = 'bs_grid_wrapper' WHERE id = :id",
@@ -101,20 +107,23 @@ final class GridWrapperMigration extends AbstractMigration
         $bounds[] = $stopSorting;
 
         // Slot 0: elements before first separator (or before stop if no separators)
-        $slot0 = $this->fetchSlotElements($pid, $ptable, $bounds[0], $bounds[1]);
+        /** @psalm-suppress PossiblyUndefinedArrayOffset */
+        $slot0          = $this->fetchSlotElements($pid, $ptable, $bounds[0], $bounds[1]);
         $wrapperSorting = $this->placeSlotElements($slot0, $startId, null, $wrapperSorting, $tstamp);
 
         // One slot per separator: elements after the separator until next separator or stop
         foreach ($separators as $i => $sep) {
-            $sepId        = (int) $sep['id'];
-            $nextBound    = $bounds[$i + 2];
-            $slotElements = $this->fetchSlotElements($pid, $ptable, (int) $sep['sorting'], $nextBound);
+            $sepId          = (int) $sep['id'];
+            $nextBound      = $bounds[$i + 2];
+            $slotElements   = $this->fetchSlotElements($pid, $ptable, (int) $sep['sorting'], $nextBound);
             $wrapperSorting = $this->placeSlotElements($slotElements, $startId, $sepId, $wrapperSorting, $tstamp);
         }
 
-        if ($stop !== false) {
-            $this->deleteElement((int) $stop['id']);
+        if ($stop === false) {
+            return;
         }
+
+        $this->deleteElement((int) $stop['id']);
     }
 
     /**
@@ -129,13 +138,24 @@ final class GridWrapperMigration extends AbstractMigration
      *
      * @throws Exception
      */
-    private function placeSlotElements(array $elements, int $wrapperId, int|null $separatorId, int $wrapperSorting, int $tstamp): int
-    {
+    private function placeSlotElements(
+        array $elements,
+        int $wrapperId,
+        int|null $separatorId,
+        int $wrapperSorting,
+        int $tstamp,
+    ): int {
         if (count($elements) > 1) {
             if ($separatorId !== null) {
-                $this->connection->executeStatement(
-                    "UPDATE tl_content SET type = 'element_group', pid = :pid, ptable = 'tl_content', sorting = :sorting WHERE id = :id",
-                    ['pid' => $wrapperId, 'sorting' => $wrapperSorting, 'id' => $separatorId],
+                $this->connection->update(
+                    'tl_content',
+                    [
+                        'pid'     => $wrapperId,
+                        'ptable'  => 'tl_content',
+                        'type'    => 'element_group',
+                        'sorting' => $wrapperSorting,
+                    ],
+                    ['id' => $separatorId],
                 );
                 $groupId = $separatorId;
             } else {
@@ -167,8 +187,15 @@ final class GridWrapperMigration extends AbstractMigration
      */
     private function fetchSlotElements(int $pid, string $ptable, int $fromSorting, int $toSorting): array
     {
+        $query = <<<'SQL'
+    SELECT * 
+      FROM tl_content 
+     WHERE pid = :pid AND ptable = :ptable AND sorting > :from AND sorting < :to 
+  ORDER BY sorting ASC
+SQL;
+
         return $this->connection->fetchAllAssociative(
-            'SELECT * FROM tl_content WHERE pid = :pid AND ptable = :ptable AND sorting > :from AND sorting < :to ORDER BY sorting ASC',
+            $query,
             ['pid' => $pid, 'ptable' => $ptable, 'from' => $fromSorting, 'to' => $toSorting],
         );
     }
@@ -176,12 +203,10 @@ final class GridWrapperMigration extends AbstractMigration
     /** @throws Exception */
     private function insertElementGroup(int $pid, string $ptable, int $sorting, int $tstamp): int
     {
-        $this->connection->executeStatement(
-            "INSERT INTO tl_content (pid, ptable, sorting, tstamp, type) VALUES (:pid, :ptable, :sorting, :tstamp, 'element_group')",
-            ['pid' => $pid, 'ptable' => $ptable, 'sorting' => $sorting, 'tstamp' => $tstamp],
+        return (int) $this->connection->insert(
+            'tl_content',
+            ['pid' => $pid, 'ptable' => $ptable, 'sorting' => $sorting, 'tstamp' => $tstamp, 'type' => 'element_group'],
         );
-
-        return (int) $this->connection->lastInsertId();
     }
 
     /**
@@ -189,8 +214,12 @@ final class GridWrapperMigration extends AbstractMigration
      *
      * @throws Exception
      */
-    private function moveElementsToParent(array $elements, int $newPid, string $newPtable, int $startSorting = 128): void
-    {
+    private function moveElementsToParent(
+        array $elements,
+        int $newPid,
+        string $newPtable,
+        int $startSorting = 128,
+    ): void {
         $sorting = $startSorting;
 
         foreach ($elements as $element) {
@@ -203,11 +232,11 @@ final class GridWrapperMigration extends AbstractMigration
     }
 
     /** @throws Exception */
-    private function deleteElement(int $id): void
+    private function deleteElement(int $elementId): void
     {
         $this->connection->executeStatement(
             'DELETE FROM tl_content WHERE id = :id',
-            ['id' => $id],
+            ['id' => $elementId],
         );
     }
 }
