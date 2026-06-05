@@ -21,8 +21,9 @@ ArrayUtil::arrayInsert(
     -1,
     [
         'bs_grid' => [
-            'href'  => 'table=tl_bs_grid',
-            'icon'  => 'bundles/contaobootstrapgrid/img/icon.png',
+            'href'    => 'table=tl_bs_grid',
+            'icon'    => 'bundles/contaobootstrapgrid/img/icon.png',
+            'primary' => true,
         ],
     ],
 );
