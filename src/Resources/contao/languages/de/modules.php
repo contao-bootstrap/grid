@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 $GLOBALS['TL_LANG']['CTE']['bs_grid']               = 'Grid';
+$GLOBALS['TL_LANG']['CTE']['bs_grid_wrapper'][0]    = 'Grid';
+$GLOBALS['TL_LANG']['CTE']['bs_grid_wrapper'][1]    = 'Grid mit verschachtelten Elementen';
 $GLOBALS['TL_LANG']['CTE']['bs_gridSeparator']['0'] = 'Grid-Trennung';
 $GLOBALS['TL_LANG']['CTE']['bs_gridSeparator']['1'] = 'Grid-Trennelement';
 $GLOBALS['TL_LANG']['CTE']['bs_gridStart']['0']     = 'Grid-Start';

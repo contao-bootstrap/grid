@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 $GLOBALS['TL_LANG']['CTE']['bs_grid'] = 'Grid';
 
+$GLOBALS['TL_LANG']['CTE']['bs_grid_wrapper'][0]  = 'Grid';
+$GLOBALS['TL_LANG']['CTE']['bs_grid_wrapper'][1]  = 'Grid with nested elements';
 $GLOBALS['TL_LANG']['CTE']['bs_gridStart'][0]     = 'Grid Start';
 $GLOBALS['TL_LANG']['CTE']['bs_gridStart'][1]     = 'Grid Start Element';
 $GLOBALS['TL_LANG']['CTE']['bs_gridSeparator'][0] = 'Grid Separator';

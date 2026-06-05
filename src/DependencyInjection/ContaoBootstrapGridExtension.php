@@ -18,6 +18,14 @@ final class ContaoBootstrapGridExtension extends Extension
     #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
+        $configuration = new Configuration();
+        $config        = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter(
+            'contao_bootstrap.grid.enable_wrapper_migration',
+            $config['enable_wrapper_migration'],
+        );
+
         $loader = new YamlFileLoader(
             $container,
             new FileLocator(__DIR__ . '/../Resources/config'),
@@ -26,5 +34,11 @@ final class ContaoBootstrapGridExtension extends Extension
         $loader->load('config.yaml');
         $loader->load('services.yaml');
         $loader->load('listeners.yaml');
+
+        if (! $config['enable_legacy_elements']) {
+            return;
+        }
+
+        $loader->load('legacy.yaml');
     }
 }

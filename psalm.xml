@@ -4,6 +4,7 @@
         <directory name="src"/>
         <ignoreFiles>
             <file name="src/ContaoBootstrapGridComponent.php"/>
+            <file name="src/DependencyInjection/Configuration.php"/>
         </ignoreFiles>
     </projectFiles>
 
@@ -32,6 +33,8 @@
         <class name="Contao\ContentModel"/>
         <class name="Contao\Database\Result"/>
         <class name="Contao\FormFieldModel"/>
+        <class name="Contao\CoreBundle\Twig\FragmentTemplate"/>
+        <class name="Contao\BackendTemplate"/>
         <class name="Contao\Model"/>
         <class name="Contao\ModuleModel"/>
         <class name="Contao\ModuleNews"/>

@@ -8,6 +8,7 @@ use Contao\BackendUser;
 use Contao\Config;
 use Contao\ContentModel;
 use Contao\Controller;
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Image\ImageSizes;
 use Contao\Database\Result;
@@ -68,6 +69,22 @@ final class ContentListener extends AbstractWrapperDcaListener
             'contao_bootstrap.grid.listeners.dca.content',
             'getGalleryTemplates',
         ];
+    }
+
+    public function updatePaletteOnNestedParent(DataContainer $dataContainer): void
+    {
+        $input         = $this->framework->getAdapter(Input::class);
+        $currentRecord = $dataContainer->getCurrentRecord();
+
+        if ($input->get('act') !== 'edit' || $currentRecord === null) {
+            return;
+        }
+
+        if ($currentRecord['type'] !== 'bs_gridSeparator' || $currentRecord['ptable'] !== 'tl_content') {
+            return;
+        }
+
+        PaletteManipulator::create()->removeField('bs_grid_parent')->applyToPalette('bs_gridSeparator', 'tl_content');
     }
 
     /**

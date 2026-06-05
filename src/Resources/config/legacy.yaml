@@ -1,0 +1,32 @@
+services:
+  ContaoBootstrap\Grid\Component\ContentElement\GridStartElementController:
+    arguments:
+      - '@netzmacht.contao_toolkit.template_renderer'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '@netzmacht.contao_toolkit.response_tagger'
+      - '@contao.security.token_checker'
+      - '@contao_bootstrap.grid.grid_provider'
+      - '@contao_bootstrap.core.helper.color_rotate'
+      - '@translator'
+
+  ContaoBootstrap\Grid\Component\ContentElement\GridSeparatorElementController:
+    arguments:
+      - '@netzmacht.contao_toolkit.template_renderer'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '@netzmacht.contao_toolkit.response_tagger'
+      - '@contao.security.token_checker'
+      - '@contao_bootstrap.grid.grid_provider'
+      - '@contao_bootstrap.core.helper.color_rotate'
+      - '@translator'
+      - '@netzmacht.contao_toolkit.repository_manager'
+
+  ContaoBootstrap\Grid\Component\ContentElement\GridStopElementController:
+    arguments:
+      - '@netzmacht.contao_toolkit.template_renderer'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '@netzmacht.contao_toolkit.response_tagger'
+      - '@contao.security.token_checker'
+      - '@contao_bootstrap.grid.grid_provider'
+      - '@contao_bootstrap.core.helper.color_rotate'
+      - '@translator'
+      - '@netzmacht.contao_toolkit.repository_manager'

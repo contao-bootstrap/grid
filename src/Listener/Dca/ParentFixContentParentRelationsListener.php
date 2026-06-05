@@ -11,8 +11,8 @@ use Contao\Input;
 use Contao\Model\Collection;
 use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
-use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
+use Netzmacht\Contao\Toolkit\Dca\Definition;
 
 use function array_unique;
 use function time;
