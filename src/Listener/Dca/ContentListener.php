@@ -84,6 +84,11 @@ final class ContentListener extends AbstractWrapperDcaListener
             return;
         }
 
+        $parent = $this->repositories->getRepository(ContentModel::class)->find((int) $currentRecord['pid']);
+        if ($parent?->type !== 'bs_grid_wrapper') {
+            return;
+        }
+
         PaletteManipulator::create()->removeField('bs_grid_parent')->applyToPalette('bs_gridSeparator', 'tl_content');
     }
 

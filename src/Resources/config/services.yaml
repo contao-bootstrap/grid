@@ -1,7 +1,8 @@
 services:
   _defaults:
-    autowire: true
+    autowire: false
     autoconfigure: true
+
   contao_bootstrap.grid.grid_builder:
     class: ContaoBootstrap\Grid\GridBuilder
     arguments:
