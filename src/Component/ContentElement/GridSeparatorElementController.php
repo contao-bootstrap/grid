@@ -130,7 +130,11 @@ final class GridSeparatorElementController extends AbstractGridElementController
     protected function getParent(ContentModel $model): ContentModel|null
     {
         if ($model->ptable === 'tl_content') {
-            return $this->repositories->getRepository(ContentModel::class)->find($model->pid);
+            $parent = $this->repositories->getRepository(ContentModel::class)->find($model->pid);
+
+            if ($parent?->type === 'bs_grid_wrapper') {
+                return $parent;
+            }
         }
 
         return $this->repositories->getRepository(ContentModel::class)->find((int) $model->bs_grid_parent);
