@@ -74,7 +74,11 @@ final class ContentListener extends AbstractWrapperDcaListener
     public function updatePaletteOnNestedParent(DataContainer $dataContainer): void
     {
         $input         = $this->framework->getAdapter(Input::class);
-        $currentRecord = $dataContainer->getCurrentRecord();
+        try {
+            $currentRecord = $dataContainer->getCurrentRecord();
+        } catch (\Exception $e) {
+            return;
+        }
 
         if ($input->get('act') !== 'edit' || $currentRecord === null) {
             return;
