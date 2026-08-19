@@ -36,7 +36,7 @@
     "contao-bootstrap/core": "^3.0",
     "contao-community-alliance/meta-palettes": "^2.0",
     "contao/core-bundle": "^5.3",
-    "doctrine/dbal": "^3.4",
+    "doctrine/dbal": "^3.4 || ^4.0",
     "mvo/contao-group-widget": "^1.4",
     "netzmacht/contao-toolkit": "^3.8 || ^4.0",
     "symfony/config": "^6.4 || ^7.4",

@@ -5,6 +5,15 @@ Changelog
 [Unreleased]
 ------------
 
+### Changed
+
+ - Support `doctrine/dbal` 4 in addition to 3 (`^3.4 || ^4.0`)
+
+### Fixed
+
+ - Pass an array to `AbstractSchemaManager::tablesExist()` when creating dynamic grid size columns,
+   as passing a string was removed in `doctrine/dbal` 4
+
 3.1.0 (2026-06-05)
 ------------------
 
