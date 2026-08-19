@@ -5,6 +5,12 @@ Changelog
 [Unreleased]
 ------------
 
+### Fixed
+
+ - Grid wrapper migration created element groups with a wrong parent id, because the affected row count
+   of the `INSERT` was used as the new record id instead of the last insert id
+ - Size index migration failed with an exception instead of skipping when the `tl_theme` table does not exist
+
 3.1.0 (2026-06-05)
 ------------------
 

@@ -89,8 +89,11 @@ final class SizeIndexMigration extends AbstractMigration
     private function getSizes(): array
     {
         $schemaManager = $this->connection->createSchemaManager();
-        $columns       = $schemaManager->listTableColumns('tl_theme');
+        if (! $schemaManager->tablesExist(['tl_theme'])) {
+            return [];
+        }
 
+        $columns = $schemaManager->listTableColumns('tl_theme');
         if (! isset($columns['bs_grid_sizes'])) {
             return [];
         }
@@ -99,7 +102,7 @@ final class SizeIndexMigration extends AbstractMigration
         $themeSizes = $this->connection->executeQuery('SELECT bs_grid_sizes FROM tl_theme')->fetchFirstColumn();
 
         foreach ($themeSizes as $themeSize) {
-            $sizes = array_merge($sizes, StringUtil::deserialize($themeSize, true));
+            $sizes = \array_push($sizes, ...StringUtil::deserialize($themeSize, true));
         }
 
         return array_values(array_unique($sizes));
