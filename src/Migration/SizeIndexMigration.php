@@ -11,7 +11,7 @@ use ContaoBootstrap\Core\Environment;
 use Doctrine\DBAL\Connection;
 use Override;
 
-use function array_merge;
+use function array_push;
 use function array_unique;
 use function array_values;
 use function is_numeric;
@@ -98,11 +98,11 @@ final class SizeIndexMigration extends AbstractMigration
             return [];
         }
 
-        $sizes      = $this->environment->getConfig()->get(['grid', 'sizes'], []);
+        $sizes      = (array) $this->environment->getConfig()->get(['grid', 'sizes'], []);
         $themeSizes = $this->connection->executeQuery('SELECT bs_grid_sizes FROM tl_theme')->fetchFirstColumn();
 
         foreach ($themeSizes as $themeSize) {
-            $sizes = \array_push($sizes, ...StringUtil::deserialize($themeSize, true));
+            $sizes = array_push($sizes, ...StringUtil::deserialize($themeSize, true));
         }
 
         return array_values(array_unique($sizes));
