@@ -203,10 +203,12 @@ SQL;
     /** @throws Exception */
     private function insertElementGroup(int $pid, string $ptable, int $sorting, int $tstamp): int
     {
-        return (int) $this->connection->insert(
+        $this->connection->insert(
             'tl_content',
             ['pid' => $pid, 'ptable' => $ptable, 'sorting' => $sorting, 'tstamp' => $tstamp, 'type' => 'element_group'],
         );
+
+        return (int) $this->connection->lastInsertId();
     }
 
     /**
