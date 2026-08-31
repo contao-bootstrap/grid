@@ -102,7 +102,7 @@ final class SizeIndexMigration extends AbstractMigration
         $themeSizes = $this->connection->executeQuery('SELECT bs_grid_sizes FROM tl_theme')->fetchFirstColumn();
 
         foreach ($themeSizes as $themeSize) {
-            $sizes = array_push($sizes, ...StringUtil::deserialize($themeSize, true));
+            array_push($sizes, ...StringUtil::deserialize($themeSize, true));
         }
 
         return array_values(array_unique($sizes));
