@@ -10,7 +10,22 @@ Changelog
  - Grid wrapper migration created element groups with a wrong parent id, because the affected row count
    of the `INSERT` was used as the new record id instead of the last insert id
  - Make Size index migration skip instead of throw when the `tl_theme` table does not exist
+
+### Changed
+
  - Changed `array_merge()` in a loop, which is a resource greedy construction, to `array_push()` as a minor improvement
+
+3.1.3 (2026-08-19)
+------------------
+
+### Changed
+
+ - Support `doctrine/dbal` 4 in addition to 3 (`^3.4 || ^4.0`)
+
+### Fixed
+
+ - Pass an array to `AbstractSchemaManager::tablesExist()` when creating dynamic grid size columns,
+   as passing a string was removed in `doctrine/dbal` 4
 
 3.1.0 (2026-06-05)
 ------------------

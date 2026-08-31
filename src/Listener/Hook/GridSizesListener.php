@@ -157,7 +157,7 @@ final class GridSizesListener
     public function createDatabaseField(string $size): void
     {
         $schemaManager = $this->connection->createSchemaManager();
-        if (! $schemaManager->tablesExist(GridModel::getTable())) {
+        if (! $schemaManager->tablesExist([GridModel::getTable()])) {
             return;
         }
 
